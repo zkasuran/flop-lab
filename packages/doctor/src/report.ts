@@ -212,7 +212,7 @@ export function markdown(report: Report): string {
       `Measured: ${report.measuredAt}. Read-only local evidence.`,
       ...report.requirements.map(
         (r) =>
-          `\n## ${r.status}: ${r.title}\n${escape(r.detail)}\n\nSource: [${r.source.locator}](${r.source.url})\n> ${escape(r.source.quote)}\n\nObserved: ${r.evidence.map((e) => `${e.source} at ${e.measuredAt}`).join("; ") || "No local probe can establish this requirement."}`,
+          `\n## ${r.status}: ${r.title}\n${escape(r.detail)}\n\nSource: [${r.source.locator}](${r.source.url})\n> ${escape(r.source.quote)}\n\nProbe records: ${r.evidence.map((e) => `${e.source} at ${e.measuredAt}${e.reason ? `: ${escape(e.reason)}` : ""}`).join("; ") || "No local probe can establish this requirement."}`,
       ),
       "\n## From a second host",
       `\`\`\`sh\n${externalCommands(report.role)}\n\`\`\``,
