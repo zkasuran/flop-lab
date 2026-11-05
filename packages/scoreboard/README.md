@@ -4,6 +4,8 @@ Rank miners by observed settlement evidence. Inspect each score term. Ask a cons
 
 The collector reads gateway models, settlements, session offers, the proof leaderboard and indexer stats through the shared MCP client. Each raw response carries its source and measurement time. Snapshots use [schema version 1](snapshot.schema.json) and are validated when read. The [model](MODEL.md) defines the score, confidence labels and how each term can be gamed.
 
+This private workspace package imports the already-landed shared MCP source entry. It adds no dependencies. The CLI build bundles that shared source.
+
 ## Run
 
 From the repository root with Node 22 and pnpm:

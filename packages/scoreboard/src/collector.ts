@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { McpClient, DEFAULT_USER_AGENT } from "@flop-lab/mcp";
+import { McpClient, DEFAULT_USER_AGENT } from "../../mcp/src/index";
 import { SOURCES, parseSnapshot, object, type Observation, type Snapshot, type Surface } from "./schema";
 
 export interface CollectorOptions {

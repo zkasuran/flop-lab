@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { parseSettlement, type Settlement } from "@flop-lab/mcp";
+import { parseSettlement, type Settlement } from "../../mcp/src/index";
 
 export const SOURCES = {
   models: "https://api.flop.network/v1/models",

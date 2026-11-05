@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { writeFile } from "node:fs/promises";
-import { McpClient } from "@flop-lab/mcp";
+import { McpClient } from "../../mcp/src/index";
 const query =
   "{ __schema { queryType { name fields { name args { name type { kind name ofType { kind name } } } type { kind name ofType { kind name } } } } } }";
 const result = await new McpClient().callTool("flop_indexer_query", { query });

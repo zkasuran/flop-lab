@@ -5,5 +5,4 @@ export default defineConfig({
   format: ["esm"],
   platform: "node",
   target: "node22",
-  noExternal: ["@flop-lab/mcp"],
 });

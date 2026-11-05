@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { escrowConserved, type Settlement } from "@flop-lab/mcp";
+import { escrowConserved, type Settlement } from "../../mcp/src/index";
 import { parseSnapshot, parseModels, parseSettlements, parsePage, type Snapshot } from "./schema";
 
 export const WINDOW_MS = 7 * 24 * 60 * 60 * 1000;

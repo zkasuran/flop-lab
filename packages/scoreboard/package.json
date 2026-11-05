@@ -12,6 +12,5 @@
     "build": "tsup",
     "record": "tsx scripts/record.ts",
     "cli": "tsx src/cli.ts"
-  },
-  "dependencies": { "@flop-lab/mcp": "workspace:*" }
+  }
 }

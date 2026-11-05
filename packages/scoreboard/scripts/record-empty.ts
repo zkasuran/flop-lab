@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { writeFile } from "node:fs/promises";
-import { McpClient } from "@flop-lab/mcp";
+import { McpClient } from "../../mcp/src/index";
 const client = new McpClient();
 const args = { model: `0x${"0".repeat(64)}`, limit: 100, offset: 0 };
 const result = await client.callTool("flop_list_settlements", args);
