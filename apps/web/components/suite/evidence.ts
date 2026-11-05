@@ -13,6 +13,7 @@ import spec from "../../../../packages/spec/fixtures/stats.json";
 import explorer from "../../../../packages/explorer/test/fixtures/block.json";
 import contracts from "../../../../packages/mcpaudit/last-run.json";
 import tclk from "../../../../packages/tclk-inspect/fixtures/htlcs.json";
+import indexer from "../../../../packages/indexer-audit/fixtures/devnet.json";
 import kestra from "../../app/kestra/observed.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
@@ -38,6 +39,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  indexer: () =>
+    metric(
+      indexer.requests,
+      "requests in recorded invariant audit",
+      indexer.completedAt,
+      mcp,
+      "packages/indexer-audit/fixtures/devnet.json",
+      "Also read explorer APIs. Consistency is not independent chain proof.",
+    ),
   tclk: () =>
     metric(
       rows(object(JSON.parse(tclk.raw) as unknown).htlcs).length,
