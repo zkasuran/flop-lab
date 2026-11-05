@@ -1,0 +1,25 @@
+{
+  "name": "@flop-lab/console",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Read-only FLOP MCP console and dated devnet cost estimates",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-console": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "graphql": "^16.11.0"
+  }
+}
