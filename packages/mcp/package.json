@@ -1,0 +1,15 @@
+{
+  "name": "@flop-lab/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Typed client for the hosted FLOP MCP server: SSE parsing, retries, rate limiting and recorded fixtures",
+  "exports": {
+    ".": "./src/index.ts",
+    "./fixtures": "./src/fixtures.ts"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run"
+  }
+}

@@ -4,16 +4,16 @@ Open tools for the FLOP Network devnet: how reliable are the miners, does the pr
 
 Everything here reads public, keyless data or uses throwaway devnet wallets. Nothing here touches mainnet funds. The devnet is disposable and may reset, so the tools say what they observed and when.
 
-| Package | What it does | State |
-|---|---|---|
-| `apps/web` | The site: one page per tool, live data, and the proof that signs this repository's pull requests | planned |
-| `packages/scoreboard` | Miner reliability scoreboard and a router that picks a miner | planned |
-| `packages/harness` | Conformance and chaos harness that files reproducible protocol bug reports | planned |
-| `packages/verifier` | Independent settlement and receipt verifier | planned |
-| `packages/spendguard` | Budget policy layer over agent wallets | planned |
-| `packages/x402kit` | Pay-per-call HTTP service and template using x402 | planned |
-| `packages/challenger` | Audit agent that checks settled sessions and files disputes | planned |
-| Kestra plugin | Budgeted, verified inference as a Kestra task | planned, own repository |
+| Package               | What it does                                                                                     | State                   |
+| --------------------- | ------------------------------------------------------------------------------------------------ | ----------------------- |
+| `apps/web`            | The site: one page per tool, live data, and the proof that signs this repository's pull requests | planned                 |
+| `packages/scoreboard` | Miner reliability scoreboard and a router that picks a miner                                     | planned                 |
+| `packages/harness`    | Conformance and chaos harness that files reproducible protocol bug reports                       | planned                 |
+| `packages/verifier`   | Independent settlement and receipt verifier                                                      | planned                 |
+| `packages/spendguard` | Budget policy layer over agent wallets                                                           | planned                 |
+| `packages/x402kit`    | Pay-per-call HTTP service and template using x402                                                | planned                 |
+| `packages/challenger` | Audit agent that checks settled sessions and files disputes                                      | planned                 |
+| Kestra plugin         | Budgeted, verified inference as a Kestra task                                                    | planned, own repository |
 
 ## Provenance
 
