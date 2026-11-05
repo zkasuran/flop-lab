@@ -58,6 +58,24 @@ pnpm --filter @flop-lab/scoreboard record 04
 
 The fixtures include real snapshots taken at separate times, a full query-root introspection recording in `indexer-schema.json` and a real empty settlement response for a zero model hash. The empty response does not mean the whole devnet was empty. Tests derive a fully empty scenario from that response and clearly keep it separate from live measurements. Recorded snapshots retain raw values rather than fabricated successful miners.
 
+## Website
+
+The `/scoreboard` page shows the observed settlement sample with its source dates and age. Filter miner addresses or reorder the table by score, settlement count or address. Rank numbers always retain score order. Open a miner to inspect formula contributions, confidence, listings and recorded price history. The chart shows lower medians from stored settlement samples across models in exact source raw units. It does not show gateway quotes.
+
+From the repository root:
+
+```sh
+pnpm --filter web exec next dev --port 3310
+```
+
+Open http://localhost:3310/scoreboard. The copyable command on the page reads a committed recording. The route policy form runs the same `pickMiner` function as the CLI with current wall-clock time. A price ceiling on the observed gateway schema produces `live-price-unknown`. Results update as listings expire. No transaction is sent.
+
+`GET /scoreboard/snapshot` uses Next revalidation of 60 seconds and calls the package collector. Successful reads replace the entire snapshot, including empty responses. Concurrent reads share one collection. Failed reads retain the last good snapshot with a last-known label and its original dates. Cold processes fall back to the committed real recordings. Failure cooldown starts at 120 seconds and caps at five minutes. Processes do not share their in-memory fallback. The collector retains its bounded retries and request counts.
+
+Visible tabs read the route at most once per minute. Hidden tabs pause. The age and policy evaluation time use the browser clock. Stored history starts with the committed recordings and retains at most twelve distinct observations for the current page session. The graph has exact values below it. It does not fill missing samples.
+
+Motion follows the reading sequence, shows progress through the explanation and animates row reordering, score bars and detail panels. Reduced motion uses immediate states without travel. The native miner dialog supports Escape, focus trapping and focus return. A horizontally scrollable table keeps the evidence columns available on small screens.
+
 ## What this does not verify
 
 This tool cannot see miner uptime or inference latency. It does not run inference, verify proofs, establish finality, verify offer signatures or authorize transactions. It does not discover reachable miner endpoints. It trusts the public services' records after shape validation. The gateway's nominal listings are not binding quotes. Historical prices do not satisfy a live price ceiling.

@@ -14,7 +14,7 @@ export const tools: readonly Tool[] = [
     slug: "scoreboard",
     name: "Miner scoreboard",
     tagline: "Compare miners using observed settlements and price sources.",
-    status: "planned",
+    status: "alpha",
     href: "/scoreboard",
     repoPath: "packages/scoreboard",
   },
