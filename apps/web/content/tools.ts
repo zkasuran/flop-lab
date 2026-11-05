@@ -91,7 +91,7 @@ export const tools: readonly Tool[] = [
     section: "observe",
     name: "Network history",
     tagline: "How has the devnet changed day by day?",
-    status: "planned",
+    status: "alpha",
     href: "/history",
     repoPath: "packages/recorder",
   },

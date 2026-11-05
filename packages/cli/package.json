@@ -18,6 +18,7 @@
   "dependencies": {
     "@flop-lab/challenger": "workspace:*",
     "@flop-lab/harness": "workspace:*",
+    "@flop-lab/recorder": "workspace:*",
     "@flop-lab/scoreboard": "workspace:*",
     "@flop-lab/spec": "workspace:*",
     "@flop-lab/spendguard": "workspace:*",
