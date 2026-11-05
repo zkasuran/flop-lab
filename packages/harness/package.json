@@ -1,0 +1,21 @@
+{
+  "name": "@flop-lab/harness",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Bounded, evidence-backed conformance checks for FLOP devnet",
+  "bin": { "flop-harness": "./dist/cli.js" },
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "start": "tsx src/cli.ts",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-labs/contracts": "0.1.1",
+    "ajv": "^8.20.0"
+  }
+}
