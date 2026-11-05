@@ -163,7 +163,7 @@ export async function verifyEvidence(value: unknown): Promise<Report> {
       throw error;
     });
     invalid.status = "FAIL";
-    return { channelId: "unknown", capturedAt: null, checks: [invalid], exitCode: 1 };
+    return { channelId: "unknown", capturedAt: null, sources: [], checks: [invalid], exitCode: 1 };
   }
   const ids = bundle.observations.filter((o) => o.id.startsWith("settlements:")).map((o) => o.id);
   const checks: Check[] = [
@@ -410,5 +410,11 @@ export async function verifyEvidence(value: unknown): Promise<Report> {
       },
     ),
   );
-  return { channelId: bundle.channelId, capturedAt: bundle.capturedAt, checks, exitCode: resultCode(checks) };
+  return {
+    channelId: bundle.channelId,
+    capturedAt: bundle.capturedAt,
+    sources: bundle.observations.map(({ id, source, tool, measuredAt }) => ({ id, source, tool, measuredAt })),
+    checks,
+    exitCode: resultCode(checks),
+  };
 }

@@ -10,9 +10,19 @@ const run = (...args: string[]) =>
 it("offline CLI reports uncertainty with zero HTTP requests", () => {
   const output = run("bundle", "fixtures/channel-1.json", "--json");
   expect(output.status).toBe(3);
-  const parsed = JSON.parse(output.stdout) as { requests: { requests: number }; checks: unknown[] };
+  const parsed = JSON.parse(output.stdout) as {
+    requests: { requests: number };
+    checks: unknown[];
+    sources: { source: string; measuredAt: string }[];
+  };
   expect(parsed.requests.requests).toBe(0);
   expect(parsed.checks).toHaveLength(12);
+  expect(parsed.sources.length).toBeGreaterThan(0);
+  expect(
+    parsed.sources.every(
+      (s) => s.source === "https://mcp.flop.network/mcp" && Number.isFinite(Date.parse(s.measuredAt)),
+    ),
+  ).toBe(true);
 });
 
 it.each([

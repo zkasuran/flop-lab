@@ -36,6 +36,7 @@ export interface Evidence {
 export interface Report {
   channelId: string;
   capturedAt: string | null;
+  sources: { id: string; source: string; tool: string; measuredAt: string }[];
   checks: Check[];
   exitCode: 0 | 1 | 3;
 }

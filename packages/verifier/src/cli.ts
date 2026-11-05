@@ -74,6 +74,8 @@ async function main() {
     console.log(
       `Channel: ${report.channelId}\nCaptured: ${report.capturedAt ?? "invalid bundle"}\nHTTP requests: ${fetcher.stats.requests}`,
     );
+    for (const source of report.sources)
+      console.log(`Evidence ${source.id}: ${source.source} ${source.tool} at ${source.measuredAt}`);
     for (const check of report.checks) console.log(`${check.status} ${check.id}: ${check.detail}`);
   }
   process.exitCode = report.exitCode;
