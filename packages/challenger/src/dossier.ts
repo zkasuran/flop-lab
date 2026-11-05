@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { DEFAULT_URL, McpClient, escrowConserved, getComputeChannel, getTrustRoot } from "@flop-lab/mcp";
-import { CHALLENGE_DOC } from "./core";
+import { CHALLENGE_DOC, SDK_CHAIN_SOURCE } from "./core";
 import { channel, object, text } from "./validation";
 import type { Check, Dossier, Observation, WatchReport } from "./types";
 
@@ -75,19 +75,19 @@ export async function draftDossier(
       name: "DA audit data",
       status: "unverifiable",
       detail:
-        "The inspected public channel and tool schemas provide no turn transcript, DA locator, retrieval proof or decryption material.",
+        "The SDK defines TranscriptBlob, DataRef and DaSource.fetch. This tool has not retrieved a channel-bound transcript or verified assigned-provider custody. No DA blob was retrieved.",
     },
     {
       name: "TOPLOC and prefill",
       status: "unverifiable",
       detail:
-        "No per-turn activation fingerprints, reproducible model inputs or comparison parameters are available in this evidence bundle. No inference was re-run.",
+        "The SDK defines checkToplocTurn and an injected prefill executor. This tool has not authenticated activation bindings, prompt bytes or governed comparison pins. No independent GPU inference was re-run.",
     },
     {
       name: "Bisection and signed turn evidence",
       status: "unverifiable",
       detail:
-        "No documented public bisection messages, signed transcript leaf, Merkle path or dispute evidence encoding was found in the inspected references.",
+        "SDK dispute tooling defines bisection helpers and DisputeEvidence with versioned leaves, enclave signatures and Merkle paths. This tool has not decoded or verified per-turn signed evidence.",
     },
     {
       name: "Runtime deadline and eligibility",
@@ -115,9 +115,22 @@ export async function draftDossier(
     submission: {
       available: false,
       extrinsic: null,
+      documentedCalls: [
+        {
+          signature: "computeChannel.reportToplocMismatch(channelId, miner, attestations)",
+          lane: "Validator-quorum TOPLOC mismatch report. This is not the documented discretionary-bond lane.",
+          source: SDK_CHAIN_SOURCE,
+          missingInputs: [
+            "Authenticated activation evidence",
+            "Independent recomputation",
+            "Extrinsic-shaped validator quorum attestations",
+            "Live runtime qualification",
+          ],
+        },
+      ],
       missing: [
-        "Documented discretionary-dispute pallet, method and argument types",
-        "Canonical evidence encoding and runtime version qualification",
+        "Qualified positional signature for discretionary open_dispute; the SDK names it but the inspected chain wrapper does not expose it",
+        "Actual per-turn evidence matching the SDK-defined format and live runtime",
         "Runtime challenge start event, duration and eligibility state",
       ],
     },

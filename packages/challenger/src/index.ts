@@ -1,5 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
-export { analyze, estimateWindow, prioritize, formatFlop, ASSUMPTIONS, CHALLENGE_DOC, WINDOW_MS } from "./core";
+export {
+  analyze,
+  estimateWindow,
+  prioritize,
+  formatFlop,
+  ASSUMPTIONS,
+  CHALLENGE_DOC,
+  SDK_CHAIN_SOURCE,
+  WINDOW_MS,
+} from "./core";
 export { collectTape, Watcher, CACHE_TTL_MS } from "./watcher";
 export { draftDossier } from "./dossier";
 export type {

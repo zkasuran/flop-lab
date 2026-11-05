@@ -15,7 +15,7 @@ watch reads one bounded snapshot. It does not poll in the background.
 --recorded replays dated public responses without network requests.
 --limit controls displayed rows, not the ranking cohort. Default: 20.
 --sort priority ranks human attention; default order is estimated urgency.
-All expiry times are draft seven-day estimates, not runtime deadlines.
+Explicit SettlementPosted rows get draft estimates. Cooperative payouts have no standard window.
 Dossiers are dry run only. No key, bond or transaction is used.
 `;
 
@@ -62,6 +62,8 @@ async function main(args: string[]): Promise<void> {
     );
     for (const assumption of dossier.assumptions) console.log(`Assumption: ${assumption}`);
     for (const check of dossier.checks) console.log(`[${check.status}] ${check.name}: ${check.detail}`);
+    for (const call of dossier.submission.documentedCalls)
+      console.log(`SDK reference only: ${call.signature}. ${call.lane} Missing: ${call.missingInputs.join("; ")}`);
     console.log(
       `Settlement source: ${dossier.evidence.settlement.source}\nMeasured: ${dossier.evidence.settlement.measuredAt}\nUse --json for the complete evidence bundle.`,
     );
@@ -98,7 +100,7 @@ async function main(args: string[]): Promise<void> {
   }
   for (const row of rows.slice(0, limit)) {
     console.log(
-      `\n${row.settlement.channelId}\n  ${row.window.status} | estimated expiry ${row.window.estimatedExpiry ?? "unknown"} | remaining ${row.window.remainingMs === null ? "unknown" : `${Math.floor(row.window.remainingMs / 1000)} s`}\n  review ${row.priority.score}/100 | field coverage ${row.priority.confidence.availableSignals}/${row.priority.confidence.totalSignals} | paid ${formatFlop(row.settlement.minerPaid)} FLOP\n  observed ${row.measuredAt} from ${row.source}`,
+      `\n${row.settlement.channelId}\n  ${row.window.status} | estimated expiry ${row.window.estimatedExpiry ?? "not established"} | remaining ${row.window.remainingMs === null ? "not established" : `${Math.floor(row.window.remainingMs / 1000)} s`}\n  ${row.window.reason}\n  review ${row.priority.score}/100 | field coverage ${row.priority.confidence.availableSignals}/${row.priority.confidence.totalSignals} | paid ${formatFlop(row.settlement.minerPaid)} FLOP\n  observed ${row.measuredAt} from ${row.source}`,
     );
   }
 }

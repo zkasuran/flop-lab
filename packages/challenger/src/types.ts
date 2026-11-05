@@ -28,7 +28,7 @@ export interface Tape {
 }
 
 export interface WindowEstimate {
-  status: "estimated-open" | "estimated-expired" | "unknown";
+  status: "estimated-open" | "estimated-expired" | "unknown" | "no-standard-window";
   estimatedExpiry: string | null;
   remainingMs: number | null;
   reason: string;
@@ -82,7 +82,12 @@ export interface Dossier {
   priority: Priority;
   bond: { documentedFlop: "100"; source: string; runtimeVerified: false; warning: string };
   eligibility: string;
-  submission: { available: false; extrinsic: null; missing: string[] };
+  submission: {
+    available: false;
+    extrinsic: null;
+    documentedCalls: { signature: string; lane: string; source: string; missingInputs: string[] }[];
+    missing: string[];
+  };
   checks: Check[];
   evidence: {
     settlement: Observation<Record<string, unknown>>;

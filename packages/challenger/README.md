@@ -1,6 +1,6 @@
 # FLOP challenger
 
-Read the settlement tape. Estimate which sessions approach the draft challenge window. Rank settlements worth a human look and collect a dry-run dossier.
+Read the settlement tape. Distinguish cooperative payouts from force-settlement window candidates. Rank settlements worth a human look and collect a dry-run dossier.
 
 No dispute is submitted. No wallet or API key is needed.
 
@@ -46,13 +46,17 @@ if (first) {
 
 ## Window assumptions
 
-Estimated expiry is `settledAt + 7 * 24 * 60 * 60 * 1000` milliseconds. Remaining time is clamped at zero. A future settlement timestamp produces an unknown window. At the exact estimated expiry the window is estimated-expired.
+The [published SDK 0.4.0 chain wrapper](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/chain.d.ts) documents cooperative `settle` as immediate payout with no standard dispute window. `forceSettle` emits `SettlementPosted` with `challengeEnd`. `finalize` pays after that window closes. The broader challenge-design page describes other audit lanes but does not establish their availability for a tape row.
 
-The [challenge design](https://docs.flop.network/docs/verification-stack), read on 2026-11-05, says approximately seven days. It calls the design draft and the duration under review. The start event and live runtime constant are not established by that text. The capacity-bond revocation window is a different parameter and is not used here.
+Cooperative `computeChannel.Settled` rows therefore show `no-standard-window` with no invented expiry. Non-cooperative final payouts show `unknown` because the posting time is missing. A final payout does not start a new window.
+
+Only an explicit non-cooperative `computeChannel.SettlementPosted` row gets a draft estimate: its timestamp plus `7 * 24 * 60 * 60 * 1000` milliseconds. Remaining time is clamped at zero. A future timestamp produces an unknown window. At the exact estimated expiry the window is estimated-expired. No such posting row appears in the recorded tape. Boundary tests use an explicitly labelled synthetic posting event.
+
+The [challenge design](https://docs.flop.network/docs/verification-stack), read on 2026-11-05, says approximately seven days. It calls the design draft and the duration under review. The live runtime constant and `challengeEnd` are not verified here. The capacity-bond revocation window is a different parameter and is not used here.
 
 Block cadence is the timestamp difference between two indexed blocks divided by their height difference. It is reported separately. It does not determine expiry. The indexer supplies observations, not an independently verified finality proof.
 
-Default ordering: estimated-open by time left, then unknown, then estimated-expired. Review score breaks ties. `--sort priority` instead sorts the full tape by review score, including expired estimates. Each row retains its window label.
+Default ordering: estimated-open by time left, then unknown, then estimated-expired, then no-standard-window. Review score breaks ties. `--sort priority` instead sorts the full tape by review score. Each row retains its window label.
 
 ## Review formula
 
@@ -75,11 +79,13 @@ Confidence is the count of available signals out of the defined signals plus tap
 
 Dossiers include the raw settlement row, selected channel and trust-root response with source URLs and capture times. Checks cover exact escrow conservation and agreement between the channel and tape. Data mismatch is a review finding, not proof of fraud.
 
-DA retrieval, prefill reproduction, TOPLOC comparison, signed-turn evidence, finality and caller eligibility remain explicitly unverifiable. The documented discretionary bond is 100 FLOP and can be forfeited if frivolous. Its live value is not verified. The extrinsic is null because the inspected references do not specify a complete dispute call and canonical evidence format. See [FEASIBILITY.md](./FEASIBILITY.md).
+The SDK defines DA transcript encoding, TOPLOC checker interfaces, bisection helpers and `DisputeEvidence`. The selected public channel does not supply the required per-turn inputs. DA retrieval, prefill reproduction, TOPLOC comparison, signed-turn evidence, finality and caller eligibility remain explicitly unverifiable.
+
+Dossiers name the documented validator-quorum call `computeChannel.reportToplocMismatch(channelId, miner, attestations)` as a reference. No attestation bundle is available and no call is constructed. The discretionary `open_dispute` signature is not exposed by the inspected chain wrapper. Its documented 100 FLOP bond is a separate lane and can be forfeited if frivolous. Its live value is not verified. The executable extrinsic remains null. See [FEASIBILITY.md](./FEASIBILITY.md).
 
 ## Data, cost and tests
 
-Raw SSE fixtures are in `fixtures/`. The tools response uses lossless base64 transport encoding to retain its original punctuation without changing bytes. `manifest.json` records the exact requests and UTC capture times from 2026-11-05T09:00:00.819Z through 09:00:03.613Z. The recorded tape has 336 rows across four pages. The two recorded blocks span 100 intervals and 102000 milliseconds, giving 1020 milliseconds per interval. These are indexer observations at capture time.
+Raw SSE fixtures are in `fixtures/`. The tools response uses lossless base64 transport encoding to retain its original punctuation without changing bytes. `manifest.json` records the exact requests and UTC capture times from 2026-11-05T09:00:00.819Z through 09:00:03.613Z. The recorded tape has 336 rows across four pages. All are cooperative payouts. None establishes a standard dispute window. The two recorded blocks span 100 intervals and 102000 milliseconds, giving 1020 milliseconds per interval. These are indexer observations at capture time. `fixtures/sdk/` preserves the inspected SDK declarations and chain implementation with hashes and retrieval times.
 
 Collection defaults to at most 1000 rows in pages of at most 100. It then requests stats and two block samples. A complete four-page replay uses seven shared-client requests. A dossier adds two. Live retries increase HTTP attempts. The shared client spaces calls by 250 milliseconds and backs off on 429 or 5xx. The default watcher allows one retry. Failure stops collection rather than starting another loop.
 

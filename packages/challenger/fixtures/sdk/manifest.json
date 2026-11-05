@@ -1,0 +1,51 @@
+[
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/chain.d.ts",
+    "file": "chain.d.ts.base64",
+    "measuredAt": "2026-11-05T09:45:56.804Z",
+    "sha256": "de11e75a96bcf42d76c65f20b1ac174a1d39915171b9624f7912b9f15fdd216e",
+    "encoding": "base64"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/chain.js",
+    "file": "chain.js.base64",
+    "measuredAt": "2026-11-05T09:45:57.865Z",
+    "sha256": "8afd179967f61804df1bfbd10214d3b126f507b70b33de6e2a10373083a7d58b",
+    "encoding": "base64"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/dispute.d.ts",
+    "file": "dispute.d.ts.base64",
+    "measuredAt": "2026-11-05T09:45:58.146Z",
+    "sha256": "452789917380c283a5cc5e34b3ded17f6020c815e04646183c5921f1298434bc",
+    "encoding": "base64"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/protocol.d.ts",
+    "file": "protocol.d.ts.base64",
+    "measuredAt": "2026-11-05T09:45:58.443Z",
+    "sha256": "a760a5cae89aa902b4f0f11537e7bd0f914bae4563dd601e5b59ab0fd9ec86ea",
+    "encoding": "base64"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/da.d.ts",
+    "file": "da.d.ts.base64",
+    "measuredAt": "2026-11-05T09:45:58.723Z",
+    "sha256": "d7a014dd421858b6326881bd431561382f4225413ffac796171b99589d6ce225",
+    "encoding": "base64"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/toploc-checker.d.ts",
+    "file": "toploc-checker.d.ts.base64",
+    "measuredAt": "2026-11-05T09:45:59.006Z",
+    "sha256": "ca4b5d454e71ce2039308742da4b820349075e49eca88591b96572da9b760434",
+    "encoding": "base64"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/toploc-evidence.d.ts",
+    "file": "toploc-evidence.d.ts.base64",
+    "measuredAt": "2026-11-05T09:45:59.323Z",
+    "sha256": "94efd329362acac93beaf103248b7ab2dd92a1145bb16de8ce0772cb65c9396d",
+    "encoding": "base64"
+  }
+]

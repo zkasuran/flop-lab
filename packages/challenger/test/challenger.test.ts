@@ -71,6 +71,7 @@ describe("recorded reality", () => {
       "2026-11-05T09:00:01.058Z",
     );
     expect(tape.measuredAt).toBe("2026-11-05T09:00:03.613Z");
+    expect(report.rows.every((r) => r.window.status === "no-standard-window")).toBe(true);
     expect(report.rows.every((r) => r.priority.score >= 0 && r.priority.score <= 100)).toBe(true);
   });
 
@@ -79,6 +80,9 @@ describe("recorded reality", () => {
     const dossier = await draftDossier(analyze(tape, now), original.channelId, client);
     expect(dossier.mode).toBe("DRY RUN ONLY");
     expect(dossier.submission).toMatchObject({ available: false, extrinsic: null });
+    expect(dossier.submission.documentedCalls[0]?.signature).toBe(
+      "computeChannel.reportToplocMismatch(channelId, miner, attestations)",
+    );
     expect(dossier.checks.find((c) => c.name === "Escrow conservation")?.status).toBe("pass");
     expect(dossier.checks.find((c) => c.name === "Channel and tape agreement")?.status).toBe("pass");
     expect(dossier.checks.find((c) => c.name === "Finality")?.status).toBe("unverifiable");
@@ -91,7 +95,11 @@ describe("recorded reality", () => {
 
 describe("window arithmetic", () => {
   it("expires exactly at the estimated boundary", () => {
-    const s = row({ settledAt: now - WINDOW_MS });
+    const s = row({
+      settledAt: now - WINDOW_MS,
+      cooperative: false,
+      settlementEvent: "computeChannel.SettlementPosted",
+    });
     expect(estimateWindow(s, now - 1)).toMatchObject({ status: "estimated-open", remainingMs: 1 });
     expect(estimateWindow(s, now)).toMatchObject({ status: "estimated-expired", remainingMs: 0 });
     expect(estimateWindow(s, now + 1).remainingMs).toBe(0);
@@ -109,14 +117,42 @@ describe("window arithmetic", () => {
   it("sorts open rows by urgency before unknown and expired rows", () => {
     const report = analyze(
       cohort([
-        row({ channelId: "later", settledAt: now - 1 }),
-        row({ channelId: "expired", settledAt: now - WINDOW_MS }),
+        row({
+          channelId: "later",
+          settledAt: now - 1,
+          cooperative: false,
+          settlementEvent: "computeChannel.SettlementPosted",
+        }),
+        row({
+          channelId: "expired",
+          settledAt: now - WINDOW_MS,
+          cooperative: false,
+          settlementEvent: "computeChannel.SettlementPosted",
+        }),
         row({ channelId: "unknown", settledAt: now + 1 }),
-        row({ channelId: "first", settledAt: now - WINDOW_MS + 1 }),
+        row({
+          channelId: "first",
+          settledAt: now - WINDOW_MS + 1,
+          cooperative: false,
+          settlementEvent: "computeChannel.SettlementPosted",
+        }),
       ]),
       now,
     );
     expect(report.rows.map((r) => r.settlement.channelId)).toEqual(["first", "later", "unknown", "expired"]);
+  });
+
+  it("does not start a dispute window at a cooperative or finalized payout", () => {
+    expect(estimateWindow(original, now)).toMatchObject({
+      status: "no-standard-window",
+      estimatedExpiry: null,
+      remainingMs: null,
+    });
+    expect(estimateWindow(row({ cooperative: false }), now)).toMatchObject({
+      status: "unknown",
+      estimatedExpiry: null,
+      remainingMs: null,
+    });
   });
 });
 

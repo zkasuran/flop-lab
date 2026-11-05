@@ -4,10 +4,12 @@ import type { Priority, Signal, Tape, WatchReport, WindowEstimate } from "./type
 import { decimal, timestamp } from "./validation";
 
 export const CHALLENGE_DOC = "https://docs.flop.network/docs/verification-stack";
+export const SDK_CHAIN_SOURCE = "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/chain.d.ts";
 export const WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 export const ASSUMPTIONS = [
-  `Estimated window: seven wall-clock days from settledAt. Source: ${CHALLENGE_DOC}, read 2026-11-05. The docs say approximately seven days and draft design.`,
-  "Neither the exact runtime duration nor the start event is verified. Estimated expiry is not a filing deadline or a claim of eligibility.",
+  `Estimated window: seven wall-clock days only for an explicit SettlementPosted observation. Source: ${CHALLENGE_DOC}, read 2026-11-05. The docs say approximately seven days and draft design.`,
+  `SDK 0.4.0 says cooperative settle has no standard dispute window. forceSettle opens a window and finalize pays after it closes. Source: ${SDK_CHAIN_SOURCE}. Other audit lanes are not established here.`,
+  "The exact runtime duration and challengeEnd are not verified. A final payout timestamp is not a challenge start. Estimated expiry is not a filing deadline or a claim of eligibility.",
   "The capacity-bond revocation constant is not used as a challenge deadline. Block cadence is measured separately and does not set the window.",
   "Settlement timestamps and hashes come from the hosted indexer. Finality is not independently verified. Pages are not an atomic snapshot.",
   "Review priority is a policy over observed tape fields, not a fraud probability. Miner stake and slashing history are not observed.",
@@ -23,6 +25,22 @@ export function estimateWindow(row: Settlement, now: number): WindowEstimate {
       estimatedExpiry: null,
       remainingMs: null,
       reason: "Settlement timestamp is in the future relative to evaluation time.",
+    };
+  if (row.cooperative && row.settlementEvent === "computeChannel.Settled")
+    return {
+      status: "no-standard-window",
+      estimatedExpiry: null,
+      remainingMs: null,
+      reason:
+        "SDK 0.4.0 documents cooperative settle as immediate payout without the standard dispute window. Other audit lanes are not established by this tape.",
+    };
+  if (row.cooperative || row.settlementEvent !== "computeChannel.SettlementPosted")
+    return {
+      status: "unknown",
+      estimatedExpiry: null,
+      remainingMs: null,
+      reason:
+        "No unambiguous force-settlement posting timestamp or challengeEnd is present. Final payout must not start a new estimated window.",
     };
   const expiry = row.settledAt + WINDOW_MS;
   return {
@@ -134,7 +152,7 @@ export function analyze(tape: Tape, now: number): WatchReport {
   const intervals = first && last ? last.value.number - first.value.number : 0;
   const delta = first && last ? last.value.timestamp - first.value.timestamp : 0;
   const blockCadence = intervals > 0 && delta > 0 ? { milliseconds: delta / intervals, intervals, samples } : null;
-  const order = { "estimated-open": 0, unknown: 1, "estimated-expired": 2 };
+  const order = { "estimated-open": 0, unknown: 1, "estimated-expired": 2, "no-standard-window": 3 };
   const rows = tape.settlements.map((settlement) => ({
     settlement,
     window: estimateWindow(settlement, now),
