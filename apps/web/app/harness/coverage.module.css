@@ -182,6 +182,9 @@
   padding: var(--space-6);
   margin-top: var(--space-8);
 }
+.more {
+  margin-top: var(--space-4);
+}
 .history h3 {
   margin-top: 0;
 }

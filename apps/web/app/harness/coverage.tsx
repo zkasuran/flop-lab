@@ -104,14 +104,17 @@ export function SourceCoverage({
   const [kind, setKind] = useState("html");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(12);
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 35%"] });
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const total = coverageTotals(pages, results);
-  const filtered = pages.filter(
-    (page) => page.format === kind && `${page.title} ${page.id}`.toLowerCase().includes(query.trim().toLowerCase()),
-  );
+  const filtered = pages
+    .filter(
+      (page) => page.format === kind && `${page.title} ${page.id}`.toLowerCase().includes(query.trim().toLowerCase()),
+    )
+    .sort((left, right) => right.mapped - left.mapped);
   return (
     <section ref={ref} id="source-coverage" className={styles.coverage} aria-labelledby="coverage-title">
       <motion.div
@@ -165,6 +168,7 @@ export function SourceCoverage({
               onClick={() => {
                 setKind(value!);
                 setSelected(null);
+                setVisibleCount(12);
               }}
               whileHover={{ borderColor: "var(--accent)" }}
               whileTap={reduced ? {} : { scale: 0.98 }}
@@ -181,6 +185,7 @@ export function SourceCoverage({
             onChange={(event) => {
               setQuery(event.target.value);
               setSelected(null);
+              setVisibleCount(12);
             }}
             whileFocus={{ borderColor: "var(--accent)" }}
             placeholder="Page title or slug"
@@ -188,11 +193,11 @@ export function SourceCoverage({
         </label>
       </div>
       <p role="status" className={styles.note}>
-        {filtered.length} source documents shown
+        Showing {Math.min(visibleCount, filtered.length)} of {filtered.length} source documents. Mapped pages first.
       </p>
       <motion.ul className={styles.pages} layout={reduced ? false : "position"}>
         <AnimatePresence initial={false} mode="popLayout">
-          {filtered.map((page) => (
+          {filtered.slice(0, visibleCount).map((page) => (
             <motion.li
               key={page.id}
               layout={reduced ? false : "position"}
@@ -243,6 +248,16 @@ export function SourceCoverage({
           ))}
         </AnimatePresence>
       </motion.ul>
+      {filtered.length > visibleCount && (
+        <motion.button
+          className={styles.more}
+          onClick={() => setVisibleCount((value) => value + 12)}
+          whileHover={{ borderColor: "var(--accent)" }}
+          whileTap={reduced ? {} : { scale: 0.98 }}
+        >
+          Show more source pages ↓
+        </motion.button>
+      )}
       {!filtered.length && <p>No source pages match. Clear the search to see the inventory.</p>}
       <aside className={styles.history} aria-label="Recorder history availability">
         <h3>Claim history</h3>

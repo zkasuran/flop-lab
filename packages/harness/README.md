@@ -205,7 +205,8 @@ hashes and spec versions stay unavailable.
 Source coverage groups the inventory by docs page or paper section. Counts mean
 blocks with a named predicate divided by retained blocks. They are separate from
 PASS counts. Expand a page to read its quoted source lines, evidence gaps and
-linked results. Details load from same-origin static JSON when requested.
+linked results. Mapped pages appear first. The list shows a bounded page of rows;
+search covers the whole inventory. Details load from same-origin static JSON when requested.
 The server checks the recorder index with a five-minute cache. A claim drawer
 shows every available recorder run, including explicit gaps for missing claims.
 
