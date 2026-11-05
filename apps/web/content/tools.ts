@@ -136,7 +136,7 @@ export const tools: readonly Tool[] = [
     section: "build",
     name: "SDK conformance",
     tagline: "Do the FLOP SDKs behave as documented?",
-    status: "planned",
+    status: "alpha",
     href: "/sdk",
     repoPath: "packages/sdkconf",
   },

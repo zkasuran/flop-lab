@@ -1,0 +1,20 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "measuredAt": "2026-11-05T20:48:48.458Z",
+  "status": 200,
+  "headers": {
+    "cache-control": "no-cache, no-transform",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "a55eb8af4d88c784-MAA",
+    "connection": "keep-alive",
+    "content-type": "text/event-stream",
+    "date": "Thu, 05 Nov 2026 20:48:48 GMT",
+    "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+    "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=zp4C6AjCxLePAL1fcOPi%2B4FpQFXh%2B8UuZWP5ZjMAdE8DVUOqTETG0ZiDeEU7HDI5ZnHq%2Bx%2Fv6SfI6h6HfVO6quzUnfVQOzsW8TGcEv5OQexSK%2BTeQ0u%2BVYfa5avkbhwIc6yngLntrNdaqguf74I%3D\"}]}",
+    "server": "cloudflare",
+    "transfer-encoding": "chunked",
+    "via": "1.1 Caddy",
+    "x-powered-by": "Express"
+  },
+  "raw": "event: message\ndata: {\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\n  \\\"stats\\\": {\\n    \\\"latestBlockNumber\\\": 2988625,\\n    \\\"totalBlocks\\\": 2988625,\\n    \\\"tps\\\": 1.9,\\n    \\\"activeHTLCs\\\": 17,\\n    \\\"totalHTLCs\\\": 17,\\n    \\\"proofs24h\\\": 0,\\n    \\\"activeOperators\\\": 0,\\n    \\\"avgBlockTime\\\": 1000,\\n    \\\"totalTransactions\\\": 5487336,\\n    \\\"txVolume24h\\\": 174279,\\n    \\\"totalAccounts\\\": 11551,\\n    \\\"flopLocked\\\": \\\"36000000000000000000\\\"\\n  }\\n}\"}]},\"jsonrpc\":\"2.0\",\"id\":1}\n\n"
+}

@@ -73,6 +73,13 @@ export const commands: readonly Command[] = [
     section: "build",
     summary: "Diagnose pay-per-call payment headers",
   },
+  {
+    name: "sdk",
+    pkg: "@flop-lab/sdkconf",
+    bin: "flop-sdkconf",
+    section: "build",
+    summary: "Check published SDK behaviour with offline request traces",
+  },
 ];
 
 /** Find a command by name. Example: findCommand(commands, "verify")?.bin === "flop-verify". */
