@@ -103,14 +103,27 @@ export async function main(argv: string[]): Promise<number> {
     const result = report.results.find((result) => result.claim.id === id);
     if (!result || result.status !== "FAIL" || result.flaky)
       throw new Error("Only a confirmed FAIL can become a draft");
-    const { stdout } = await promisify(execFile)(
-      "gh",
-      ["api", "repos/flop-labs/flop-core/commits/HEAD", "--jq", ".sha"],
-      { timeout: 20_000 },
-    );
+    let sha: string | null = null;
+    let unavailableReason: string | undefined;
+    try {
+      const { stdout } = await promisify(execFile)(
+        "gh",
+        ["api", "repos/flop-labs/flop-core/commits/HEAD", "--jq", ".sha"],
+        { timeout: 20_000 },
+      );
+      sha = stdout.trim();
+    } catch {
+      unavailableReason =
+        "The flop-core source revision could not be retrieved. Its repository is private; no source or deployment commit is inferred from this live observation.";
+    }
+    const tracker = await promisify(execFile)("gh", ["api", "repos/flop-labs/network/commits/HEAD", "--jq", ".sha"], {
+      timeout: 20_000,
+    });
     console.log(
       renderBugDraft(report, id, {
-        sha: stdout.trim(),
+        sha,
+        unavailableReason,
+        tracker: { sha: tracker.stdout.trim(), measuredAt: new Date().toISOString() },
         measuredAt: new Date().toISOString(),
         source: "https://api.github.com/repos/flop-labs/flop-core/commits/HEAD",
       }),

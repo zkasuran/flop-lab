@@ -21,8 +21,8 @@ export const tools: readonly Tool[] = [
   {
     slug: "harness",
     name: "Conformance harness",
-    tagline: "Run repeatable checks against devnet protocol claims.",
-    status: "planned",
+    tagline: "Trace recorded protocol checks from claims to request evidence.",
+    status: "alpha",
     href: "/harness",
     repoPath: "packages/harness",
   },
