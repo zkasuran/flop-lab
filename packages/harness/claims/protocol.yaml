@@ -1,6 +1,7 @@
 [
   {
     "id": "block-time",
+    "evidenceNeeded": "Finalized block timestamps over a declared interval, plus runtime timing configuration and spec version. Separate the observed mean from the configured target.",
     "title": "Block time",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -16,6 +17,7 @@
   },
   {
     "id": "block-size",
+    "evidenceNeeded": "Versioned runtime metadata exposing the maximum block length at a finalized hash. Observed small blocks cannot prove the limit.",
     "title": "Block size limit",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -31,6 +33,7 @@
   },
   {
     "id": "block-reward",
+    "evidenceNeeded": "Era identifier, reward schedule and issuance events at the same finalized block, expressed in raw token units.",
     "title": "Block reward",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -46,6 +49,7 @@
   },
   {
     "id": "halving",
+    "evidenceNeeded": "Versioned halving schedule and activation block. Converting block intervals to days also needs observed block timestamps.",
     "title": "Halving period",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -61,6 +65,7 @@
   },
   {
     "id": "halving-count",
+    "evidenceNeeded": "Runtime emission schedule with every halving step and the terminal reward rule, bound to a finalized hash and spec version.",
     "title": "Number of halvings",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -76,6 +81,7 @@
   },
   {
     "id": "miner-share",
+    "evidenceNeeded": "Era issuance and miner reward events with verified contribution totals at a finalized hash. Session settlement payouts do not measure block reward shares.",
     "title": "Miner share",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -91,6 +97,7 @@
   },
   {
     "id": "validator-share",
+    "evidenceNeeded": "Era issuance, active validator set and validator reward events in raw units at a finalized hash.",
     "title": "Validator share",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -106,6 +113,7 @@
   },
   {
     "id": "agent-share",
+    "evidenceNeeded": "Era issuance and agent or broker protocol-account mint events, with the account mapping and runtime split. Minting and onward distribution are separate checks.",
     "title": "Agent/broker share",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -121,6 +129,7 @@
   },
   {
     "id": "staker-share",
+    "evidenceNeeded": "Era issuance and community-staker protocol-account mint events, with the account mapping and runtime split. Minting alone does not prove distribution.",
     "title": "Community-staker share",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -136,6 +145,7 @@
   },
   {
     "id": "validator-cap",
+    "evidenceNeeded": "Versioned runtime validator-set capacity at a finalized hash. A set below the design cap cannot establish its enforced maximum.",
     "title": "Set size",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -151,6 +161,7 @@
   },
   {
     "id": "miner-stake",
+    "evidenceNeeded": "Finalized miner admission parameters separating base self-stake from capacity bond, plus the active runtime version.",
     "title": "Base self-stake",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -166,6 +177,7 @@
   },
   {
     "id": "challenge-window",
+    "evidenceNeeded": "Runtime dispute-window value and time unit at a finalized hash, including governance activation history and applicable DA retention.",
     "title": "Challenge window",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -181,6 +193,7 @@
   },
   {
     "id": "response-deadline",
+    "evidenceNeeded": "Runtime response deadline and time unit at a finalized hash, plus a public dispute lifecycle showing how expiry is enforced.",
     "title": "Response deadline",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -196,6 +209,7 @@
   },
   {
     "id": "dispute-bond",
+    "evidenceNeeded": "Finalized dispute-bond parameter in raw units, its runtime version and reserve or release events for a public dispute.",
     "title": "Dispute bond",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
@@ -211,6 +225,7 @@
   },
   {
     "id": "fraud-slash",
+    "evidenceNeeded": "Finalized fraud verdict and slash events linked to the miner's stake immediately before the verdict, plus the active slash policy.",
     "title": "Fraud slash",
     "source": {
       "url": "https://docs.flop.network/docs/protocol-parameters",
