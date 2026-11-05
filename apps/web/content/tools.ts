@@ -163,7 +163,7 @@ export const tools: readonly Tool[] = [
     section: "operate",
     name: "Operator doctor",
     tagline: "Is this machine ready to mine or validate?",
-    status: "planned",
+    status: "alpha",
     href: "/doctor",
     repoPath: "packages/doctor",
   },

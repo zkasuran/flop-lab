@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "doctor",
+    pkg: "@flop-lab/doctor",
+    bin: "flop-doctor",
+    section: "operate",
+    summary: "Check local operator readiness against sourced requirements",
+  },
+  {
     name: "spec",
     pkg: "@flop-lab/spec",
     bin: "flop-spec",
