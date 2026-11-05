@@ -2,7 +2,7 @@
 
 Inspected on 2026-11-05. Package: `@flop-labs/sdk@0.4.0`.
 
-This note records the SDK findings and integration design. This milestone ships the policy engine, ledger and trusted-callback guard. SDK-specific estimation and finality adapters are not exported by this milestone.
+This note records the SDK findings and integration design. The package exports policy, ledger and SDK adapters. The application injects its installed SDK functions. Generic ports preserve their concrete types without a package runtime dependency. Compatibility was checked against the shipped SDK declarations.
 
 Registry tarball: <https://registry.npmjs.org/@flop-labs/sdk/-/sdk-0.4.0.tgz>.
 SHA256: `bfccb19b27899ec1c76ccb32c2a2c62af3763e09b6e597f8a36aad25705b9b0f`.
@@ -40,7 +40,7 @@ The direct-session runtime creates `FlopChainSubmitter(api, signer, true)`. It d
 
 The estimator calculates `G_n` from the supplied architecture and token profile. It raises per-channel escrow to the largest of catalog cost, standing-offer minimum, the base-turn tariff plus work and a nonzero floor. Cooperative spot settlement pays the reserved escrow. Transaction fees are additional.
 
-Spendguard requires one estimated channel and one turn. Generated tokens must cover `maxTokens`. It admits the exact estimated escrow against every policy cap and passes that amount as `maxFlop`. It never offers the whole remaining budget to the SDK. Architecture, context-token counts, price, calibration and their provenance remain trusted application inputs. A low estimate can cause failure. It cannot raise the guarded escrow cap.
+Spendguard requires one estimated channel and one turn. Generated tokens must cover `maxTokens`. It admits the exact estimated escrow against every policy cap, the requested amount and the permit's hard ceiling. It passes that amount as `maxFlop`. It never offers the whole remaining budget to the SDK. Architecture, context-token counts, price, calibration and their provenance remain trusted application inputs. A low estimate can cause failure. It cannot raise the guarded escrow cap.
 
 ## Finality and refunds
 
