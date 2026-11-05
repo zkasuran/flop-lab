@@ -1,0 +1,17 @@
+{
+  "name": "@flop-lab/x402kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Fail-closed FLOP payment reference and SDK header diagnostics",
+  "exports": { ".": "./src/index.ts" },
+  "bin": { "flop-x402": "./dist/cli.js" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "dev": "tsx src/cli.ts serve",
+    "record": "tsx test/record.ts"
+  },
+  "dependencies": { "@flop-lab/mcp": "workspace:*", "hono": "^4.10.6", "@hono/node-server": "^1.19.6" }
+}

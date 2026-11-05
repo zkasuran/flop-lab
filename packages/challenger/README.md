@@ -90,6 +90,8 @@ Dossiers name the documented validator-quorum call `computeChannel.reportToplocM
 
 ## Data, cost and tests
 
+The web workbench is at `/challenger`. It shows a dated tape, lane filters, a payout timeline, dry-run dossiers and the outside-audit report. See [the page README](../../apps/web/app/challenger/README.md) for its cache, fallback and request limits.
+
 Raw SSE fixtures are in `fixtures/`. The tools response uses lossless base64 transport encoding to retain its original punctuation without changing bytes. `manifest.json` records the exact requests and UTC capture times from 2026-11-05T09:00:00.819Z through 09:00:03.613Z. The recorded tape has 336 rows across four pages. All are cooperative payouts. None establishes a standard dispute window. The two recorded blocks span 100 intervals and 102000 milliseconds, giving 1020 milliseconds per interval. These are indexer observations at capture time. `fixtures/sdk/` preserves the inspected SDK declarations and chain implementation with hashes and retrieval times.
 
 Collection defaults to at most 1000 rows in pages of at most 100. It then requests stats and two block samples. A complete four-page replay uses seven shared-client requests. A dossier adds two. Live retries increase HTTP attempts. The shared client spaces calls by 250 milliseconds and backs off on 429 or 5xx. The default watcher allows one retry. Failure stops collection rather than starting another loop.

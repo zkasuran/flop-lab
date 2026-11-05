@@ -20,6 +20,7 @@ export function Footer() {
         <MotionLink href="/provenance">Verify contribution proofs ↗</MotionLink>
       </div>
       <div className="footer-links">
+        <MotionLink href="/about">How this was made</MotionLink>
         <MotionLink href={repository}>Repository ↗</MotionLink>
         <MotionLink href={`${repository}/blob/main/LICENSE`}>Apache-2.0</MotionLink>
         <span className="muted">

@@ -1,0 +1,139 @@
+{
+  "execution": {
+    "id": "3F4DXszdAcK2iyIVBRarwv",
+    "flowId": "flop_observe",
+    "state": "SUCCESS",
+    "kestraVersion": "2.0.6",
+    "completedAt": "2026-11-05T09:44:11.551275Z",
+    "source": "http://127.0.0.1:28100",
+    "capture": "Kestra execution API on a local H2 instance with the built plugin"
+  },
+  "stats": {
+    "blockHeight": 2950311,
+    "accounts": 6375,
+    "operators": 0,
+    "proofs": 0,
+    "measuredAt": "2026-11-05T09:44:02.074531Z",
+    "source": "https://mcp.flop.network/mcp#flop_get_stats",
+    "requestCount": 1
+  },
+  "tape": {
+    "rows": [
+      {
+        "channelId": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec",
+        "settledBlock": 2945246,
+        "settledAt": 1793866215001,
+        "agent": "5CkdQjY666dWJ2TJDCmqnMETi7x2Vbq4QY53WzpJHDbYZVPh",
+        "miner": "5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1",
+        "escrow": "522000000000000021",
+        "minerPaid": "516780000000000021",
+        "burned": "0",
+        "aggregateGn": "54",
+        "unusedEscrow": "5220000000000000",
+        "pricePerGflop": "9570000000000000.388888888888888888",
+        "cooperative": true,
+        "settlementKind": "settled",
+        "settlementEvent": "computeChannel.Settled",
+        "marketKind": "spot",
+        "modelHash": "0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306",
+        "assuranceTier": "Soft",
+        "calibrationVersion": 3,
+        "utilizationPpm": 82949,
+        "settledBlockHash": "0x0c173cb93aa92e059bd64d966b36477ec585143a1460b541968b8d39b3e4a272",
+        "extrinsicHash": "0x469ed46a6b74f15651a8e9a6edca460981d5db0bd73d5fff3595a866aea6217e",
+        "extrinsicIndex": 3,
+        "eventIndex": 3,
+        "callSection": "computeChannel",
+        "callMethod": "settle",
+        "selfTrade": false,
+        "measuredAt": "2026-11-05T09:44:02.512274251Z",
+        "source": "https://mcp.flop.network/mcp#flop_list_settlements"
+      }
+    ],
+    "count": 100,
+    "total": 336,
+    "truncated": true,
+    "nextOffset": 100,
+    "uri": "kestra:///company/flop/flop-observe/executions/3F4DXszdAcK2iyIVBRarwv/tasks/tape/10mP3vP1iIZx9NEi7gTtpI/14631336528318818018.ion",
+    "measuredAt": "2026-11-05T09:44:02.512274Z",
+    "source": "https://mcp.flop.network/mcp#flop_list_settlements",
+    "requestCount": 1
+  },
+  "verify": {
+    "status": "PASS",
+    "results": [
+      {
+        "channelId": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec",
+        "status": "PASS",
+        "reasons": [],
+        "measuredAt": "2026-11-05T09:44:02.512274251Z",
+        "source": "https://mcp.flop.network/mcp#flop_list_settlements"
+      }
+    ],
+    "checkedAt": "2026-11-05T09:44:02.812533Z",
+    "count": 100
+  },
+  "models": {
+    "models": [
+      {
+        "id": "qwen/qwen2.5-0.5b-instruct",
+        "priceSources": [
+          {
+            "miner_address": "5CJdDCTKFmpF7HLfmBJQdsZwMgeBzQAX6jTTQa5PtUgviHQW",
+            "version": "chain:2950313",
+            "source": "devnet-nominal",
+            "effective_at": "2026-11-05T09:43:58.001Z",
+            "expires_at": "2026-11-05T09:45:58.001Z",
+            "expired": false,
+            "fresh": true,
+            "measuredAt": "2026-11-05T09:44:11.454411187Z",
+            "endpoint": "https://api.flop.network/v1/models"
+          }
+        ],
+        "measuredAt": "2026-11-05T09:44:11.454411187Z",
+        "source": "https://api.flop.network/v1/models"
+      }
+    ],
+    "count": 1,
+    "total": 1,
+    "truncated": false,
+    "measuredAt": "2026-11-05T09:44:11.454411Z",
+    "source": "https://api.flop.network/v1/models",
+    "requestCount": 1
+  },
+  "watch": {
+    "count": 1,
+    "measuredAt": "2026-11-05T09:49:23.081849Z",
+    "source": "https://mcp.flop.network/mcp#flop_list_settlements",
+    "requestCount": 4
+  },
+  "chat": {
+    "completion": {
+      "id": "mock-e2e-only",
+      "object": "chat.completion",
+      "created": 1793871852,
+      "model": "qwen/qwen2.5-0.5b-instruct",
+      "choices": [
+        {
+          "index": 0,
+          "message": { "role": "assistant", "content": "Mock response. No live inference." },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": { "prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2 }
+    },
+    "usage": { "prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2 },
+    "observedPricePerGflop": "0.01",
+    "priceMeasuredAt": "2026-11-05T09:44:12.418186Z",
+    "measuredAt": "2026-11-05T09:44:12.674002Z",
+    "source": "http://127.0.0.1:3370/v1/chat/completions",
+    "requestCount": 2
+  },
+  "excerpts": {
+    "tape": "First row only. The count and pagination fields describe the original task output. The ION URI belongs to the removed local instance.",
+    "verify": "First result only. The status and count describe the original task output.",
+    "models": "Model id, first price source and provenance only. The original model has nine price sources. Other model metadata is omitted. Fresh and expired describe the worker clock at capture, not the current time.",
+    "watch": "Rows omitted. Execution 4zj34yO7Pkz0q4Vk9BkTxQ followed a controlled local cursor replay against the live tape. No new settlement arrival was observed.",
+    "chat": "Full output from local mock execution 40uGBC9bgPJodB61PVCikZ. Not run against the live gateway."
+  }
+}

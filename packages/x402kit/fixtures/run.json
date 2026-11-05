@@ -1,0 +1,86 @@
+{
+  "measuredAt": "2026-11-05T16:24:25.689Z",
+  "mode": "local-http-reference",
+  "paymentExecution": "UNVERIFIED",
+  "request": {
+    "url": "http://127.0.0.1:3350/settlements",
+    "method": "GET",
+    "headers": {
+      "x-flop-request-id": "recorded-request-0001"
+    }
+  },
+  "response": {
+    "status": 402,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "x-flop-executable": "false",
+      "x-flop-expires-at": "1793895925525",
+      "x-flop-request-hash": "ddc86c11229e0c51ca28b36f2e6142460e3ee738dbebd8670971e8fb6e183c5d",
+      "x-flop-request-id": "recorded-request-0001",
+      "x-payment-asset": "FLOP",
+      "x-payment-destination": "UNVERIFIED-NO-RECEIVING-ACCOUNT",
+      "x-payment-hash-lock": "47d2f3ceda25d5e1b54072653e08575896976ec75e967b7a5dddfeda4c64df2f",
+      "x-payment-network": "flop-devnet",
+      "x-payment-price": "0.01",
+      "x-payment-required": "true",
+      "x-payment-timeout-blocks": "60"
+    },
+    "body": {
+      "error": "payment_required",
+      "verification": "UNVERIFIED",
+      "quote": {
+        "requestId": "recorded-request-0001",
+        "requestHash": "ddc86c11229e0c51ca28b36f2e6142460e3ee738dbebd8670971e8fb6e183c5d",
+        "hashLock": "47d2f3ceda25d5e1b54072653e08575896976ec75e967b7a5dddfeda4c64df2f",
+        "priceFlop": "0.01",
+        "payTo": "UNVERIFIED-NO-RECEIVING-ACCOUNT",
+        "network": "flop-devnet",
+        "asset": "FLOP",
+        "expiresAt": 1793895925525,
+        "timeoutBlocks": 60,
+        "executable": false
+      }
+    }
+  },
+  "preview": {
+    "status": "observed",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T16:24:25.688Z",
+    "cacheTtlMs": 60000,
+    "verification": "Arithmetic only. Not chain finality or inference verification.",
+    "rows": [
+      {
+        "channelId": "0xb2dc4989e811e9a9e4930acc16181a1ed062c464b239921c7ef2a7e20bb8c4da",
+        "settledBlock": 2964740,
+        "minerPaid": "65340000000000004",
+        "escrowConserved": true
+      },
+      {
+        "channelId": "0xabc1f7efcff906548d537d74745d46c6bdcb7142012ec004a1131c52bb032c40",
+        "settledBlock": 2955987,
+        "minerPaid": "855359999999999992",
+        "escrowConserved": true
+      },
+      {
+        "channelId": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec",
+        "settledBlock": 2945246,
+        "minerPaid": "516780000000000021",
+        "escrowConserved": true
+      },
+      {
+        "channelId": "0x776c2e77b664b3670d351da75abe3e44ff09cc5deba41f60958cef86af3c0bab",
+        "settledBlock": 2893718,
+        "minerPaid": "302939999999999996",
+        "escrowConserved": true
+      },
+      {
+        "channelId": "0x89e1c22519f49c195162d68f447d7e0177f015de371b2e7cdccd7221fb48fe19",
+        "settledBlock": 2885980,
+        "minerPaid": "11796839999999999710",
+        "escrowConserved": true
+      }
+    ]
+  },
+  "requests": 2
+}
