@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { ToolHeader } from "@/components/tool-header";
 
 import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
@@ -69,14 +70,7 @@ export function Playground({ seed }: { seed: CatalogSeed | null }) {
         <MotionLink className={styles.back} href="/#tools">
           ↑ All tools
         </MotionLink>
-        <p className="eyebrow">
-          Spend guard / policy workbench <span className="badge alpha">alpha</span>
-        </p>
-        <h1>
-          Give your agent
-          <br />
-          <span>a spending boundary.</span>
-        </h1>
+        <ToolHeader slug="spendguard" />
         <p className={styles.intro}>Edit a policy. Send a scripted request. See exactly why it passes or stops.</p>
         <div className={styles.labels}>
           <span>Real policy engine</span>

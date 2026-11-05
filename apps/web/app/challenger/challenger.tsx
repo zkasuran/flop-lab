@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { ToolHeader } from "@/components/tool-header";
 
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRouter } from "next/navigation";
@@ -89,12 +90,7 @@ export function Challenger({
       <section className={styles.hero} aria-labelledby="watcher-title">
         <div>
           <ReadingReveal>
-            <p className="eyebrow">Read-only / FLOP devnet</p>
-            <h1 id="watcher-title">
-              Read the clock.
-              <br />
-              <span>Question the evidence.</span>
-            </h1>
+            <ToolHeader slug="challenger" titleId="watcher-title" />
           </ReadingReveal>
           <ReadingReveal order={1}>
             <p className={styles.lead}>
