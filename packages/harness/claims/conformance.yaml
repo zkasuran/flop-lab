@@ -4,152 +4,142 @@
     "title": "Gateway model list contract",
     "check": "contracts",
     "expected": "assertModelList from @flop-labs/contracts@0.1.1 accepts the response",
-    "source":
-      {
-        "url": "https://www.npmjs.com/package/@flop-labs/contracts/v/0.1.1",
-        "quote": "Validation checks structure without coercion, default insertion, or removal of fields.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "dist/generated/schemas.js#ModelList",
-      },
+    "source": {
+      "url": "https://www.npmjs.com/package/@flop-labs/contracts/v/0.1.1",
+      "quote": "Validation checks structure without coercion, default insertion, or removal of fields.",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "dist/generated/schemas.js#ModelList"
+    },
     "kind": "http",
-    "risk": "read-only",
+    "risk": "read-only"
   },
   {
     "id": "price-source-expiry",
     "title": "Price-source lifetime convention",
     "check": "expiry",
     "expected": "expires_at - effective_at = 120000 ms. This is an observed catalogue convention, not a runtime guarantee.",
-    "source":
-      {
-        "url": "https://api.flop.network/v1/models",
-        "quote": '"effective_at":"2026-11-05T09:23:34.000Z","expires_at":"2026-11-05T09:25:34.000Z"',
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "data[].x-flop.price_sources[]",
-      },
+    "source": {
+      "url": "https://api.flop.network/v1/models",
+      "quote": "\"effective_at\":\"2026-11-05T09:23:34.000Z\",\"expires_at\":\"2026-11-05T09:25:34.000Z\"",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "data[].x-flop.price_sources[]"
+    },
     "kind": "http",
-    "risk": "read-only",
+    "risk": "read-only"
   },
   {
     "id": "model-registry",
     "title": "Discovered models are registered",
     "check": "registry",
     "expected": "Every discovered modelHash exists in the trust-root registry",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "quote": "Discover verified models on the FLOP network from the on-chain Model Registry. When FLOP_GATEWAY_URL is set, onlineMinerCount and servingMiners come from GET /v1/models x-flop.price_sources, and a registered model the catalog is not serving is marked served false. Otherwise onlineMinerCount stays the chain count.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "tools/list#flop_discover_models",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "quote": "Discover verified models on the FLOP network from the on-chain Model Registry. When FLOP_GATEWAY_URL is set, onlineMinerCount and servingMiners come from GET /v1/models x-flop.price_sources, and a registered model the catalog is not serving is marked served false. Otherwise onlineMinerCount stays the chain count.",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "tools/list#flop_discover_models"
+    },
     "kind": "mcp",
-    "risk": "read-only",
+    "risk": "read-only"
   },
   {
     "id": "model-serving",
     "title": "Gateway and discovery serving sets",
     "check": "serving",
     "expected": "For gateway-backed discovery, served, servingMiners and onlineMinerCount match gateway model and price-source sets",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "quote": "Discover verified models on the FLOP network from the on-chain Model Registry. When FLOP_GATEWAY_URL is set, onlineMinerCount and servingMiners come from GET /v1/models x-flop.price_sources, and a registered model the catalog is not serving is marked served false. Otherwise onlineMinerCount stays the chain count.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "tools/list#flop_discover_models",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "quote": "Discover verified models on the FLOP network from the on-chain Model Registry. When FLOP_GATEWAY_URL is set, onlineMinerCount and servingMiners come from GET /v1/models x-flop.price_sources, and a registered model the catalog is not serving is marked served false. Otherwise onlineMinerCount stays the chain count.",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "tools/list#flop_discover_models"
+    },
     "kind": "mcp",
-    "risk": "read-only",
+    "risk": "read-only"
   },
   {
     "id": "settlement-conservation",
     "title": "Whole-tape escrow conservation",
     "check": "settlements",
     "expected": "minerPaid + unusedEscrow + burned = escrow, using raw-unit integers for every row",
-    "source":
-      {
-        "url": "https://github.com/zkasuran/flop-lab/blob/38872e3/packages/mcp/src/api.ts",
-        "quote": "Exact check of the documented split: what the miner got, what came back, and what was burned add up to the escrow.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "escrowConserved",
-      },
+    "source": {
+      "url": "https://github.com/zkasuran/flop-lab/blob/38872e3/packages/mcp/src/api.ts",
+      "quote": "Exact check of the documented split: what the miner got, what came back, and what was burned add up to the escrow.",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "escrowConserved"
+    },
     "kind": "mcp",
-    "risk": "read-only",
+    "risk": "read-only"
   },
   {
     "id": "settlement-pagination",
     "title": "Settlement pagination",
     "check": "pagination",
     "expected": "limit and offset are honoured, hasMore matches total and adjacent slices match",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "quote": "Pagination offset",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "tools/list#flop_list_settlements.inputSchema.properties.offset",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "quote": "Pagination offset",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "tools/list#flop_list_settlements.inputSchema.properties.offset"
+    },
     "kind": "mcp",
     "risk": "read-only",
-    "tool": "flop_list_settlements",
+    "tool": "flop_list_settlements"
   },
   {
     "id": "offer-pagination",
     "title": "Offer pagination",
     "check": "pagination",
     "expected": "limit and offset are honoured, hasMore matches total and adjacent slices match",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "quote": "Pagination offset",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "tools/list#flop_list_session_offers.inputSchema.properties.offset",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "quote": "Pagination offset",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "tools/list#flop_list_session_offers.inputSchema.properties.offset"
+    },
     "kind": "mcp",
     "risk": "read-only",
-    "tool": "flop_list_session_offers",
+    "tool": "flop_list_session_offers"
   },
   {
     "id": "invalid-limit",
     "title": "Invalid pagination limit",
     "check": "bad-input",
     "expected": "limit=0 is rejected with an explicit MCP error",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "quote": "Maximum rows",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "tools/list#flop_list_settlements.inputSchema.properties.limit.minimum=1",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "quote": "Maximum rows",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "tools/list#flop_list_settlements.inputSchema.properties.limit.minimum=1"
+    },
     "kind": "mcp",
     "risk": "read-only",
-    "tool": "flop_list_settlements",
+    "tool": "flop_list_settlements"
   },
   {
     "id": "indexer-stats-fields",
     "title": "GraphQL and MCP stats fields",
     "check": "graphql",
     "expected": "Every field in flop_get_stats.stats exists on GraphQL type Stats",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "quote": "The schema is introspectable",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "tools/list#flop_indexer_query.description",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "quote": "The schema is introspectable",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "tools/list#flop_indexer_query.description"
+    },
     "kind": "graphql",
-    "risk": "read-only",
+    "risk": "read-only"
   },
   {
     "id": "simulated-tee-label",
     "title": "Simulated verifier is labelled",
     "check": "simulated",
     "expected": "verified=false, status=unverified and simulated=true",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "quote": "Simulated check of a TEE (Trusted Execution Environment) quote/attestation (Intel SGX or AWS Nitro). Performs no cryptographic verification: always returns verified: false, status: 'unverified', simulated: true, and placeholder quote details.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-        "path": "tools/list#flop_verify_tee_quote.description",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "quote": "Simulated check of a TEE (Trusted Execution Environment) quote/attestation (Intel SGX or AWS Nitro). Performs no cryptographic verification: always returns verified: false, status: 'unverified', simulated: true, and placeholder quote details.",
+      "measuredAt": "2026-11-05T09:23:46.373Z",
+      "path": "tools/list#flop_verify_tee_quote.description"
+    },
     "kind": "mcp",
-    "risk": "read-only",
-  },
+    "risk": "read-only"
+  }
 ]

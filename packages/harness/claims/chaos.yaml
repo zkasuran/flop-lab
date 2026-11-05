@@ -2,76 +2,71 @@
   {
     "id": "chaos-spend-limit",
     "title": "Agent spend-limit enforcement",
-    "source":
-      {
-        "url": "https://docs.flop.network/docs/agent-accounts-and-spend-control",
-        "quote": "Spend limits and proxies put that boundary on-chain, where a bug in the agent cannot exceed it.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://docs.flop.network/docs/agent-accounts-and-spend-control",
+      "quote": "Spend limits and proxies put that boundary on-chain, where a bug in the agent cannot exceed it.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "sdk",
     "risk": "spends-test-funds",
     "expected": "An attempted spend beyond the account limit is rejected",
     "check": "unavailable",
-    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites.",
+    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites."
   },
   {
     "id": "chaos-session-budget",
     "title": "Session-key exhaustion",
-    "source":
-      {
-        "url": "https://www.npmjs.com/package/@flop-labs/sdk/v/0.4.0",
-        "quote": "Create a session key with spending limits.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://www.npmjs.com/package/@flop-labs/sdk/v/0.4.0",
+      "quote": "Create a session key with spending limits.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "sdk",
     "risk": "spends-test-funds",
     "expected": "A session cannot authorize spending beyond its remaining limit",
     "check": "unavailable",
-    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites.",
+    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites."
   },
   {
     "id": "chaos-htlc-refund",
     "title": "HTLC refund timing",
-    "source":
-      {
-        "url": "https://docs.flop.network/docs/atomic-swaps",
-        "quote": "If the counter-transfer never confirms, the timelock returns the escrowed FLOP.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://docs.flop.network/docs/atomic-swaps",
+      "quote": "If the counter-transfer never confirms, the timelock returns the escrowed FLOP.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "sdk",
     "risk": "spends-test-funds",
     "expected": "Refund is unavailable before expiry and returns escrow after expiry",
     "check": "unavailable",
-    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites.",
+    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites."
   },
   {
     "id": "chaos-escrow-ceiling",
     "title": "Direct-session escrow ceiling",
-    "source":
-      {
-        "url": "https://docs.flop.network/docs/send-to-specific-miner",
-        "quote": "Transaction fees are additional.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://docs.flop.network/docs/send-to-specific-miner",
+      "quote": "Transaction fees are additional.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "sdk",
     "risk": "spends-test-funds",
     "expected": "Escrow never exceeds max-flop; account for fees separately",
     "check": "unavailable",
-    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites.",
+    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites."
   },
   {
     "id": "chaos-expiry-refund",
     "title": "Unacknowledged miner refund",
-    "source":
-      {
-        "url": "https://docs.flop.network/docs/send-to-specific-miner",
-        "quote": "Both refund the channel escrow; fees remain spent.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://docs.flop.network/docs/send-to-specific-miner",
+      "quote": "Both refund the channel escrow; fees remain spent.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "sdk",
     "risk": "spends-test-funds",
     "expected": "Unacknowledged force-open escrow is recoverable after expiry",
     "check": "unavailable",
-    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites.",
-  },
+    "reason": "No verified public write transport, faucet/genesis match and throwaway wallet are available. No extrinsics were submitted. Recovery cannot be tested without these prerequisites."
+  }
 ]

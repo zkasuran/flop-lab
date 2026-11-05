@@ -2,563 +2,569 @@
   {
     "id": "mcp-health",
     "title": "flop_health minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_health.inputSchema",
-        "quote": "Check FLOP node connection status, sync state, and peer count",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_health.inputSchema",
+      "quote": "Check FLOP node connection status, sync state, and peer count",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_health",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-get-balance",
     "title": "flop_get_balance minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_balance.inputSchema",
-        "quote": "Query FLOP token balance for an account address",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_balance.inputSchema",
+      "quote": "Query FLOP token balance for an account address",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_balance",
-    "args": { "address": "$agent" },
+    "args": {
+      "address": "$agent"
+    }
   },
   {
     "id": "mcp-check-htlc",
     "title": "flop_check_htlc minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_check_htlc.inputSchema",
-        "quote": "Check the status of an HTLC by its hash lock",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_check_htlc.inputSchema",
+      "quote": "Check the status of an HTLC by its hash lock",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_check_htlc",
-    "args": { "hash_lock": "$hashlock" },
+    "args": {
+      "hash_lock": "$hashlock"
+    }
   },
   {
     "id": "mcp-trust-root",
     "title": "flop_trust_root minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_trust_root.inputSchema",
-        "quote": "Read-only canonical trust base: allowed TDX measurements (dstack VKs), registered models, SKU ceilings, evidence params, and active PoUI committee",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_trust_root.inputSchema",
+      "quote": "Read-only canonical trust base: allowed TDX measurements (dstack VKs), registered models, SKU ceilings, evidence params, and active PoUI committee",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_trust_root",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-get-compute-channel",
     "title": "flop_get_compute_channel minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_compute_channel.inputSchema",
-        "quote": "Get one indexed compute channel with lifecycle, payment/evidence state, model hash, GPU SKU, and exact settlement call provenance.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_compute_channel.inputSchema",
+      "quote": "Get one indexed compute channel with lifecycle, payment/evidence state, model hash, GPU SKU, and exact settlement call provenance.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_compute_channel",
-    "args": { "channel_id": "$channel" },
+    "args": {
+      "channel_id": "$channel"
+    }
   },
   {
     "id": "mcp-list-session-offers",
     "title": "flop_list_session_offers minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_list_session_offers.inputSchema",
-        "quote": "List miner-signed standing session offers with on-chain stake, settlement, failed-ack, timeout, and slash facts",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_list_session_offers.inputSchema",
+      "quote": "List miner-signed standing session offers with on-chain stake, settlement, failed-ack, timeout, and slash facts",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_list_session_offers",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-list-settlements",
     "title": "flop_list_settlements minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_list_settlements.inputSchema",
-        "quote": "List realized compute-channel settlements with model hashes, point-in-time GPU SKUs, prices, assurance tiers, blocks, runtime events, and exact extrinsic references.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_list_settlements.inputSchema",
+      "quote": "List realized compute-channel settlements with model hashes, point-in-time GPU SKUs, prices, assurance tiers, blocks, runtime events, and exact extrinsic references.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_list_settlements",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-list-swaps",
     "title": "flop_list_swaps minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_list_swaps.inputSchema",
-        "quote": "List open swap intents from the Headless Order Indexer",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_list_swaps.inputSchema",
+      "quote": "List open swap intents from the Headless Order Indexer",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_list_swaps",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-indexer-query",
     "title": "flop_indexer_query minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_indexer_query.inputSchema",
-        "quote": "Run an arbitrary GraphQL query against the FLOP chain indexer (blocks, transactions, HTLCs, PoUI proofs, accounts, DAG, stats)",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_indexer_query.inputSchema",
+      "quote": "Run an arbitrary GraphQL query against the FLOP chain indexer (blocks, transactions, HTLCs, PoUI proofs, accounts, DAG, stats)",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_indexer_query",
-    "args": { "query": "{ __schema { queryType { name } } }" },
+    "args": {
+      "query": "{ __schema { queryType { name } } }"
+    }
   },
   {
     "id": "mcp-get-stats",
     "title": "flop_get_stats minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_stats.inputSchema",
-        "quote": "Network stats from the chain indexer: block height, TPS, avg block time, active/total HTLCs, 24h proofs, active operators, total transactions/accounts, FLOP locked.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_stats.inputSchema",
+      "quote": "Network stats from the chain indexer: block height, TPS, avg block time, active/total HTLCs, 24h proofs, active operators, total transactions/accounts, FLOP locked.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_stats",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-get-block",
     "title": "flop_get_block minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_block.inputSchema",
-        "quote": "Fetch a block by hash or number from the chain indexer.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_block.inputSchema",
+      "quote": "Fetch a block by hash or number from the chain indexer.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_block",
-    "args": { "number": "$block" },
+    "args": {
+      "number": "$block"
+    }
   },
   {
     "id": "mcp-get-poui-leaderboard",
     "title": "flop_get_poui_leaderboard minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_poui_leaderboard.inputSchema",
-        "quote": "Top PoUI miners by accumulated G_n weight from the chain indexer.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_poui_leaderboard.inputSchema",
+      "quote": "Top PoUI miners by accumulated G_n weight from the chain indexer.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_poui_leaderboard",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-check-session",
     "title": "flop_check_session minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_check_session.inputSchema",
-        "quote": "Check the status and remaining budget of a session key",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_check_session.inputSchema",
+      "quote": "Check the status and remaining budget of a session key",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_check_session",
-    "args": { "owner": "$agent", "delegate": "$miner" },
+    "args": {
+      "owner": "$agent",
+      "delegate": "$miner"
+    }
   },
   {
     "id": "mcp-verify-tee-quote",
     "title": "flop_verify_tee_quote minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_verify_tee_quote.inputSchema",
-        "quote": "Simulated check of a TEE (Trusted Execution Environment) quote/attestation (Intel SGX or AWS Nitro)",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_verify_tee_quote.inputSchema",
+      "quote": "Simulated check of a TEE (Trusted Execution Environment) quote/attestation (Intel SGX or AWS Nitro)",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_verify_tee_quote",
-    "args": { "quote_hex": "0x00" },
+    "args": {
+      "quote_hex": "0x00"
+    }
   },
   {
     "id": "mcp-get-tcb-status",
     "title": "flop_get_tcb_status minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_tcb_status.inputSchema",
-        "quote": "Get TCB (Trusted Computing Base) status and security advisories for Intel SGX or other TEE platforms",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_tcb_status.inputSchema",
+      "quote": "Get TCB (Trusted Computing Base) status and security advisories for Intel SGX or other TEE platforms",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_tcb_status",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-get-inference-receipt",
     "title": "flop_get_inference_receipt minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_inference_receipt.inputSchema",
-        "quote": "Get a settled HTLC's authenticated TEE quote digest and verified compute",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_inference_receipt.inputSchema",
+      "quote": "Get a settled HTLC's authenticated TEE quote digest and verified compute",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_inference_receipt",
-    "args": { "hash_lock": "$hashlock" },
+    "args": {
+      "hash_lock": "$hashlock"
+    }
   },
   {
     "id": "mcp-estimate-cost",
     "title": "flop_estimate_cost minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_estimate_cost.inputSchema",
-        "quote": "Estimate the cost of an inference task before submission",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_estimate_cost.inputSchema",
+      "quote": "Estimate the cost of an inference task before submission",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_estimate_cost",
-    "args": { "model_hash": "$model", "prompt_length": 1 },
+    "args": {
+      "model_hash": "$model",
+      "prompt_length": 1
+    }
   },
   {
     "id": "mcp-get-result",
     "title": "flop_get_result minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_result.inputSchema",
-        "quote": "Get inference task status by task ID",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_result.inputSchema",
+      "quote": "Get inference task status by task ID",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_result",
-    "args": { "task_id": "$hashlock" },
+    "args": {
+      "task_id": "$hashlock"
+    }
   },
   {
     "id": "mcp-discover-models",
     "title": "flop_discover_models minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_discover_models.inputSchema",
-        "quote": "Discover verified models on the FLOP network from the on-chain Model Registry",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_discover_models.inputSchema",
+      "quote": "Discover verified models on the FLOP network from the on-chain Model Registry",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_discover_models",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-find-best-miner",
     "title": "flop_find_best_miner minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_find_best_miner.inputSchema",
-        "quote": "Find the best miner for a specific model based on price, quality, latency, and availability criteria.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_find_best_miner.inputSchema",
+      "quote": "Find the best miner for a specific model based on price, quality, latency, and availability criteria.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_find_best_miner",
-    "args": { "model_hash": "$model" },
+    "args": {
+      "model_hash": "$model"
+    }
   },
   {
     "id": "mcp-get-model-info",
     "title": "flop_get_model_info minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_model_info.inputSchema",
-        "quote": "Get detailed information about a specific model.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_model_info.inputSchema",
+      "quote": "Get detailed information about a specific model.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_model_info",
-    "args": { "model_id": "$model" },
+    "args": {
+      "model_id": "$model"
+    }
   },
   {
     "id": "mcp-get-model-pricing",
     "title": "flop_get_model_pricing minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_model_pricing.inputSchema",
-        "quote": "Get pricing information for model inference.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_model_pricing.inputSchema",
+      "quote": "Get pricing information for model inference.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_get_model_pricing",
-    "args": { "model_id": "$model" },
+    "args": {
+      "model_id": "$model"
+    }
   },
   {
     "id": "mcp-compare-pricing",
     "title": "flop_compare_pricing minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_compare_pricing.inputSchema",
-        "quote": "Compare pricing across different models and providers.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_compare_pricing.inputSchema",
+      "quote": "Compare pricing across different models and providers.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_compare_pricing",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-list-providers",
     "title": "flop_list_providers minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_list_providers.inputSchema",
-        "quote": "List inference providers available on the FLOP network.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_list_providers.inputSchema",
+      "quote": "List inference providers available on the FLOP network.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_list_providers",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-estimate-inference-cost",
     "title": "flop_estimate_inference_cost minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_estimate_inference_cost.inputSchema",
-        "quote": "Estimate the cost of an inference task before submission",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_estimate_inference_cost.inputSchema",
+      "quote": "Estimate the cost of an inference task before submission",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_estimate_inference_cost",
-    "args": { "model_hash": "$model", "input_tokens": 1 },
+    "args": {
+      "model_hash": "$model",
+      "input_tokens": 1
+    }
   },
   {
     "id": "mcp-get-agent-card",
     "title": "flop_get_agent_card minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_get_agent_card.inputSchema",
-        "quote": "Fetch an A2A (Agent-to-Agent) Agent Card for an on-chain FLOP agent",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_get_agent_card.inputSchema",
+      "quote": "Fetch an A2A (Agent-to-Agent) Agent Card for an on-chain FLOP agent",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "unavailable",
     "tool": "flop_get_agent_card",
     "args": {},
-    "reason": "No observed on-chain agent id is available from the indexed settlement accounts. An account address is not an agent id.",
+    "reason": "No observed on-chain agent id is available from the indexed settlement accounts. An account address is not an agent id."
   },
   {
     "id": "mcp-agent-pack-manifest",
     "title": "flop_agent_pack_manifest minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_agent_pack_manifest.inputSchema",
-        "quote": "Return the publishable FLOP agent context pack manifest: skills, MCP endpoints, catalog pointers, and install metadata.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_agent_pack_manifest.inputSchema",
+      "quote": "Return the publishable FLOP agent context pack manifest: skills, MCP endpoints, catalog pointers, and install metadata.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_agent_pack_manifest",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-agent-skill-get",
     "title": "flop_agent_skill_get minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_agent_skill_get.inputSchema",
-        "quote": "Fetch one publishable FLOP agent skill by id or path.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_agent_skill_get.inputSchema",
+      "quote": "Fetch one publishable FLOP agent skill by id or path.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_agent_skill_get",
-    "args": { "id_or_path": "$skill" },
+    "args": {
+      "id_or_path": "$skill"
+    }
   },
   {
     "id": "mcp-agent-pack-install",
     "title": "flop_agent_pack_install minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_agent_pack_install.inputSchema",
-        "quote": "Return client-specific install guidance for the FLOP agent context pack and MCP endpoint.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_agent_pack_install.inputSchema",
+      "quote": "Return client-specific install guidance for the FLOP agent context pack and MCP endpoint.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_agent_pack_install",
-    "args": {},
+    "args": {}
   },
   {
     "id": "mcp-knowledge-search",
     "title": "flop_knowledge_search minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_knowledge_search.inputSchema",
-        "quote": "Search the generated FLOP OKF knowledge catalog for repo, protocol, MCP, and model context.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_knowledge_search.inputSchema",
+      "quote": "Search the generated FLOP OKF knowledge catalog for repo, protocol, MCP, and model context.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_knowledge_search",
-    "args": { "query": "protocol" },
+    "args": {
+      "query": "protocol"
+    }
   },
   {
     "id": "mcp-knowledge-get",
     "title": "flop_knowledge_get minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_knowledge_get.inputSchema",
-        "quote": "Fetch one generated FLOP knowledge catalog concept by id or path.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_knowledge_get.inputSchema",
+      "quote": "Fetch one generated FLOP knowledge catalog concept by id or path.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_knowledge_get",
-    "args": { "id_or_path": "$concept" },
+    "args": {
+      "id_or_path": "$concept"
+    }
   },
   {
     "id": "mcp-explain-requirement",
     "title": "flop_explain_requirement minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_explain_requirement.inputSchema",
-        "quote": "Explain a yellowpaper R-ID, Appendix E item, decision, or Appendix H row with spec/implementation/evidence status, line-range citations, related records, and conflicts.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_explain_requirement.inputSchema",
+      "quote": "Explain a yellowpaper R-ID, Appendix E item, decision, or Appendix H row with spec/implementation/evidence status, line-range citations, related records, and conflicts.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_explain_requirement",
-    "args": { "id": "R9.5" },
+    "args": {
+      "id": "R9.5"
+    }
   },
   {
     "id": "mcp-knowledge-manifest",
     "title": "flop_knowledge_manifest minimal input",
-    "source":
-      {
-        "url": "https://mcp.flop.network/mcp",
-        "path": "tools/list#flop_knowledge_manifest.inputSchema",
-        "quote": "Return the generated FLOP knowledge catalog manifest.",
-        "measuredAt": "2026-11-05T09:23:46.373Z",
-      },
+    "source": {
+      "url": "https://mcp.flop.network/mcp",
+      "path": "tools/list#flop_knowledge_manifest.inputSchema",
+      "quote": "Return the generated FLOP knowledge catalog manifest.",
+      "measuredAt": "2026-11-05T09:23:46.373Z"
+    },
     "kind": "mcp",
     "risk": "read-only",
     "expected": "Advertised read-only tool accepts schema-valid minimal input and returns structured data; validate outputSchema when supplied.",
     "check": "probe",
     "tool": "flop_knowledge_manifest",
-    "args": {},
-  },
+    "args": {}
+  }
 ]
