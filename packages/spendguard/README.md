@@ -23,11 +23,13 @@ node packages/spendguard/dist/cli.js verify ./spend.jsonl
 node packages/spendguard/dist/cli.js evaluate packages/spendguard/examples/policy.json packages/spendguard/examples/request.json --ledger ./spend.jsonl --dry-run
 ```
 
-`init` refuses existing files. Retain the printed head in a separate trusted location. Verify against it with `verify ./spend.jsonl EXPECTED_HEAD`. CLI simulation does not authorize a later library spend. The CLI accepts JSON policies. The importable API also provides typed SDK session and wallet guards.
+`init` refuses existing files. Retain the printed head in a separate trusted location. Verify against it with `verify ./spend.jsonl EXPECTED_HEAD`. CLI simulation does not authorize a later library spend. The CLI accepts JSON or strict policy YAML. The importable API also provides typed SDK session and wallet guards.
 
 ## Policy
 
 See [the example](examples/policy.json) and [JSON Schema](policy.schema.json). Quote all FLOP values. Unknown keys fail closed. Decimal strings convert to exact `bigint` amounts. Exponents, negatives and excess fractional precision are refused.
+
+[The YAML example](examples/policy.yaml) supports two-space mappings, block lists, plain names, quoted strings and JSON inline arrays or maps. Anchors, tags, multiline scalars, tabs and inline comments are refused. Full-line comments are allowed. Use `parsePolicyText` for the same parser in the browser. This is a deliberate policy subset, not a general YAML parser.
 
 - `budgets.task`: lifetime net charge for a task ID.
 - `budgets.hour` and `budgets.day`: rolling windows `(now - window, now]`.

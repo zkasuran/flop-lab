@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: Apache-2.0
 import { readFile } from "node:fs/promises";
-import { evaluate, parsePolicy, parseRequest } from "./policy";
+import { evaluate, parsePolicyText, parseRequest } from "./policy";
 import { FileLedger } from "./ledger";
 
 const usage = `flop-spendguard init LEDGER
 flop-spendguard verify LEDGER [EXPECTED_HEAD]
-flop-spendguard evaluate POLICY.json REQUEST.json [--ledger LEDGER] --dry-run
+flop-spendguard evaluate POLICY.json|yaml REQUEST.json [--ledger LEDGER] --dry-run
 
 The CLI signs nothing. Policies use decimal FLOP strings.
-Output includes every rule and source. JSON input only.`;
+Output includes every rule and source. JSON or strict policy YAML.`;
 
 async function main(args: string[]) {
   const [command, path, extra, ...rest] = args;
@@ -46,7 +46,7 @@ async function main(args: string[]) {
     else throw new Error(`Unknown or duplicate option ${rest[i]}`);
   }
   if (!dryRun) throw new Error("CLI evaluation requires --dry-run");
-  const policy = parsePolicy(JSON.parse(await readFile(path, "utf8")) as unknown);
+  const policy = parsePolicyText(await readFile(path, "utf8"));
   const request = parseRequest(JSON.parse(await readFile(extra, "utf8")) as unknown);
   request.dryRun = true;
   const ledger = ledgerPath ? (await new FileLedger(ledgerPath).verify()).reservations : [];

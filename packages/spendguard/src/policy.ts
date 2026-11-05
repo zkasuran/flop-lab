@@ -113,6 +113,80 @@ export function parsePolicy(value: unknown): Policy {
   }
   return structuredClone(p) as unknown as Policy;
 }
+/**
+ * Read JSON or the policy's small YAML subset: mappings, block lists and JSON inline values.
+ * Tabs, duplicate block-mapping keys, anchors, tags and multiline scalars are refused.
+ * @example parsePolicyText(documentText)
+ */
+export function parsePolicyText(input: string): Policy {
+  if (typeof input !== "string" || input.length > 65_536)
+    throw new Error("Policy text must fit within 65536 characters");
+  if (input.trimStart().startsWith("{")) return parsePolicy(JSON.parse(input) as unknown);
+  const lines = input.split(/\r?\n/);
+  if (lines.length > 512) throw new Error("Policy text must fit within 512 lines");
+  const result: Record<string, unknown> = Object.create(null);
+  let section: unknown;
+  const scalar = (text: string): unknown => {
+    if (!text) throw new Error("Missing scalar value");
+    if (/^'(?:[^']|'')*'$/.test(text)) return text.slice(1, -1).replace(/''/g, "'");
+    if (/^["[{]/.test(text)) {
+      try {
+        return JSON.parse(text) as unknown;
+      } catch (error) {
+        throw new Error("Quoted strings and inline lists or maps must use JSON syntax", { cause: error });
+      }
+    }
+    if (/^[&*!|>]/.test(text) || text.includes(" #") || text.includes(": "))
+      throw new Error("YAML anchors, tags, multiline values and inline comments are not supported");
+    if (text === "true") return true;
+    if (text === "false") return false;
+    if (text === "null" || text === "~") return null;
+    if (/^-?(0|[1-9]\d*)(?:\.\d+)?$/.test(text)) return Number(text);
+    return text;
+  };
+  const mapping = (text: string): [string, string] => {
+    const match = /^("(?:[^"\\]|\\.)*"|'(?:[^']|'')*'|[^:]+):(?: +(.*))?$/.exec(text);
+    if (!match?.[1]) throw new Error("Expected key: value");
+    const raw = match[1].trim();
+    const key = /^["']/.test(raw) ? scalar(raw) : raw;
+    if (typeof key !== "string" || !key) throw new Error("Mapping keys must be nonempty strings");
+    return [key, match[2]?.trim() ?? ""];
+  };
+  const set = (target: Record<string, unknown>, key: string, value: unknown) => {
+    if (Object.hasOwn(target, key)) throw new Error(`Duplicate policy key: ${key}`);
+    Object.defineProperty(target, key, { value, enumerable: true, writable: true, configurable: true });
+  };
+  for (const [index, line] of lines.entries()) {
+    if (!line.trim() || line.trimStart().startsWith("#")) continue;
+    try {
+      if (line.includes("\t")) throw new Error("Use spaces instead of tabs");
+      const indent = line.length - line.trimStart().length;
+      const text = line.trim();
+      if (indent === 0) {
+        const [key, value] = mapping(text);
+        const parsed = value
+          ? scalar(value)
+          : ["allowModels", "allowMiners", "denyMiners"].includes(key)
+            ? []
+            : (Object.create(null) as Record<string, unknown>);
+        set(result, key, parsed);
+        section = value ? undefined : parsed;
+      } else if (indent === 2 && Array.isArray(section)) {
+        if (!text.startsWith("- ")) throw new Error("Expected a block-list item: - value");
+        section.push(scalar(text.slice(2).trim()));
+      } else if (indent === 2 && section && typeof section === "object") {
+        const [key, value] = mapping(text);
+        set(section as Record<string, unknown>, key, scalar(value));
+      } else throw new Error("Policy mappings and lists use exactly two spaces of indentation");
+    } catch (error) {
+      throw new Error(`Policy YAML line ${index + 1}: ${error instanceof Error ? error.message : String(error)}`, {
+        cause: error,
+      });
+    }
+  }
+  return parsePolicy(result);
+}
+
 /** Validate a spend request at an input boundary. @example parseRequest(JSON.parse(input)) */
 export function parseRequest(value: unknown): SpendRequest {
   const r = object(value, "request");
