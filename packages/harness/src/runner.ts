@@ -115,6 +115,8 @@ export async function runHarness(options: RunOptions = {}): Promise<RunReport> {
         result.reason = `Failure was not reproduced: ${second.reason}`;
       } else result.reason = `Confirmed by a fresh repeat: ${first.reason}`;
     }
+    if (result.status === "UNVERIFIABLE" && claim.evidenceNeeded)
+      result.reason += ` Public data needed: ${claim.evidenceNeeded}`;
   }
   report.finishedAt = new Date().toISOString();
   report.durationMs = Date.now() - started;

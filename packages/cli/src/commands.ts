@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "contracts",
+    pkg: "@flop-lab/mcpaudit",
+    bin: "flop-mcpaudit",
+    section: "build",
+    summary: "Audit advertised MCP schemas and inspect dated trust material",
+  },
+  {
     name: "doctor",
     pkg: "@flop-lab/doctor",
     bin: "flop-doctor",

@@ -43,6 +43,7 @@ const claimSchema = {
     tool: { type: "string", pattern: "^flop_[a-z_]+$" },
     args: { type: "object" },
     reason: { type: "string" },
+    evidenceNeeded: { type: "string", minLength: 1 },
   },
 };
 
