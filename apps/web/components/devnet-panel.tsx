@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/rea
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { Observation, Snapshot } from "@/lib/devnet";
+import { compareSample } from "@/lib/observation-view";
 import { Disclosure, MotionButton, ObservedNumber } from "./motion";
 
 function age(at: string | null, now: number): string {
@@ -58,8 +59,9 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
   const columns = Math.min(6, ordered.length);
   const rows = Math.ceil(ordered.length / Math.max(1, columns));
   const sampled = new Set(snapshot.settlements.value?.map((row) => row.miner));
-  const matches = addresses.filter((address) => sampled.has(address));
-  const known = snapshot.miners.value !== null && snapshot.settlements.value !== null;
+  const comparison = compareSample(snapshot.miners.value, snapshot.settlements.value);
+  const matches = comparison?.matches ?? [];
+  const known = comparison !== null;
   const stale = [snapshot.miners, snapshot.settlements].some(
     (observation) => observation.stale || !observation.measuredAt || now - Date.parse(observation.measuredAt) > 60_000,
   );
@@ -155,7 +157,7 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
           className="sample-fill"
           initial={false}
           animate={{
-            scaleX: (reduced || visible) && known && addresses.length ? matches.length / addresses.length : 0,
+            scaleX: reduced || visible ? (comparison?.ratio ?? 0) : 0,
           }}
           transition={{ duration: reduced ? 0 : 0.5 }}
         />
