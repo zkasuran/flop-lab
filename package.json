@@ -1,0 +1,11 @@
+{
+  "name": "flop-lab",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@11.25.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "pnpm -r --if-present run check",
+    "build": "pnpm -r --if-present run build"
+  }
+}
