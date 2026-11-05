@@ -81,6 +81,11 @@ Every field must come from independent canonical chain observations. Never const
 this object from client headers. `verifyObservedPayment` validates the object and
 its agreement with the stored quote. It does not read the chain itself.
 
+The quote's random hash-lock field is a reference challenge. This package has no
+HTLC preimage lifecycle or redemption path. Adding `readPayment` alone does not
+make a working merchant. The executable flag indicates that the callback contract
+was supplied, not that live payment support has been established.
+
 ## Threat model
 
 The middleware rejects malformed proofs, changed requests, exact-amount mismatches,

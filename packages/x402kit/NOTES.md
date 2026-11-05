@@ -108,3 +108,9 @@ The demo advertises `X-Flop-Executable: false` and returns
 Its quote recipient is an explicit non-address marker. Do not fund it.
 The fixture flow is a local Request/Response handler recording. Its settlement
 preview comes from the real hosted MCP and is not proof of payment to this service.
+
+The reference generates an opaque random challenge in the hash-lock field. It does
+not implement an HTLC preimage lifecycle or redemption. Supplying `readPayment`
+enables the synthetic callback contract; it is not sufficient to deploy a working
+legacy HTLC merchant. A live integration also needs an audited challenge issuer,
+recipient binding, creation and redemption. None of those paths is shipped here.
