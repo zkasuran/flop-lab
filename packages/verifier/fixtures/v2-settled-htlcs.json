@@ -1,0 +1,14 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_indexer_query",
+  "args": {
+    "query": "{ htlcs(limit: 5, status: \"SETTLED\") { hashLock htlcId sender recipient amount timeout status paymentStatus evidenceStatus verifierRef timeoutPath observationHead preImage gnUsed receiptHash createdAt settledAt refundedAt blockHash blockNumber } }"
+  },
+  "value": {
+    "htlcs": []
+  },
+  "raw": "{\n  \"htlcs\": []\n}",
+  "measuredAt": "2026-11-05T22:11:40.904Z",
+  "durationMs": 369,
+  "attempts": 1
+}

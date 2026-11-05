@@ -50,7 +50,7 @@ export const commands: readonly Command[] = [
     pkg: "@flop-lab/verifier",
     bin: "flop-verify",
     section: "verify",
-    summary: "Check settlement arithmetic and save evidence to replay offline",
+    summary: "Cross-check settlements, receipts and attestation evidence offline",
   },
   {
     name: "harness",

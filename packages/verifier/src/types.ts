@@ -8,6 +8,8 @@ export interface Check {
   detail: string;
   inputs: Record<string, unknown>;
   evidence: string[];
+  /** A service simulation never contributes a passing verification claim. */
+  simulated?: boolean;
 }
 
 export interface Observation {
@@ -25,7 +27,7 @@ export interface Observation {
 }
 
 export interface Evidence {
-  version: 1;
+  version: 1 | 2;
   network: "flop-devnet";
   channelId: string;
   capturedAt: string;

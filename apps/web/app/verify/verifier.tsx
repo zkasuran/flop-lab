@@ -28,7 +28,28 @@ const titles: Record<string, string> = {
   "challenge-window": "Challenge window",
   "merkle-inclusion": "Transcript inclusion",
   "tee-quote-digest": "Hardware quote",
+  "indexer-channel": "Indexed channel agreement",
+  "indexer-settlement": "Indexed settlement agreement",
+  "indexer-htlc": "Indexed HTLC agreement",
+  "htlc-link": "Explicit HTLC link",
+  "htlc-preimage": "Public preimage",
+  "htlc-timelock": "HTLC timeout and head",
+  "htlc-amount": "HTLC escrow amount",
+  "receipt-amount": "Receipt amount labels",
+  "quote-structure": "Quote envelope structure",
+  "quote-digest": "Quote byte digest",
+  "attestation-trust": "Platform and measurement",
+  "attestation-tcb": "TCB advisory binding",
+  "tee-service-simulation": "Simulated service",
 };
+const groups = ["All evidence", "Settlement", "Indexer", "Receipts and HTLCs", "Attestation"] as const;
+type Group = (typeof groups)[number];
+function checkGroup(id: string): Group {
+  if (id.startsWith("indexer-")) return "Indexer";
+  if (id.startsWith("htlc-") || id.startsWith("receipt-")) return "Receipts and HTLCs";
+  if (/^(tee-|quote-|attestation-)/.test(id)) return "Attestation";
+  return "Settlement";
+}
 
 function Action(props: HTMLMotionProps<"button">) {
   const reduced = useReducedMotion();
@@ -83,7 +104,7 @@ function CheckRow({ check, bundle, index }: { check: Check; bundle: Evidence | n
       whileInView={reduced ? {} : { opacity: [0.55, 1], y: [6, 0] }}
       viewport={{ once: true, amount: 0.1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: reduced ? 0 : 0.24, delay: reduced ? 0 : index * 0.02 }}
+      transition={{ duration: reduced ? 0 : 0.24, delay: reduced ? 0 : Math.min(index * 0.02, 0.2) }}
     >
       <Action
         className={styles.checkToggle}
@@ -99,7 +120,7 @@ function CheckRow({ check, bundle, index }: { check: Check; bundle: Evidence | n
           <span>{check.claim}</span>
         </span>
         <span className={styles.status} data-status={check.status}>
-          {labels[check.status]}
+          {check.simulated ? "Simulated" : labels[check.status]}
         </span>
         <motion.span
           aria-hidden="true"
@@ -169,7 +190,8 @@ export function Verifier({ initialBundle, initialReport }: { initialBundle: Evid
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [recent, setRecent] = useState<ReturnType<typeof recentInput> | null>(null);
-  const [filter, setFilter] = useState<Status | "all">("all");
+  const [filter, setFilter] = useState<Status | "all" | "simulated">("all");
+  const [group, setGroup] = useState<Group>("All evidence");
   const [copied, setCopied] = useState(false);
   const file = useRef<HTMLInputElement>(null);
   const results = useRef<HTMLElement>(null);
@@ -178,7 +200,11 @@ export function Verifier({ initialBundle, initialReport }: { initialBundle: Evid
   const counts = Object.fromEntries(
     statuses.map((status) => [status, report.checks.filter((c) => c.status === status).length]),
   ) as Record<Status, number>;
-  const visible = report.checks.filter((c) => filter === "all" || c.status === filter);
+  const visible = report.checks.filter(
+    (c) =>
+      (group === "All evidence" || checkGroup(c.id) === group) &&
+      (filter === "all" || (filter === "simulated" ? c.simulated : c.status === filter && !c.simulated)),
+  );
   const command =
     "pnpm --filter @flop-lab/verifier build && node packages/verifier/dist/cli.js bundle evidence.json --json";
   const readStep = (order: number) => ({
@@ -200,6 +226,7 @@ export function Verifier({ initialBundle, initialReport }: { initialBundle: Evid
     setReport(next);
     setOrigin(label);
     setFilter("all");
+    setGroup("All evidence");
     setMessage(
       `Checks complete. ${next.checks.filter((c) => c.status === "FAIL").length} failed. ${next.checks.filter((c) => c.status === "UNVERIFIABLE").length} unverifiable.`,
     );
@@ -305,7 +332,8 @@ export function Verifier({ initialBundle, initialReport }: { initialBundle: Evid
             <span>evidence add up?</span>
           </motion.h1>
           <motion.p className={styles.intro} {...readStep(2)}>
-            Check a settlement. See what agrees, what fails and what public data cannot prove.
+            Check settlement views, receipts and attestation. See what agrees, what fails and what public data cannot
+            prove.
           </motion.p>
         </div>
         <motion.aside className={styles.principle} {...readStep(3)}>
@@ -517,15 +545,44 @@ export function Verifier({ initialBundle, initialReport }: { initialBundle: Evid
         <p className={styles.help}>
           Counts describe checks on this bundle. They are not a trust score. Final counts remain visible during motion.
         </p>
+        <div className={styles.assurance} aria-label="Evidence boundaries">
+          <div>
+            <h3>Proven consistency</h3>
+            <p>Only the named arithmetic, byte or data-view agreement. A pass does not prove honest inference.</p>
+          </div>
+          <div>
+            <h3>Not provable from public data</h3>
+            <p>Missing links, empty trust keys and unsigned evidence remain unverifiable.</p>
+          </div>
+          <div>
+            <h3>Simulated by the service</h3>
+            <p>The TEE simulation never adds a pass. Receipt placeholder fields do not prove payment.</p>
+          </div>
+        </div>
+        <div className={styles.filters} role="group" aria-label="Evidence groups">
+          {groups.map((item) => (
+            <Action
+              key={item}
+              className="quiet-button"
+              aria-pressed={group === item}
+              onClick={() => {
+                setGroup(item);
+                setFilter("all");
+              }}
+            >
+              {item}
+            </Action>
+          ))}
+        </div>
         <div className={styles.filters} role="group" aria-label="Filter checks">
-          {(["all", ...statuses] as const).map((status) => (
+          {(["all", ...statuses, "simulated"] as const).map((status) => (
             <Action
               className="quiet-button"
               key={status}
               aria-pressed={filter === status}
               onClick={() => setFilter(status)}
             >
-              {status === "all" ? "All checks" : labels[status]}
+              {status === "all" ? "All checks" : status === "simulated" ? "Simulated service" : labels[status]}
             </Action>
           ))}
         </div>

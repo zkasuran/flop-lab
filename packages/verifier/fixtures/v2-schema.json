@@ -1,0 +1,874 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "value": {
+    "__schema": {
+      "queryType": {
+        "fields": [
+          {
+            "name": "stats",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Stats"
+              }
+            }
+          },
+          {
+            "name": "blocks",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "block",
+            "args": [
+              {
+                "name": "hash",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "number",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Block",
+              "ofType": null
+            }
+          },
+          {
+            "name": "transactions",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "transaction",
+            "args": [
+              {
+                "name": "hash",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Transaction",
+              "ofType": null
+            }
+          },
+          {
+            "name": "htlcs",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "status",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "address",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "htlc",
+            "args": [
+              {
+                "name": "hashLock",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Htlc",
+              "ofType": null
+            }
+          },
+          {
+            "name": "pouiProofs",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "pouiLeaderboard",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "since",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "account",
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Account",
+              "ofType": null
+            }
+          },
+          {
+            "name": "inferenceSpend",
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              },
+              {
+                "name": "from",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "to",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "InferenceSpend"
+              }
+            }
+          },
+          {
+            "name": "inferenceReceived",
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              },
+              {
+                "name": "from",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "to",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "InferenceReceived"
+              }
+            }
+          },
+          {
+            "name": "htlcPaid",
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              },
+              {
+                "name": "from",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "to",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "HtlcPaid"
+              }
+            }
+          },
+          {
+            "name": "htlcReceived",
+            "args": [
+              {
+                "name": "address",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              },
+              {
+                "name": "from",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "to",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "HtlcReceived"
+              }
+            }
+          },
+          {
+            "name": "sponsorPositions",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "role",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "sponsor",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "operator",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "status",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "computeChannels",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "status",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "agent",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "miner",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ComputeChannelConnection"
+              }
+            }
+          },
+          {
+            "name": "computeChannel",
+            "args": [
+              {
+                "name": "channelId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ComputeChannel",
+              "ofType": null
+            }
+          },
+          {
+            "name": "settlementPrices",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "model",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "sku",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "miner",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "agent",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "tier",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "SettlementPriceConnection"
+              }
+            }
+          },
+          {
+            "name": "settlementPrice",
+            "args": [
+              {
+                "name": "channelId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "SettlementPrice",
+              "ofType": null
+            }
+          },
+          {
+            "name": "reliabilityEvents",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "miner",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "kind",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ReliabilityEventConnection"
+              }
+            }
+          },
+          {
+            "name": "minerGhostStatsSnapshots",
+            "args": [
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "miner",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "eventKind",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MinerGhostStatsSnapshotConnection"
+              }
+            }
+          },
+          {
+            "name": "minerReliability",
+            "args": [
+              {
+                "name": "miner",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MinerReliability"
+              }
+            }
+          },
+          {
+            "name": "minerReliabilitySeries",
+            "args": [
+              {
+                "name": "miner",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String"
+                  }
+                }
+              },
+              {
+                "name": "bucket",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "from",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "to",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "epochBlocks",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "networkValue",
+            "args": [
+              {
+                "name": "since",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "NetworkValue"
+              }
+            }
+          },
+          {
+            "name": "termCurve",
+            "args": [
+              {
+                "name": "days",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TermCurve"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "raw": "{\n  \"__schema\": {\n    \"queryType\": {\n      \"fields\": [\n        {\n          \"name\": \"stats\",\n          \"args\": [],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"Stats\"\n            }\n          }\n        },\n        {\n          \"name\": \"blocks\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"block\",\n          \"args\": [\n            {\n              \"name\": \"hash\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"number\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Block\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"transactions\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"transaction\",\n          \"args\": [\n            {\n              \"name\": \"hash\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Transaction\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"htlcs\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"status\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"address\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"htlc\",\n          \"args\": [\n            {\n              \"name\": \"hashLock\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Htlc\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"pouiProofs\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"pouiLeaderboard\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"since\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"account\",\n          \"args\": [\n            {\n              \"name\": \"address\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Account\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"inferenceSpend\",\n          \"args\": [\n            {\n              \"name\": \"address\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            },\n            {\n              \"name\": \"from\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"to\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"InferenceSpend\"\n            }\n          }\n        },\n        {\n          \"name\": \"inferenceReceived\",\n          \"args\": [\n            {\n              \"name\": \"address\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            },\n            {\n              \"name\": \"from\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"to\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"InferenceReceived\"\n            }\n          }\n        },\n        {\n          \"name\": \"htlcPaid\",\n          \"args\": [\n            {\n              \"name\": \"address\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            },\n            {\n              \"name\": \"from\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"to\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"HtlcPaid\"\n            }\n          }\n        },\n        {\n          \"name\": \"htlcReceived\",\n          \"args\": [\n            {\n              \"name\": \"address\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            },\n            {\n              \"name\": \"from\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"to\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"HtlcReceived\"\n            }\n          }\n        },\n        {\n          \"name\": \"sponsorPositions\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"role\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"sponsor\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"operator\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"status\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"computeChannels\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"status\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"agent\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"miner\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"ComputeChannelConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"computeChannel\",\n          \"args\": [\n            {\n              \"name\": \"channelId\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"ComputeChannel\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"settlementPrices\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"model\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"sku\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"miner\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"agent\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"tier\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"SettlementPriceConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"settlementPrice\",\n          \"args\": [\n            {\n              \"name\": \"channelId\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"SettlementPrice\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"reliabilityEvents\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"miner\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"kind\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"ReliabilityEventConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"minerGhostStatsSnapshots\",\n          \"args\": [\n            {\n              \"name\": \"limit\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"offset\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"miner\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"eventKind\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"MinerGhostStatsSnapshotConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"minerReliability\",\n          \"args\": [\n            {\n              \"name\": \"miner\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"MinerReliability\"\n            }\n          }\n        },\n        {\n          \"name\": \"minerReliabilitySeries\",\n          \"args\": [\n            {\n              \"name\": \"miner\",\n              \"type\": {\n                \"kind\": \"NON_NULL\",\n                \"name\": null,\n                \"ofType\": {\n                  \"kind\": \"SCALAR\",\n                  \"name\": \"String\"\n                }\n              }\n            },\n            {\n              \"name\": \"bucket\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"String\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"from\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"to\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            },\n            {\n              \"name\": \"epochBlocks\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"networkValue\",\n          \"args\": [\n            {\n              \"name\": \"since\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Float\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"NetworkValue\"\n            }\n          }\n        },\n        {\n          \"name\": \"termCurve\",\n          \"args\": [\n            {\n              \"name\": \"days\",\n              \"type\": {\n                \"kind\": \"SCALAR\",\n                \"name\": \"Int\",\n                \"ofType\": null\n              }\n            }\n          ],\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"TermCurve\"\n            }\n          }\n        }\n      ]\n    }\n  }\n}",
+  "measuredAt": "2026-11-05T22:11:05.244Z",
+  "durationMs": 134,
+  "attempts": 1
+}
