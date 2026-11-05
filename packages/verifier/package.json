@@ -1,0 +1,19 @@
+{
+  "name": "@flop-lab/verifier",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Offline-first settlement evidence checks for FLOP devnet",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-verify": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  }
+}

@@ -1,0 +1,8 @@
+group: io.kestra.plugin.flop.settlements
+name: settlements
+title: FLOP settlements
+description: Read, check and react to settlement rows.
+body: List reads a bounded tape. Verify checks exact arithmetic and ordering. NewSettlement stores its poll cursor in namespace KV.
+videos: []
+createdBy: flop-lab
+managedBy: flop-lab

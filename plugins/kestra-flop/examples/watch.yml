@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+id: flop_watch
+namespace: company.flop
+triggers:
+  - id: tape
+    type: io.kestra.plugin.flop.settlements.NewSettlement
+    interval: PT1M
+    maxResults: 1000
+tasks:
+  - id: verify
+    type: io.kestra.plugin.flop.settlements.Verify
+    settlements: "{{ trigger.rows }}"

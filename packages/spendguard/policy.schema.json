@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zkasuran/flop-lab/spendguard/policy.schema.json",
+  "title": "Spendguard policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "budgets",
+    "maxPricePerGflop",
+    "maxEscrowPerSession",
+    "allowModels",
+    "allowMiners",
+    "denyMiners",
+    "modelCaps",
+    "minerCaps",
+    "requireDryRun",
+    "cooldown"
+  ],
+  "$defs": {
+    "flop": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+    "names": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 256, "pattern": "\\S" }
+    },
+    "caps": {
+      "type": "object",
+      "propertyNames": { "minLength": 1, "maxLength": 256, "pattern": "\\S" },
+      "additionalProperties": { "$ref": "#/$defs/flop" }
+    }
+  },
+  "properties": {
+    "version": { "const": 1 },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task", "hour", "day", "total"],
+      "properties": {
+        "task": { "$ref": "#/$defs/flop" },
+        "hour": { "$ref": "#/$defs/flop" },
+        "day": { "$ref": "#/$defs/flop" },
+        "total": { "$ref": "#/$defs/flop" }
+      }
+    },
+    "maxPricePerGflop": { "$ref": "#/$defs/flop" },
+    "maxEscrowPerSession": { "$ref": "#/$defs/flop" },
+    "allowModels": { "$ref": "#/$defs/names" },
+    "allowMiners": { "$ref": "#/$defs/names" },
+    "denyMiners": { "$ref": "#/$defs/names" },
+    "modelCaps": { "$ref": "#/$defs/caps" },
+    "minerCaps": { "$ref": "#/$defs/caps" },
+    "requireDryRun": { "type": "boolean" },
+    "cooldown": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+  }
+}

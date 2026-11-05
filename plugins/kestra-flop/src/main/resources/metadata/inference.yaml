@@ -1,0 +1,8 @@
+group: io.kestra.plugin.flop.inference
+name: inference
+title: FLOP inference
+description: Guarded chat requests tested with a mock gateway.
+body: ChatCompletion requires a fresh explicit GFLOP price and sends the total cost ceiling to the gateway. It has not run against the live gateway.
+videos: []
+createdBy: flop-lab
+managedBy: flop-lab

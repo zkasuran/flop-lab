@@ -4,3 +4,6 @@ node_modules
 pnpm-lock.yaml
 fixtures
 plugins/
+packages/harness/claims
+packages/harness/last-run.json
+packages/*/fixtures

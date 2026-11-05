@@ -1,0 +1,20 @@
+{
+  "name": "@flop-lab/scoreboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Observed settlement scoreboard and conservative miner router",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-scoreboard": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts",
+    "cli": "tsx src/cli.ts"
+  }
+}

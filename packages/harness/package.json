@@ -5,8 +5,12 @@
   "type": "module",
   "license": "Apache-2.0",
   "description": "Bounded, evidence-backed conformance checks for FLOP devnet",
-  "bin": { "flop-harness": "./dist/cli.js" },
-  "exports": { ".": "./src/index.ts" },
+  "bin": {
+    "flop-harness": "./dist/cli.js"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
     "build": "tsup",

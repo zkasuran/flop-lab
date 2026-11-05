@@ -1,0 +1,10 @@
+{
+  "measuredAt": "2026-11-05T08:43:10.126Z",
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_get_stats",
+  "arguments": {},
+  "status": 200,
+  "contentType": "text/event-stream",
+  "elapsedMs": 620,
+  "raw": "event: message\ndata: {\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\n  \\\"stats\\\": {\\n    \\\"latestBlockNumber\\\": 2947024,\\n    \\\"totalBlocks\\\": 2947024,\\n    \\\"tps\\\": 2.07,\\n    \\\"activeHTLCs\\\": 1,\\n    \\\"totalHTLCs\\\": 1,\\n    \\\"proofs24h\\\": 0,\\n    \\\"activeOperators\\\": 0,\\n    \\\"avgBlockTime\\\": 1052.578947368421,\\n    \\\"totalTransactions\\\": 5395207,\\n    \\\"txVolume24h\\\": 170742,\\n    \\\"totalAccounts\\\": 5956,\\n    \\\"flopLocked\\\": \\\"2000000000000000000\\\"\\n  }\\n}\"}]},\"jsonrpc\":\"2.0\",\"id\":1}\n\n"
+}
