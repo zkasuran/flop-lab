@@ -33,15 +33,15 @@ pnpm --filter @flop-lab/harness start run --only gateway-contract --max-requests
 
 Each answers one question, has its own README with the limits and has a page on the site.
 
-| Question | Tool |
-|---|---|
-| Does this settlement add up? | [`verifier`](packages/verifier): replays public evidence offline, with exact integer arithmetic. PASS, FAIL or UNVERIFIABLE per check, never a guess. |
-| Which miner should I use? | [`scoreboard`](packages/scoreboard): ranks miners from settlements and price sources, with the confidence of every score and a router that explains its pick. |
-| Does the network do what the docs say? | [`harness`](packages/harness): a catalogue of documented claims, each checked with a bounded number of requests and no funds. |
-| How do I stop an agent overspending? | [`spendguard`](packages/spendguard): budgets, price ceilings and an append-only ledger in front of the SDK. |
-| What is about to leave its challenge window? | [`challenger`](packages/challenger): tracks windows and drafts review dossiers. It never files a dispute. |
-| Can I run this from a Kestra flow? | [`plugins/kestra-flop`](plugins/kestra-flop): read-only network tasks and a settlement trigger. |
-| How does an API charge per call in FLOP? | [`x402kit`](packages/x402kit): in progress. |
+| Question                                     | Tool                                                                                                                                                          |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Does this settlement add up?                 | [`verifier`](packages/verifier): replays public evidence offline, with exact integer arithmetic. PASS, FAIL or UNVERIFIABLE per check, never a guess.         |
+| Which miner should I use?                    | [`scoreboard`](packages/scoreboard): ranks miners from settlements and price sources, with the confidence of every score and a router that explains its pick. |
+| Does the network do what the docs say?       | [`harness`](packages/harness): a catalogue of documented claims, each checked with a bounded number of requests and no funds.                                 |
+| How do I stop an agent overspending?         | [`spendguard`](packages/spendguard): budgets, price ceilings and an append-only ledger in front of the SDK.                                                   |
+| What is about to leave its challenge window? | [`challenger`](packages/challenger): tracks windows and drafts review dossiers. It never files a dispute.                                                     |
+| Can I run this from a Kestra flow?           | [`plugins/kestra-flop`](plugins/kestra-flop): read-only network tasks and a settlement trigger.                                                               |
+| How does an API charge per call in FLOP?     | [`x402kit`](packages/x402kit): in progress.                                                                                                                   |
 
 All of them read through one small client, [`packages/mcp`](packages/mcp), which parses the hosted server's event stream, retries politely and ships recorded fixtures for tests.
 
