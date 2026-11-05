@@ -36,7 +36,7 @@ export const tools: readonly Tool[] = [
     slug: "harness",
     section: "verify",
     name: "Conformance harness",
-    tagline: "Does the network do what its docs say?",
+    tagline: "Which documented claims have public evidence?",
     status: "alpha",
     href: "/harness",
     repoPath: "packages/harness",

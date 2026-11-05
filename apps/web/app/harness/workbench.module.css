@@ -2,6 +2,19 @@
 .workbench {
   padding-block: var(--space-8) var(--space-16);
 }
+.historyRuns {
+  padding-left: var(--space-6);
+  max-height: 24rem;
+  overflow: auto;
+}
+.historyRuns li {
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+.historyRuns strong {
+  display: block;
+  font-family: var(--font-data);
+}
 .workbench a {
   transition: color var(--motion-fast);
 }

@@ -197,9 +197,17 @@ the missing agent-pack tools and #80 covers the private source repository.
 
 ## Recorded-run website
 
-The `/harness` page reads the committed `packages/harness/last-run.json`. It labels
-the run as last known and shows its original time, source URLs and available network
-identifiers. Missing genesis hashes and spec versions stay unavailable.
+The `/harness` page reads the committed expanded archive in
+`packages/harness/fixtures/coverage/`. It labels the run as last known and shows its
+original time, source URLs and available network identifiers. Missing genesis
+hashes and spec versions stay unavailable.
+
+Source coverage groups the inventory by docs page or paper section. Counts mean
+blocks with a named predicate divided by retained blocks. They are separate from
+PASS counts. Expand a page to read its quoted source lines, evidence gaps and
+linked results. Details load from same-origin static JSON when requested.
+The server checks the recorder index with a five-minute cache. A claim drawer
+shows every available recorder run, including explicit gaps for missing claims.
 
 Filter the catalogue by outcome or boundary. Search by claim, expected value or
 reason. Open a claim for its quoted source, expected predicate, observed attempts
@@ -209,12 +217,14 @@ against the current devnet, so their results can differ from the recording.
 After a checkout and `pnpm install --frozen-lockfile`, run the site locally:
 
 ```sh
-pnpm --filter web exec next dev --port 3320
+pnpm --filter web exec next dev --port 3600
 ```
 
-Open `http://localhost:3320/harness`. To refresh the page's recording, run
-`pnpm --filter @flop-lab/harness record`, review the fixtures and commit the output.
-The page makes no FLOP API calls. Motion follows reading order, filtered rows,
+Open `http://localhost:3600/harness`. To refresh the page's recording, run
+`pnpm --filter @flop-lab/harness record`, then
+`pnpm --filter @flop-lab/harness exec tsx scripts/site-data.ts` and review the files.
+The generator updates source groups and all split-recording imports.
+The browser makes no FLOP API calls. Motion follows source coverage, filtered rows,
 the detail drawer and recorded request durations. Reduced motion keeps the final
 values and disables travel.
 
