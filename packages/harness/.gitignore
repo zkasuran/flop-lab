@@ -1,2 +1,4 @@
 dist/
 last-run.md
+!fixtures/coverage/
+!fixtures/coverage/**

@@ -22,6 +22,39 @@ discovery, settlement arithmetic, pagination, error handling and advertised MCP
 tool inputs. Each claim carries a quoted source or schema path. JSON-compatible
 YAML 1.2 keeps catalogue parsing small and deterministic.
 
+The expanded inventory records every body block from the docs index and the pinned
+yellowpaper. The capture at `2026-11-05T22:44:20.746Z` read 38 docs pages and the
+paper at `2a2cc8218048a2933071bb2f45d75335560e39d8`. It retained 2609 prose,
+table and example blocks. Source fixtures preserve original bytes after JSON
+decoding. Each block has its raw source line range and a quoted text projection.
+HTML table cells are separated with ` | ` for readability.
+
+This is a source-block inventory. A paragraph can contain several assertions.
+Examples and context remain visible so keyword filtering cannot hide coverage
+gaps. It is not a claim that automatic extraction understands every sentence.
+Unmapped blocks carry a reason and the evidence needed. Some need another tool,
+a runtime, a worker or a write-enabled test rather than a public read.
+
+`claims/extracted.yaml` adds exact paper parameter identifiers, quoted docs
+parameters and hosted session boundaries. Parameter checks reuse the spec tool's
+exact unit arithmetic. A catalog match verifies agreement between two sources,
+not runtime enforcement. Missing rows and incompatible units are UNVERIFIABLE.
+The original protocol checks retain their runtime evidence requirements.
+
+```sh
+pnpm --filter @flop-lab/harness start coverage --page protocol-parameters
+pnpm --filter @flop-lab/harness start run --profile ci --max-flop 0
+pnpm --filter @flop-lab/harness start history --only gateway-contract
+```
+
+`coverage` without `--page` emits the whole offline inventory. `history` reads the
+recorder's public `data/index.json` once with an 8-second timeout and a 4 MB ceiling.
+It preserves every run's source and measurement time. Missing claims stay gaps.
+It never carries a previous PASS forward. An absent data branch is an empty
+history, not a successful conformance run. The recorded branch lookup returned
+HTTP 404. Recorder seed fixtures test populated history without claiming a live
+archive exists.
+
 ## Run
 
 From the repository root with Node 22 and pnpm:
@@ -94,6 +127,11 @@ retry with backoff on transient failures. Gateway reads retry once on 429 or 5xx
 and honour Retry-After up to 30 seconds. Responses have a 196608-byte ceiling and a
 20-second timeout. Redirects and unlisted endpoint URLs are refused.
 
+The `full` profile caps network attempts at 80. `ci` caps attempts at 12 and selects
+gateway shape, price-source lifetime, the reported audit rate, hosted read-only
+inventory and the catalog's block reward. `--max-requests` can lower a profile's
+ceiling. It cannot raise it. An exhausted run keeps unexecuted checks SKIPPED.
+
 Successful equivalent reads are cached for 30 seconds within one run. Cache hits
 retain the original evidence references and observation times. Confirmation clears
 the cache. No cache persists between runs. A budget exhausted during confirmation
@@ -112,10 +150,12 @@ listed with their expected outcomes so missing coverage remains visible.
 pnpm --filter @flop-lab/harness record
 ```
 
-This runs the read-only checks with a request ceiling of 100. It writes raw dated
-per-request fixtures and a compact `packages/harness/last-run.json`. The compact
-snapshot marks truncated response and observation excerpts and references each
-raw fixture. It is suitable for the site and can be passed to `report`.
+This runs the read-only checks with a request ceiling of 80. It writes raw dated
+per-request fixtures and splits compact results under `fixtures/coverage/` to
+keep files below 200 KB. The compact snapshot marks truncated response and
+observation excerpts and references each raw fixture. `loadCoverageRecording()`
+reassembles and validates that archive. The older `last-run.json` remains a dated
+historical recording. A normal `run` still emits a single JSON report for `report`.
 Review fixture and catalogue changes before committing them. Live devnet data can
 change or disappear after a reset. Recorded responses are not current measurements.
 
@@ -183,6 +223,8 @@ for this milestone is retained with its PR.
 
 ## What this does not verify
 
+- Exhaustive sentence-level interpretation. Coverage counts source blocks and explicit predicates.
+- Runtime enforcement from source catalog agreement or continuous health from historical runs.
 - Inference correctness, miner performance, receipt signatures or cryptographic proofs.
 - Simulated TEE answers or placeholder receipt fields as evidence of verification.
 - Runtime constants that the public MCP surfaces do not expose with a version.

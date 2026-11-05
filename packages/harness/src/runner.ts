@@ -8,6 +8,7 @@ import { object } from "./validation";
 import type { Attempt, Claim, Observation, Risk, RunReport } from "./types";
 
 export interface RunOptions {
+  profile?: "full" | "ci";
   only?: string;
   risk?: Risk;
   maxRequests?: number;
@@ -16,6 +17,18 @@ export interface RunOptions {
   claims?: Claim[];
   transport?: Transport;
 }
+
+export const PROFILES = {
+  full: { maxRequests: 80 },
+  ci: { maxRequests: 12 },
+} as const;
+export const CI_CLAIMS = [
+  "gateway-contract",
+  "price-source-expiry",
+  "audit-rate",
+  "hosted-session-boundary",
+  "docs-initial-block-reward",
+] as const;
 
 /** Exact FLOP decimal ceiling, rejecting signs and exponent notation. @example parseFlop("0.01") */
 export function parseFlop(value: string): bigint {
@@ -30,9 +43,19 @@ export async function runHarness(options: RunOptions = {}): Promise<RunReport> {
   const maxFlop = options.maxFlop ?? "0";
   const ceiling = parseFlop(maxFlop);
   const claims = options.claims ?? (await loadClaims());
+  const profile = options.profile ?? "full";
+  if (profile !== "full" && profile !== "ci") throw new Error("Unknown run profile");
+  if (options.maxRequests !== undefined && (!Number.isSafeInteger(options.maxRequests) || options.maxRequests < 0))
+    throw new Error("max-requests must be a nonnegative safe integer");
   if (options.only && !claims.some((claim) => claim.id === options.only))
     throw new Error(`Unknown claim: ${options.only}`);
-  const transport = options.transport ?? new Transport({ maxRequests: options.maxRequests });
+  if (profile === "ci" && options.only && !(CI_CLAIMS as readonly string[]).includes(options.only))
+    throw new Error("Claim is outside the ci profile");
+  const transport =
+    options.transport ??
+    new Transport({
+      maxRequests: Math.min(options.maxRequests ?? PROFILES[profile].maxRequests, PROFILES[profile].maxRequests),
+    });
   const context = new Context(transport);
   const started = Date.now();
   const report: RunReport = {
@@ -72,6 +95,10 @@ export async function runHarness(options: RunOptions = {}): Promise<RunReport> {
       command: `pnpm --filter @flop-lab/harness start run --only ${claim.id} --max-requests 80 --max-flop 0`,
     };
     report.results.push(result);
+    if (profile === "ci" && !(CI_CLAIMS as readonly string[]).includes(claim.id)) {
+      result.reason = "Not selected by ci profile";
+      continue;
+    }
     if ((options.only && claim.id !== options.only) || (options.risk && claim.risk !== options.risk)) continue;
     if (claim.risk === "spends-test-funds" && (!options.allowSpend || ceiling === 0n)) {
       result.reason = "Requires --allow-spend and a positive --max-flop ceiling. No transactions submitted.";

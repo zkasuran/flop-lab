@@ -15,10 +15,11 @@
     "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
     "build": "tsup",
     "start": "tsx src/cli.ts",
-    "record": "tsx scripts/record.ts"
+    "record": "tsx scripts/record-coverage.ts"
   },
   "dependencies": {
     "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/spec": "workspace:*",
     "@flop-labs/contracts": "0.1.1",
     "ajv": "^8.20.0"
   }

@@ -121,6 +121,9 @@ importers:
       '@flop-lab/mcp':
         specifier: workspace:*
         version: link:../mcp
+      '@flop-lab/spec':
+        specifier: workspace:*
+        version: link:../spec
       '@flop-labs/contracts':
         specifier: 0.1.1
         version: 0.1.1
