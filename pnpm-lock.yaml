@@ -38,8 +38,6 @@ importers:
 
   packages/mcp: {}
 
-  packages/verifier: {}
-
 packages:
 
   '@cacheable/memory@2.2.0':
