@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Record devnet snapshots and compare reset signals and claim changes",
   },
   {
+    name: "doctor",
+    pkg: "@flop-lab/doctor",
+    bin: "flop-doctor",
+    section: "operate",
+    summary: "Check local operator readiness against sourced requirements",
+  },
+  {
     name: "spec",
     pkg: "@flop-lab/spec",
     bin: "flop-spec",
@@ -72,6 +79,13 @@ export const commands: readonly Command[] = [
     bin: "flop-x402",
     section: "build",
     summary: "Diagnose pay-per-call payment headers",
+  },
+  {
+    name: "sdk",
+    pkg: "@flop-lab/sdkconf",
+    bin: "flop-sdkconf",
+    section: "build",
+    summary: "Check published SDK behaviour with offline request traces",
   },
 ];
 

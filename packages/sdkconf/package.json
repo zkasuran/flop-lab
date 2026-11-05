@@ -1,0 +1,26 @@
+{
+  "name": "@flop-lab/sdkconf",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Offline FLOP SDK conformance scenarios and request traces",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-sdkconf": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "start": "tsx src/cli.ts",
+    "record": "tsx test/record.ts"
+  },
+  "devDependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-labs/sdk": "0.4.0",
+    "@flop-labs/client": "0.2.1",
+    "@flop-labs/cli": "0.4.0"
+  }
+}
