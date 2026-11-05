@@ -51,6 +51,14 @@ export const tools: readonly Tool[] = [
     repoPath: "packages/x402kit",
   },
   {
+    slug: "kestra",
+    name: "FLOP for Kestra",
+    tagline: "Read the devnet and check settlements in a dated Kestra flow.",
+    status: "alpha",
+    href: "/kestra",
+    repoPath: "plugins/kestra-flop",
+  },
+  {
     slug: "challenger",
     name: "Challenge watcher",
     tagline: "Track challenge windows and prepare evidence for review.",

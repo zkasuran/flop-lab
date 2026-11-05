@@ -7,7 +7,7 @@ describe("tool navigation contract", () => {
     expect(new Set(tools.map((tool) => tool.slug)).size).toBe(tools.length);
     for (const tool of tools) {
       expect(tool.href).toMatch(/^\/[a-z0-9-]+$/);
-      expect(tool.repoPath).toMatch(/^packages\/[a-z0-9-]+$/);
+      expect(tool.repoPath).toMatch(/^(packages|plugins)\/[a-z0-9-]+$/);
     }
   });
   it("does not send visitors to missing pages for planned tools", () => {
