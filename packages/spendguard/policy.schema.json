@@ -4,15 +4,45 @@
   "title": "Spendguard policy",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "budgets", "maxPricePerGflop", "maxEscrowPerSession", "allowModels", "allowMiners", "denyMiners", "modelCaps", "minerCaps", "requireDryRun", "cooldown"],
+  "required": [
+    "version",
+    "budgets",
+    "maxPricePerGflop",
+    "maxEscrowPerSession",
+    "allowModels",
+    "allowMiners",
+    "denyMiners",
+    "modelCaps",
+    "minerCaps",
+    "requireDryRun",
+    "cooldown"
+  ],
   "$defs": {
     "flop": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
-    "names": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 256, "pattern": "\\S" } },
-    "caps": { "type": "object", "propertyNames": { "minLength": 1, "maxLength": 256, "pattern": "\\S" }, "additionalProperties": { "$ref": "#/$defs/flop" } }
+    "names": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 256, "pattern": "\\S" }
+    },
+    "caps": {
+      "type": "object",
+      "propertyNames": { "minLength": 1, "maxLength": 256, "pattern": "\\S" },
+      "additionalProperties": { "$ref": "#/$defs/flop" }
+    }
   },
   "properties": {
     "version": { "const": 1 },
-    "budgets": { "type": "object", "additionalProperties": false, "required": ["task", "hour", "day", "total"], "properties": { "task": { "$ref": "#/$defs/flop" }, "hour": { "$ref": "#/$defs/flop" }, "day": { "$ref": "#/$defs/flop" }, "total": { "$ref": "#/$defs/flop" } } },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task", "hour", "day", "total"],
+      "properties": {
+        "task": { "$ref": "#/$defs/flop" },
+        "hour": { "$ref": "#/$defs/flop" },
+        "day": { "$ref": "#/$defs/flop" },
+        "total": { "$ref": "#/$defs/flop" }
+      }
+    },
     "maxPricePerGflop": { "$ref": "#/$defs/flop" },
     "maxEscrowPerSession": { "$ref": "#/$defs/flop" },
     "allowModels": { "$ref": "#/$defs/names" },

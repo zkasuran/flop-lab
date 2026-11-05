@@ -78,9 +78,7 @@ Spendguard uses an explicitly supplied SDK port. Import your application's insta
 
 ```ts
 import { runDirectSession, computeChannel } from "@flop-labs/sdk";
-import {
-  guardedSession, reconcileChannel, sdkFinalityPort,
-} from "@flop-lab/spendguard";
+import { guardedSession, reconcileChannel, sdkFinalityPort } from "@flop-lab/spendguard";
 
 const sdkPort = { runDirectSession, estimateSession: computeChannel.estimateSession };
 const permit = {
@@ -95,8 +93,7 @@ const permit = {
 await guardedSession(guard, request, plan, permit, { dryRun: true }, sdkPort);
 const result = await guardedSession(guard, request, plan, permit, { dryRun: false }, sdkPort);
 // Once the outcome block is known, read finalized state instead of trusting result:
-await reconcileChannel(guard, request.id, outcomeBlockHash, rpcSource,
-  sdkFinalityPort(api, channelId));
+await reconcileChannel(guard, request.id, outcomeBlockHash, rpcSource, sdkFinalityPort(api, channelId));
 ```
 
 The guard uses `estimateSession`, admits exactly one channel and checks that generated tokens cover `maxTokens`. The full estimated escrow must fit `request.amount`, the permit's hard ceiling and every policy limit. It passes that exact escrow as `maxFlop`. It never increases a requested ceiling to make an estimate fit. The dry run invokes the estimator and policy pipeline but does not call `runDirectSession`.

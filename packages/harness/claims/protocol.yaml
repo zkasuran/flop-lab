@@ -2,240 +2,256 @@
   {
     "id": "block-time",
     "title": "Block time",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Average, with a roadmap toward sub-millisecond settlement",
-      "path": "Block time table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Average, with a roadmap toward sub-millisecond settlement",
+        "path": "Block time table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "1 s",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "block-size",
     "title": "Block size limit",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Bounds how many proof hashes a block carries",
-      "path": "Block size limit table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Bounds how many proof hashes a block carries",
+        "path": "Block size limit table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "2 MB",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "block-reward",
     "title": "Block reward",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Era 0",
-      "path": "Block reward table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Era 0",
+        "path": "Block reward table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "96 FLOP",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "halving",
     "title": "Halving period",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "63,072,000 blocks",
-      "path": "Halving period table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "63,072,000 blocks",
+        "path": "Halving period table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "730 days",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "halving-count",
     "title": "Number of halvings",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Then constant in perpetuity",
-      "path": "Number of halvings table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Then constant in perpetuity",
+        "path": "Number of halvings table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "5",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "miner-share",
     "title": "Miner share",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Distributed by verified G_n contribution",
-      "path": "Miner share table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Distributed by verified G_n contribution",
+        "path": "Miner share table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "75%",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "validator-share",
     "title": "Validator share",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Shared across the active set",
-      "path": "Validator share table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Shared across the active set",
+        "path": "Validator share table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "10%",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "agent-share",
     "title": "Agent/broker share",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Minted to a protocol account; distribution not yet live",
-      "path": "Agent/broker share table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Minted to a protocol account; distribution not yet live",
+        "path": "Agent/broker share table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "10%",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "staker-share",
     "title": "Community-staker share",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Minted to a protocol account; distribution not yet live",
-      "path": "Community-staker share table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Minted to a protocol account; distribution not yet live",
+        "path": "Community-staker share table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "5%",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "validator-cap",
     "title": "Set size",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Capped",
-      "path": "Set size table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Capped",
+        "path": "Set size table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "1,000",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "miner-stake",
     "title": "Base self-stake",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Before the capacity bond",
-      "path": "Base self-stake table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Before the capacity bond",
+        "path": "Base self-stake table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "10,000 FLOP",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "challenge-window",
     "title": "Challenge window",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Bounded by DA retention; under review to shorten toward hours",
-      "path": "Challenge window table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Bounded by DA retention; under review to shorten toward hours",
+        "path": "Challenge window table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "~7 days",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "response-deadline",
     "title": "Response deadline",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Silence defaults to a fraud verdict",
-      "path": "Response deadline table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Silence defaults to a fraud verdict",
+        "path": "Response deadline table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "2 hours",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "dispute-bond",
     "title": "Dispute bond",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Forfeited if the dispute is frivolous",
-      "path": "Dispute bond table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Forfeited if the dispute is frivolous",
+        "path": "Dispute bond table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "100 FLOP",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "fraud-slash",
     "title": "Fraud slash",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "Slash, eject, blacklist",
-      "path": "Fraud slash table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "Slash, eject, blacklist",
+        "path": "Fraud slash table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "100%",
     "check": "unavailable",
-    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant."
+    "reason": "The public MCP surfaces do not expose the finalized runtime constant and its version. A design parameter or average is not proof of the live constant.",
   },
   {
     "id": "audit-rate",
     "title": "Soft-tier audit rate",
-    "source": {
-      "url": "https://docs.flop.network/docs/protocol-parameters",
-      "quote": "About one session in forty; a governance dial, not a constant",
-      "path": "Audit rate table row",
-      "measuredAt": "2026-11-05T09:23:46.373Z"
-    },
+    "source":
+      {
+        "url": "https://docs.flop.network/docs/protocol-parameters",
+        "quote": "About one session in forty; a governance dial, not a constant",
+        "path": "Audit rate table row",
+        "measuredAt": "2026-11-05T09:23:46.373Z",
+      },
     "kind": "chain",
     "risk": "read-only",
     "expected": "softTierSpotCheckRatePpm = 25000 (documented 2.5% design rate)",
-    "check": "audit"
-  }
+    "check": "audit",
+  },
 ]

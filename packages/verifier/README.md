@@ -38,20 +38,20 @@ Every check names its claim, inputs and observation ids. Status is `PASS`, `FAIL
 
 ## Checks
 
-| Id | Claim and required data |
-| --- | --- |
-| `bundle-integrity` | Schema and SHA-256 hashes agree. Requires the complete bundle. Does not authenticate its author. |
-| `settlement-record` | Exactly one row in the captured pages matches the channel id. |
-| `escrow-conservation` | `minerPaid + unusedEscrow + burned = escrow`. Requires unsigned integer strings in raw units. Uses BigInt. |
-| `display-price-ratio` | The written price is `minerPaid / aggregateGn`, exactly or truncated to its written fractional precision. Uses integer arithmetic. |
-| `channel-consistency` | The channel and tape agree on escrow, payment, burn, work, parties and market. |
-| `price-consistency` | The agreed historical GFLOP price justifies the payment. Unverifiable without a G_n conversion, per-turn compute and the agreement. |
-| `model-registry` | Reported hashes agree with captured discovery and trust-root membership. Checks measuredRoot when enforcement is enabled. |
-| `settlement-event` | Kind, cooperative flag, amounts, block and extrinsic references agree across indexed views. Requires a successful indexed transaction for this channel. |
-| `assurance-tier` | Tier agreement is checked. Authentication remains unverifiable without verified signatures and an appraisal chain. |
-| `challenge-window` | Rejects settlement after the captured head or a deadline before settlement. Exact expiry remains unverifiable without the historical runtime constant. |
-| `merkle-inclusion` | Unverifiable without authoritative leaf/node encoding and an authenticated root. A published `merklePath` does not establish encoding. |
-| `tee-quote-digest` | Unverifiable without raw quote bytes, documented hashing and independent authentication. Not applicable to a captured Soft channel with no HTLC link or quote. |
+| Id                    | Claim and required data                                                                                                                                        |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bundle-integrity`    | Schema and SHA-256 hashes agree. Requires the complete bundle. Does not authenticate its author.                                                               |
+| `settlement-record`   | Exactly one row in the captured pages matches the channel id.                                                                                                  |
+| `escrow-conservation` | `minerPaid + unusedEscrow + burned = escrow`. Requires unsigned integer strings in raw units. Uses BigInt.                                                     |
+| `display-price-ratio` | The written price is `minerPaid / aggregateGn`, exactly or truncated to its written fractional precision. Uses integer arithmetic.                             |
+| `channel-consistency` | The channel and tape agree on escrow, payment, burn, work, parties and market.                                                                                 |
+| `price-consistency`   | The agreed historical GFLOP price justifies the payment. Unverifiable without a G_n conversion, per-turn compute and the agreement.                            |
+| `model-registry`      | Reported hashes agree with captured discovery and trust-root membership. Checks measuredRoot when enforcement is enabled.                                      |
+| `settlement-event`    | Kind, cooperative flag, amounts, block and extrinsic references agree across indexed views. Requires a successful indexed transaction for this channel.        |
+| `assurance-tier`      | Tier agreement is checked. Authentication remains unverifiable without verified signatures and an appraisal chain.                                             |
+| `challenge-window`    | Rejects settlement after the captured head or a deadline before settlement. Exact expiry remains unverifiable without the historical runtime constant.         |
+| `merkle-inclusion`    | Unverifiable without authoritative leaf/node encoding and an authenticated root. A published `merklePath` does not establish encoding.                         |
+| `tee-quote-digest`    | Unverifiable without raw quote bytes, documented hashing and independent authentication. Not applicable to a captured Soft channel with no HTLC link or quote. |
 
 ### Price semantics
 

@@ -12,17 +12,17 @@ The tarball was unpacked in the agent scratch directory. These findings come fro
 
 The README wallet examples take a client and decimal JavaScript numbers. The shipped functions take a polkadot API, signer and raw `bigint` amounts. Spendguard follows the shipped declarations.
 
-| Shipped API | Fund movement or authority change |
-| --- | --- |
-| `createAgentWallet(api, signer, {agent, perTxLimit, dailyCap, allowedDestinations})` | Creates wallet guardrails. Transaction fees apply. |
-| `fundAgentWallet(api, signer, agent, amount)` | Moves the owner's funds into the agent wallet. |
-| `agentTransfer(api, signer, destination, amount)` | Transfers wallet funds through the wallet pallet. |
-| `ownerWithdraw(api, signer, agent, amount)` | Moves wallet funds back to the owner. |
-| `createSession(api, signer, {delegate, spendingCap, durationBlocks, allowedPallets})` | Grants delegated authority. Defaults per-transaction and daily limits to `spendingCap`. |
-| `createCalibratedSession(api, signer, params)` | Explicit spending, per-transaction and daily caps. |
-| `executeViaSession(api, signer, owner, call, spendAmount)` | Executes a supplied call through the session pallet using a queried nonce. The nested call controls actual movement. |
-| `runDirectSession(options)` | Opens escrow, serves one turn and settles or attempts recovery. It escrows `options.maxFlop`. |
-| `computeChannel.estimateSession(input)` | Pure calculation. No signing, RPC or funds. |
+| Shipped API                                                                           | Fund movement or authority change                                                                                    |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `createAgentWallet(api, signer, {agent, perTxLimit, dailyCap, allowedDestinations})`  | Creates wallet guardrails. Transaction fees apply.                                                                   |
+| `fundAgentWallet(api, signer, agent, amount)`                                         | Moves the owner's funds into the agent wallet.                                                                       |
+| `agentTransfer(api, signer, destination, amount)`                                     | Transfers wallet funds through the wallet pallet.                                                                    |
+| `ownerWithdraw(api, signer, agent, amount)`                                           | Moves wallet funds back to the owner.                                                                                |
+| `createSession(api, signer, {delegate, spendingCap, durationBlocks, allowedPallets})` | Grants delegated authority. Defaults per-transaction and daily limits to `spendingCap`.                              |
+| `createCalibratedSession(api, signer, params)`                                        | Explicit spending, per-transaction and daily caps.                                                                   |
+| `executeViaSession(api, signer, owner, call, spendAmount)`                            | Executes a supplied call through the session pallet using a queried nonce. The nested call controls actual movement. |
+| `runDirectSession(options)`                                                           | Opens escrow, serves one turn and settles or attempts recovery. It escrows `options.maxFlop`.                        |
+| `computeChannel.estimateSession(input)`                                               | Pure calculation. No signing, RPC or funds.                                                                          |
 
 Sources: `dist/agent-wallet.js` lines 87-100, 109-174 and 345-374; `dist/agent-wallet.d.ts`; `dist/compute-channel/direct-session.js`; `dist/compute-channel/session-estimate.js`.
 
