@@ -4,6 +4,7 @@ import { MotionLink, ReadingPath, ReadingReveal } from "@/components/motion";
 import { ToolGrid } from "@/components/tool-grid";
 import { DevnetPanel } from "@/components/devnet-panel";
 import { getCachedSnapshot } from "@/lib/devnet-server";
+import { Findings } from "@/components/findings";
 
 const command = "curl --fail https://api.flop.network/v1/models";
 export const revalidate = 30;
@@ -40,6 +41,24 @@ export default async function Home() {
         </div>
         <DevnetPanel snapshot={snapshot} visual />
       </section>
+      <section className="section" aria-labelledby="promise-heading">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">The promise / The outside view</p>
+            <h2 id="promise-heading">Proofs should stand up to questions.</h2>
+          </div>
+          <p className="muted">
+            FLOP promises verified AI inference. Miners submit proofs. Anyone can challenge a session. Proven fraud
+            costs the miner its whole stake.{" "}
+            <MotionLink href="https://docs.flop.network/docs/verification-stack">Read the design ↗</MotionLink>
+          </p>
+        </div>
+        <p className="intro">
+          We built independent tools to check those promises from outside. They read public data, test the claims and
+          show the evidence you can inspect yourself.
+        </p>
+      </section>
+      <Findings snapshot={snapshot} />
       <DevnetPanel snapshot={snapshot} />
       <ReadingPath
         title="Follow the evidence."
@@ -65,8 +84,8 @@ export default async function Home() {
             <h2 id="tools-heading">One question. One tool.</h2>
           </div>
           <p className="muted">
-            Planned tools link to their package location. They are not ready to run. Each tool will publish its evidence
-            and limits.
+            Start with a settlement in the verifier. Use the harness to inspect a failed claim or the scoreboard to
+            compare miner evidence. Alpha pages run today. Planned pages link to their source.
           </p>
         </div>
         <ToolGrid />
@@ -75,10 +94,11 @@ export default async function Home() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">Start with a read</p>
-            <h2 id="start-heading">Ask the network yourself.</h2>
+            <h2 id="start-heading">Start with the public model list.</h2>
           </div>
           <p className="muted">
-            The public model list is keyless. This command reads gateway data. It does not send inference or move funds.
+            No wallet, key or account. Paste this command in a terminal to read the gateway's model list and price
+            sources. Then open a tool to check what the records support.
           </p>
         </div>
         <div className="command">
