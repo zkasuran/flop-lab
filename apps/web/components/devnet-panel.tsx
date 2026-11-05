@@ -1,34 +1,29 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion, useInView, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { Observation, Snapshot } from "@/lib/devnet";
-import { compareSample } from "@/lib/observation-view";
-import { Disclosure, MotionButton, ObservedNumber } from "./motion";
+import { age, compareSample, isStale } from "@/lib/observation-view";
+import { Disclosure, EASE_OUT, MotionButton, ObservedNumber } from "./motion";
 import { recordedModels, withRecording, type ModelFallback } from "@/app/history/fallback";
 
-function age(at: string | null, now: number): string {
-  if (!at) return "not measured";
-  const seconds = Math.max(0, Math.floor((now - Date.parse(at)) / 1000));
-  return seconds < 60
-    ? `${seconds}s old`
-    : seconds < 3600
-      ? `${Math.floor(seconds / 60)}m old`
-      : `${Math.floor(seconds / 3600)}h old`;
-}
 function addressHash(address: string) {
   let hash = 2166136261;
   for (const char of address) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0;
   return hash;
 }
 function Source({ observation, now }: { observation: Observation<unknown>; now: number }) {
-  const stale = observation.stale || !observation.measuredAt || now - Date.parse(observation.measuredAt) > 60_000;
+  const stale = isStale(observation, now);
   return (
     <div className="observation-source">
-      <span className={stale ? "warning" : "muted"}>
-        {observation.source.startsWith("Recorded snapshot") ? "Recorded snapshot" : stale ? "Last known" : "Observed"} ·{" "}
-        {age(observation.measuredAt, now)}
+      <span className={stale ? "warning" : "success"}>
+        <span className="status-dot" aria-hidden="true" />
+        {observation.source.startsWith("Recorded snapshot")
+          ? "Recorded snapshot"
+          : stale
+            ? "Last known"
+            : "Observed"} / {age(observation.measuredAt, now)}
       </span>
       <span>
         Measured at{" "}
@@ -60,20 +55,25 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
   const ordered = [...addresses].sort((a, b) => addressHash(a) - addressHash(b) || a.localeCompare(b));
   const columns = Math.min(6, ordered.length);
   const rows = Math.ceil(ordered.length / Math.max(1, columns));
+  // The plot grows with the number of rows so a short list stays compact.
+  const rowGap = 64;
+  const height = Math.max(1, rows) * rowGap + 8;
+  const guides = [
+    ...Array.from({ length: Math.max(0, rows - 1) }, (_, row) => `M0 ${30 + rowGap / 2 + row * rowGap}H380`),
+    `M95 0V${height}M190 0V${height}M285 0V${height}`,
+  ].join("");
   const sampled = new Set(snapshot.settlements.value?.map((row) => row.miner));
   const comparison = compareSample(snapshot.miners.value, snapshot.settlements.value);
   const matches = comparison?.matches ?? [];
   const known = comparison !== null;
-  const stale = [snapshot.miners, snapshot.settlements].some(
-    (observation) => observation.stale || !observation.measuredAt || now - Date.parse(observation.measuredAt) > 60_000,
-  );
+  const stale = [snapshot.miners, snapshot.settlements].some((observation) => isStale(observation, now));
   const shown = sampleOnly ? matches : addresses;
   const moving = !reduced && visible && tabVisible;
   return (
-    <div ref={ref} className="hero-panel miner-map">
+    <div ref={ref} className="miner-map frame">
       <div className="map-heading">
         <p className="eyebrow">Price sources / Settlement sample</p>
-        <span className={`badge ${stale ? "warning" : ""}`}>{stale ? "Last known" : "Observed addresses"}</span>
+        <span className={`badge ${stale ? "warning" : "success"}`}>{stale ? "Last known" : "Observed addresses"}</span>
       </div>
       <div className="map-total">
         <span className="mono">
@@ -82,29 +82,48 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
         <span className="muted">distinct price-source addresses</span>
       </div>
       <div className="map-filters" role="group" aria-label="Map addresses">
-        <MotionButton className="quiet-button" aria-pressed={!sampleOnly} onClick={() => setSampleOnly(false)}>
-          All addresses
-        </MotionButton>
-        <MotionButton
-          className="quiet-button"
-          aria-pressed={sampleOnly}
-          disabled={!known}
-          onClick={() => setSampleOnly(true)}
-        >
-          In sample
-        </MotionButton>
+        <LayoutGroup id="map-filter">
+          {[
+            { value: false, label: "All addresses", disabled: false },
+            { value: true, label: "In sample", disabled: !known },
+          ].map((option) => (
+            <MotionButton
+              key={option.label}
+              className="quiet-button"
+              aria-pressed={sampleOnly === option.value}
+              disabled={option.disabled}
+              onClick={() => setSampleOnly(option.value)}
+            >
+              {sampleOnly === option.value && (
+                <motion.span
+                  layoutId="map-filter-pill"
+                  className="filter-pill"
+                  transition={{ duration: reduced ? 0 : 0.24, ease: EASE_OUT }}
+                />
+              )}
+              <span>{option.label}</span>
+            </MotionButton>
+          ))}
+        </LayoutGroup>
       </div>
       <svg
-        viewBox="0 0 380 260"
+        className="map-plot"
+        viewBox={`0 0 380 ${height}`}
         role="img"
         aria-label="Miner addresses ordered by address hash. Filled nodes appear in the returned settlement page."
       >
-        <path d="M0 65H380M0 130H380M0 195H380M95 0V260M190 0V260M285 0V260" stroke="var(--border)" strokeWidth="0.5" />
+        <defs>
+          <radialGradient id="node-glow">
+            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <path d={guides} stroke="var(--border)" strokeWidth="0.5" strokeDasharray="2 4" />
         <AnimatePresence initial={false}>
           {shown.map((miner, index) => {
             const slot = ordered.indexOf(miner);
             const x = columns > 1 ? 28 + (slot % columns) * (324 / (columns - 1)) : 190;
-            const y = rows > 1 ? 28 + Math.floor(slot / columns) * (194 / (rows - 1)) : 130;
+            const y = 30 + Math.floor(slot / columns) * rowGap;
             const settled = sampled.has(miner);
             return (
               <motion.g
@@ -114,8 +133,13 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
                 initial={false}
                 animate={{ opacity: 1, y: moving || reduced ? 0 : 8 }}
                 exit={{ opacity: 0, transition: { duration: reduced ? 0 : 0.18, delay: 0 } }}
-                transition={{ duration: reduced ? 0 : 0.3, delay: reduced ? 0 : Math.min(index * 0.02, 0.2) }}
+                transition={{
+                  duration: reduced ? 0 : 0.3,
+                  ease: EASE_OUT,
+                  delay: reduced ? 0 : Math.min(index * 0.02, 0.2),
+                }}
               >
+                {settled && <circle cx={x} cy={y} r={20} fill="url(#node-glow)" />}
                 {moving && pulses.includes(miner) ? (
                   <motion.circle
                     cx={x}
@@ -128,10 +152,16 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
                     transition={{ duration: reduced ? 0 : 0.5 }}
                   />
                 ) : (
-                  <circle cx={x} cy={y} r={11} fill="none" stroke={settled ? "var(--accent)" : "var(--muted)"} />
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={11}
+                    fill="var(--background)"
+                    stroke={settled ? "var(--accent)" : "var(--border-strong)"}
+                  />
                 )}
-                <circle cx={x} cy={y} r={4} fill={settled ? "var(--accent)" : "var(--surface)"} />
-                <text x={x} y={y + 25} textAnchor="middle" fill="var(--muted)" fontSize="9" fontFamily="monospace">
+                <circle cx={x} cy={y} r={4} fill={settled ? "var(--accent)" : "var(--surface-raised)"} />
+                <text x={x} y={y + 26} textAnchor="middle" fill="var(--subtle)" fontSize="9" className="map-label">
                   {miner.slice(0, 5)}
                 </text>
               </motion.g>
@@ -139,7 +169,7 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
           })}
         </AnimatePresence>
         {!shown.length && (
-          <text x="190" y="130" textAnchor="middle" fill="var(--muted)" fontSize="12">
+          <text x="190" y={height / 2} textAnchor="middle" fill="var(--muted)" fontSize="12">
             {sampleOnly ? "No matching addresses in this page" : "No miner addresses observed"}
           </text>
         )}
@@ -161,7 +191,7 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
           animate={{
             scaleX: reduced || visible ? (comparison?.ratio ?? 0) : 0,
           }}
-          transition={{ duration: reduced ? 0 : 0.5 }}
+          transition={{ duration: reduced ? 0 : 0.5, ease: EASE_OUT }}
         />
       </div>
       <p className="muted map-caption">
@@ -244,10 +274,16 @@ export function DevnetPanel({ snapshot: liveSnapshot, visual = false }: { snapsh
   }, [snapshot.settlements]);
   const last = snapshot.settlements.value?.[0];
   if (visual) return <MinerMap snapshot={snapshot} now={now} pulses={pulses} />;
+  const stale = [snapshot.stats, snapshot.miners, snapshot.settlements].some((observation) =>
+    isStale(observation, now),
+  );
   return (
-    <section className="live-strip" aria-labelledby="observations-title">
+    <section className="live-strip frame" aria-labelledby="observations-title">
       <div className="strip-heading">
         <h2 id="observations-title" className="eyebrow">
+          <span className={stale ? "warning" : "success"}>
+            <span className="status-dot" aria-hidden="true" />
+          </span>
           Devnet observations
         </h2>
         <p className="muted">Refresh window: 30 seconds. Source failures retain dated values.</p>
