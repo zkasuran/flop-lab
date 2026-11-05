@@ -19,9 +19,9 @@ const mono = localFont({
 });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL ?? "https://flop-lab.vercel.app"),
-  title: { default: "flop-lab | Open tools for FLOP devnet", template: "%s | flop-lab" },
+  title: { default: "flop-lab | Check FLOP's promises from outside", template: "%s | flop-lab" },
   description:
-    "Independent tools to inspect, test and build on FLOP devnet. Real observations with sources and clear limits.",
+    "Does a settlement add up? Does the network match its docs? Independent FLOP devnet tools with dated findings you can inspect and rerun.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
