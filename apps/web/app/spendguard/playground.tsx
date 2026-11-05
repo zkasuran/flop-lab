@@ -1,31 +1,18 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import { useMemo, useRef, useState, type ComponentProps } from "react";
+import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import Link from "next/link";
+import { MotionButton as Control, MotionLink } from "@/components/motion";
 import { initialPolicy, parsePolicyText, replay, scenario, fillRatio, type CatalogSeed } from "./library";
 import styles from "./spendguard.module.css";
 
 const command =
   "node packages/spendguard/dist/cli.js evaluate packages/spendguard/examples/policy.yaml packages/spendguard/examples/request.json --dry-run";
 
-function Control(props: ComponentProps<typeof motion.button>) {
-  const reduced = useReducedMotion();
-  return (
-    <motion.button
-      type="button"
-      whileHover={reduced ? {} : { y: -1 }}
-      whileTap={reduced ? {} : { scale: 0.97 }}
-      transition={{ duration: reduced ? 0 : 0.14 }}
-      {...props}
-    />
-  );
-}
-
 /** Interactive replay of the production evaluator. Example: <Playground seed={recordedIdentity} />. */
 export function Playground({ seed }: { seed: CatalogSeed | null }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotion() !== false;
   const pipeline = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: pipeline, offset: ["start end", "end center"] });
   const progress = useTransform(scrollYProgress, [0, 1], [0, 1]);
@@ -79,9 +66,9 @@ export function Playground({ seed }: { seed: CatalogSeed | null }) {
   return (
     <motion.div className={styles.page} initial={false} animate={{ opacity: 1 }}>
       <motion.header className={styles.hero} {...reveal(0)}>
-        <Link className={styles.back} href="/#tools">
+        <MotionLink className={styles.back} href="/#tools">
           ↑ All tools
-        </Link>
+        </MotionLink>
         <p className="eyebrow">
           Spend guard / policy workbench <span className="badge alpha">alpha</span>
         </p>
@@ -98,7 +85,7 @@ export function Playground({ seed }: { seed: CatalogSeed | null }) {
         </div>
       </motion.header>
 
-      <motion.section className={styles.observation} aria-label="Data provenance" {...reveal(1)}>
+      <motion.section className={styles.observation} layout={!reduced} aria-label="Data provenance" {...reveal(1)}>
         <div>
           <span className="eyebrow">Recorded identities / chosen limits</span>
           <p>
@@ -489,9 +476,9 @@ export function Playground({ seed }: { seed: CatalogSeed | null }) {
           The browser ledger is temporary. It does not exercise the package's file lock, hash-chain audit log or refund
           reconciliation. Policy edits replay the processed prefix from an empty ledger. Reloading clears edits.
         </p>
-        <Link href="https://github.com/zkasuran/flop-lab/tree/main/packages/spendguard">
+        <MotionLink href="https://github.com/zkasuran/flop-lab/tree/main/packages/spendguard">
           Read the package and its limits ↗
-        </Link>
+        </MotionLink>
       </section>
     </motion.div>
   );
