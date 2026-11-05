@@ -6,5 +6,5 @@ export default ts.config(
   { ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts'] },
   js.configs.recommended,
   ...ts.configs.recommended,
-  { files: ['**/*.mjs'], languageOptions: { globals: { process: 'readonly', console: 'readonly', Buffer: 'readonly', URL: 'readonly' } } },
+  { files: ['**/*.mjs'], languageOptions: { globals: { process: 'readonly', console: 'readonly', Buffer: 'readonly', URL: 'readonly', performance: 'readonly', fetch: 'readonly', AbortSignal: 'readonly' } } },
 );

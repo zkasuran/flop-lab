@@ -2,17 +2,22 @@
 import { tools, toolHref } from '@/content/tools';
 import { CopyButton } from '@/components/controls';
 import { Reveal } from '@/components/reveal';
+import { DevnetPanel } from '@/components/devnet-panel';
+import { getSnapshot } from '@/lib/devnet-server';
 
 const command = 'curl --fail https://api.flop.network/v1/models';
-export default function Home() {
+export const revalidate = 30;
+export default async function Home() {
+  const snapshot = await getSnapshot();
   return <>
     <section className="hero" aria-labelledby="pitch">
       <div><p className="eyebrow">Independent tools / FLOP devnet</p><h1 id="pitch">Observe first.<br />Build on evidence.</h1>
         <p className="intro">Open tools for a network where agents pay miners for AI inference. Inspect what happened. See what is still unverified.</p>
         <div className="hero-actions"><a className="button" href="#tools">Explore the tools <span aria-hidden="true">↓</span></a><a href="https://docs.flop.network">Read the protocol ↗</a></div>
       </div>
-      <aside className="hero-panel"><p className="eyebrow">Field notes / Devnet</p><h2>Evidence before confidence.</h2><p className="muted">Live observations are being connected. No network measurements are shown in this build.</p></aside>
+      <DevnetPanel snapshot={snapshot} visual />
     </section>
+    <DevnetPanel snapshot={snapshot} />
     <section className="section" id="tools" aria-labelledby="tools-heading">
       <div className="section-heading"><div><p className="eyebrow">The workbench</p><h2 id="tools-heading">One question. One tool.</h2></div><p className="muted">Planned tools link to their package location. They are not ready to run. Each tool will publish its evidence and limits.</p></div>
       <Reveal><div className="tool-grid">{tools.map(tool => <a className="tool-card" href={toolHref(tool)} key={tool.slug}>

@@ -90,3 +90,25 @@ dialog::backdrop { background: #000b; }
   .command { align-items: start; padding: var(--space-4); }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.live-strip { border: 1px solid var(--border); margin-bottom: var(--space-16); }
+.strip-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--border); }
+.strip-heading p, .strip-note { font-size: var(--text-xs); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.stats-grid article { padding: var(--space-6); border-right: 1px solid var(--border); }
+.stats-grid article:last-child { border: 0; }
+.stats-grid h3 { font: var(--text-sm)/1.4 var(--font-text); color: var(--muted); letter-spacing: 0; }
+.stat-value { font-size: 1.7rem; min-height: 4.5rem; padding-block: var(--space-4); line-height: 1.4; }
+.stat-time { font-size: var(--text-sm); }
+.observation-source { display: grid; gap: var(--space-2); font: 0.65rem/1.5 var(--font-data); color: var(--muted); overflow-wrap: anywhere; }
+.source-name { opacity: 0.9; }
+.strip-note { border-top: 1px solid var(--border); padding: var(--space-4) var(--space-6); }
+.miner-map { padding: var(--space-6); }
+.map-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2); }
+.miner-map svg { width: 100%; height: auto; aspect-ratio: 380 / 260; margin-block: var(--space-4); overflow: visible; }
+.map-caption, .map-details { font-size: var(--text-xs); }
+.map-details { margin-top: var(--space-4); }
+summary { cursor: pointer; }
+.map-details ul { padding-left: var(--space-4); }
+.map-details code { overflow-wrap: anywhere; }
+@media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats-grid article { border-bottom: 1px solid var(--border); } }
+@media (max-width: 520px) { .stats-grid article { padding: var(--space-4); } .stat-value { font-size: 1.45rem; } .stat-time { font-size: var(--text-xs); } }
