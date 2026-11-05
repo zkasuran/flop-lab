@@ -1,0 +1,28 @@
+{
+  "kind": "synthetic adversarial and hardware variants; not live observations",
+  "gpu": {
+    "a40": "NVIDIA A40, 46068, 45000\n",
+    "twoSmall": "NVIDIA T1000, 8192, 8000\nNVIDIA T1000, 8192, 8000\n",
+    "none": "",
+    "oddLocale": "NVIDIA A40, 46.068, 45.000\n",
+    "invalid": "NVIDIA A40, N/A, N/A",
+    "injection": "<script>alert(1)</script>, 46068, 45000",
+    "missing": { "code": "ENOENT", "stdout": "" }
+  },
+  "disk": {
+    "valid": "1B-blocks Avail\n4000000000000 1000000000000\n",
+    "oddHeader": "Blöcke Verfügbar\n4000000000000 1000000000000\n",
+    "badLocale": "Blöcke Verfügbar\n4.000.000 1.000.000\n",
+    "impossible": "size avail\n100 200\n"
+  },
+  "memory": { "valid": "MemTotal:       64000000 kB\nMemAvailable:   32000000 kB\n", "missing": "MemFree: 1 kB\n" },
+  "cpu": { "valid": "8\n", "invalid": "8 CPUs", "zero": "0" },
+  "docker": {
+    "version": "28.0.1\n",
+    "compose": "2.39.0\n",
+    "denied": { "code": 1, "stdout": "" },
+    "digests": "[\"repo@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]",
+    "noDigests": "[]",
+    "badDigests": "[false]"
+  }
+}
