@@ -8,13 +8,17 @@ import { resolve } from "node:path";
 import { runHarness } from "./runner";
 import { parseReport, renderBugDraft, renderMarkdown } from "./report";
 import { loadClaims } from "./catalogue";
+import { loadInventory } from "./inventory";
+import { claimTimeline, fetchClaimHistory } from "./history";
 import { serialize } from "./validation";
 import type { Risk } from "./types";
 
-const help = `flop-harness run [--only id] [--class read-only|spends-test-funds]
+const help = `flop-harness run [--profile full|ci] [--only id] [--class read-only|spends-test-funds]
   [--max-requests 80] [--max-flop 0] [--allow-spend]
   [--out last-run.json] [--markdown last-run.md]
 flop-harness list
+flop-harness coverage [--page document-id]
+flop-harness history [--only claim-id]
 flop-harness report <claim-id> [--input last-run.json]
 
 Runs public devnet checks. A failure must reproduce before it is marked FAIL.
@@ -35,10 +39,14 @@ export async function main(argv: string[]): Promise<number> {
   let id: string | undefined;
   const allowed =
     command === "run"
-      ? ["--only", "--class", "--max-requests", "--max-flop", "--out", "--markdown"]
+      ? ["--profile", "--only", "--class", "--max-requests", "--max-flop", "--out", "--markdown"]
       : command === "report"
         ? ["--input"]
-        : [];
+        : command === "coverage"
+          ? ["--page"]
+          : command === "history"
+            ? ["--only"]
+            : [];
   if (command === "report") id = args.shift();
   for (let i = 0; i < args.length; i++) {
     const flag = args[i]!;
@@ -55,7 +63,23 @@ export async function main(argv: string[]): Promise<number> {
     console.log(serialize(await loadClaims()));
     return 0;
   }
+  if (command === "coverage") {
+    const pages = await loadInventory();
+    const id = values.get("--page");
+    if (id && !pages.some((page) => page.id === id)) throw new Error("Unknown source document");
+    console.log(serialize(id ? pages.find((page) => page.id === id) : pages));
+    return 0;
+  }
+  if (command === "history") {
+    const history = await fetchClaimHistory();
+    const id = values.get("--only");
+    if (id && !(await loadClaims()).some((claim) => claim.id === id)) throw new Error("Unknown claim");
+    console.log(serialize({ ...history, ...(id ? { timeline: claimTimeline(history.runs, id) } : {}) }));
+    return history.state === "unavailable" ? 3 : 0;
+  }
   if (command === "run") {
+    const profile = values.get("--profile") ?? "full";
+    if (profile !== "full" && profile !== "ci") throw new Error("Unknown run profile");
     const risk = values.get("--class");
     if (risk && risk !== "read-only" && risk !== "spends-test-funds") throw new Error("Unknown risk class");
     const rawRequests = values.get("--max-requests") ?? "80";
@@ -64,6 +88,7 @@ export async function main(argv: string[]): Promise<number> {
     const markdown = values.get("--markdown") ?? "last-run.md";
     if (resolve(out) === resolve(markdown)) throw new Error("JSON and Markdown output paths must differ");
     const report = await runHarness({
+      profile,
       only: values.get("--only"),
       risk: risk as Risk | undefined,
       maxRequests: Number(rawRequests),
