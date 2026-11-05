@@ -12,6 +12,7 @@ import history from "../../../../packages/recorder/test/fixtures/seed/index.json
 import spec from "../../../../packages/spec/fixtures/stats.json";
 import explorer from "../../../../packages/explorer/test/fixtures/block.json";
 import contracts from "../../../../packages/mcpaudit/last-run.json";
+import tclk from "../../../../packages/tclk-inspect/fixtures/htlcs.json";
 import kestra from "../../app/kestra/observed.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
@@ -37,6 +38,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  tclk: () =>
+    metric(
+      rows(object(JSON.parse(tclk.raw) as unknown).htlcs).length,
+      "HTLC rows in the deal inspector sample",
+      tclk.measuredAt,
+      tclk.source,
+      "packages/tclk-inspect/fixtures/htlcs.json",
+      "Bounded indexer sample. A hash match is not proof of payment.",
+    ),
   explorer: () => {
     const observation = explorer.entities[0]?.evidence.find((entry) => entry.label === "block");
     return metric(

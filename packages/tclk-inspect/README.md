@@ -14,7 +14,7 @@ node packages/tclk-inspect/dist/cli.js inspect /tmp/opencode/tclk-deal.json --of
 
 The temporary directory `/tmp/opencode` must exist. The example is a synthetic signed rehearsal. Its public test keys are not wallets and its escrow reference names no payment.
 
-After the suite build, `pnpm --filter @flop-lab/cli exec flop tclk --help` runs the same binary through the suite CLI.
+After the suite build, `node packages/cli/dist/cli.js tclk --help` runs the same binary through the suite CLI. A locally installed `flop` binary accepts the same `tclk` subcommand.
 
 ## Inspect a transcript
 
