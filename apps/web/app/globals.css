@@ -196,12 +196,36 @@ nav a {
 .section-heading h2 {
   margin-top: var(--space-3);
 }
+.tool-sections {
+  display: grid;
+  gap: var(--space-12);
+}
+.tool-section {
+  display: grid;
+  gap: var(--space-6);
+}
+.tool-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+.tool-section-head p {
+  color: var(--muted);
+}
+.tool-card h4 {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: 1.12;
+  font-weight: 550;
+  letter-spacing: -0.04em;
+}
 .tool-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  border: 1px solid var(--border);
-  background: var(--border);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
 }
 .tool-card {
   height: 100%;
@@ -211,6 +235,8 @@ nav a {
   flex-direction: column;
   gap: var(--space-6);
   min-height: 270px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   text-decoration: none;
   position: relative;
 }

@@ -69,6 +69,27 @@ importers:
 
   packages/challenger: {}
 
+  packages/cli:
+    dependencies:
+      '@flop-lab/challenger':
+        specifier: workspace:*
+        version: link:../challenger
+      '@flop-lab/harness':
+        specifier: workspace:*
+        version: link:../harness
+      '@flop-lab/scoreboard':
+        specifier: workspace:*
+        version: link:../scoreboard
+      '@flop-lab/spendguard':
+        specifier: workspace:*
+        version: link:../spendguard
+      '@flop-lab/verifier':
+        specifier: workspace:*
+        version: link:../verifier
+      '@flop-lab/x402kit':
+        specifier: workspace:*
+        version: link:../x402kit
+
   packages/harness:
     dependencies:
       '@flop-lab/mcp':

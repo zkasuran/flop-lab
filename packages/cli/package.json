@@ -1,0 +1,26 @@
+{
+  "name": "@flop-lab/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "One flop command for every flop-lab tool",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@flop-lab/challenger": "workspace:*",
+    "@flop-lab/harness": "workspace:*",
+    "@flop-lab/scoreboard": "workspace:*",
+    "@flop-lab/spendguard": "workspace:*",
+    "@flop-lab/verifier": "workspace:*",
+    "@flop-lab/x402kit": "workspace:*"
+  }
+}

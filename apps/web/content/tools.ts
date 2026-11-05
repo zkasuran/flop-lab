@@ -1,6 +1,19 @@
 // SPDX-License-Identifier: Apache-2.0
+export type Section = "observe" | "verify" | "build" | "operate" | "agents" | "identity";
+
+/** Suite sections in display order. Each one answers one kind of question. */
+export const sections: readonly { id: Section; title: string; question: string }[] = [
+  { id: "observe", title: "Observe", question: "What is the network doing right now and over time?" },
+  { id: "verify", title: "Verify", question: "Do the claims hold when checked from outside?" },
+  { id: "build", title: "Build", question: "How do I integrate with FLOP correctly?" },
+  { id: "operate", title: "Operate", question: "Is my miner or validator ready to join?" },
+  { id: "agents", title: "Agents", question: "How does an agent spend, route and dispute safely?" },
+  { id: "identity", title: "Identity", question: "Who did this work and can I check it?" },
+];
+
 export type Tool = {
   slug: string;
+  section: Section;
   name: string;
   tagline: string;
   status: "planned" | "alpha" | "live";
@@ -12,6 +25,7 @@ export const repository = "https://github.com/zkasuran/flop-lab";
 export const tools: readonly Tool[] = [
   {
     slug: "scoreboard",
+    section: "agents",
     name: "Miner scoreboard",
     tagline: "Which miner has settlement evidence I can compare?",
     status: "alpha",
@@ -20,6 +34,7 @@ export const tools: readonly Tool[] = [
   },
   {
     slug: "harness",
+    section: "verify",
     name: "Conformance harness",
     tagline: "Does the network do what its docs say?",
     status: "alpha",
@@ -28,6 +43,7 @@ export const tools: readonly Tool[] = [
   },
   {
     slug: "verify",
+    section: "verify",
     name: "Settlement verifier",
     tagline: "Does this settlement add up?",
     status: "alpha",
@@ -36,6 +52,7 @@ export const tools: readonly Tool[] = [
   },
   {
     slug: "spendguard",
+    section: "agents",
     name: "Spend guard",
     tagline: "Would my budget policy stop this request?",
     status: "alpha",
@@ -44,6 +61,7 @@ export const tools: readonly Tool[] = [
   },
   {
     slug: "x402",
+    section: "build",
     name: "Pay-per-call kit",
     tagline: "How does an API charge per call in FLOP?",
     status: "alpha",
@@ -52,6 +70,7 @@ export const tools: readonly Tool[] = [
   },
   {
     slug: "kestra",
+    section: "build",
     name: "FLOP for Kestra",
     tagline: "Read the devnet and check settlements in a dated Kestra flow.",
     status: "alpha",
@@ -60,13 +79,127 @@ export const tools: readonly Tool[] = [
   },
   {
     slug: "challenger",
+    section: "agents",
     name: "Challenge watcher",
     tagline: "Which settlements need a challenge-window review?",
     status: "alpha",
     href: "/challenger",
     repoPath: "packages/challenger",
   },
+  {
+    slug: "history",
+    section: "observe",
+    name: "Network history",
+    tagline: "How has the devnet changed day by day?",
+    status: "planned",
+    href: "/history",
+    repoPath: "packages/recorder",
+  },
+  {
+    slug: "explorer",
+    section: "observe",
+    name: "Chain explorer",
+    tagline: "What is in this block, extrinsic or account?",
+    status: "planned",
+    href: "/explorer",
+    repoPath: "packages/explorer",
+  },
+  {
+    slug: "spec",
+    section: "verify",
+    name: "Spec differ",
+    tagline: "Does the running chain match the yellowpaper?",
+    status: "planned",
+    href: "/spec",
+    repoPath: "packages/spec",
+  },
+  {
+    slug: "contracts",
+    section: "verify",
+    name: "MCP contract audit",
+    tagline: "Do the network's tools return what they advertise?",
+    status: "planned",
+    href: "/contracts",
+    repoPath: "packages/mcpaudit",
+  },
+  {
+    slug: "indexer",
+    section: "verify",
+    name: "Indexer audit",
+    tagline: "Does the indexer agree with the chain?",
+    status: "planned",
+    href: "/indexer",
+    repoPath: "packages/indexer-audit",
+  },
+  {
+    slug: "sdk",
+    section: "build",
+    name: "SDK conformance",
+    tagline: "Do the FLOP SDKs behave as documented?",
+    status: "planned",
+    href: "/sdk",
+    repoPath: "packages/sdkconf",
+  },
+  {
+    slug: "console",
+    section: "build",
+    name: "MCP console",
+    tagline: "What does each public tool return right now?",
+    status: "planned",
+    href: "/console",
+    repoPath: "packages/console",
+  },
+  {
+    slug: "start",
+    section: "build",
+    name: "Agent starter",
+    tagline: "How do I start a FLOP agent that is safe by default?",
+    status: "planned",
+    href: "/start",
+    repoPath: "packages/create-flop-agent",
+  },
+  {
+    slug: "doctor",
+    section: "operate",
+    name: "Operator doctor",
+    tagline: "Is this machine ready to mine or validate?",
+    status: "planned",
+    href: "/doctor",
+    repoPath: "packages/doctor",
+  },
+  {
+    slug: "tclk",
+    section: "agents",
+    name: "Deal inspector",
+    tagline: "Did this agent-to-agent deal follow the protocol?",
+    status: "planned",
+    href: "/tclk",
+    repoPath: "packages/tclk-inspect",
+  },
+  {
+    slug: "mcp",
+    section: "agents",
+    name: "flop-lab MCP server",
+    tagline: "How does my agent call every flop-lab tool?",
+    status: "planned",
+    href: "/mcp",
+    repoPath: "packages/mcp-server",
+  },
+  {
+    slug: "identity",
+    section: "identity",
+    name: "DID trail",
+    tagline: "What has this did:key signed and does it verify?",
+    status: "planned",
+    href: "/identity",
+    repoPath: "packages/did",
+  },
 ];
+
+/** Tools of one section in registry order. Example: toolsIn("verify")[0]?.slug. */
+export function toolsIn(section: Section): readonly Tool[] {
+  return tools.filter((tool) => tool.section === section);
+}
 
 /** Resolve a card destination. Example: toolHref(tools[0]). */
 export function toolHref(tool: Tool): string {

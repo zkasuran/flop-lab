@@ -81,11 +81,11 @@ export default async function Home() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">The workbench</p>
-            <h2 id="tools-heading">One question. One tool.</h2>
+            <h2 id="tools-heading">One suite. One question per tool.</h2>
           </div>
           <p className="muted">
-            Start with a settlement in the verifier. Use the harness to inspect a failed claim or the scoreboard to
-            compare miner evidence. Alpha pages run today. Planned pages link to their source.
+            The suite has six sections, from watching the network to checking who signed a change. Start with a
+            settlement in the verifier. Alpha pages run today on real data. Planned pages link to their source.
           </p>
         </div>
         <ToolGrid />
