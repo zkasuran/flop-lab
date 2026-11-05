@@ -55,8 +55,9 @@ console.log(renderMarkdown(report));
 - **FLAKY**: a failure did not reproduce. Its status is `UNVERIFIABLE`, never `FAIL`.
 
 MCP input schemas describe requests, not response truth. Generic probes check
-schema-valid inputs and validate an output schema only when the server advertises
-one. Plain-text missing-resource replies are unavailable. An empty settlement tape
+schema-valid inputs and validate `structuredContent` against an output schema only
+when the server advertises one. Text content does not replace structured output.
+Plain-text missing-resource replies are unavailable. An empty settlement tape
 does not pass conservation. An empty offer list cannot verify offset movement.
 
 Settlement arithmetic uses integer raw units. The runner reads every page and
@@ -130,10 +131,41 @@ pnpm --filter @flop-lab/harness start report mcp-knowledge-get --input last-run.
 ```
 
 Only reproduced failures with evidence can become drafts. The command uses `gh api`
-to resolve the current `flop-labs/flop-core` default-branch SHA. It refuses to draft
-when that lookup fails. A source SHA does not identify the deployed service.
+to resolve the current `flop-labs/flop-core` default-branch SHA. The source repository
+is private. When the lookup fails, the draft records the revision as unavailable
+with a reason. It separately resolves and labels the public tracker's issue-form
+revision for the publishing gate. That SHA is not an implementation or deployment
+revision. A source SHA does not identify the deployed service.
 The draft includes expected vs observed values, exact request excerpts, a reproduction
-command and unknowns. Search existing issues and PRs before publishing a draft.
+command and unknowns. Service bugs go to `https://github.com/flop-labs/network`.
+Search existing issues and PRs before publishing a draft. Issue #23 already covers
+the missing agent-pack tools and #80 covers the private source repository.
+
+## Recorded-run website
+
+The `/harness` page reads the committed `packages/harness/last-run.json`. It labels
+the run as last known and shows its original time, source URLs and available network
+identifiers. Missing genesis hashes and spec versions stay unavailable.
+
+Filter the catalogue by outcome or boundary. Search by claim, expected value or
+reason. Open a claim for its quoted source, expected predicate, observed attempts
+and request excerpts. Each row can copy a bounded workspace command. Commands run
+against the current devnet, so their results can differ from the recording.
+
+After a checkout and `pnpm install --frozen-lockfile`, run the site locally:
+
+```sh
+pnpm --filter web exec next dev --port 3320
+```
+
+Open `http://localhost:3320/harness`. To refresh the page's recording, run
+`pnpm --filter @flop-lab/harness record`, review the fixtures and commit the output.
+The page makes no FLOP API calls. Motion follows reading order, filtered rows,
+the detail drawer and recorded request durations. Reduced motion keeps the final
+values and disables travel.
+
+The harness package check includes the recorded site-view tests. Browser evidence
+for this milestone is retained with its PR.
 
 ## What this does not verify
 
