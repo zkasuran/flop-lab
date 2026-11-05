@@ -11,9 +11,9 @@ From the repository root with Node 22 and pnpm:
 ```sh
 pnpm install
 pnpm --filter @flop-lab/scoreboard build
-pnpm --filter @flop-lab/scoreboard cli snapshot --out /tmp/scoreboard.json
-pnpm --filter @flop-lab/scoreboard cli rank --file /tmp/scoreboard.json
-pnpm --filter @flop-lab/scoreboard cli route --file /tmp/scoreboard.json --model qwen/qwen2.5-0.5b-instruct --max-price-per-gflop 0.01 --json
+pnpm --filter @flop-lab/scoreboard cli snapshot --out /tmp/opencode/scoreboard-a01.json
+pnpm --filter @flop-lab/scoreboard cli rank --file /tmp/opencode/scoreboard-a01.json
+pnpm --filter @flop-lab/scoreboard cli route --file /tmp/opencode/scoreboard-a01.json --model qwen/qwen2.5-0.5b-instruct --max-price-per-gflop 0.01 --json
 ```
 
 The last command exits with status 2 when there is no eligible miner. Current gateway listings have no per-GFLOP quote. A ceiling cannot pass on a historical price. Omit the ceiling only when you want a discovery recommendation without a price guarantee.
