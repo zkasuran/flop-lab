@@ -77,6 +77,9 @@ importers:
       '@flop-lab/doctor':
         specifier: workspace:*
         version: link:../doctor
+      '@flop-lab/explorer':
+        specifier: workspace:*
+        version: link:../explorer
       '@flop-lab/harness':
         specifier: workspace:*
         version: link:../harness
@@ -103,6 +106,12 @@ importers:
         version: link:../x402kit
 
   packages/doctor: {}
+
+  packages/explorer:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/harness:
     dependencies:

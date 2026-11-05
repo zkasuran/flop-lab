@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Record devnet snapshots and compare reset signals and claim changes",
   },
   {
+    name: "explore",
+    pkg: "@flop-lab/explorer",
+    bin: "flop-explorer",
+    section: "observe",
+    summary: "Search devnet entities and inspect dated query evidence",
+  },
+  {
     name: "doctor",
     pkg: "@flop-lab/doctor",
     bin: "flop-doctor",

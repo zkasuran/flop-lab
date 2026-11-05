@@ -1,0 +1,15 @@
+{
+  "name": "@flop-lab/explorer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Search FLOP devnet entities with dated query evidence",
+  "exports": { ".": "./src/index.ts" },
+  "bin": { "flop-explorer": "./dist/cli.js" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": { "@flop-lab/mcp": "workspace:*" }
+}
