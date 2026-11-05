@@ -97,6 +97,12 @@ pnpm --filter @flop-lab/verifier record
 
 Tests replay recorded tool answers through the shared client's `replayFetch`. They also rehash synthetic corruptions so arithmetic and provenance checks must detect contradictions independently of file integrity. CLI replay is tested without live requests. Default tests need no network.
 
+## Browser workbench
+
+The site's `/verify` page starts with a dated recorded channel. Paste a channel id or pick a recent settlement to collect current public observations. Expand any check for its inputs and exact source text. Download the bundle as `evidence.json`.
+
+Choose **Verify a local bundle** to replay the downloaded file without a network request. The browser uses these same checks and Web Crypto. Local files are never uploaded. Hash failures stop further checks. The [page README](../../apps/web/app/verify/README.md) describes collection limits and local run commands.
+
 ## What a passing run still does not prove
 
 A passing run proves only its named consistency claims against captured inputs. It does not prove inference was honest, correct or useful. An author can edit every input and rehash the bundle. Public views share an indexer and are not independent witnesses. Matching a registry hash does not prove model weights ran. Arithmetic does not prove payment execution. A successful indexed extrinsic does not prove consensus finality.
