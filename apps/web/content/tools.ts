@@ -27,7 +27,7 @@ export const tools: readonly Tool[] = [
     slug: "scoreboard",
     section: "agents",
     name: "Miner scoreboard",
-    tagline: "Which miner has settlement evidence I can compare?",
+    tagline: "Which miner has reliability evidence over time?",
     status: "alpha",
     href: "/scoreboard",
     repoPath: "packages/scoreboard",

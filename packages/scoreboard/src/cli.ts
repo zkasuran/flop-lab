@@ -7,17 +7,23 @@ import { Collector, parseSnapshot, rankSnapshot, pickMiner, sensitivity } from "
 const help = `flop-scoreboard snapshot|rank|explain <miner>|route [options]
 
 --file <snapshot.json>       Offline mode. No requests.
+--reliability-file <json>    Attach a separately recorded reliability response.
 --out <snapshot.json>        Save snapshot output.
 --model <slug>               Required for route.
 --max-price-per-gflop <FLOP>  Reject unknown live prices.
 --min-confidence <0..1>      Default 0.2.
+--min-reliability <0..1>     Require observed acknowledgement ratio.
+--min-reliability-outcomes N Require a minimum acknowledgement sample.
+--min-proofs N               Require proof activity in the query window.
+--reject-ghost-failures      Refuse failures and unknown ghost evidence.
+--max-reliability-age-ms N   Default 86400000 when reliability is required.
 --exclude <miner>            Repeat to exclude miners.
 --now <UTC timestamp>        Explicit evaluation time for replay.
 --sensitivity               Rank changes for each weight +/-10%.
 --json                      Machine-readable output.
 --help                      Show this help.
 
-Scores describe settlement history, not uptime or latency.
+Scores describe observed evidence, not uptime or latency.
 Gateway nominal listings do not provide per-GFLOP quotes.`;
 
 async function main() {
@@ -25,10 +31,16 @@ async function main() {
     allowPositionals: true,
     options: {
       file: { type: "string" },
+      "reliability-file": { type: "string" },
       out: { type: "string" },
       model: { type: "string" },
       "max-price-per-gflop": { type: "string" },
       "min-confidence": { type: "string" },
+      "min-reliability": { type: "string" },
+      "min-reliability-outcomes": { type: "string" },
+      "min-proofs": { type: "string" },
+      "reject-ghost-failures": { type: "boolean" },
+      "max-reliability-age-ms": { type: "string" },
       exclude: { type: "string", multiple: true },
       now: { type: "string" },
       sensitivity: { type: "boolean" },
@@ -47,9 +59,16 @@ async function main() {
   if (command === "explain" && !positionals[1]) throw new Error("explain requires a miner address");
   const requestedNow = values.now === undefined ? undefined : Date.parse(values.now);
   if (requestedNow !== undefined && !Number.isFinite(requestedNow)) throw new Error("invalid --now timestamp");
-  const snapshot = values.file
+  let snapshot = values.file
     ? parseSnapshot(JSON.parse(await readFile(values.file, "utf8")))
     : await new Collector().snapshot();
+  if (values["reliability-file"]) {
+    if (!values.file) throw new Error("--reliability-file requires --file");
+    snapshot = parseSnapshot({
+      ...snapshot,
+      reliability: JSON.parse(await readFile(values["reliability-file"], "utf8")),
+    });
+  }
   const now = requestedNow ?? Date.now();
   if (values.out && command !== "snapshot") throw new Error("--out only applies to snapshot");
   if (command === "snapshot") {
@@ -72,6 +91,13 @@ async function main() {
       model: values.model!,
       maxPricePerGflop: values["max-price-per-gflop"],
       minConfidence: values["min-confidence"] === undefined ? undefined : Number(values["min-confidence"]),
+      minReliability: values["min-reliability"] === undefined ? undefined : Number(values["min-reliability"]),
+      minReliabilityOutcomes:
+        values["min-reliability-outcomes"] === undefined ? undefined : Number(values["min-reliability-outcomes"]),
+      minProofs: values["min-proofs"] === undefined ? undefined : Number(values["min-proofs"]),
+      rejectGhostFailures: values["reject-ghost-failures"],
+      maxReliabilityAgeMs:
+        values["max-reliability-age-ms"] === undefined ? undefined : Number(values["max-reliability-age-ms"]),
       exclude: values.exclude,
       now,
     });
@@ -101,7 +127,7 @@ async function main() {
       console.log("TERM\tWEIGHT\tOBSERVED VALUE\tCONTRIBUTION");
       for (const term of result.terms)
         console.log(
-          `${term.name}\t${term.weight.toFixed(3)}\t${term.value.toFixed(3)}\t${term.contribution.toFixed(3)}`,
+          `${term.name}\t${term.weight.toFixed(3)}\t${term.value?.toFixed(3) ?? "no data"}\t${term.contribution.toFixed(3)}`,
         );
       console.log(
         `Distinct agents: ${result.distinctAgents}\nUnused escrow ratio: ${result.unusedEscrowRatio ?? "no data"}\nHistorical lower-median price (raw units per GFLOP): ${result.historicalMedianPriceRaw ?? "no data"}`,
