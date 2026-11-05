@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Observation, Snapshot } from "@/lib/devnet";
 import { compareSample } from "@/lib/observation-view";
 import { Disclosure, MotionButton, ObservedNumber } from "./motion";
+import { recordedModels, withRecording, type ModelFallback } from "@/app/history/fallback";
 
 function age(at: string | null, now: number): string {
   if (!at) return "not measured";
@@ -26,7 +27,8 @@ function Source({ observation, now }: { observation: Observation<unknown>; now: 
   return (
     <div className="observation-source">
       <span className={stale ? "warning" : "muted"}>
-        {stale ? "Last known" : "Observed"} · {age(observation.measuredAt, now)}
+        {observation.source.startsWith("Recorded snapshot") ? "Recorded snapshot" : stale ? "Last known" : "Observed"} ·{" "}
+        {age(observation.measuredAt, now)}
       </span>
       <span>
         Measured at{" "}
@@ -198,7 +200,20 @@ function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; 
   );
 }
 
-export function DevnetPanel({ snapshot, visual = false }: { snapshot: Snapshot; visual?: boolean }) {
+export function DevnetPanel({ snapshot: liveSnapshot, visual = false }: { snapshot: Snapshot; visual?: boolean }) {
+  const [recording, setRecording] = useState<ModelFallback | null>(null);
+  const snapshot = withRecording(liveSnapshot, recording);
+  useEffect(() => {
+    let active = true;
+    if (liveSnapshot.miners.stale || liveSnapshot.miners.value === null) {
+      void recordedModels().then((value) => {
+        if (active) setRecording(value);
+      });
+    }
+    return () => {
+      active = false;
+    };
+  }, [liveSnapshot.miners.stale, liveSnapshot.renderedAt, liveSnapshot.miners.value]);
   const router = useRouter();
   const [now, setNow] = useState(Date.parse(snapshot.renderedAt));
   const previous = useRef(new Set(snapshot.settlements.value?.map((row) => row.channel)));
