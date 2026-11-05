@@ -1,5 +1,21 @@
 # FLOP payment reference template
 
+How can I try the FLOP payment reference? This template starts the parent package's
+read-only Hono service inside the flop-lab checkout. Inspect a recorded quote first,
+then start the settlement preview with the development command below.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. This inspects recorded headers:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/x402kit build
+node packages/x402kit/dist/cli.js inspect packages/x402kit/fixtures/headers.json
+```
+
+## Run the preview
+
 Run this folder inside the flop-lab checkout. The dev command builds the parent package.
 
 ```sh

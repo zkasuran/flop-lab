@@ -1,6 +1,18 @@
 # flop-lab web
 
-The shared website for independent FLOP devnet tools. It shows dated devnet observations, planned tool status and local Ed25519 contribution checks. Planned tools link to their intended package folder. A folder can be absent until that tool ships.
+What can I check about FLOP from outside? This site brings the independent devnet tools together. Start with dated network observations, open a tool to inspect its evidence or check a contribution signature in your browser.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. Open http://localhost:3380 after the server starts:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter web build
+pnpm --filter web exec next start --port 3380
+```
+
+Stop this server before using the development commands below.
 
 ## Run
 
@@ -46,7 +58,7 @@ Refresh the raw recordings with `pnpm --filter web exec tsx scripts/record-devne
 
 `lib/did.ts` decodes base58btc, checks the `ed01` multicodec prefix and imports the public key into WebCrypto. The exact UTF-8 manifest bytes are verified with Ed25519. The UI pins the contributor DID and checks the signed commit and branch against the current PR head. Its tamper control flips one byte before verification. It never changes the displayed original manifest.
 
-The build reader serves the orchestrator's root `SIGNATURE.json` at `/SIGNATURE.json`. It returns an empty response when absent, and the page says `not signed in this build`. Vercel file tracing includes this file when it exists at build time. The file must be produced by the orchestrator before the deployment build. A deployed manifest must match the build commit.
+The build reader serves the orchestrator's root `SIGNATURE.json` at `/SIGNATURE.json`. It returns an empty response when absent and the page says `not signed in this build`. Vercel file tracing includes this file when it exists at build time. The file must be produced by the orchestrator before the deployment build. A deployed manifest must match the build commit.
 
 `tests/fixtures/pull-request.json` records a public publisher proof with its raw response, source and time. Refresh it with `pnpm --filter web exec tsx scripts/record-provenance.ts`. Tests also generate throwaway Ed25519 keys in memory and exercise invalid signatures, changed heads and malformed manifests.
 

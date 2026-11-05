@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Check published SDK behaviour with offline request traces",
   },
   {
+    name: "spec",
+    pkg: "@flop-lab/spec",
+    bin: "flop-spec",
+    section: "verify",
+    summary: "Compare the pinned yellowpaper with dated public observations",
+  },
+  {
     name: "verify",
     pkg: "@flop-lab/verifier",
     bin: "flop-verify",
