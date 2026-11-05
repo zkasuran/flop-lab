@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Audit advertised MCP schemas and inspect dated trust material",
   },
   {
+    name: "history",
+    pkg: "@flop-lab/recorder",
+    bin: "flop-recorder",
+    section: "observe",
+    summary: "Record devnet snapshots and compare reset signals and claim changes",
+  },
+  {
     name: "doctor",
     pkg: "@flop-lab/doctor",
     bin: "flop-doctor",

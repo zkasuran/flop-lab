@@ -83,6 +83,9 @@ importers:
       '@flop-lab/mcpaudit':
         specifier: workspace:*
         version: link:../mcpaudit
+      '@flop-lab/recorder':
+        specifier: workspace:*
+        version: link:../recorder
       '@flop-lab/scoreboard':
         specifier: workspace:*
         version: link:../scoreboard
@@ -129,6 +132,15 @@ importers:
       ajv-formats:
         specifier: ^3.0.1
         version: 3.0.1(ajv@8.20.0)
+
+  packages/recorder:
+    dependencies:
+      '@flop-lab/harness':
+        specifier: workspace:*
+        version: link:../harness
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/scoreboard: {}
 
