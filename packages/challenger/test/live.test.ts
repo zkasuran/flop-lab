@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { expect, it } from "vitest";
-import { McpClient, McpError } from "@flop-lab/mcp";
+import { McpClient, McpError } from "../../mcp/src/index";
 import { collectTape } from "../src/index";
 
 it.skipIf(process.env.FLOP_LIVE !== "1")(

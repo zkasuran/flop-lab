@@ -18,6 +18,8 @@ node packages/challenger/dist/cli.js watch --sort priority --json
 
 The binary is `flop-challenger`. The direct Node command works from a checkout without a global install.
 
+This private workspace package imports the shared `packages/mcp` source directly, matching the other tool packages. The CLI bundles that same client. It does not require a new root lockfile dependency.
+
 Build a dossier for the channel in the recorded sample:
 
 ```sh

@@ -5,5 +5,4 @@ export default defineConfig({
   entry: ["src/cli.ts"],
   format: ["esm"],
   clean: true,
-  noExternal: ["@flop-lab/mcp", "@flop-lab/mcp/fixtures"],
 });

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import type { Settlement } from "@flop-lab/mcp";
+import type { Settlement } from "../../mcp/src/index";
 
 export interface Observation<T> {
   value: T;

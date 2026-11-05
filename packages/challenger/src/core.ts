@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import type { Settlement } from "@flop-lab/mcp";
+import type { Settlement } from "../../mcp/src/index";
 import type { Priority, Signal, Tape, WatchReport, WindowEstimate } from "./types";
 import { decimal, timestamp } from "./validation";
 

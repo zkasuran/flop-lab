@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Node-only fixture adapter. Transport parsing stays in the shared MCP client.
 import { readFileSync } from "node:fs";
-import { DEFAULT_URL, McpClient } from "@flop-lab/mcp";
-import { replayFetch } from "@flop-lab/mcp/fixtures";
+import { DEFAULT_URL, McpClient } from "../../mcp/src/index";
+import { replayFetch } from "../../mcp/src/fixtures";
 import { object, text } from "./validation";
 
 interface Recording {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { DEFAULT_URL, McpClient, escrowConserved, getComputeChannel, getTrustRoot } from "@flop-lab/mcp";
+import { DEFAULT_URL, McpClient, escrowConserved, getComputeChannel, getTrustRoot } from "../../mcp/src/index";
 import { CHALLENGE_DOC, SDK_CHAIN_SOURCE } from "./core";
 import { channel, object, text } from "./validation";
 import type { Check, Dossier, Observation, WatchReport } from "./types";

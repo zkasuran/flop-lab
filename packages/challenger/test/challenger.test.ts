@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { beforeAll, describe, expect, it } from "vitest";
-import { McpClient, type Settlement } from "@flop-lab/mcp";
+import { McpClient, type Settlement } from "../../mcp/src/index";
 import {
   analyze,
   collectTape,

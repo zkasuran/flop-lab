@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
 import { mkdir, writeFile } from "node:fs/promises";
-import { McpClient, listSettlements, getStats, getComputeChannel, getTrustRoot, indexerQuery } from "@flop-lab/mcp";
+import {
+  McpClient,
+  listSettlements,
+  getStats,
+  getComputeChannel,
+  getTrustRoot,
+  indexerQuery,
+} from "../../mcp/src/index";
 
 const directory = new URL("../fixtures/", import.meta.url);
 await mkdir(directory, { recursive: true });

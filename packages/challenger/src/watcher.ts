@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { DEFAULT_URL, McpClient, getStats, listSettlements } from "@flop-lab/mcp";
+import { DEFAULT_URL, McpClient, getStats, listSettlements } from "../../mcp/src/index";
 import { block, integer, settlement } from "./validation";
 import type { Tape } from "./types";
 

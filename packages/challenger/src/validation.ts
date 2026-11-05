@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { parseSettlement, type Settlement } from "@flop-lab/mcp";
+import { parseSettlement, type Settlement } from "../../mcp/src/index";
 import type { BlockSample } from "./types";
 
 export function object(value: unknown, name: string): Record<string, unknown> {

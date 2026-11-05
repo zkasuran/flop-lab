@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: Apache-2.0
-import { McpClient } from "@flop-lab/mcp";
+import { McpClient } from "../../mcp/src/index";
 import { analyze, formatFlop } from "./core";
 import { collectTape } from "./watcher";
 import { draftDossier } from "./dossier";

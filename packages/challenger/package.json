@@ -15,8 +15,5 @@
     "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
     "build": "tsup",
     "record": "tsx test/record.ts"
-  },
-  "dependencies": {
-    "@flop-lab/mcp": "workspace:*"
   }
 }
