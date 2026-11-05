@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { Observation, Snapshot } from "@/lib/devnet";
+import { compareSample } from "@/lib/observation-view";
+import { Disclosure, MotionButton, ObservedNumber } from "./motion";
 
 function age(at: string | null, now: number): string {
   if (!at) return "not measured";
@@ -14,10 +16,10 @@ function age(at: string | null, now: number): string {
       ? `${Math.floor(seconds / 60)}m old`
       : `${Math.floor(seconds / 3600)}h old`;
 }
-function position(address: string) {
+function addressHash(address: string) {
   let hash = 2166136261;
   for (const char of address) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0;
-  return { x: 28 + (hash % 324), y: 25 + ((hash >>> 12) % 205) };
+  return hash;
 }
 function Source({ observation, now }: { observation: Observation<unknown>; now: number }) {
   const stale = observation.stale || !observation.measuredAt || now - Date.parse(observation.measuredAt) > 60_000;
@@ -40,91 +42,193 @@ function Source({ observation, now }: { observation: Observation<unknown>; now: 
   );
 }
 
-export function DevnetPanel({ snapshot, visual = false }: { snapshot: Snapshot; visual?: boolean }) {
-  const router = useRouter();
-  const [now, setNow] = useState(Date.parse(snapshot.renderedAt));
-  const reduced = useReducedMotion();
+function MinerMap({ snapshot, now, pulses }: { snapshot: Snapshot; now: number; pulses: string[] }) {
   const ref = useRef<HTMLDivElement>(null);
-  const visible = useInView(ref);
-  const previous = useRef(new Set(snapshot.settlements.value?.map((row) => row.channel)));
-  const [pulses, setPulses] = useState<string[]>([]);
+  const visible = useInView(ref, { amount: 0.25 });
+  const reduced = useReducedMotion() !== false;
+  const [sampleOnly, setSampleOnly] = useState(false);
+  const [tabVisible, setTabVisible] = useState(true);
   useEffect(() => {
-    const timer = setInterval(() => {
-      setNow(Date.now());
-      if (!visual && !document.hidden) router.refresh();
-    }, 30_000);
-    return () => clearInterval(timer);
-  }, [router, visual]);
-  useEffect(() => {
-    const rows = snapshot.settlements.value ?? [];
-    setPulses(rows.filter((row) => !previous.current.has(row.channel)).map((row) => row.miner));
-    previous.current = new Set(rows.map((row) => row.channel));
-  }, [snapshot.settlements]);
-  const last = snapshot.settlements.value?.[0];
-  if (visual)
-    return (
-      <div ref={ref} className="hero-panel miner-map">
-        <div className="map-heading">
-          <p className="eyebrow">Price-source map</p>
-          <span className="badge">Observed addresses</span>
-        </div>
-        <svg
-          viewBox="0 0 380 260"
-          role="img"
-          aria-label="Miner addresses positioned by address hash. Highlighted nodes appear in the returned settlement page."
+    const update = () => setTabVisible(!document.hidden);
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+  const addresses = snapshot.miners.value ?? [];
+  const ordered = [...addresses].sort((a, b) => addressHash(a) - addressHash(b) || a.localeCompare(b));
+  const columns = Math.min(6, ordered.length);
+  const rows = Math.ceil(ordered.length / Math.max(1, columns));
+  const sampled = new Set(snapshot.settlements.value?.map((row) => row.miner));
+  const comparison = compareSample(snapshot.miners.value, snapshot.settlements.value);
+  const matches = comparison?.matches ?? [];
+  const known = comparison !== null;
+  const stale = [snapshot.miners, snapshot.settlements].some(
+    (observation) => observation.stale || !observation.measuredAt || now - Date.parse(observation.measuredAt) > 60_000,
+  );
+  const shown = sampleOnly ? matches : addresses;
+  const moving = !reduced && visible && tabVisible;
+  return (
+    <div ref={ref} className="hero-panel miner-map">
+      <div className="map-heading">
+        <p className="eyebrow">Price sources / Settlement sample</p>
+        <span className={`badge ${stale ? "warning" : ""}`}>{stale ? "Last known" : "Observed addresses"}</span>
+      </div>
+      <div className="map-total">
+        <span className="mono">
+          <ObservedNumber value={snapshot.miners.value?.length} />
+        </span>
+        <span className="muted">distinct price-source addresses</span>
+      </div>
+      <div className="map-filters" role="group" aria-label="Map addresses">
+        <MotionButton className="quiet-button" aria-pressed={!sampleOnly} onClick={() => setSampleOnly(false)}>
+          All addresses
+        </MotionButton>
+        <MotionButton
+          className="quiet-button"
+          aria-pressed={sampleOnly}
+          disabled={!known}
+          onClick={() => setSampleOnly(true)}
         >
-          <path
-            d="M0 65H380M0 130H380M0 195H380M95 0V260M190 0V260M285 0V260"
-            stroke="var(--border)"
-            strokeWidth="0.5"
-          />
-          {(snapshot.miners.value ?? []).map((miner) => {
-            const { x, y } = position(miner);
-            const settled = snapshot.settlements.value?.some((row) => row.miner === miner);
+          In sample
+        </MotionButton>
+      </div>
+      <svg
+        viewBox="0 0 380 260"
+        role="img"
+        aria-label="Miner addresses ordered by address hash. Filled nodes appear in the returned settlement page."
+      >
+        <path d="M0 65H380M0 130H380M0 195H380M95 0V260M190 0V260M285 0V260" stroke="var(--border)" strokeWidth="0.5" />
+        <AnimatePresence initial={false}>
+          {shown.map((miner, index) => {
+            const slot = ordered.indexOf(miner);
+            const x = columns > 1 ? 28 + (slot % columns) * (324 / (columns - 1)) : 190;
+            const y = rows > 1 ? 28 + Math.floor(slot / columns) * (194 / (rows - 1)) : 130;
+            const settled = sampled.has(miner);
             return (
               <motion.g
                 key={miner}
                 aria-label={`${miner}${settled ? " / in settlement sample" : ""}`}
-                layout={!reduced}
-                transition={{ duration: reduced ? 0 : 0.4 }}
+                className="map-node"
+                initial={false}
+                animate={{ opacity: 1, y: moving || reduced ? 0 : 8 }}
+                exit={{ opacity: 0, transition: { duration: reduced ? 0 : 0.18, delay: 0 } }}
+                transition={{ duration: reduced ? 0 : 0.3, delay: reduced ? 0 : Math.min(index * 0.02, 0.2) }}
               >
-                <motion.circle
-                  cx={x}
-                  cy={y}
-                  r={6}
-                  fill={settled ? "var(--accent)" : "var(--muted)"}
-                  animate={{ r: !reduced && visible && pulses.includes(miner) ? [6, 12, 6] : 6 }}
-                  transition={{ duration: reduced ? 0 : 0.5 }}
-                />
-                <text x={x} y={y + 20} textAnchor="middle" fill="var(--muted)" fontSize="9" fontFamily="monospace">
+                {moving && pulses.includes(miner) ? (
+                  <motion.circle
+                    cx={x}
+                    cy={y}
+                    r={11}
+                    fill="none"
+                    stroke={settled ? "var(--accent)" : "var(--muted)"}
+                    style={{ transformOrigin: `${x}px ${y}px` }}
+                    animate={{ scale: [1, 1.8, 1] }}
+                    transition={{ duration: reduced ? 0 : 0.5 }}
+                  />
+                ) : (
+                  <circle cx={x} cy={y} r={11} fill="none" stroke={settled ? "var(--accent)" : "var(--muted)"} />
+                )}
+                <circle cx={x} cy={y} r={4} fill={settled ? "var(--accent)" : "var(--surface)"} />
+                <text x={x} y={y + 25} textAnchor="middle" fill="var(--muted)" fontSize="9" fontFamily="monospace">
                   {miner.slice(0, 5)}
                 </text>
               </motion.g>
             );
           })}
-          {!snapshot.miners.value?.length && (
-            <text x="190" y="130" textAnchor="middle" fill="var(--muted)" fontSize="14">
-              No miner addresses observed
-            </text>
-          )}
-        </svg>
-        <p className="muted map-caption">
-          One node per price-source address. Position is an address hash, not geography. Highlight means seen in the
-          settlement sample.
-        </p>
-        <details className="map-details">
-          <summary>Read addresses and source time</summary>
-          <Source observation={snapshot.miners} now={now} />
-          <ul>
-            {snapshot.miners.value?.map((miner) => (
-              <li key={miner}>
-                <code>{miner}</code>
-              </li>
-            ))}
-          </ul>
-        </details>
+        </AnimatePresence>
+        {!shown.length && (
+          <text x="190" y="130" textAnchor="middle" fill="var(--muted)" fontSize="12">
+            {sampleOnly ? "No matching addresses in this page" : "No miner addresses observed"}
+          </text>
+        )}
+      </svg>
+      <p className="map-caption" role="status">
+        {known ? (
+          <>
+            <ObservedNumber value={matches.length} /> of <ObservedNumber value={addresses.length} /> price-source
+            addresses in the settlement page
+          </>
+        ) : (
+          "Sample comparison unavailable"
+        )}
+      </p>
+      <div className="sample-track" aria-hidden="true">
+        <motion.div
+          className="sample-fill"
+          initial={false}
+          animate={{
+            scaleX: reduced || visible ? (comparison?.ratio ?? 0) : 0,
+          }}
+          transition={{ duration: reduced ? 0 : 0.5 }}
+        />
       </div>
-    );
+      <p className="muted map-caption">
+        One node per address, ordered by address hash. Not geography. A filled centre means a sample match. This is not
+        a measure of activity or capacity.
+      </p>
+      <div className="map-details">
+        <Disclosure title="Read addresses and source times">
+          <p className="eyebrow">Price sources</p>
+          <Source observation={snapshot.miners} now={now} />
+          <p className="eyebrow">Settlement page</p>
+          <Source observation={snapshot.settlements} now={now} />
+          <motion.ul layout={!reduced} transition={{ duration: reduced ? 0 : 0.24 }}>
+            <AnimatePresence initial={false}>
+              {shown.map((miner) => (
+                <motion.li
+                  layout={!reduced}
+                  key={miner}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: reduced ? 0 : 0.18 }}
+                >
+                  <code>{miner}</code>
+                  <span className="muted">
+                    {!known ? " / sample unavailable" : sampled.has(miner) ? " / in sample" : " / absent from sample"}
+                  </span>
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </motion.ul>
+          {!shown.length && <p className="muted">No addresses in this view.</p>}
+        </Disclosure>
+      </div>
+    </div>
+  );
+}
+
+export function DevnetPanel({ snapshot, visual = false }: { snapshot: Snapshot; visual?: boolean }) {
+  const router = useRouter();
+  const [now, setNow] = useState(Date.parse(snapshot.renderedAt));
+  const previous = useRef(new Set(snapshot.settlements.value?.map((row) => row.channel)));
+  const [pulses, setPulses] = useState<string[]>([]);
+  useEffect(() => {
+    // The server-rendered page can itself be cached. Its render time is not the browser's current time.
+    setNow(Date.now());
+    const onVisibility = () => {
+      setNow(Date.now());
+      if (!visual && !document.hidden) router.refresh();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    const timer = setInterval(() => {
+      setNow(Date.now());
+      if (!visual && !document.hidden) router.refresh();
+    }, 30_000);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [router, visual]);
+  useEffect(() => {
+    const rows = snapshot.settlements.value ?? [];
+    setPulses(rows.filter((row) => !previous.current.has(row.channel)).map((row) => row.miner));
+    previous.current = new Set(rows.map((row) => row.channel));
+    const timer = setTimeout(() => setPulses([]), 500);
+    return () => clearTimeout(timer);
+  }, [snapshot.settlements]);
+  const last = snapshot.settlements.value?.[0];
+  if (visual) return <MinerMap snapshot={snapshot} now={now} pulses={pulses} />;
   return (
     <section className="live-strip" aria-labelledby="observations-title">
       <div className="strip-heading">
@@ -136,17 +240,23 @@ export function DevnetPanel({ snapshot, visual = false }: { snapshot: Snapshot; 
       <div className="stats-grid">
         <article>
           <h3>Block height</h3>
-          <p className="stat-value mono">{snapshot.stats.value?.block.toLocaleString("en-US") ?? "No data"}</p>
+          <p className="stat-value mono">
+            <ObservedNumber value={snapshot.stats.value?.block} />
+          </p>
           <Source observation={snapshot.stats} now={now} />
         </article>
         <article>
           <h3>Accounts</h3>
-          <p className="stat-value mono">{snapshot.stats.value?.accounts.toLocaleString("en-US") ?? "No data"}</p>
+          <p className="stat-value mono">
+            <ObservedNumber value={snapshot.stats.value?.accounts} />
+          </p>
           <Source observation={snapshot.stats} now={now} />
         </article>
         <article>
           <h3>Miners in price sources</h3>
-          <p className="stat-value mono">{snapshot.miners.value?.length ?? "No data"}</p>
+          <p className="stat-value mono">
+            <ObservedNumber value={snapshot.miners.value?.length} />
+          </p>
           <Source observation={snapshot.miners} now={now} />
         </article>
         <article>

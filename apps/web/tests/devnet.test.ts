@@ -5,6 +5,7 @@ import { replayFetch } from "@flop-lab/mcp/fixtures";
 import stats from "./fixtures/stats.json";
 import settlements from "./fixtures/settlements.json";
 import models from "./fixtures/models.json";
+import { compareSample } from "../lib/observation-view";
 import {
   FetchFailure,
   observationCache,
@@ -57,6 +58,33 @@ describe("recorded public boundaries", () => {
   it("rejects hostile display fields", () => {
     expect(() => parseMiners({ data: [{ "x-flop": { price_sources: [{ miner_address: "<script>" }] } }] })).toThrow();
     expect(() => parseSettlements({ data: [{}] })).toThrow();
+  });
+});
+
+describe("observed sample comparison", () => {
+  it("matches the recorded address intersection without treating settlement rows as miners", async () => {
+    const miners = parseMiners(JSON.parse(models.raw));
+    const rows = parseSettlements({ data: (await listSettlements(replay())).value.data });
+    const expected = {
+      total: 10,
+      matches: ["5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1"],
+      ratio: 0.1,
+    };
+    expect(compareSample(miners, rows)).toEqual(expected);
+    expect(compareSample([...miners, ...miners], [...rows, ...rows])).toEqual(expected);
+  });
+  it("keeps missing sources distinct from a measured empty page", () => {
+    const miners = parseMiners(JSON.parse(models.raw));
+    expect(compareSample(null, [])).toBeNull();
+    expect(compareSample(miners, null)).toBeNull();
+    expect(compareSample(miners, [])).toEqual({ total: 10, matches: [], ratio: 0 });
+    expect(compareSample([], [])).toEqual({ total: 0, matches: [], ratio: 0 });
+  });
+  it("does not count settlements from miners outside the recorded price-source list", async () => {
+    const rows = parseSettlements({ data: (await listSettlements(replay())).value.data });
+    const otherMiners = parseMiners(JSON.parse(models.raw)).filter((miner) => !rows.some((row) => row.miner === miner));
+    expect(compareSample(otherMiners, rows)).toEqual({ total: 9, matches: [], ratio: 0 });
+    expect(compareSample([], rows)).toEqual({ total: 0, matches: [], ratio: 0 });
   });
 });
 
