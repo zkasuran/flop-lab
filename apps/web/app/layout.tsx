@@ -45,6 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </MotionLink>
           <nav aria-label="Main navigation">
             <MotionLink href="/#tools">Tools</MotionLink>
+            <MotionLink href="/about">About</MotionLink>
             <MotionLink className="nav-repo" href={repository}>
               Source ↗
             </MotionLink>
