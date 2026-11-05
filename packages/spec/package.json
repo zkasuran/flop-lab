@@ -1,0 +1,16 @@
+{
+  "name": "@flop-lab/spec",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Compare a pinned FLOP yellowpaper with dated public observations",
+  "exports": { ".": "./src/index.ts" },
+  "bin": { "flop-spec": "./dist/cli.js" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": { "@flop-lab/mcp": "workspace:*" }
+}

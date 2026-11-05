@@ -80,6 +80,9 @@ importers:
       '@flop-lab/scoreboard':
         specifier: workspace:*
         version: link:../scoreboard
+      '@flop-lab/spec':
+        specifier: workspace:*
+        version: link:../spec
       '@flop-lab/spendguard':
         specifier: workspace:*
         version: link:../spendguard
@@ -105,6 +108,12 @@ importers:
   packages/mcp: {}
 
   packages/scoreboard: {}
+
+  packages/spec:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/spendguard: {}
 
