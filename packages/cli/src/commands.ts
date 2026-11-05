@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "sdk",
+    pkg: "@flop-lab/sdkconf",
+    bin: "flop-sdkconf",
+    section: "build",
+    summary: "Check published SDK behaviour with offline request traces",
+  },
+  {
     name: "verify",
     pkg: "@flop-lab/verifier",
     bin: "flop-verify",
