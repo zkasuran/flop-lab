@@ -1,7 +1,21 @@
-# @flop-lab/harness
+# FLOP conformance harness
 
-Check public FLOP devnet claims against dated responses. Use this before integrating
-a gateway response or reporting a disagreement to the maintainers.
+Does the network do what its docs say? The harness checks documented FLOP claims
+against public responses. Each result keeps the claim, observed evidence and source
+time. A failure must reproduce before the harness marks it FAIL.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. This checks the gateway contract
+and writes `last-run.json` and `last-run.md` in the current directory:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/harness build
+node packages/harness/dist/cli.js run --only gateway-contract --max-requests 8 --max-flop 0
+```
+
+## Claims and evidence
 
 The catalogue covers documented protocol parameters, gateway contracts, model
 discovery, settlement arithmetic, pagination, error handling and advertised MCP

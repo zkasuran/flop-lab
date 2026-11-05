@@ -1,8 +1,21 @@
 # FLOP pay-per-call kit
 
-Inspect the FLOP SDK's payment headers. Build request-bound payment handling with a
-hard client ceiling and a replay store. Run a dated settlement preview from the
-hosted MCP.
+How would an API charge per call in FLOP? This kit inspects SDK payment headers and
+provides request-bound payment handling with a client ceiling and replay store.
+Its read-only demo shows dated settlement arithmetic.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. This inspects recorded payment
+headers without sending a payment:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/x402kit build
+node packages/x402kit/dist/cli.js inspect packages/x402kit/fixtures/headers.json
+```
+
+## Payment boundary
 
 **Payment execution is UNVERIFIED.** The reference demo fails closed. The shipped
 SDK does not establish recipient binding for an arbitrary merchant in the HTLC

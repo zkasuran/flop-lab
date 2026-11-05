@@ -20,6 +20,7 @@
     "@flop-lab/challenger": "workspace:*",
     "@flop-lab/harness": "workspace:*",
     "@flop-lab/scoreboard": "workspace:*",
+    "@flop-lab/spec": "workspace:*",
     "@flop-lab/spendguard": "workspace:*",
     "@flop-lab/verifier": "workspace:*",
     "@flop-lab/x402kit": "workspace:*"
