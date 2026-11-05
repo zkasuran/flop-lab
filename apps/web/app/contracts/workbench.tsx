@@ -391,6 +391,7 @@ export function ContractsBoard({ report }: { report: AuditReport | null }) {
               </strong>
               <div className={styles.statTrack} aria-hidden="true">
                 <motion.div
+                  style={{ scaleX: totals[status] / report.tools.length }}
                   initial={false}
                   whileInView={{
                     scaleX: reduced ? totals[status] / report.tools.length : [0, totals[status] / report.tools.length],
