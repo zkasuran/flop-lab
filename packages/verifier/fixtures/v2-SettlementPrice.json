@@ -1,0 +1,367 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "args": {
+    "query": "query { __type(name: \"SettlementPrice\") { fields { name type { kind name ofType { kind name } } } } }"
+  },
+  "value": {
+    "__type": {
+      "fields": [
+        {
+          "name": "channelId",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "settledBlock",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "Int"
+            }
+          }
+        },
+        {
+          "name": "settledAt",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "Float"
+            }
+          }
+        },
+        {
+          "name": "settledBlockHash",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "agent",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "miner",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "escrow",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "minerPaid",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "burned",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "aggregateGn",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "unusedEscrow",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "pricePerGflop",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "cooperative",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Boolean",
+            "ofType": null
+          }
+        },
+        {
+          "name": "settlementKind",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "settlementEvent",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "marketKind",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "contractStartBlock",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "contractEndBlock",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "reservedRate",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "quotaTotal",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "contractPricePerGn",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "bond",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "forwardOutcome",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "bondReleased",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "bondSlashed",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "buyerDamages",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "backupBounty",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "modelHash",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "gpuSku",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "gpuSkuSource",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "assuranceTier",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "calibrationVersion",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "utilizationPpm",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "selfTrade",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "extrinsicHash",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "extrinsicIndex",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "eventIndex",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "callSection",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "callMethod",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        }
+      ]
+    }
+  },
+  "raw": "{\n  \"__type\": {\n    \"fields\": [\n      {\n        \"name\": \"channelId\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"settledBlock\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"Int\"\n          }\n        }\n      },\n      {\n        \"name\": \"settledAt\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"Float\"\n          }\n        }\n      },\n      {\n        \"name\": \"settledBlockHash\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"agent\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"miner\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"escrow\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"minerPaid\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"burned\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"aggregateGn\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"unusedEscrow\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"pricePerGflop\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"cooperative\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Boolean\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"settlementKind\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"settlementEvent\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"marketKind\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"contractStartBlock\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"contractEndBlock\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"reservedRate\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"quotaTotal\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"contractPricePerGn\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"bond\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"forwardOutcome\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"bondReleased\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"bondSlashed\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"buyerDamages\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"backupBounty\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"modelHash\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"gpuSku\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"gpuSkuSource\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"assuranceTier\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"calibrationVersion\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"utilizationPpm\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"selfTrade\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"Boolean\"\n          }\n        }\n      },\n      {\n        \"name\": \"extrinsicHash\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"extrinsicIndex\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"eventIndex\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"callSection\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"callMethod\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      }\n    ]\n  }\n}",
+  "measuredAt": "2026-11-05T22:11:06.037Z",
+  "durationMs": 127,
+  "attempts": 1
+}

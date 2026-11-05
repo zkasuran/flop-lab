@@ -1,6 +1,6 @@
 # Settlement verifier page
 
-`/verify` checks FLOP devnet settlement evidence with the same library as `flop-verify`. It starts with a dated recorded channel. Collect a public channel on demand or replay a JSON file entirely in the browser. Every result exposes its inputs and original observations. Download the exact bundle for offline replay.
+Do the settlement, receipt and attestation agree? `/verify` checks FLOP devnet evidence with the same library as `flop-verify`. It starts with a dated recorded v2 channel. Collect a public channel on demand or replay a v1 or v2 JSON file entirely in the browser. Every result exposes its inputs and original observations. Download the exact bundle for offline replay.
 
 ## Run
 
@@ -9,10 +9,12 @@ From the repository root with Node 22:
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter web build
-pnpm --filter web exec next start --port 3330
+pnpm --filter web exec next start --port 3460
 ```
 
-Open `http://localhost:3330/verify`. Paste a channel id or load recent settlements. Choose **Verify a local bundle** to replay the downloaded `evidence.json`. Uploaded JSON is never sent to the server. Hash mismatches stop all other checks. Invalid JSON and oversized files preserve the previous result with an explicit error.
+Open `http://localhost:3460/verify`. Paste a channel id or load recent settlements. Choose **Verify a local bundle** to replay the downloaded `evidence.json`. Uploaded JSON is never sent to the server. Hash mismatches stop all other checks. Invalid JSON and oversized files preserve the previous result with an explicit error.
+
+Filter by Settlement, Indexer, Receipts and HTLCs or Attestation. The page separates proven consistency, limits of public evidence and service simulation. The simulated TEE service never contributes a passing check. Empty dstack keys remain visible. A byte digest match does not authenticate a hardware quote.
 
 ```sh
 pnpm --filter @flop-lab/verifier build
@@ -27,7 +29,7 @@ The server uses the shared MCP client through `EvidenceFetcher`. Reads occur onl
 
 Responses and failures are cached for 30 seconds with a maximum of 16 entries per process. Observation caching preserves original measurement times. The MCP transport waits at least 300 ms between requests, uses a 5-second timeout and retries 429 or 5xx once with backoff. These are configured limits rather than measured throughput claims. Serverless instances do not share a global rate limiter.
 
-The initial recorded example comes from `packages/verifier/fixtures/channel-1.json`. It is labelled with its original capture time and source. A devnet reset can remove it from live services. Live collection failure keeps the previous result visible.
+The initial recorded example comes from `packages/verifier/fixtures/v2-channel.json`. It is labelled with its original capture time and source. A devnet reset can remove it from live services. Live collection failure keeps the previous result visible.
 
 ## Motion and access
 

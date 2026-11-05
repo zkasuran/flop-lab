@@ -7,8 +7,11 @@ const cwd = fileURLToPath(new URL("../", import.meta.url));
 const run = (...args: string[]) =>
   spawnSync(process.execPath, ["--import", "tsx", "src/cli.ts", ...args], { cwd, encoding: "utf8", timeout: 10_000 });
 
-it("offline CLI reports uncertainty with zero HTTP requests", () => {
-  const output = run("bundle", "fixtures/channel-1.json", "--json");
+it.each([
+  ["channel-1.json", 12],
+  ["v2-channel.json", 25],
+] as const)("offline CLI replays %s with zero HTTP requests", (file, count) => {
+  const output = run("bundle", `fixtures/${file}`, "--json");
   expect(output.status).toBe(3);
   const parsed = JSON.parse(output.stdout) as {
     requests: { requests: number };
@@ -16,7 +19,7 @@ it("offline CLI reports uncertainty with zero HTTP requests", () => {
     sources: { source: string; measuredAt: string }[];
   };
   expect(parsed.requests.requests).toBe(0);
-  expect(parsed.checks).toHaveLength(12);
+  expect(parsed.checks).toHaveLength(count);
   expect(parsed.sources.length).toBeGreaterThan(0);
   expect(
     parsed.sources.every(

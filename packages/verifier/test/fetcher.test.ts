@@ -6,7 +6,7 @@ import { expect, it, vi } from "vitest";
 import { canonical, EvidenceFetcher, parseEvidence, verifyEvidence } from "../src/index";
 import { object } from "../src/schema";
 
-const bundle = parseEvidence(JSON.parse(readFileSync(new URL("../fixtures/channel-1.json", import.meta.url), "utf8")));
+const bundle = parseEvidence(JSON.parse(readFileSync(new URL("../fixtures/v2-channel.json", import.meta.url), "utf8")));
 
 function recorded() {
   return vi.fn<typeof fetch>(async (url, init) => {

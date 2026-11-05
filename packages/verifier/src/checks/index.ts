@@ -2,6 +2,7 @@
 import { integrityErrors, parseEvidence } from "../bundle";
 import { array, boolean, hash, height, integer, Missing, object, text } from "../schema";
 import type { Check, Evidence, Report } from "../types";
+import { checkPublicEvidence } from "./public";
 
 type Outcome = Pick<Check, "status" | "detail">;
 const pass = (detail: string): Outcome => ({ status: "PASS", detail });
@@ -410,6 +411,7 @@ export async function verifyEvidence(value: unknown): Promise<Report> {
       },
     ),
   );
+  if (bundle.version === 2) checks.push(...(await checkPublicEvidence(bundle, row)));
   return {
     channelId: bundle.channelId,
     capturedAt: bundle.capturedAt,

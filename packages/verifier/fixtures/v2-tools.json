@@ -1,0 +1,119 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "measuredAt": "2026-11-05T22:11:05.108Z",
+  "tools": [
+    {
+      "name": "flop_check_htlc",
+      "description": "Check the status of an HTLC by its hash lock. Returns CREATED, SETTLED, or REFUNDED.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "hash_lock": {
+            "type": "string",
+            "description": "HTLC hash lock (hex string)"
+          }
+        },
+        "required": [
+          "hash_lock"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "flop_trust_root",
+      "description": "Read-only canonical trust base: allowed TDX measurements (dstack VKs), registered models, SKU ceilings, evidence params, and active PoUI committee. Pin snapshotHash to detect governance-gated drift across upgrades.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "flop_verify_tee_quote",
+      "description": "Simulated check of a TEE (Trusted Execution Environment) quote/attestation (Intel SGX or AWS Nitro). Performs no cryptographic verification: always returns verified: false, status: 'unverified', simulated: true, and placeholder quote details.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "quote_hex": {
+            "type": "string",
+            "description": "TEE quote or attestation data as hex string"
+          },
+          "tee_type": {
+            "default": "auto",
+            "description": "TEE type: 'intel-sgx' for Intel SGX quotes, 'aws-nitro' for AWS Nitro attestations, or 'auto' to detect automatically",
+            "type": "string",
+            "enum": [
+              "intel-sgx",
+              "aws-nitro",
+              "auto"
+            ]
+          },
+          "tcb_response_hex": {
+            "description": "Intel TCB response data as hex (required for Intel SGX verification)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "quote_hex"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "flop_get_tcb_status",
+      "description": "Get TCB (Trusted Computing Base) status and security advisories for Intel SGX or other TEE platforms. Check for known vulnerabilities and recommended updates.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "platform": {
+            "default": "intel-sgx",
+            "description": "TEE platform to check TCB status for",
+            "type": "string",
+            "enum": [
+              "intel-sgx",
+              "aws-nitro",
+              "amd-sev"
+            ]
+          },
+          "tcb_version": {
+            "description": "Specific TCB version to check (e.g., SVN for Intel SGX)",
+            "type": "string"
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "flop_get_inference_receipt",
+      "description": "Get a settled HTLC's authenticated TEE quote digest and verified compute. Other receipt fields are placeholders and do not establish model or input/output commitments or finalized settlement.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "hash_lock": {
+            "type": "string",
+            "description": "HTLC hash lock (hex string)"
+          }
+        },
+        "required": [
+          "hash_lock"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true
+      }
+    }
+  ]
+}

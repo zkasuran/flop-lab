@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { ToolHeader } from "@/components/tool-header";
 
 import { AnimatePresence, MotionConfig, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { MotionLink } from "@/components/motion";
@@ -321,14 +322,7 @@ export function HarnessWorkbench({ report }: { report: RunReport | null }) {
         </MotionLink>
         <header className={styles.hero}>
           <div>
-            <motion.p className="eyebrow" {...enter(0)}>
-              Devnet workbench / Conformance harness
-            </motion.p>
-            <motion.h1 {...enter(1)}>
-              Claims meet
-              <br />
-              <span>observations.</span>
-            </motion.h1>
+            <ToolHeader slug="harness" />
             <motion.p className={styles.intro} {...enter(2)}>
               Inspect repeatable protocol checks. Trace a result to its source. Copy the command and test it yourself.
             </motion.p>

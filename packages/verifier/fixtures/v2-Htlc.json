@@ -1,0 +1,179 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "args": {
+    "query": "query { __type(name: \"Htlc\") { fields { name type { kind name ofType { kind name } } } } }"
+  },
+  "value": {
+    "__type": {
+      "fields": [
+        {
+          "name": "hashLock",
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "SCALAR",
+              "name": "String"
+            }
+          }
+        },
+        {
+          "name": "htlcId",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "sender",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "recipient",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "amount",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "timeout",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "status",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "paymentStatus",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "evidenceStatus",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "verifierRef",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "timeoutPath",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "observationHead",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "preImage",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "gnUsed",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        },
+        {
+          "name": "receiptHash",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "createdAt",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null
+          }
+        },
+        {
+          "name": "settledAt",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null
+          }
+        },
+        {
+          "name": "refundedAt",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null
+          }
+        },
+        {
+          "name": "blockHash",
+          "type": {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null
+          }
+        },
+        {
+          "name": "blockNumber",
+          "type": {
+            "kind": "SCALAR",
+            "name": "Int",
+            "ofType": null
+          }
+        }
+      ]
+    }
+  },
+  "raw": "{\n  \"__type\": {\n    \"fields\": [\n      {\n        \"name\": \"hashLock\",\n        \"type\": {\n          \"kind\": \"NON_NULL\",\n          \"name\": null,\n          \"ofType\": {\n            \"kind\": \"SCALAR\",\n            \"name\": \"String\"\n          }\n        }\n      },\n      {\n        \"name\": \"htlcId\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"sender\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"recipient\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"amount\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"timeout\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"status\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"paymentStatus\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"evidenceStatus\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"verifierRef\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"timeoutPath\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"observationHead\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"preImage\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"gnUsed\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"receiptHash\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"createdAt\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Float\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"settledAt\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Float\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"refundedAt\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Float\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"blockHash\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"String\",\n          \"ofType\": null\n        }\n      },\n      {\n        \"name\": \"blockNumber\",\n        \"type\": {\n          \"kind\": \"SCALAR\",\n          \"name\": \"Int\",\n          \"ofType\": null\n        }\n      }\n    ]\n  }\n}",
+  "measuredAt": "2026-11-05T22:11:06.444Z",
+  "durationMs": 134,
+  "attempts": 1
+}

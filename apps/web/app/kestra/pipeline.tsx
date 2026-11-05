@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { ToolHeader } from "@/components/tool-header";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
@@ -30,16 +31,9 @@ export function KestraPipeline() {
             <MotionLink href="/#tools" className={styles.back}>
               ← All tools
             </MotionLink>
-            <p className="eyebrow">
-              FLOP for Kestra <span className="badge alpha">alpha</span>
-            </p>
           </ReadingReveal>
           <ReadingReveal order={1}>
-            <h1>
-              From network
-              <br />
-              to workflow.
-            </h1>
+            <ToolHeader slug="kestra" />
           </ReadingReveal>
           <ReadingReveal order={2}>
             <p className={styles.intro}>

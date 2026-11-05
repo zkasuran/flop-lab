@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { ToolHeader } from "@/components/tool-header";
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
@@ -494,12 +495,7 @@ export function Scoreboard({
         </motion.a>
         <header className={styles.hero}>
           <div>
-            <p className="eyebrow">Scoreboard / FLOP devnet / alpha</p>
-            <h1>
-              Evidence first.
-              <br />
-              <span>Then a miner.</span>
-            </h1>
+            <ToolHeader slug="scoreboard" />
             <Reveal delay={0.05}>
               <p className={styles.intro}>
                 Compare miners by the settlements we can see. Open a score. Read its limits. Route with an explanation.

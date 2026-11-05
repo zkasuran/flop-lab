@@ -1,0 +1,137 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "capturedAt": "2026-11-05T22:15:48.754Z",
+  "stats": {
+    "requests": 10,
+    "retries": 0,
+    "failures": 0
+  },
+  "bytes": 57980,
+  "checks": [
+    {
+      "id": "bundle-integrity",
+      "status": "PASS",
+      "detail": "Hashes match. An unsigned bundle can be edited and rehashed; this is not source authentication."
+    },
+    {
+      "id": "settlement-record",
+      "status": "PASS",
+      "detail": "One matching settlement in the captured pages."
+    },
+    {
+      "id": "escrow-conservation",
+      "status": "PASS",
+      "detail": "The reported split conserves escrow exactly. This does not prove funds moved."
+    },
+    {
+      "id": "display-price-ratio",
+      "status": "PASS",
+      "detail": "Display-ratio consistency only. No conversion from G_n to GFLOP is established."
+    },
+    {
+      "id": "channel-consistency",
+      "status": "PASS",
+      "detail": "The two indexed views agree. Both are served through the same public MCP."
+    },
+    {
+      "id": "price-consistency",
+      "status": "UNVERIFIABLE",
+      "detail": "Missing an invertible G_n-to-GFLOP definition, per-turn compute and the agreed historical price. A derived tape ratio is not a pricing proof."
+    },
+    {
+      "id": "model-registry",
+      "status": "PASS",
+      "detail": "Hash membership matches these snapshots. This does not verify weights ran or historical registry membership."
+    },
+    {
+      "id": "settlement-event",
+      "status": "PASS",
+      "detail": "Indexed event, call and header references agree. No consensus or storage proof was checked."
+    },
+    {
+      "id": "assurance-tier",
+      "status": "UNVERIFIABLE",
+      "detail": "Missing authenticated co-signed transcript and activation evidence. WITNESS_ONLY and signatures without verification are not proof."
+    },
+    {
+      "id": "challenge-window",
+      "status": "UNVERIFIABLE",
+      "detail": "The docs specify about seven days, bounded by DA retention. Missing the exact historical runtime window and authenticated head. No exact expiry is inferred."
+    },
+    {
+      "id": "merkle-inclusion",
+      "status": "UNVERIFIABLE",
+      "detail": "Missing an authoritative leaf and node encoding plus an authenticated transcript root. Published witness merklePath fields alone are not inclusion proof."
+    },
+    {
+      "id": "tee-quote-digest",
+      "status": "NOT_APPLICABLE",
+      "detail": "This captured Soft compute channel declares no HTLC link or hardware quote."
+    },
+    {
+      "id": "indexer-channel",
+      "status": "PASS",
+      "detail": "Captured views agree. They share infrastructure and are not independent witnesses."
+    },
+    {
+      "id": "indexer-settlement",
+      "status": "PASS",
+      "detail": "Captured views agree. They share infrastructure and are not independent witnesses."
+    },
+    {
+      "id": "htlc-link",
+      "status": "UNVERIFIABLE",
+      "detail": "No explicit public HTLC hash-lock link. A channel id is not a hash lock."
+    },
+    {
+      "id": "indexer-htlc",
+      "status": "UNVERIFIABLE",
+      "detail": "No explicit public HTLC hash-lock link. A channel id is not a hash lock."
+    },
+    {
+      "id": "htlc-preimage",
+      "status": "UNVERIFIABLE",
+      "detail": "No explicit public HTLC hash-lock link. A channel id is not a hash lock."
+    },
+    {
+      "id": "htlc-timelock",
+      "status": "UNVERIFIABLE",
+      "detail": "No explicit public HTLC hash-lock link. A channel id is not a hash lock."
+    },
+    {
+      "id": "receipt-amount",
+      "status": "UNVERIFIABLE",
+      "detail": "No explicit public HTLC hash-lock link. A channel id is not a hash lock."
+    },
+    {
+      "id": "htlc-amount",
+      "status": "UNVERIFIABLE",
+      "detail": "No explicit public HTLC hash-lock link. A channel id is not a hash lock."
+    },
+    {
+      "id": "quote-structure",
+      "status": "UNVERIFIABLE",
+      "detail": "No inline public quote envelope. Opaque attestation references cannot be resolved by the public tools."
+    },
+    {
+      "id": "quote-digest",
+      "status": "UNVERIFIABLE",
+      "detail": "No inline public quote envelope. Opaque attestation references cannot be resolved by the public tools."
+    },
+    {
+      "id": "attestation-trust",
+      "status": "UNVERIFIABLE",
+      "detail": "Captured trust root has empty dstackVkeys. No public measurement binding can be established."
+    },
+    {
+      "id": "attestation-tcb",
+      "status": "UNVERIFIABLE",
+      "detail": "No inline public quote envelope. Opaque attestation references cannot be resolved by the public tools."
+    },
+    {
+      "id": "tee-service-simulation",
+      "status": "UNVERIFIABLE",
+      "detail": "flop_verify_tee_quote is documented as simulated. It was not called and cannot add a pass."
+    }
+  ]
+}
