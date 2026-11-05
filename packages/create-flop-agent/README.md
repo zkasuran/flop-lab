@@ -43,7 +43,7 @@ import { generateAgent } from "@flop-lab/create-flop-agent";
 await generateAgent({ directory: "/tmp/my-flop-agent", maxFlop: "0.1" });
 ```
 
-The generator uses `link:` dependencies to the installed source checkout. `--workspace <path>` selects another installed flop-lab checkout. This works outside a pnpm workspace while the packages remain private. Keep the checkout at that path. After publication, replace the links with tested published versions and their documented exports. No registry installation command for these private packages is advertised.
+The generator uses `link:` dependencies to the installed source checkout and its locked TypeScript toolchain. `--workspace <path>` selects another installed flop-lab checkout. This works outside a pnpm workspace while the packages remain private. Keep the checkout at that path. After publication, replace the links with tested published versions and their documented exports. No registry installation command for these private packages is advertised.
 
 ## Evidence and checks
 
@@ -55,7 +55,7 @@ pnpm --filter @flop-lab/create-flop-agent record
 pnpm exec tsx packages/create-flop-agent/scripts/verify.ts /tmp/starter-mutation.log
 ```
 
-`check` generates into a temporary directory, installs from the local pnpm cache, type-checks the generated project and runs its tests and default command. The mutation script removes the initial devnet guard, requires a failing test result, restores it and requires green checks. It records command output and generation timing.
+`check` generates into a temporary directory, installs local workspace links offline, type-checks the generated project and runs its tests and default command. The mutation script removes the initial devnet guard, requires a failing test result, restores it and requires green checks. It records command output and generation timing.
 
 Health has a 30-second freshness bound. The scoreboard collector caches for 60 seconds. The shared MCP client spaces calls and applies bounded backoff to 429 and 5xx responses. Recorded replay performs no network requests. Live request attempts and run duration are printed by the generated command.
 

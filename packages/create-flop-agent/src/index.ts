@@ -40,6 +40,13 @@ export async function generateAgent(options: GenerateOptions) {
     if (manifest.name !== `@flop-lab/${name}`) throw new Error(`Workspace is missing @flop-lab/${name}`);
     links[`@flop-lab/${name}`] = `link:${source}`;
   }
+  const toolchain: Record<string, string> = {};
+  for (const name of ["@types/node", "tsx", "typescript", "vitest"]) {
+    const source = join(workspace, "node_modules", name);
+    const manifest = JSON.parse(await readFile(join(source, "package.json"), "utf8")) as { name?: unknown };
+    if (manifest.name !== name) throw new Error(`Install the workspace toolchain first: missing ${name}`);
+    toolchain[name] = `link:${source}`;
+  }
   const contents = new Map<string, string>();
   for (const [name] of templateFiles.slice(0, 8)) {
     const source = name === ".gitignore" ? "gitignore.txt" : name;
@@ -71,7 +78,7 @@ export async function generateAgent(options: GenerateOptions) {
           "ledger:init": "tsx src/init-ledger.ts",
         },
         dependencies: links,
-        devDependencies: { "@types/node": "26.6.6", tsx: "4.23.15", typescript: "6.0.3", vitest: "5.1.0" },
+        devDependencies: toolchain,
       },
       null,
       2,

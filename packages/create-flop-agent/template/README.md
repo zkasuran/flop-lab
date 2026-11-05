@@ -37,7 +37,7 @@ Health expires after 30 seconds and is rechecked immediately before an adapter c
 
 Before rehearsing an explicit quote, run `pnpm ledger:init` once to create the local ledger and its head anchor. Existing files are refused. A missing ledger during a turn is an error. Reuse the same `requestId` for the dry run and its matching operation.
 
-The `link:` dependencies point at the source checkout used to generate this project. Install that checkout first. Keep it at the same path. These packages are private and their exports currently target TypeScript source. When published, replace the links with tested published versions and follow their exported entry points. Do not run an unpublished `npx` command.
+The `link:` dependencies point at the source checkout and its locked TypeScript toolchain. Install that checkout first. Keep it at the same path. These packages are private and their exports currently target TypeScript source. When published, replace the package and toolchain links with tested published versions and follow their exported entry points. Do not run an unpublished `npx` command.
 
 ## What this does not verify
 
