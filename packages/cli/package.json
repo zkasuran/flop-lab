@@ -16,6 +16,7 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@flop-lab/explorer": "workspace:*",
     "@flop-lab/doctor": "workspace:*",
     "@flop-lab/challenger": "workspace:*",
     "@flop-lab/harness": "workspace:*",

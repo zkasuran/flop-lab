@@ -1,0 +1,2 @@
+# Compact captured reports retain raw tool text and stay below the fixture size cap.
+test/fixtures/*.json
