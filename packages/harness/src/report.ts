@@ -98,7 +98,9 @@ export function parseReport(value: unknown): RunReport {
   const report = object(value);
   if (report.version !== 1) throw new Error("Unsupported report version");
   if (!Number.isFinite(Date.parse(text(report.measuredAt)))) throw new Error("Invalid report measurement time");
-  text(report.finishedAt);
+  if (!Number.isFinite(Date.parse(text(report.finishedAt)))) throw new Error("Invalid report completion time");
+  integer(report.durationMs);
+  array(report.source).forEach(text);
   const evidenceIds = new Set<number>();
   for (const value of array(report.evidence)) {
     const item = object(value);
@@ -108,9 +110,13 @@ export function parseReport(value: unknown): RunReport {
     const request = object(item.request);
     text(request.url);
     text(request.method);
-    object(request.headers);
+    Object.values(object(request.headers)).forEach(text);
+    if (request.body !== undefined) text(request.body);
     text(item.response);
-    text(item.measuredAt);
+    if (!Number.isFinite(Date.parse(text(item.measuredAt)))) throw new Error("Invalid evidence time");
+    integer(item.durationMs);
+    if (item.status !== null && (integer(item.status) < 100 || integer(item.status) > 599))
+      throw new Error("Invalid HTTP status");
   }
   const ids = new Set<string>();
   for (const value of array(report.results)) {
@@ -121,6 +127,7 @@ export function parseReport(value: unknown): RunReport {
     ids.add(id);
     text(claim.expected);
     text(claim.title);
+    if (!["read-only", "spends-test-funds"].includes(text(claim.risk))) throw new Error("Invalid risk class");
     text(object(claim.source).url);
     text(object(claim.source).quote);
     if (!["PASS", "FAIL", "UNVERIFIABLE", "SKIPPED"].includes(text(result.status)) || typeof result.flaky !== "boolean")
@@ -131,13 +138,25 @@ export function parseReport(value: unknown): RunReport {
       const attempt = object(value);
       if (!["PASS", "FAIL", "UNVERIFIABLE"].includes(text(attempt.status))) throw new Error("Invalid attempt status");
       text(attempt.reason);
-      text(attempt.measuredAt);
+      if (!Number.isFinite(Date.parse(text(attempt.measuredAt)))) throw new Error("Invalid attempt time");
+      integer(attempt.durationMs);
+      if (!("observed" in attempt)) throw new Error("Missing observed value");
       if (array(attempt.evidence).some((id) => !evidenceIds.has(integer(id))))
         throw new Error("Missing evidence reference");
     }
   }
-  object(report.network);
-  object(report.budget);
+  const network = object(report.network);
+  if (network.name !== null) text(network.name);
+  if (network.genesisHash !== null && !/^0x[a-fA-F0-9]{64}$/.test(text(network.genesisHash)))
+    throw new Error("Invalid genesis hash");
+  if (network.specVersion !== null) integer(network.specVersion);
+  text(network.reason);
+  if (array(network.evidence).some((id) => !evidenceIds.has(integer(id)))) throw new Error("Missing network evidence");
+  const budget = object(report.budget);
+  if (integer(budget.requests) > integer(budget.maxRequests)) throw new Error("Request budget exceeded");
+  integer(budget.cacheTtlMs);
+  text(budget.maxFlop);
+  text(budget.spentFlop);
   return report as unknown as RunReport;
 }
 

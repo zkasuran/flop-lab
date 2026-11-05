@@ -4,6 +4,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { pathToFileURL } from "node:url";
+import { resolve } from "node:path";
 import { runHarness } from "./runner";
 import { parseReport, renderBugDraft, renderMarkdown } from "./report";
 import { loadClaims } from "./catalogue";
@@ -61,7 +62,7 @@ export async function main(argv: string[]): Promise<number> {
     if (!/^\d+$/.test(rawRequests)) throw new Error("max-requests must be a nonnegative integer");
     const out = values.get("--out") ?? "last-run.json";
     const markdown = values.get("--markdown") ?? "last-run.md";
-    if (out === markdown) throw new Error("JSON and Markdown output paths must differ");
+    if (resolve(out) === resolve(markdown)) throw new Error("JSON and Markdown output paths must differ");
     const report = await runHarness({
       only: values.get("--only"),
       risk: risk as Risk | undefined,

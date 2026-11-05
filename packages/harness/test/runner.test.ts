@@ -203,4 +203,8 @@ describe("reports", () => {
     selected(report, "gateway-contract").attempts[0]!.evidence.push(99999);
     expect(() => parseReport(report)).toThrow("Missing evidence");
   });
+  it("rejects incomplete network metadata at the import boundary", async () => {
+    const report = await run("gateway-contract");
+    expect(() => parseReport({ ...report, network: {} })).toThrow();
+  });
 });
