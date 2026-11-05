@@ -5,6 +5,8 @@ import { CommandPalette, ThemeToggle } from "@/components/controls";
 import { Footer } from "@/components/footer";
 import { repository } from "@/content/tools";
 import { MotionLink, RouteSurface } from "@/components/motion";
+import { SectionNavigation } from "@/components/suite/navigation";
+import { paletteEntries } from "@/components/suite/docs";
 import "./globals.css";
 
 const text = localFont({
@@ -24,7 +26,8 @@ export const metadata: Metadata = {
     "Does a settlement add up? Does the network match its docs? Independent FLOP devnet tools with dated findings you can inspect and rerun.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const entries = await paletteEntries();
   return (
     <html lang="en" suppressHydrationWarning className={`${text.variable} ${mono.variable}`}>
       <head>
@@ -49,10 +52,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <MotionLink className="nav-repo" href={repository}>
               Source ↗
             </MotionLink>
-            <CommandPalette />
+            <CommandPalette entries={entries} />
             <ThemeToggle />
           </nav>
         </header>
+        <SectionNavigation />
         <main id="main" className="container">
           <RouteSurface>{children}</RouteSurface>
         </main>

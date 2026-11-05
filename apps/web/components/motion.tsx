@@ -3,6 +3,7 @@
 
 import {
   AnimatePresence,
+  LayoutGroup,
   motion,
   MotionConfig,
   useInView,
@@ -51,15 +52,17 @@ export function RouteSurface({ children }: { children: ReactNode }) {
   const reduced = useReducedMotion() !== false;
   return (
     <MotionConfig reducedMotion="user">
-      <motion.div
-        className="route-surface"
-        key={path}
-        initial={{ y: reduced ? 0 : 8 }}
-        animate={{ y: 0 }}
-        transition={{ duration: reduced ? 0 : 0.24 }}
-      >
-        {children}
-      </motion.div>
+      <LayoutGroup id="suite-routes">
+        <motion.div
+          className="route-surface"
+          key={path}
+          initial={{ y: reduced ? 0 : 8 }}
+          animate={{ y: 0 }}
+          transition={{ duration: reduced ? 0 : 0.24 }}
+        >
+          {children}
+        </motion.div>
+      </LayoutGroup>
     </MotionConfig>
   );
 }

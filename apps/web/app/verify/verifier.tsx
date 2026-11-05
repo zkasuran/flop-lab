@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { ToolHeader } from "@/components/tool-header";
 
 import { AnimatePresence, animate, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
@@ -296,14 +297,7 @@ export function Verifier({ initialBundle, initialReport }: { initialBundle: Evid
       </motion.a>
       <header className={styles.hero}>
         <div>
-          <motion.p className="eyebrow" {...readStep(0)}>
-            Settlement verifier / devnet
-          </motion.p>
-          <motion.h1 {...readStep(1)}>
-            Does the
-            <br />
-            <span>evidence add up?</span>
-          </motion.h1>
+          <ToolHeader slug="verify" />
           <motion.p className={styles.intro} {...readStep(2)}>
             Check a settlement. See what agrees, what fails and what public data cannot prove.
           </motion.p>

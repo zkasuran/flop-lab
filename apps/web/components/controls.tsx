@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { tools, toolHref } from "@/content/tools";
+import { searchEntries, type SearchEntry } from "./suite/catalogue";
 import { motion, useReducedMotion } from "motion/react";
 import { MotionButton, MotionLink } from "./motion";
 
@@ -52,12 +52,15 @@ export function ThemeToggle() {
   );
 }
 
-export function CommandPalette() {
+export function CommandPalette({ entries }: { entries: readonly SearchEntry[] }) {
   const reduced = useReducedMotion() !== false;
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
   const [query, setQuery] = useState("");
   const open = () => {
+    opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setQuery("");
     dialog.current?.showModal();
     input.current?.focus();
@@ -75,19 +78,30 @@ export function CommandPalette() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-  const matches = tools.filter((tool) => `${tool.name} ${tool.tagline}`.toLowerCase().includes(query.toLowerCase()));
+  const matches = searchEntries(entries, query);
   return (
     <>
-      <MotionButton className="quiet-button" onClick={open}>
-        Find tool <span className="shortcut mono">/</span>
+      <MotionButton ref={trigger} className="quiet-button" onClick={open}>
+        Search <span className="shortcut mono">/</span>
       </MotionButton>
       <dialog
         ref={dialog}
         aria-labelledby="palette-title"
+        onClose={() => (opener.current?.isConnected ? opener.current : trigger.current)?.focus()}
         onClick={(event) => {
           if (event.target === dialog.current) dialog.current.close();
         }}
         onKeyDown={(event) => {
+          if (event.key === "Enter" && event.target === input.current) {
+            event.preventDefault();
+            dialog.current?.querySelector<HTMLAnchorElement>(".palette-list a")?.click();
+            return;
+          }
+          if (event.key === "Home" && event.target !== input.current) {
+            event.preventDefault();
+            input.current?.focus();
+            return;
+          }
           if (!["ArrowDown", "ArrowUp"].includes(event.key)) return;
           const links = Array.from(dialog.current?.querySelectorAll<HTMLAnchorElement>("a") ?? []);
           if (!links.length) return;
@@ -103,7 +117,7 @@ export function CommandPalette() {
         }}
       >
         <div className="palette-head">
-          <h2 id="palette-title">Find a tool</h2>
+          <h2 id="palette-title">Search the suite</h2>
           <MotionButton className="quiet-button" onClick={() => dialog.current?.close()}>
             Close
           </MotionButton>
@@ -113,24 +127,36 @@ export function CommandPalette() {
           whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
           transition={{ duration: reduced ? 0 : 0.16 }}
           className="palette-search"
-          aria-label="Search tools"
-          placeholder="Search by name or task"
+          aria-label="Search tools, sections and docs"
+          placeholder="Tool, section or docs heading"
+          aria-describedby="palette-help"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
+        <p id="palette-help" className="palette-empty muted">
+          Arrows move. Enter opens. Home returns to search. Escape closes.
+        </p>
         <ul className="palette-list">
-          {matches.map((tool) => (
-            <motion.li key={tool.slug} layout={!reduced} transition={{ duration: reduced ? 0 : 0.2 }}>
-              <MotionLink href={toolHref(tool)} onClick={() => dialog.current?.close()}>
-                {tool.name}
-                <span className={`badge ${tool.status}`}>{tool.status}</span>
+          {matches.slice(0, 30).map((entry) => (
+            <motion.li key={entry.id} layout={!reduced} transition={{ duration: reduced ? 0 : 0.2 }}>
+              <MotionLink href={entry.href} onClick={() => dialog.current?.close()}>
+                <span>
+                  {entry.title}
+                  <small className="muted" style={{ display: "block" }}>
+                    {entry.detail}
+                  </small>
+                </span>
+                <span className="badge">{entry.kind}</span>
               </MotionLink>
             </motion.li>
           ))}
         </ul>
+        {matches.length > 30 && (
+          <p className="palette-empty muted">Showing the first 30 of {matches.length} matches. Refine your search.</p>
+        )}
         {!matches.length && (
           <p className="palette-empty muted" role="status">
-            No tools match this search.
+            No tools, sections or docs match this search.
           </p>
         )}
       </dialog>

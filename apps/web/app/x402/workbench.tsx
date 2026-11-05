@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { ToolHeader } from "@/components/tool-header";
 
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
@@ -106,12 +107,7 @@ export function X402Workbench({ run, initialPreview }: { run: typeof recordedRun
           <MotionLink href="/#tools" className={styles.back}>
             ‹ All tools
           </MotionLink>
-          <p className="eyebrow">Pay-per-call kit / SDK reference</p>
-          <h1>
-            A payment request.
-            <br />
-            <span>Not yet a receipt.</span>
-          </h1>
+          <ToolHeader slug="x402" />
           <p className={styles.lead}>
             Trace the headers. Bound the spend. See exactly where chain verification is missing.
           </p>
