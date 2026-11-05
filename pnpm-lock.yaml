@@ -80,6 +80,9 @@ importers:
       '@flop-lab/harness':
         specifier: workspace:*
         version: link:../harness
+      '@flop-lab/recorder':
+        specifier: workspace:*
+        version: link:../recorder
       '@flop-lab/scoreboard':
         specifier: workspace:*
         version: link:../scoreboard
@@ -114,6 +117,15 @@ importers:
         version: 8.20.0
 
   packages/mcp: {}
+
+  packages/recorder:
+    dependencies:
+      '@flop-lab/harness':
+        specifier: workspace:*
+        version: link:../harness
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/scoreboard: {}
 

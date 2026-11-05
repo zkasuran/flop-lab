@@ -19,6 +19,7 @@
     "@flop-lab/doctor": "workspace:*",
     "@flop-lab/challenger": "workspace:*",
     "@flop-lab/harness": "workspace:*",
+    "@flop-lab/recorder": "workspace:*",
     "@flop-lab/scoreboard": "workspace:*",
     "@flop-lab/sdkconf": "workspace:*",
     "@flop-lab/spec": "workspace:*",
