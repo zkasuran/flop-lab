@@ -35,6 +35,7 @@
   },
   {
     "id": "mcp-check-htlc",
+    "evidenceNeeded": "A public indexed hash lock with a corresponding HTLC record, plus an output schema that distinguishes missing records from structured status results.",
     "title": "flop_check_htlc minimal input",
     "source": {
       "url": "https://mcp.flop.network/mcp",
@@ -203,6 +204,7 @@
   },
   {
     "id": "mcp-check-session",
+    "evidenceNeeded": "A public owner and delegate pair with an active session and a declared output schema. A settlement agent address does not establish a delegate relationship.",
     "title": "flop_check_session minimal input",
     "source": {
       "url": "https://mcp.flop.network/mcp",
@@ -256,6 +258,7 @@
   },
   {
     "id": "mcp-get-inference-receipt",
+    "evidenceNeeded": "An indexed hash lock linked to an available inference receipt with a declared output schema. Receipt existence does not prove its cryptographic validity.",
     "title": "flop_get_inference_receipt minimal input",
     "source": {
       "url": "https://mcp.flop.network/mcp",
@@ -432,6 +435,7 @@
   },
   {
     "id": "mcp-get-agent-card",
+    "evidenceNeeded": "An on-chain agent id from a public registry or registration event, linked to a retrievable agent card. An account address is not an agent id.",
     "title": "flop_get_agent_card minimal input",
     "source": {
       "url": "https://mcp.flop.network/mcp",
@@ -465,6 +469,7 @@
   },
   {
     "id": "mcp-agent-skill-get",
+    "evidenceNeeded": "A working public agent-pack manifest listing a skill id and the content served for that id. The hosted pack currently reports that its files are missing.",
     "title": "flop_agent_skill_get minimal input",
     "source": {
       "url": "https://mcp.flop.network/mcp",
@@ -553,6 +558,7 @@
   },
   {
     "id": "mcp-knowledge-manifest",
+    "evidenceNeeded": "A complete manifest response within the harness capture limit, or a paginated manifest contract. mcpaudit can separately validate a larger response using compressed raw fixtures.",
     "title": "flop_knowledge_manifest minimal input",
     "source": {
       "url": "https://mcp.flop.network/mcp",

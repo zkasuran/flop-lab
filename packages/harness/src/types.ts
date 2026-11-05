@@ -12,6 +12,7 @@ export interface Claim {
   tool?: string;
   args?: Record<string, unknown>;
   reason?: string;
+  evidenceNeeded?: string;
 }
 export interface Evidence {
   id: number;
