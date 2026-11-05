@@ -1,0 +1,7 @@
+{
+  "name": "create-flop-x402-example",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": { "dev": "node ../dist/cli.js serve" }
+}

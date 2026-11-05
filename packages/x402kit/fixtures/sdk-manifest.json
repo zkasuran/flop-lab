@@ -1,0 +1,30 @@
+[
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/x402.js",
+    "measuredAt": "2026-11-05T16:24:25.117Z",
+    "file": "sdk-dist-x402.js.base64",
+    "bytes": 9265,
+    "sha256": "d2c20e26c9f8e48af6af3218c810b8f06b6bff2084ededa4ef2234ad4510bd8d"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/x402.d.ts",
+    "measuredAt": "2026-11-05T16:24:25.146Z",
+    "file": "sdk-dist-x402.d.ts.base64",
+    "bytes": 4375,
+    "sha256": "173da07c7cab9532dd5e8a9c5a97a65b8d93edde8c1e4723b59ce6ad7b41481c"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/x402-types/index.d.ts",
+    "measuredAt": "2026-11-05T16:24:25.190Z",
+    "file": "sdk-dist-x402-types-index.d.ts.base64",
+    "bytes": 2372,
+    "sha256": "58ee5e99364fca6d030a8a5003434b5112c45073c57add2a7604478c08c1a428"
+  },
+  {
+    "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/README.md",
+    "measuredAt": "2026-11-05T16:24:25.222Z",
+    "file": "sdk-README.md.base64",
+    "bytes": 17482,
+    "sha256": "9faea0d1180e73e04fc0a572d152b8dc091cb9349b595826b869f6f31acabe20"
+  }
+]
