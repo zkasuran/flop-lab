@@ -9,8 +9,10 @@ import { pickMiner, type RouteOptions } from "../../../../packages/scoreboard/sr
 import { parsePage, type Snapshot } from "../../../../packages/scoreboard/src/schema";
 import { addHistory, historyGeometry, parseResponse, type HistoryPoint, type SnapshotResponse } from "./data";
 import styles from "./scoreboard.module.css";
+import { MinerComparison, MinerTimeline } from "./reliability-panel";
 
-const command = "pnpm --filter @flop-lab/scoreboard cli rank --file fixtures/snapshot-03.json";
+const command =
+  "pnpm --filter @flop-lab/scoreboard cli rank --file fixtures/snapshot-04.json --reliability-file fixtures/reliability-04.json --now 2026-11-05T22:49:04.652Z";
 const modelDoc = "https://github.com/zkasuran/flop-lab/blob/main/packages/scoreboard/MODEL.md";
 const short = (address: string) => `${address.slice(0, 7)}...${address.slice(-6)}`;
 const number = (value: number) => value.toFixed(2);
@@ -160,7 +162,7 @@ function MinerDetails({
             <div className={styles.detailScore}>
               <strong>{row.score === null ? "No score" : number(row.score)}</strong>
               <span>
-                settlement score / 100
+                {row.scoreVersion} / 100
                 <br />
                 <span className="muted">
                   {row.confidenceLabel} confidence · {percent(row.confidence)}
@@ -169,8 +171,10 @@ function MinerDetails({
             </div>
             <h3>Where the score comes from</h3>
             <p className="muted">
-              100 × confidence × (0.70 × cooperative share + 0.30 × recency). Policy weights, not measured
-              probabilities.
+              {row.scoreVersion === "evidence-v2"
+                ? "Half the settlement score plus acknowledgement, ghost, cumulative outcome and proof terms. Missing terms earn no points."
+                : "100 × confidence × (0.70 × cooperative share + 0.30 × recency)."}{" "}
+              Policy weights, not measured probabilities. <a href={modelDoc}>Exact formula ↗</a>
             </p>
             {row.terms.map((term) => (
               <div className={styles.term} key={term.name}>
@@ -185,7 +189,7 @@ function MinerDetails({
                   label={`${term.name}: ${number(term.contribution)} points out of 100`}
                 />
                 <small className="muted">
-                  Weight {percent(term.weight)} · observed term {number(term.value)}
+                  Weight {percent(term.weight)} · observed term {term.value === null ? "No data" : number(term.value)}
                 </small>
               </div>
             ))}
@@ -207,6 +211,7 @@ function MinerDetails({
                 <dd>{row.unusedEscrowRatio === null ? "No data" : percent(row.unusedEscrowRatio)}</dd>
               </div>
             </dl>
+            <MinerTimeline key={row.miner} row={row} />
             <h3>Stored price history</h3>
             <History history={history} miner={row.miner} />
             <h3>Gateway listings</h3>
@@ -277,6 +282,14 @@ function Router({ snapshot, now }: { snapshot: Snapshot; now: number }) {
             const next: RouteOptions = {
               model: String(data.get("model") ?? ""),
               minConfidence: Number(data.get("confidence")),
+              ...(String(data.get("reliability") ?? "").trim()
+                ? {
+                    minReliability: Number(data.get("reliability")),
+                    minReliabilityOutcomes: Number(data.get("outcomes")),
+                  }
+                : {}),
+              ...(String(data.get("proofs") ?? "").trim() ? { minProofs: Number(data.get("proofs")) } : {}),
+              rejectGhostFailures: data.get("ghost") === "reject",
               exclude: String(data.get("exclude") ?? "")
                 .split(/[\s,]+/)
                 .filter(Boolean),
@@ -304,6 +317,32 @@ function Router({ snapshot, now }: { snapshot: Snapshot; now: number }) {
           <label>
             Minimum confidence
             <input name="confidence" type="number" min="0" max="1" step="0.01" defaultValue="0.2" required />
+          </label>
+          <label>
+            Minimum acknowledgement ratio
+            <input
+              name="reliability"
+              type="number"
+              min="0"
+              max="1"
+              step="0.01"
+              placeholder="Optional, fails when unknown"
+            />
+          </label>
+          <label>
+            Minimum outcomes when a ratio is set
+            <input name="outcomes" type="number" min="0" step="1" defaultValue="5" />
+          </label>
+          <label>
+            Minimum proof count
+            <input name="proofs" type="number" min="0" step="1" placeholder="Optional, fails when unknown" />
+          </label>
+          <label>
+            Ghost policy
+            <select name="ghost" defaultValue="observe">
+              <option value="observe">Observe only</option>
+              <option value="reject">Reject failures and unknown evidence</option>
+            </select>
           </label>
           <label>
             Maximum FLOP per GFLOP
@@ -387,8 +426,8 @@ function Router({ snapshot, now }: { snapshot: Snapshot; now: number }) {
                   See who qualifies.
                 </h3>
                 <p className="muted">
-                  The router checks listing expiry, settlement evidence, confidence and exclusions. Historical prices
-                  never satisfy a live spending limit.
+                  The router checks listings, settlement evidence and your reliability limits. Required reliability
+                  evidence expires after a day. Historical prices never satisfy a live spending limit.
                 </p>
               </motion.div>
             )}
@@ -498,7 +537,8 @@ export function Scoreboard({
             <ToolHeader slug="scoreboard" />
             <Reveal delay={0.05}>
               <p className={styles.intro}>
-                Compare miners by the settlements we can see. Open a score. Read its limits. Route with an explanation.
+                Compare miners over time. Inspect settlements, acknowledgement history and ghost outcomes. Route with an
+                explanation.
               </p>
             </Reveal>
           </div>
@@ -549,7 +589,7 @@ export function Scoreboard({
             {[
               [
                 "Observe",
-                "Dated gateway listings and a bounded settlement page. Nominal listings earn no score points.",
+                "Dated settlements, reliability series and proof activity. Nominal listings earn no score points.",
               ],
               [
                 "Filter",
@@ -557,7 +597,7 @@ export function Scoreboard({
               ],
               [
                 "Explain",
-                "Weight cooperation and recency by evidence confidence. A partial tape caps confidence at 0.5.",
+                "Show each contribution. Missing reliability terms earn no points. A partial settlement tape caps confidence at 0.5.",
               ],
             ].map(([title, text], index) => (
               <Reveal key={title} delay={index * 0.07}>
@@ -594,7 +634,7 @@ export function Scoreboard({
             <label>
               Order by
               <select value={sort} onChange={(event) => setSort(event.target.value)}>
-                <option value="score">Settlement score</option>
+                <option value="score">Evidence score</option>
                 <option value="settlements">Settlement count</option>
                 <option value="address">Miner address</option>
               </select>
@@ -602,7 +642,7 @@ export function Scoreboard({
           </div>
           {!totalIncluded && (
             <p className={styles.empty} role="status">
-              No usable settlements in the seven-day window. Observed listings have no score. This is not evidence of
+              No usable settlements in the seven-day window. Listings alone earn no points. This is not evidence of
               miner failure.
             </p>
           )}
@@ -683,9 +723,10 @@ export function Scoreboard({
             </p>
           )}
           <p className={styles.tableNote}>
-            Rank numbers always refer to settlement score order. Select another order to compare the same evidence.
+            Rank numbers always refer to evidence score order. Select another order to compare the same evidence.
           </p>
         </section>
+        <MinerComparison rows={rows} snapshot={data.snapshot} onInspect={setSelected} />
         <Router snapshot={data.snapshot} now={now} />
         <section className="section" aria-labelledby="source-heading">
           <div className="section-heading">
@@ -723,7 +764,7 @@ export function Scoreboard({
           </div>
           <p className={styles.tableNote}>
             Run from a checkout after <code>pnpm install</code>. This command reads a committed recording. It scores at
-            the current time.
+            its capture time.
           </p>
           <ul className={styles.sources}>
             {data.snapshot.records.map((record) => (

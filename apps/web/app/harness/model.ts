@@ -31,7 +31,7 @@ export function filterResults(results: ClaimResult[], status: Filter, kind: stri
 /** Use the workspace entry point after checkout rather than an unpublished binary. @example reproduceCommand("gateway-contract") */
 export function reproduceCommand(id: string): string {
   if (!/^[a-z][a-z0-9-]+$/.test(id)) throw new Error("Invalid claim id");
-  return `pnpm --filter @flop-lab/harness start run --only ${id} --max-requests 100 --max-flop 0`;
+  return `pnpm --filter @flop-lab/harness start run --only ${id} --max-requests 80 --max-flop 0`;
 }
 
 /** Keep evidence excerpts readable without discarding the raw fixture reference. @example excerpt({ok: true}) */

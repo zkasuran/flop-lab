@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { escrowConserved, type Settlement } from "../../mcp/src/index";
 import { parseSnapshot, parseModels, parseSettlements, parsePage, type Snapshot } from "./schema";
+import { parseReliability, scoreReliability, type MinerReliability } from "./reliability";
+import { genesisHash, type SettlementHistory } from "./archive";
 
 export const WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 export const DEFAULT_WEIGHTS: Readonly<{ cooperative: number; recency: number }> = Object.freeze({
@@ -24,7 +26,9 @@ export interface RankedMiner {
   unusedEscrowRatio: number | null;
   latestSettlementAt: number | null;
   historicalMedianPriceRaw: string | null;
-  terms: { name: string; weight: number; value: number; contribution: number }[];
+  terms: { name: string; weight: number; value: number | null; contribution: number }[];
+  scoreVersion: "settlement-v1" | "evidence-v2";
+  reliability: MinerReliability;
   priceSources: ReturnType<typeof parseModels>;
   provenance: { source: string; measuredAt: string }[];
   warnings: string[];
@@ -48,6 +52,21 @@ export function compareDecimal(a: string, b: string): number {
 /** Rank observed settlement history. The score is not uptime. @example rankSnapshot(snapshot, { now: Date.now() }) */
 export function rankSnapshot(input: Snapshot, options: RankOptions = {}): RankedMiner[] {
   const snapshot = parseSnapshot(input);
+  return rankValidated(snapshot, options);
+}
+
+/** Score each archive sample separately, including when genesis is unknown. @example rankRecordedHistory(snapshot) */
+export function rankRecordedHistory(input: Snapshot) {
+  const snapshot = parseSnapshot(input);
+  return (snapshot.archive?.snapshots ?? []).map((record) => ({
+    source: record.source,
+    measuredAt: record.measuredAt,
+    genesis: record.genesis,
+    rows: rankValidated(snapshot, { now: Date.parse(record.measuredAt) }, record),
+  }));
+}
+
+function rankValidated(snapshot: Snapshot, options: RankOptions, archived?: SettlementHistory): RankedMiner[] {
   const now = options.now ?? Date.now();
   const windowMs = options.windowMs ?? WINDOW_MS;
   const weights = options.weights ?? DEFAULT_WEIGHTS;
@@ -60,12 +79,38 @@ export function rankSnapshot(input: Snapshot, options: RankOptions = {}): Ranked
   )
     throw new Error("invalid weights");
   const modelRecord = snapshot.records.find((r) => r.kind === "models")!;
-  const settlementRecord = snapshot.records.find((r) => r.kind === "settlements")!;
-  const prices = parseModels(modelRecord);
-  const all = parseSettlements(settlementRecord);
+  const settlementRecord = archived
+    ? { ...archived, kind: "settlements" as const }
+    : snapshot.records.find((r) => r.kind === "settlements")!;
+  const prices = archived ? [] : parseModels(modelRecord);
+  const genesis = genesisHash(snapshot.records.find((r) => r.kind === "indexer")!.raw);
+  const history = (archived ? [] : (snapshot.archive?.snapshots ?? [])).filter(
+    (s) =>
+      genesis !== null &&
+      s.genesis === genesis &&
+      Date.parse(s.measuredAt) <= Date.parse(snapshot.measuredAt) &&
+      Date.parse(s.measuredAt) <= now &&
+      Date.parse(s.measuredAt) >= now - windowMs,
+  );
+  const byChannel = new Map<string, Settlement>();
+  for (const record of [...history].sort((a, b) => Date.parse(a.measuredAt) - Date.parse(b.measuredAt))) {
+    for (const row of parseSettlements({ ...record, kind: "settlements" }))
+      if (row.settledAt <= Date.parse(record.measuredAt)) byChannel.set(row.channelId, row);
+  }
+  for (const row of parseSettlements(settlementRecord)) byChannel.set(row.channelId, row);
+  const all = [...byChannel.values()];
   const page = parsePage(settlementRecord.raw);
-  const incomplete = page.hasMore || page.offset !== 0 || page.data.length < page.total;
-  const miners = new Set([...prices.map((p) => p.miner), ...all.map((s) => s.miner)]);
+  const incomplete = history.length > 0 || page.hasMore || page.offset !== 0 || page.data.length < page.total;
+  const view = !archived && snapshot.reliability ? parseReliability(snapshot.reliability) : undefined;
+  const v2 = !archived && (!!view || !!snapshot.reliabilityError);
+  const miners = new Set([
+    ...prices.map((p) => p.miner),
+    ...all.map((s) => s.miner),
+    ...(view?.evidence.miners ?? []),
+    ...(view?.proofs.map((p) => p.submitter) ?? []),
+    ...(view?.events.flatMap((e) => (e.miner === null ? [] : [e.miner])) ?? []),
+    ...(view?.ghosts.map((e) => e.miner) ?? []),
+  ]);
   const rows: RankedMiner[] = [];
   for (const miner of miners) {
     const observed = all.filter((s) => s.miner === miner);
@@ -81,7 +126,7 @@ export function rankSnapshot(input: Snapshot, options: RankOptions = {}): Ranked
     const cooperative = n ? eligible.filter((s) => s.cooperative).length / n : null;
     const recency = latest === null ? 0 : Math.max(0, 1 - (now - latest) / windowMs);
     const sum = weights.cooperative + weights.recency;
-    const terms = [
+    let terms: RankedMiner["terms"] = [
       {
         name: "cooperative",
         weight: weights.cooperative / sum,
@@ -95,6 +140,12 @@ export function rankSnapshot(input: Snapshot, options: RankOptions = {}): Ranked
         contribution: 100 * confidence * (weights.recency / sum) * recency,
       },
     ];
+    const reliability = scoreReliability(view, miner, now, windowMs);
+    if (v2)
+      terms = [
+        ...terms.map((t) => ({ ...t, weight: t.weight * 0.5, contribution: t.contribution * 0.5 })),
+        ...reliability.terms,
+      ];
     const historic = eligible
       .filter((s) => BigInt(s.aggregateGn) > 0n)
       .map((s) => s.pricePerGflop)
@@ -105,14 +156,27 @@ export function rankSnapshot(input: Snapshot, options: RankOptions = {}): Ranked
       warnings.push(
         `Partial settlement tape: ${page.data.length} of ${page.total} reported rows. Confidence capped at 0.5.`,
       );
-    if (n === 0) warnings.push("No usable settlements in the window. No score.");
+    if (n === 0) warnings.push("No usable settlements in the window.");
+    if (v2) warnings.push(...reliability.warnings);
+    if (!archived && snapshot.reliabilityError) warnings.push(`Reliability unavailable: ${snapshot.reliabilityError}`);
+    if (history.length)
+      warnings.push(
+        `Settlement history includes ${history.length} recorder snapshots with matching observed genesis. Channels are deduplicated.`,
+      );
+    if (!archived && snapshot.archive && !history.length)
+      warnings.push("No matching recorder settlement history. Reliability uses the indexer series.");
     if (inWindow.length > n) warnings.push(`${inWindow.length - n} self-trade or nonconserving rows excluded.`);
     if (priceSources.some((p) => p.source === "devnet-nominal"))
       warnings.push("devnet-nominal listing. No live per-GFLOP quote. Listing does not affect score.");
     if (priceSources.some((p) => now >= Date.parse(p.expiresAt))) warnings.push("Expired gateway price source.");
     rows.push({
       miner,
-      score: n ? terms.reduce((sum, term) => sum + term.contribution, 0) : null,
+      score:
+        n || (v2 && reliability.terms.some((t) => t.value !== null))
+          ? terms.reduce((sum, term) => sum + term.contribution, 0)
+          : null,
+      scoreVersion: v2 ? "evidence-v2" : "settlement-v1",
+      reliability,
       confidence,
       confidenceLabel: n === 0 ? "none" : confidence < 0.5 ? "low" : confidence < 0.8 ? "medium" : "high",
       settlements: n,
@@ -127,7 +191,12 @@ export function rankSnapshot(input: Snapshot, options: RankOptions = {}): Ranked
       historicalMedianPriceRaw: historic[Math.floor((historic.length - 1) / 2)] ?? null,
       terms,
       priceSources,
-      provenance: [modelRecord, settlementRecord].map(({ source, measuredAt }) => ({ source, measuredAt })),
+      provenance: [
+        ...(archived ? [] : [modelRecord]),
+        settlementRecord,
+        ...history,
+        ...(view ? [view.evidence] : []),
+      ].map(({ source, measuredAt }) => ({ source, measuredAt })),
       warnings,
     });
   }

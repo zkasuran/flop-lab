@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { parseSettlement, type Settlement } from "../../mcp/src/index";
+import { parseReliability, type ReliabilityEvidence } from "./reliability";
+import { genesisHash, parseArchive, type ArchiveHistory } from "./archive";
 
 export const SOURCES = {
   models: "https://api.flop.network/v1/models",
@@ -20,6 +22,9 @@ export interface Snapshot {
   measuredAt: string;
   records: Observation[];
   collection: { requests: number; durationMs: number; cacheTtlMs: number };
+  reliability?: ReliabilityEvidence;
+  reliabilityError?: string;
+  archive?: ArchiveHistory;
 }
 export interface PriceSource {
   model: string;
@@ -161,6 +166,7 @@ export function parseSnapshot(value: unknown): Snapshot {
       const stats = object(record.raw.stats, "indexer.stats");
       nonnegative(stats.latestBlockNumber, "indexer.latestBlockNumber");
       nonnegative(stats.totalAccounts, "indexer.totalAccounts");
+      genesisHash(record.raw);
     }
     return record;
   });
@@ -168,10 +174,16 @@ export function parseSnapshot(value: unknown): Snapshot {
     throw new Error("snapshot requires each surface exactly once");
   const requests = nonnegative(c.requests, "requests");
   if (!Number.isSafeInteger(requests)) throw new Error("requests must be an integer");
+  const reliability = o.reliability === undefined ? undefined : parseReliability(o.reliability).evidence;
+  if (reliability && Date.parse(reliability.measuredAt) > Date.parse(measuredAt))
+    throw new Error("Reliability measured after snapshot");
   return {
     schemaVersion: 1,
     measuredAt,
     records,
+    ...(reliability ? { reliability } : {}),
+    ...(o.archive === undefined ? {} : { archive: parseArchive(o.archive) }),
+    ...(o.reliabilityError === undefined ? {} : { reliabilityError: text(o.reliabilityError, "reliabilityError") }),
     collection: {
       requests,
       durationMs: nonnegative(c.durationMs, "durationMs"),

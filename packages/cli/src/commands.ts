@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Generate a devnet-only agent with fixture-backed dry runs",
   },
   {
+    name: "indexer",
+    pkg: "@flop-lab/indexer-audit",
+    bin: "flop-indexer-audit",
+    section: "verify",
+    summary: "Audit indexer totals, block links and settlement accounting",
+  },
+  {
     name: "tclk",
     pkg: "@flop-lab/tclk-inspect",
     bin: "flop-tclk",

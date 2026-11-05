@@ -1,6 +1,6 @@
 # FLOP scoreboard
 
-Which miner has settlement evidence I can compare? The scoreboard ranks miners from public settlements and price sources. Each score shows its inputs and confidence. A router explains its pick or why no miner meets the policy.
+Which miner has evidence I can rely on over time? The scoreboard compares settlement history, acknowledgements, ghost outcomes and proof activity. Each score shows its formula and source dates. The router explains its pick or refusal.
 
 ## Quick start
 
@@ -9,14 +9,16 @@ From the repository root with Node 22 and pnpm. This ranks a dated recording at 
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter @flop-lab/scoreboard build
-node packages/scoreboard/dist/cli.js rank --file packages/scoreboard/fixtures/snapshot-01.json --now 2026-11-05T08:56:16.581Z
+node packages/scoreboard/dist/cli.js rank --file packages/scoreboard/fixtures/snapshot-04.json --reliability-file packages/scoreboard/fixtures/reliability-04.json --now 2026-11-05T22:49:04.652Z
 ```
 
 ## Sources and scoring
 
-The collector reads gateway models, settlements, session offers, the proof leaderboard and indexer stats through the shared MCP client. Each raw response carries its source and measurement time. Snapshots use [schema version 1](snapshot.schema.json) and are validated when read. The [model](MODEL.md) defines the score, confidence labels and how each term can be gamed.
+The collector reads gateway models, settlements, session offers, the proof leaderboard and indexer stats through the shared MCP client. It queries `minerReliability`, `minerReliabilitySeries`, `minerGhostStatsSnapshots`, `reliabilityEvents` and `pouiLeaderboard` using the recorded introspection schema. Each response carries its source, query and measurement time. Snapshots use [schema version 1](snapshot.schema.json) with optional reliability and archive evidence. The [model](MODEL.md) defines both score versions and their limits.
 
-This private workspace package imports the already-landed shared MCP source entry. It adds no dependencies. The CLI build bundles that shared source.
+Old snapshots keep `settlement-v1`. New collections use `evidence-v2`: half the settlement score plus acknowledgement, ghost, cumulative outcome and proof terms. Missing terms earn no points. Confidence still describes settlement evidence only. Reliability is a heuristic over the captured window, not a success probability or FLOP FRCR.
+
+This workspace package imports the shared MCP client and recorder validators. The CLI build bundles those sources.
 
 ## Run
 
@@ -42,6 +44,20 @@ node packages/scoreboard/dist/cli.js explain 5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZ
 
 `--json` produces machine-readable output. `--exclude` can be repeated. `--min-confidence` accepts a value from 0 to 1. Offline reads make no requests. Evaluation uses the current time unless `--now` is supplied. An expired snapshot cannot route to an expired listing.
 
+### Reliability policy
+
+```sh
+node packages/scoreboard/dist/cli.js route --file packages/scoreboard/fixtures/snapshot-04.json --reliability-file packages/scoreboard/fixtures/reliability-04.json --model qwen/qwen2.5-0.5b-instruct --min-reliability 0.9 --min-reliability-outcomes 5 --min-proofs 1 --reject-ghost-failures --json
+```
+
+Thresholds in this command are policy choices. A requested acknowledgement ratio defaults to a minimum of five observed outcomes. Missing acknowledgement or proof evidence refuses even a zero threshold. `--reject-ghost-failures` refuses unknown ghost outcomes as well as observed failures. Required reliability evidence has a default maximum age of one day. Override it with `--max-reliability-age-ms`. Routing always requires settlement evidence and an effective gateway listing. Proof activity alone cannot route a miner.
+
+### Recorder history
+
+The collector checks the public recorder `data/index.json` and reads at most eight snapshots from the last seven days. Each snapshot is checked against its content hash and index entry. `rankRecordedHistory(snapshot)` scores each sample separately at capture time using settlement-v1. Missing days stay missing. The latest ranking only pools archived channels when a non-null observed genesis matches the current indexer observation. Repeated channels count once. Combined samples retain the partial-tape confidence cap.
+
+If the archive is absent or unavailable, the collector returns that state and uses indexer reliability series. The bundled recorder samples have no genesis hash. They receive separate rankings rather than being pooled. The archive does not yet record reliability series, so those terms always use the indexer.
+
 ## Import
 
 ```ts
@@ -65,22 +81,24 @@ The newest settlement page is bounded to 100 rows. It is not a complete network 
 
 ```sh
 pnpm --filter @flop-lab/scoreboard check
-pnpm --filter @flop-lab/scoreboard record 04
+pnpm --filter @flop-lab/scoreboard record 05
 ```
 
 The fixtures include real snapshots taken at separate times, a full query-root introspection recording in `indexer-schema.json` and a real empty settlement response for a zero model hash. The empty response does not mean the whole devnet was empty. Tests derive a fully empty scenario from that response and clearly keep it separate from live measurements. Recorded snapshots retain raw values rather than fabricated successful miners.
 
+The reliability recording at `2026-11-05T22:49:04.650Z` has 24 miner summaries, 33 daily buckets, 100 events and 100 ghost snapshots. Its proof leaderboard is empty. Raw reliability and base snapshot responses are stored separately to keep each file under 200 KB. Controlled test inputs exercise nonempty proof activity and failure terms. They are not devnet measurements.
+
 ## Website
 
-The `/scoreboard` page shows the observed settlement sample with its source dates and age. Filter miner addresses or reorder the table by score, settlement count or address. Rank numbers always retain score order. Open a miner to inspect formula contributions, confidence, listings and recorded price history. The chart shows lower medians from stored settlement samples across models in exact source raw units. It does not show gateway quotes.
+The `/scoreboard` page shows the observed sample with source dates and age. Compare two miners on the same fields. Open a miner for its event timeline, ghost counters and formula terms. Filter the timeline by event kind. Recorder sample scores appear when available. The price chart shows stored settlement medians in exact source raw units.
 
 From the repository root:
 
 ```sh
-pnpm --filter web exec next dev --port 3310
+pnpm --filter web exec next dev --port 3560
 ```
 
-Open http://localhost:3310/scoreboard. The copyable command on the page reads a committed recording. The route policy form runs the same `pickMiner` function as the CLI with current wall-clock time. A price ceiling on the observed gateway schema produces `live-price-unknown`. Results update as listings expire. No transaction is sent.
+Open http://localhost:3560/scoreboard. The copyable command replays a committed recording at capture time. The route policy form runs `pickMiner` with current wall-clock time. A price ceiling produces `live-price-unknown`. Results update as listings expire. No transaction is sent.
 
 `GET /scoreboard/snapshot` uses Next revalidation of 60 seconds and calls the package collector. Successful reads replace the entire snapshot, including empty responses. Concurrent reads share one collection. Failed reads retain the last good snapshot with a last-known label and its original dates. Cold processes fall back to the committed real recordings. Failure cooldown starts at 120 seconds and caps at five minutes. Processes do not share their in-memory fallback. The site gives the entire collection an eight-second deadline, including network reads and retry waits. Exceeding it cancels both before returning the fallback. This bounds static builds when public services stall. Request counts remain in the last successful snapshot.
 
@@ -92,4 +110,4 @@ Motion follows the reading sequence, shows progress through the explanation and 
 
 This tool cannot see miner uptime or inference latency. It does not run inference, verify proofs, establish finality, verify offer signatures or authorize transactions. It does not discover reachable miner endpoints. It trusts the public services' records after shape validation. The gateway's nominal listings are not binding quotes. Historical prices do not satisfy a live price ceiling.
 
-The score covers the observed settlement sample across models. It cannot detect off-chain failures, hidden resets, collusive agents or fabricated useful work. A recent cooperative session can improve the score without demonstrating long-term reliability. Count and agent diversity can be inflated. The model documents these attacks per term. Empty and missing data are not proof of failure or safety.
+The score covers bounded samples across models. It cannot detect off-chain failures, hidden resets, collusion or fabricated useful work. Complete-day buckets omit partial edge days. Cumulative outcomes overlap and are not a session success rate. A ghost task does not establish registration or current endpoint availability. Proof count does not establish proof validity. Recorder content hashes do not prove authorship or chain finality. Empty and missing data are not proof of failure or safety.
