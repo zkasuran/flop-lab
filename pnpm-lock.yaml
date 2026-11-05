@@ -38,11 +38,7 @@ importers:
 
   packages/mcp: {}
 
-  packages/verifier:
-    dependencies:
-      '@flop-lab/mcp':
-        specifier: workspace:*
-        version: link:../mcp
+  packages/verifier: {}
 
 packages:
 

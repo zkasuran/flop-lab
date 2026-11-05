@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { readFileSync } from "node:fs";
-import { McpClient } from "@flop-lab/mcp";
-import { replayFetch } from "@flop-lab/mcp/fixtures";
+import { McpClient } from "../../mcp/src/index";
+import { replayFetch } from "../../mcp/src/fixtures";
 import { expect, it, vi } from "vitest";
 import { canonical, EvidenceFetcher, parseEvidence, verifyEvidence } from "../src/index";
 import { object } from "../src/schema";

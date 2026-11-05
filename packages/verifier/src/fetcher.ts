@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { McpClient, McpError } from "@flop-lab/mcp";
+import { McpClient, McpError } from "../../mcp/src/index";
 import { canonical, sealEvidence, sealObservation } from "./bundle";
 import { checkArithmetic, resultCode } from "./checks/index";
 import { array, boolean, hash, height, object } from "./schema";
