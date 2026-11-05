@@ -9,10 +9,10 @@ From the repository root with Node 22 and pnpm:
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter @flop-lab/verifier build
-pnpm --filter @flop-lab/verifier exec node dist/cli.js --help
-pnpm --filter @flop-lab/verifier exec node dist/cli.js bundle fixtures/channel-1.json --json
-pnpm --filter @flop-lab/verifier exec node dist/cli.js tape --limit 20
-pnpm --filter @flop-lab/verifier exec node dist/cli.js channel 0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec --out evidence.json
+node packages/verifier/dist/cli.js --help
+node packages/verifier/dist/cli.js bundle packages/verifier/fixtures/channel-1.json --json
+node packages/verifier/dist/cli.js tape --limit 20
+node packages/verifier/dist/cli.js channel 0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec --out evidence.json
 ```
 
 The package exposes the `flop-verify` binary. The repository commands above invoke its built entry directly. The example channel is from a dated devnet fixture. A devnet reset can remove it. `--out` creates a new file and refuses to overwrite an existing one. `--json` prints machine-readable results. Offline replay never follows URLs in a bundle.
