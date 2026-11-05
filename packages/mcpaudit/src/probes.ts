@@ -36,7 +36,7 @@ const minimal: Record<string, Record<string, unknown>> = {
   flop_agent_skill_get: { id_or_path: "flop" },
   flop_agent_pack_install: { target: "generic", mode: "remote" },
   flop_knowledge_search: { query: "inference", limit: 1 },
-  flop_knowledge_get: { id_or_path: "inference" },
+  flop_knowledge_get: { id_or_path: "mcp-tools/flop_estimate_inference_cost" },
   flop_explain_requirement: { id: "R9.5" },
   flop_knowledge_manifest: {},
 };

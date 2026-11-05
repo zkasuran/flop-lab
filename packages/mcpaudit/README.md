@@ -9,10 +9,10 @@ Run from the workspace root with Node 22 and pnpm:
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter @flop-lab/mcpaudit build
-pnpm --filter @flop-lab/mcpaudit exec flop-mcpaudit run --tool flop_knowledge_get --json
+node packages/mcpaudit/dist/cli.js run --tool flop_knowledge_get --json
 ```
 
-The last command exits 1 when it reproduces the known contract violation. After the suite build, `pnpm --filter @flop-lab/cli exec flop contracts run --json` delegates to this same binary.
+The last command exits 1 when it reproduces the known contract violation. After the suite build, `node packages/cli/dist/cli.js contracts run --json` delegates to this same binary.
 
 ## Commands and API
 
