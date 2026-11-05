@@ -1,0 +1,15 @@
+{
+  "cache-control": "no-store",
+  "content-type": "application/json",
+  "x-flop-executable": "false",
+  "x-flop-expires-at": "1793895925525",
+  "x-flop-request-hash": "ddc86c11229e0c51ca28b36f2e6142460e3ee738dbebd8670971e8fb6e183c5d",
+  "x-flop-request-id": "recorded-request-0001",
+  "x-payment-asset": "FLOP",
+  "x-payment-destination": "UNVERIFIED-NO-RECEIVING-ACCOUNT",
+  "x-payment-hash-lock": "47d2f3ceda25d5e1b54072653e08575896976ec75e967b7a5dddfeda4c64df2f",
+  "x-payment-network": "flop-devnet",
+  "x-payment-price": "0.01",
+  "x-payment-required": "true",
+  "x-payment-timeout-blocks": "60"
+}
