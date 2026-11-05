@@ -37,8 +37,8 @@ export const tools: readonly Tool[] = [
   {
     slug: "spendguard",
     name: "Spend guard",
-    tagline: "Apply explicit budget limits to throwaway agent wallets.",
-    status: "planned",
+    tagline: "Edit a budget policy and inspect every decision on scripted requests.",
+    status: "alpha",
     href: "/spendguard",
     repoPath: "packages/spendguard",
   },
