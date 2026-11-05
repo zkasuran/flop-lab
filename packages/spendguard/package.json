@@ -1,0 +1,16 @@
+{
+  "name": "@flop-lab/spendguard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Exact FLOP budgets with locked reservations and a hash-chained audit ledger",
+  "exports": { ".": "./src/index.ts", "./policy": "./src/policy.ts", "./schema": "./policy.schema.json" },
+  "bin": { "flop-spendguard": "./dist/cli.js" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup src/index.ts src/policy.ts src/cli.ts --format esm --dts --clean",
+    "measure": "tsx scripts/measure.ts",
+    "mutation": "tsx scripts/mutation.ts"
+  }
+}

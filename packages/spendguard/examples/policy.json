@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "budgets": { "task": "0.03", "hour": "0.05", "day": "0.2", "total": "1" },
+  "maxPricePerGflop": "0.001",
+  "maxEscrowPerSession": "0.02",
+  "allowModels": ["qwen/qwen2.5-0.5b-instruct"],
+  "allowMiners": ["demo-miner"],
+  "denyMiners": [],
+  "modelCaps": {},
+  "minerCaps": {},
+  "requireDryRun": true,
+  "cooldown": 1000
+}
