@@ -1,0 +1,1 @@
+{"raw":"HTLC not found or RPC unavailable.","measuredAt":"2026-11-05T21:24:19.509Z","durationMs":233,"attempts":1,"source":"https://mcp.flop.network/mcp","tool":"flop_check_htlc","variables":{"hash_lock":"0x79abe3554fc8b5fd22b8c5c520ffb7f274a98d2d047691d491f467d0e78cf96a"}}

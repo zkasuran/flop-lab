@@ -30,6 +30,25 @@ const page = (await listSettlements(mcp, { limit: 20 })).value;
 
 The server rejects the default `Python-urllib` user agent with HTTP 403. This client sends `flop-lab/0.1 (+https://github.com/zkasuran/flop-lab)`.
 
+## Typed indexer reads
+
+`readIndexer(client, entity, args)` uses fixed selections and GraphQL variables.
+It returns the query, variables, source, raw response and measurement time with validated data.
+Use `readIndexer(client, "block", { number: 100 })` for a block or
+`readIndexer(client, "computeChannels", { limit: 20, offset: 0 })` for a page.
+
+Selections cover blocks, transactions, accounts, HTLCs, channels, settlement prices,
+PoUI proofs, reliability events, miner reliability, sponsor positions and account totals.
+Nullable fields remain null. Integer token amounts remain strings. Invalid shapes fail closed.
+List reads default to 20 rows with a maximum of 100. No helper auto-paginates.
+Blocks, transactions, HTLCs, proofs and sponsor positions return arrays without a total.
+Channels, prices and reliability events return `data` and `pagination`.
+
+`fixtures/indexer-schema.json` records full schema introspection including arguments,
+defaults and nested types. The other `indexer-*.json` files retain raw tool text and capture times.
+The schema does not expose transaction fees, transaction events or a block transaction filter.
+A bounded recent transaction list is not a complete block transaction history.
+
 ## What this does not verify
 
 It validates the shape of the answers it types, not their truth. Some tools of the server are documented as simulated (`flop_verify_tee_quote`) or partly placeholder (`flop_get_inference_receipt`). Do not present them as proof.
