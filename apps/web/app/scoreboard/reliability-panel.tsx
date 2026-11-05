@@ -136,7 +136,7 @@ export function MinerComparison({
           <div key={label} className={styles.card}>
             <label>
               {label}
-              <select value={row?.miner ?? ""} onChange={(e) => set(e.target.value)}>
+              <select aria-label={label} value={row?.miner ?? ""} onChange={(e) => set(e.target.value)}>
                 {!row && <option value="">No other miner</option>}
                 {rows.map((r) => (
                   <option key={r.miner} value={r.miner} disabled={label === "Miner B" && r.miner === a?.miner}>
@@ -191,6 +191,10 @@ export function MinerComparison({
                     <div>
                       <dt>Usable settlements</dt>
                       <dd>{row.settlements}</dd>
+                    </div>
+                    <div>
+                      <dt>Cumulative outcome term</dt>
+                      <dd>{percent(row.reliability.terms.find((t) => t.name === "outcomes")?.value ?? null)}</dd>
                     </div>
                   </dl>
                   <motion.button

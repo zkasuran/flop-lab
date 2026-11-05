@@ -24,7 +24,7 @@
 }
 .score strong {
   font-family: var(--font-data);
-  font-size: var(--text-3xl);
+  font-size: var(--text-xl);
 }
 .score span {
   color: var(--muted);
