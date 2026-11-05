@@ -9,7 +9,7 @@ import { parsePage, type Snapshot } from "../../../../packages/scoreboard/src/sc
 import { addHistory, historyGeometry, parseResponse, type HistoryPoint, type SnapshotResponse } from "./data";
 import styles from "./scoreboard.module.css";
 
-const command = "pnpm --filter @flop-lab/scoreboard cli rank --file packages/scoreboard/fixtures/snapshot-03.json";
+const command = "pnpm --filter @flop-lab/scoreboard cli rank --file fixtures/snapshot-03.json";
 const modelDoc = "https://github.com/zkasuran/flop-lab/blob/main/packages/scoreboard/MODEL.md";
 const short = (address: string) => `${address.slice(0, 7)}...${address.slice(-6)}`;
 const number = (value: number) => value.toFixed(2);
