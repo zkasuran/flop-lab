@@ -1,0 +1,8 @@
+group: io.kestra.plugin.flop.models
+name: models
+title: FLOP models
+description: Inspect models and source freshness.
+body: List keeps the gateway model fields and marks expired price sources without inventing missing prices.
+videos: []
+createdBy: flop-lab
+managedBy: flop-lab

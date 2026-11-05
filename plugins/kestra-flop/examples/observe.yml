@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: Apache-2.0
+id: flop_observe
+namespace: company.flop
+tasks:
+  - id: stats
+    type: io.kestra.plugin.flop.network.Stats
+  - id: tape
+    type: io.kestra.plugin.flop.settlements.List
+    maxResults: 100
+    store: true
+  - id: verify
+    type: io.kestra.plugin.flop.settlements.Verify
+    settlements: "{{ outputs.tape.rows }}"
+    failOnMismatch: true
+  - id: models
+    type: io.kestra.plugin.flop.models.List

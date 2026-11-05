@@ -1,0 +1,2 @@
+# SSE frames require the final blank delimiter. Preserve recorded bytes.
+*.sse -text whitespace=-blank-at-eof

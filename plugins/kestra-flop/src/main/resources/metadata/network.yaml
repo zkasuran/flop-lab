@@ -1,0 +1,8 @@
+group: io.kestra.plugin.flop.network
+name: network
+title: FLOP network
+description: Read dated network counters.
+body: Stats reports block height, accounts, operators and proofs from the hosted indexer.
+videos: []
+createdBy: flop-lab
+managedBy: flop-lab
