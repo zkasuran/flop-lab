@@ -29,8 +29,8 @@ export const tools: readonly Tool[] = [
   {
     slug: "verify",
     name: "Settlement verifier",
-    tagline: "Inspect receipt evidence and name the gaps in verification.",
-    status: "planned",
+    tagline: "Check settlement arithmetic and replay the evidence in your browser.",
+    status: "alpha",
     href: "/verify",
     repoPath: "packages/verifier",
   },
