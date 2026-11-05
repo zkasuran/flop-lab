@@ -1,0 +1,14 @@
+{
+  "name": "@flop-lab/doctor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Sourced read-only FLOP operator preflight",
+  "exports": { ".": "./src/index.ts" },
+  "bin": { "flop-doctor": "./dist/cli.js" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  }
+}

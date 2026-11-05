@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "role": "validator",
+  "measuredAt": "2026-11-05T20:53:16.833Z",
+  "status": "UNKNOWN",
+  "inventory": {
+    "os": {
+      "source": "node:os platform/arch",
+      "measuredAt": "2026-11-05T20:53:16.833Z",
+      "durationMs": 0,
+      "value": {
+        "platform": "linux",
+        "arch": "x64"
+      },
+      "reason": null
+    },
+    "gpu": {
+      "source": "nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits",
+      "measuredAt": "2026-11-05T20:53:16.833Z",
+      "durationMs": 2,
+      "value": null,
+      "reason": "Probe unavailable (ENOENT)"
+    },
+    "disk": {
+      "source": "df -B1 --output=size,avail -- [selected path redacted]",
+      "measuredAt": "2026-11-05T20:53:16.835Z",
+      "durationMs": 3,
+      "value": {
+        "totalBytes": 518434521088,
+        "availableBytes": 23556624384
+      },
+      "reason": null
+    },
+    "memory": {
+      "source": "/proc/meminfo: MemTotal and MemAvailable",
+      "measuredAt": "2026-11-05T20:53:16.839Z",
+      "durationMs": 1,
+      "value": {
+        "totalBytes": 33042911232,
+        "availableBytes": 18890833920
+      },
+      "reason": null
+    },
+    "cpu": {
+      "source": "nproc",
+      "measuredAt": "2026-11-05T20:53:16.840Z",
+      "durationMs": 2,
+      "value": 22,
+      "reason": null
+    },
+    "docker": {
+      "source": "docker version --format {{.Server.Version}}",
+      "measuredAt": "2026-11-05T20:53:16.841Z",
+      "durationMs": 21,
+      "value": "29.8.1",
+      "reason": null
+    },
+    "compose": {
+      "source": "docker compose version --short",
+      "measuredAt": "2026-11-05T20:53:16.862Z",
+      "durationMs": 33,
+      "value": "5.5.1",
+      "reason": null
+    },
+    "images": {},
+    "ports": [],
+    "clocks": [
+      {
+        "source": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-05T20:53:16.895Z",
+        "durationMs": 3972,
+        "value": {
+          "date": "Thu, 05 Nov 2026 20:53:20 GMT",
+          "age": null,
+          "startMs": 1793911996895,
+          "endMs": 1793912000865,
+          "elapsedMs": 3969.995052
+        },
+        "reason": null
+      },
+      {
+        "source": "https://explorer.devnet.flop.network",
+        "measuredAt": "2026-11-05T20:53:20.867Z",
+        "durationMs": 397,
+        "value": {
+          "date": "Thu, 05 Nov 2026 20:53:21 GMT",
+          "age": null,
+          "startMs": 1793912000867,
+          "endMs": 1793912001264,
+          "elapsedMs": 396.97796500000004
+        },
+        "reason": null
+      }
+    ],
+    "models": {
+      "source": "https://api.flop.network/v1/models",
+      "measuredAt": "2026-11-05T20:53:16.895Z",
+      "durationMs": 3972,
+      "value": ["qwen/qwen2.5-0.5b-instruct"],
+      "reason": null
+    }
+  },
+  "requirements": [
+    {
+      "id": "os",
+      "title": "Supported host OS",
+      "status": "READY",
+      "detail": "linux/x64. This profile checks the documented Linux amd64 deployment path.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Join the current devnet",
+        "quote": "follow its README on a dedicated Linux amd64 host"
+      },
+      "evidence": [
+        {
+          "source": "node:os platform/arch",
+          "measuredAt": "2026-11-05T20:53:16.833Z",
+          "durationMs": 0,
+          "value": {
+            "platform": "linux",
+            "arch": "x64"
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "gpu",
+      "title": "GPU requirement",
+      "status": "READY",
+      "detail": "Validators do not need a GPU. GPU probe failures do not fail this requirement.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Run a FLOP validator",
+        "quote": "No GPU or TEE is needed."
+      },
+      "evidence": []
+    },
+    {
+      "id": "cpu",
+      "title": "Validator CPU reference",
+      "status": "UNKNOWN",
+      "detail": "22 available logical processors. Reference: 8 physical cores at 3.4 GHz with SMT off. nproc cannot verify dedicated cores, SMT or sustained frequency. This is a production reference, not a measured devnet minimum.",
+      "source": {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/main/yellowpaper.md",
+        "locator": "15.3 Duties and resource intensity",
+        "quote": "8 physical cores at\n≥3.4 GHz with SMT off, 32 GB ECC RAM, 4 TB enterprise NVMe (chain state plus DA custody"
+      },
+      "evidence": [
+        {
+          "source": "nproc",
+          "measuredAt": "2026-11-05T20:53:16.840Z",
+          "durationMs": 2,
+          "value": 22,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ram",
+      "title": "Validator RAM reference",
+      "status": "UNKNOWN",
+      "detail": "33042911232 total bytes; 18890833920 available bytes. Reference: 32 GB ECC. ECC is not observable through meminfo. This is a production reference, not a measured devnet minimum.",
+      "source": {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/main/yellowpaper.md",
+        "locator": "15.3 Duties and resource intensity",
+        "quote": "8 physical cores at\n≥3.4 GHz with SMT off, 32 GB ECC RAM, 4 TB enterprise NVMe (chain state plus DA custody"
+      },
+      "evidence": [
+        {
+          "source": "/proc/meminfo: MemTotal and MemAvailable",
+          "measuredAt": "2026-11-05T20:53:16.839Z",
+          "durationMs": 1,
+          "value": {
+            "totalBytes": 33042911232,
+            "availableBytes": 18890833920
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "disk",
+      "title": "Validator storage reference",
+      "status": "UNKNOWN",
+      "detail": "518434521088 filesystem capacity bytes; 23556624384 available bytes at the selected path. df does not measure installed device capacity or NVMe quality. The 4 TB reference includes chain state and DA custody; the source does not specify whether this means free or installed space.",
+      "source": {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/main/yellowpaper.md",
+        "locator": "15.3 Duties and resource intensity",
+        "quote": "8 physical cores at\n≥3.4 GHz with SMT off, 32 GB ECC RAM, 4 TB enterprise NVMe (chain state plus DA custody"
+      },
+      "evidence": [
+        {
+          "source": "df -B1 --output=size,avail -- [selected path redacted]",
+          "measuredAt": "2026-11-05T20:53:16.835Z",
+          "durationMs": 3,
+          "value": {
+            "totalBytes": 518434521088,
+            "availableBytes": 23556624384
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "docker",
+      "title": "Docker daemon access",
+      "status": "READY",
+      "detail": "Observed version 29.8.1. No container was started.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Prepare the host",
+        "quote": "Use Linux with Docker Engine, the Docker Compose plugin"
+      },
+      "evidence": [
+        {
+          "source": "docker version --format {{.Server.Version}}",
+          "measuredAt": "2026-11-05T20:53:16.841Z",
+          "durationMs": 21,
+          "value": "29.8.1",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "compose",
+      "title": "Docker Compose availability",
+      "status": "READY",
+      "detail": "Observed version 5.5.1. No container was started.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Prepare the host",
+        "quote": "Use Linux with Docker Engine, the Docker Compose plugin"
+      },
+      "evidence": [
+        {
+          "source": "docker compose version --short",
+          "measuredAt": "2026-11-05T20:53:16.862Z",
+          "durationMs": 33,
+          "value": "5.5.1",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "image-node",
+      "title": "node image pin and local digest",
+      "status": "UNKNOWN",
+      "detail": "No image evidence",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Other networks and disposable rehearsals",
+        "quote": "Two pinned images from one release"
+      },
+      "evidence": []
+    },
+    {
+      "id": "image-da",
+      "title": "da image pin and local digest",
+      "status": "UNKNOWN",
+      "detail": "No image evidence",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Other networks and disposable rehearsals",
+        "quote": "Two pinned images from one release"
+      },
+      "evidence": []
+    },
+    {
+      "id": "ports",
+      "title": "Local port binding",
+      "status": "UNKNOWN",
+      "detail": "No role-specific port bind was recorded. Binding tests availability only. A busy port can already belong to the intended service. It does not prove firewall, NAT or ingress. DA port is release-specific: 7000 in the old devnet profile and 7001 in the prepared profile. Select --da-port only from your approved release.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Join the current devnet",
+        "quote": "configuration uses private-network P2P TCP 30333 and host DA TCP 7000, mapped to container TCP 7000"
+      },
+      "evidence": []
+    },
+    {
+      "id": "reachability",
+      "title": "Inbound peer reachability",
+      "status": "UNKNOWN",
+      "detail": "Run TCP checks from an authorized peer outside this machine. Local binding cannot prove peer-route reachability. Keep RPC and metrics private.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Join the current devnet",
+        "quote": "configuration uses private-network P2P TCP 30333 and host DA TCP 7000, mapped to container TCP 7000"
+      },
+      "evidence": []
+    },
+    {
+      "id": "clock",
+      "title": "Clock offset diagnostic",
+      "status": "UNKNOWN",
+      "detail": "Server minus local intervals: [-865, 4105] ms; [-264, 1133] ms. Spec timing_max_clock_skew_ms = 250 ms. HTTP Date has second precision and cannot certify this bound or the miner-agent clock difference. No precise clock verdict. Check time synchronization.",
+      "source": {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/main/yellowpaper.md#param-timing_max_clock_skew_ms",
+        "locator": "Compute-channel timing bounds",
+        "quote": "Maximum clock skew (in ms) tolerated between miner and agent wall clocks when classifying timing as Eligible vs Ambiguous."
+      },
+      "evidence": [
+        {
+          "source": "https://api.flop.network/v1/models",
+          "measuredAt": "2026-11-05T20:53:16.895Z",
+          "durationMs": 3972,
+          "value": {
+            "date": "Thu, 05 Nov 2026 20:53:20 GMT",
+            "age": null,
+            "startMs": 1793911996895,
+            "endMs": 1793912000865,
+            "elapsedMs": 3969.995052
+          },
+          "reason": null
+        },
+        {
+          "source": "https://explorer.devnet.flop.network",
+          "measuredAt": "2026-11-05T20:53:20.867Z",
+          "durationMs": 397,
+          "value": {
+            "date": "Thu, 05 Nov 2026 20:53:21 GMT",
+            "age": null,
+            "startMs": 1793912000867,
+            "endMs": 1793912001264,
+            "elapsedMs": 396.97796500000004
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "admission",
+      "title": "Devnet activation",
+      "status": "UNKNOWN",
+      "detail": "Host checks do not establish release availability, funding, registration, promotion, live session keys or advancing finality.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-validator",
+        "locator": "Join the current devnet",
+        "quote": "The existing devnet still needs operations approval, funding and promotion."
+      },
+      "evidence": []
+    }
+  ],
+  "requests": 2,
+  "durationMs": 4432
+}

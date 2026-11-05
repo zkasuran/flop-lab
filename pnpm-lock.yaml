@@ -74,6 +74,9 @@ importers:
       '@flop-lab/challenger':
         specifier: workspace:*
         version: link:../challenger
+      '@flop-lab/doctor':
+        specifier: workspace:*
+        version: link:../doctor
       '@flop-lab/harness':
         specifier: workspace:*
         version: link:../harness
@@ -89,6 +92,8 @@ importers:
       '@flop-lab/x402kit':
         specifier: workspace:*
         version: link:../x402kit
+
+  packages/doctor: {}
 
   packages/harness:
     dependencies:
