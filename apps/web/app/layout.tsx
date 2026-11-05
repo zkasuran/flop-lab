@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Link from "next/link";
 import { CommandPalette, ThemeToggle } from "@/components/controls";
 import { Footer } from "@/components/footer";
 import { repository } from "@/content/tools";
+import { MotionLink, RouteSurface } from "@/components/motion";
 import "./globals.css";
 
 const text = localFont({
@@ -40,20 +40,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         <header className="topbar container">
-          <Link className="wordmark" href="/">
+          <MotionLink className="wordmark" href="/">
             flop<span>-lab</span>
-          </Link>
+          </MotionLink>
           <nav aria-label="Main navigation">
-            <Link href="/#tools">Tools</Link>
-            <a className="nav-repo" href={repository}>
+            <MotionLink href="/#tools">Tools</MotionLink>
+            <MotionLink className="nav-repo" href={repository}>
               Source ↗
-            </a>
+            </MotionLink>
             <CommandPalette />
             <ThemeToggle />
           </nav>
         </header>
         <main id="main" className="container">
-          {children}
+          <RouteSurface>{children}</RouteSurface>
         </main>
         <Footer />
       </body>
