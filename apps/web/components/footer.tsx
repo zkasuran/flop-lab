@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import Link from "next/link";
+import { MotionLink } from "./motion";
 import { CONTRIBUTOR_DID, FINGERPRINT } from "@/lib/constants";
 import { repository } from "@/content/tools";
 import { CopyButton } from "./controls";
@@ -17,19 +17,19 @@ export function Footer() {
           </div>
           <p className="muted mono">Fingerprint {FINGERPRINT}</p>
         </div>
-        <Link href="/provenance">Verify contribution proofs ↗</Link>
+        <MotionLink href="/provenance">Verify contribution proofs ↗</MotionLink>
       </div>
       <div className="footer-links">
-        <a href={repository}>Repository ↗</a>
-        <a href={`${repository}/blob/main/LICENSE`}>Apache-2.0</a>
+        <MotionLink href={repository}>Repository ↗</MotionLink>
+        <MotionLink href={`${repository}/blob/main/LICENSE`}>Apache-2.0</MotionLink>
         <span className="muted">
           Build{" "}
           {commit === "unknown" ? (
             "unknown"
           ) : (
-            <a className="mono" title={commit} href={`${repository}/commit/${commit}`}>
+            <MotionLink className="mono" title={commit} href={`${repository}/commit/${commit}`}>
               {commit.slice(0, 12)}
-            </a>
+            </MotionLink>
           )}
         </span>
       </div>

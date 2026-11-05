@@ -5,11 +5,20 @@ import { motion, useReducedMotion } from "motion/react";
 import { getPullPage, type PullPage } from "@/lib/github";
 import { extractProof, verifyBuild, verifyContribution, type PullRequest } from "@/lib/provenance";
 import { parseSignedBuild, type Verification } from "@/lib/did";
+import { Disclosure, MotionButton, MotionLink, ReadingReveal } from "./motion";
 
 function Result({ result }: { result: Verification | null }) {
+  const reduced = useReducedMotion() !== false;
   return (
     <p className={`verification-result ${result ? (result.valid ? "success" : "error") : "muted"}`} role="status">
-      {result ? `${result.valid ? "PASS" : "FAIL"} / ${result.reason}` : "Checking signature locally..."}
+      <motion.span
+        key={result?.reason ?? "checking"}
+        initial={{ opacity: reduced ? 1 : 0.65 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: reduced ? 0 : 0.18 }}
+      >
+        {result ? `${result.valid ? "PASS" : "FAIL"} / ${result.reason}` : "Checking signature locally..."}
+      </motion.span>
     </p>
   );
 }
@@ -17,7 +26,7 @@ function PullProof({ pr }: { pr: PullRequest }) {
   const [tamper, setTamper] = useState(false);
   const [checked, setChecked] = useState<{ pr: PullRequest; tamper: boolean; result: Verification } | null>(null);
   const result = checked?.pr === pr && checked.tamper === tamper ? checked.result : null;
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotion() !== false;
   let proof;
   try {
     proof = extractProof(pr.body);
@@ -42,9 +51,9 @@ function PullProof({ pr }: { pr: PullRequest }) {
     >
       <div className="proof-card-heading">
         <h3>
-          <a href={pr.html_url}>
+          <MotionLink href={pr.html_url}>
             #{pr.number} {pr.title.replace(/[\u2013\u2014]/g, "-")}
-          </a>
+          </MotionLink>
         </h3>
         <span className="badge">{pr.state}</span>
       </div>
@@ -52,8 +61,11 @@ function PullProof({ pr }: { pr: PullRequest }) {
       {proof && (
         <>
           <label className="tamper">
-            <input
+            <motion.input
               type="checkbox"
+              whileTap={{ scale: reduced ? 1 : 0.9 }}
+              whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
+              transition={{ duration: reduced ? 0 : 0.12 }}
               checked={tamper}
               onChange={(event) => {
                 setChecked(null);
@@ -62,22 +74,22 @@ function PullProof({ pr }: { pr: PullRequest }) {
             />
             Tamper: flip one manifest byte
           </label>
-          <details>
-            <summary>Inspect signed bytes and attestation metadata</summary>
+          <Disclosure title="Inspect signed bytes and attestation metadata">
             <p className="mono break-word">{proof.did}</p>
             <pre className="manifest">{proof.manifest}</pre>
             <p className="mono break-word">Signature: {proof.signature}</p>
             <p className="muted">
               Attestation sequence: {proof.seq}. This field is metadata, not signed manifest content.{" "}
-              <a href="https://technocore.chat/r/technocore">Open the room ↗</a>
+              <MotionLink href="https://technocore.chat/r/technocore">Open the room ↗</MotionLink>
             </p>
-          </details>
+          </Disclosure>
         </>
       )}
     </motion.article>
   );
 }
 function BuildProof() {
+  const reduced = useReducedMotion() !== false;
   const [signed, setSigned] = useState<unknown>();
   const [status, setStatus] = useState<"loading" | "unsigned" | "loaded" | "error">("loading");
   const [error, setError] = useState("");
@@ -136,8 +148,11 @@ function BuildProof() {
         <>
           <Result result={result} />
           <label className="tamper">
-            <input
+            <motion.input
               type="checkbox"
+              whileTap={{ scale: reduced ? 1 : 0.9 }}
+              whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
+              transition={{ duration: reduced ? 0 : 0.12 }}
               checked={tamper}
               onChange={(event) => {
                 setResult(null);
@@ -146,10 +161,9 @@ function BuildProof() {
             />
             Tamper: flip one manifest byte
           </label>
-          <details>
-            <summary>Inspect build manifest</summary>
+          <Disclosure title="Inspect build manifest">
             <pre className="manifest">{parseSignedBuild(signed).manifest}</pre>
-          </details>
+          </Disclosure>
         </>
       )}
     </section>
@@ -210,7 +224,7 @@ export function ProvenanceBrowser() {
             <p className="error" role="status">
               {error}
             </p>
-            <button
+            <MotionButton
               className="quiet-button"
               disabled={loading}
               onClick={() => {
@@ -219,7 +233,7 @@ export function ProvenanceBrowser() {
               }}
             >
               Try reading GitHub again
-            </button>
+            </MotionButton>
           </div>
         )}
         {data && (
@@ -232,19 +246,21 @@ export function ProvenanceBrowser() {
               {data.note && <p className="warning">{data.note}</p>}
             </div>
             {!data.prs.length && <p className="panel muted">No pull requests returned by GitHub.</p>}
-            {data.prs.map((pr) => (
-              <PullProof key={`${pr.number}-${pr.head.sha}`} pr={pr} />
+            {data.prs.map((pr, index) => (
+              <ReadingReveal key={`${pr.number}-${pr.head.sha}`} order={index}>
+                <PullProof pr={pr} />
+              </ReadingReveal>
             ))}
           </>
         )}
         <div className="pagination">
-          <button className="quiet-button" disabled={loading || page === 1} onClick={() => navigate(page - 1)}>
+          <MotionButton className="quiet-button" disabled={loading || page === 1} onClick={() => navigate(page - 1)}>
             Previous page
-          </button>
+          </MotionButton>
           <span className="mono">Page {page}</span>
-          <button className="quiet-button" disabled={loading || !data?.next} onClick={() => navigate(page + 1)}>
+          <MotionButton className="quiet-button" disabled={loading || !data?.next} onClick={() => navigate(page + 1)}>
             Next page
-          </button>
+          </MotionButton>
         </div>
       </section>
     </>
