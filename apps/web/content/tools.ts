@@ -172,7 +172,7 @@ export const tools: readonly Tool[] = [
     section: "agents",
     name: "Deal inspector",
     tagline: "Did this agent-to-agent deal follow the protocol?",
-    status: "planned",
+    status: "alpha",
     href: "/tclk",
     repoPath: "packages/tclk-inspect",
   },
