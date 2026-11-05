@@ -1,10 +1,9 @@
 # FLOP payment reference template
 
-Run this folder inside the flop-lab checkout. It uses the built parent package.
+Run this folder inside the flop-lab checkout. The dev command builds the parent package.
 
 ```sh
 pnpm install
-pnpm --filter @flop-lab/x402kit build
 pnpm dev
 ```
 

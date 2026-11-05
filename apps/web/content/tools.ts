@@ -46,7 +46,7 @@ export const tools: readonly Tool[] = [
     slug: "x402",
     name: "Pay-per-call kit",
     tagline: "How does an API charge per call in FLOP?",
-    status: "planned",
+    status: "alpha",
     href: "/x402",
     repoPath: "packages/x402kit",
   },
