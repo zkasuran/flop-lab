@@ -105,6 +105,20 @@ describe("recorded public contracts", () => {
       "additionalProperties",
     );
   });
+  it("validates structuredContent rather than a corrected text copy", async () => {
+    const report = await run(
+      "mcp-knowledge-get",
+      recordedFetch((name, value) => {
+        if (name === "flop_knowledge_get") {
+          const concept = object(object(value).concept);
+          delete concept.generated_by;
+          delete concept.updated_at;
+        }
+        return value;
+      }),
+    );
+    expect(selected(report, "mcp-knowledge-get").status).toBe("FAIL");
+  });
 });
 
 describe("budget and confirmation", () => {
@@ -202,6 +216,22 @@ describe("reports", () => {
     const report = await run("gateway-contract");
     selected(report, "gateway-contract").attempts[0]!.evidence.push(99999);
     expect(() => parseReport(report)).toThrow("Missing evidence");
+  });
+  it("reports private source as unavailable without inventing a commit", async () => {
+    const report = await run("mcp-agent-pack-manifest");
+    const draft = renderBugDraft(report, "mcp-agent-pack-manifest", {
+      sha: null,
+      measuredAt: report.measuredAt,
+      source: "https://api.github.com/repos/flop-labs/flop-core/commits/HEAD",
+      unavailableReason: "Private repository returned 404",
+      tracker: { sha: "b".repeat(40), measuredAt: report.measuredAt },
+    });
+    expect(draft).toContain("Unavailable: Private repository returned 404");
+    expect(draft).toContain("https://github.com/flop-labs/network");
+    expect(draft).toContain("public flop-labs/network issue-form revision");
+    expect(() =>
+      renderBugDraft(report, "mcp-agent-pack-manifest", { sha: null, measuredAt: report.measuredAt, source: "test" }),
+    ).toThrow("SHA");
   });
   it("rejects incomplete network metadata at the import boundary", async () => {
     const report = await run("gateway-contract");

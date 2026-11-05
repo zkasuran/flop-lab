@@ -160,11 +160,17 @@ export function parseReport(value: unknown): RunReport {
   return report as unknown as RunReport;
 }
 
-/** Only reproduced failures can become issue drafts. SHA must be freshly resolved by the caller. @example renderBugDraft(report, "invalid-limit", { sha, measuredAt, source }) */
+/** Only reproduced failures can become issue drafts. Record why private source is unavailable. @example renderBugDraft(report, "invalid-limit", { sha, measuredAt, source }) */
 export function renderBugDraft(
   report: RunReport,
   id: string,
-  upstream: { sha: string; measuredAt: string; source: string },
+  upstream: {
+    sha: string | null;
+    measuredAt: string;
+    source: string;
+    unavailableReason?: string;
+    tracker?: { sha: string; measuredAt: string };
+  },
 ): string {
   const result = report.results.find((result) => result.claim.id === id);
   if (
@@ -176,14 +182,32 @@ export function renderBugDraft(
     result.attempts[0]?.reason !== result.attempts[1]?.reason
   )
     throw new Error("Only confirmed, reproduced FAILs with evidence can become drafts");
-  if (!/^[a-f0-9]{40}$/.test(upstream.sha)) throw new Error("Current upstream default-branch SHA is unavailable");
+  if (upstream.sha === null ? !upstream.unavailableReason?.trim() : !/^[a-f0-9]{40}$/.test(upstream.sha))
+    throw new Error("Provide a valid upstream SHA or an explicit unavailability reason");
+  if (upstream.tracker && !/^[a-f0-9]{40}$/.test(upstream.tracker.sha)) throw new Error("Invalid tracker SHA");
   const ids = new Set(result.attempts.flatMap((attempt) => attempt.evidence));
-  const evidence = report.evidence.filter((item) => ids.has(item.id));
+  const evidence = report.evidence.filter((item) => {
+    if (!ids.has(item.id)) return false;
+    if (!result.claim.tool) return true;
+    try {
+      const request = object(JSON.parse(item.request.body ?? "{}"));
+      return object(request.params).name === result.claim.tool;
+    } catch {
+      return false;
+    }
+  });
   return [
     "### Commit verified against",
     "",
-    `${upstream.sha}`,
-    `Resolved at ${upstream.measuredAt} from ${upstream.source}. This identifies source HEAD, not the deployed service revision.`,
+    ...(upstream.tracker
+      ? [
+          upstream.tracker.sha,
+          `This is the public flop-labs/network issue-form revision, checked at ${upstream.tracker.measuredAt}. It is not the MCP source or deployed service revision.`,
+        ]
+      : []),
+    `Implementation source: ${upstream.sha ?? `Unavailable: ${cell(upstream.unavailableReason!)}`}`,
+    `Checked at ${upstream.measuredAt} from ${upstream.source}. No deployed service revision is established.`,
+    "Public tracker: https://github.com/flop-labs/network. Private source access is tracked in issue #80.",
     "",
     "### Report",
     "",
@@ -202,7 +226,10 @@ export function renderBugDraft(
       fence({
         status: attempt.status,
         measuredAt: attempt.measuredAt,
-        observed: attempt.observed,
+        observed:
+          JSON.stringify(attempt.observed).length > 4096
+            ? { excerpt: JSON.stringify(attempt.observed).slice(0, 4096), truncated: true }
+            : attempt.observed,
         reason: attempt.reason,
       }),
     ),
@@ -210,7 +237,11 @@ export function renderBugDraft(
     "Exact recorded requests and response excerpts:",
     "",
     ...evidence.map((item) =>
-      fence({ ...item, response: item.response.slice(0, 6000), excerptTruncated: item.response.length > 6000 }),
+      fence({
+        ...item,
+        response: item.response.slice(0, 1024),
+        excerptTruncated: item.responseTruncated === true || item.response.length > 1024,
+      }),
     ),
     "",
     "### Unknown",
