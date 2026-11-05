@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "start",
+    pkg: "@flop-lab/create-flop-agent",
+    bin: "create-flop-agent",
+    section: "build",
+    summary: "Generate a devnet-only agent with fixture-backed dry runs",
+  },
+  {
     name: "tclk",
     pkg: "@flop-lab/tclk-inspect",
     bin: "flop-tclk",

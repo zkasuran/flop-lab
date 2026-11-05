@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+wallets/
+*wallet*
+*.key
+*.pem
+*.seed
+*.mnemonic
+.agent-ledger*

@@ -1,0 +1,25 @@
+{
+  "name": "@flop-lab/create-flop-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Generate a devnet-only FLOP agent with fixture-backed dry runs",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "create-flop-agent": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test template && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/scoreboard": "workspace:*",
+    "@flop-lab/spendguard": "workspace:*",
+    "@flop-lab/verifier": "workspace:*"
+  }
+}

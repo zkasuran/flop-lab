@@ -154,7 +154,7 @@ export const tools: readonly Tool[] = [
     section: "build",
     name: "Agent starter",
     tagline: "How do I start a FLOP agent that is safe by default?",
-    status: "planned",
+    status: "alpha",
     href: "/start",
     repoPath: "packages/create-flop-agent",
   },
