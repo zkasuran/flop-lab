@@ -639,7 +639,7 @@ export function Scoreboard({
                       <td>
                         <motion.button
                           className={styles.minerButton}
-                        title={`Inspect miner ${row.miner}`}
+                          title={`Inspect miner ${row.miner}`}
                           data-miner={row.miner}
                           aria-haspopup="dialog"
                           onClick={() => setSelected(row.miner)}
