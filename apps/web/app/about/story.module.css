@@ -1,0 +1,8 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+.story {
+  overflow-wrap: anywhere;
+}
+.story p + p,
+.story h3 + p {
+  margin-top: var(--space-4);
+}
