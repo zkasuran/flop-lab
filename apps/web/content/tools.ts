@@ -45,8 +45,8 @@ export const tools: readonly Tool[] = [
   {
     slug: "x402",
     name: "Pay-per-call kit",
-    tagline: "Build a service with payment-aware request handling.",
-    status: "planned",
+    tagline: "Replay payment headers and inspect the missing chain evidence.",
+    status: "alpha",
     href: "/x402",
     repoPath: "packages/x402kit",
   },

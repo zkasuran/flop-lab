@@ -3,5 +3,5 @@
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
-  "scripts": { "dev": "node ../dist/cli.js serve" }
+  "scripts": { "dev": "pnpm --filter @flop-lab/x402kit build && node ../dist/cli.js serve" }
 }
