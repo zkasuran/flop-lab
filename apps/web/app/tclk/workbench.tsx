@@ -9,6 +9,7 @@ import { simulate, simulationPaths } from "../../../../packages/tclk-inspect/src
 import { SPEC_URL, UPSTREAM_COMMIT, type Inspection, type Status } from "../../../../packages/tclk-inspect/src/model";
 import type { HtlcRow } from "../../../../packages/tclk-inspect/src/chain";
 import styles from "./tclk.module.css";
+import { projectTranscript } from "./view";
 
 interface ChainSnapshot {
   rows: HtlcRow[];
@@ -35,11 +36,12 @@ export function Workbench({ initial, chain }: { initial: Inspection; chain: Chai
   const guide = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: guide, offset: ["start 80%", "end 40%"] });
   const readingScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const step = report.steps.find((entry) => entry.index === selected);
-  const passed = report.steps.filter((s) => s.ok).length;
-  const visible = report.steps.filter((s) => !onlyBad || !s.ok);
-  const hash = report.state?.offer.lock === "hash" ? report.state.statement : undefined;
-  const matches = chain.rows.filter((r) => r.hashLock === hash);
+  const { step, passed, visible, selectedState, hash, matches } = projectTranscript(
+    report,
+    selected,
+    onlyBad,
+    chain.rows,
+  );
   const duration = reduced ? 0 : 0.28;
   async function inspect(value: string, source: string) {
     const id = ++requestId.current;
@@ -173,7 +175,7 @@ export function Workbench({ initial, chain }: { initial: Inspection; chain: Chai
               <div>
                 <span className={styles.avatar}>B</span>
                 <strong>Acceptor</strong>
-                <small>{report.state?.offer.role === "payer" ? "payee" : "payer"}</small>
+                <small>{!report.state ? "No role" : report.state.offer.role === "payer" ? "payee" : "payer"}</small>
               </div>
             </div>
             <div className={styles.lanes}>
@@ -233,7 +235,7 @@ export function Workbench({ initial, chain }: { initial: Inspection; chain: Chai
             <div className={styles.states}>
               {statuses.map((state) => (
                 <div key={state} className={styles.state}>
-                  {(step?.to ?? report.state?.status) === state && (
+                  {selectedState === state && (
                     <motion.span
                       layoutId={reduced ? undefined : "tclk-state"}
                       className={styles.stateMarker}
@@ -320,7 +322,12 @@ export function Workbench({ initial, chain }: { initial: Inspection; chain: Chai
                   ? "Hash present in the sample"
                   : "No match in this sample"}
             </h3>
-            <p className={styles.hash}>{hash ?? "Point locks need a different chain check."}</p>
+            <p className={styles.hash}>
+              {hash ??
+                (report.state?.offer.lock === "point"
+                  ? "Point locks need a different chain check."
+                  : "No accepted hash statement in the supplied records.")}
+            </p>
             <p className="muted">This is a recorded page. It does not establish absence from the whole chain.</p>
             <p>
               Checker response for an observed indexer hash: <strong>{chain.check}</strong>
