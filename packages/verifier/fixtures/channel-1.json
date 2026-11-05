@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "network": "flop-devnet",
+  "channelId": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec",
+  "capturedAt": "2026-11-05T09:00:10.247Z",
+  "observations": [
+    {
+      "id": "channel",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_get_compute_channel",
+      "args": {
+        "channel_id": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec"
+      },
+      "measuredAt": "2026-11-05T08:59:59.603Z",
+      "durationMs": 160,
+      "attempts": 1,
+      "raw": "{\n  \"channelId\": \"0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec\",\n  \"agent\": \"5CkdQjY666dWJ2TJDCmqnMETi7x2Vbq4QY53WzpJHDbYZVPh\",\n  \"miner\": \"5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1\",\n  \"escrow\": \"522000000000000021\",\n  \"measuredRoot\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"lineage\": null,\n  \"status\": \"settled\",\n  \"paymentStatus\": \"PAID\",\n  \"evidenceStatus\": \"WITNESS_ONLY\",\n  \"timeoutPath\": \"claimed_before_timeout\",\n  \"observationHead\": \"finalized\",\n  \"aggregateGn\": \"54\",\n  \"minerPaid\": \"516780000000000021\",\n  \"burned\": \"0\",\n  \"cooperative\": true,\n  \"marketKind\": \"spot\",\n  \"assuranceTier\": \"Soft\",\n  \"calibrationVersion\": 3,\n  \"capGflopsPerSec\": 7,\n  \"softTierSpotCheckRatePpm\": 25000,\n  \"openedBlock\": 2945153,\n  \"statusBlockNumber\": 2945246,\n  \"openedAt\": 1793866114000,\n  \"updatedAt\": 1793866215001,\n  \"settlement\": {\n    \"kind\": \"settled\",\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2945246,\n    \"blockHash\": \"0x0c173cb93aa92e059bd64d966b36477ec585143a1460b541968b8d39b3e4a272\",\n    \"timestamp\": 1793866215001,\n    \"extrinsicHash\": \"0x469ed46a6b74f15651a8e9a6edca460981d5db0bd73d5fff3595a866aea6217e\",\n    \"extrinsicIndex\": 3,\n    \"eventIndex\": 3,\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\"\n  },\n  \"latestTransition\": {\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2945246,\n    \"blockHash\": \"0x0c173cb93aa92e059bd64d966b36477ec585143a1460b541968b8d39b3e4a272\",\n    \"extrinsicIndex\": 3,\n    \"eventIndex\": 3,\n    \"extrinsicHash\": \"0x469ed46a6b74f15651a8e9a6edca460981d5db0bd73d5fff3595a866aea6217e\",\n    \"signer\": \"5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1\",\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\",\n    \"data\": {\n      \"channelId\": \"0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec\",\n      \"minerPaid\": \"516,780,000,000,000,021\",\n      \"burned\": \"0\",\n      \"aggregateGn\": \"54\",\n      \"cooperative\": true\n    },\n    \"timestamp\": 1793866215001,\n    \"observationHead\": \"finalized\"\n  }\n}",
+      "error": null,
+      "sha256": "0x60756c35fec84eba493eaad51a52d9c5b68b78aec1fd53874468a3f63899fdb9"
+    },
+    {
+      "id": "settlements:0",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_list_settlements",
+      "args": {
+        "agent": "5CkdQjY666dWJ2TJDCmqnMETi7x2Vbq4QY53WzpJHDbYZVPh",
+        "limit": 25,
+        "offset": 0
+      },
+      "measuredAt": "2026-11-05T08:59:59.878Z",
+      "durationMs": 135,
+      "attempts": 1,
+      "raw": "{\n  \"data\": [\n    {\n      \"channelId\": \"0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec\",\n      \"settledBlock\": 2945246,\n      \"settledAt\": 1793866215001,\n      \"agent\": \"5CkdQjY666dWJ2TJDCmqnMETi7x2Vbq4QY53WzpJHDbYZVPh\",\n      \"miner\": \"5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1\",\n      \"escrow\": \"522000000000000021\",\n      \"minerPaid\": \"516780000000000021\",\n      \"burned\": \"0\",\n      \"aggregateGn\": \"54\",\n      \"unusedEscrow\": \"5220000000000000\",\n      \"pricePerGflop\": \"9570000000000000.388888888888888888\",\n      \"cooperative\": true,\n      \"settlementKind\": \"settled\",\n      \"settlementEvent\": \"computeChannel.Settled\",\n      \"marketKind\": \"spot\",\n      \"contractStartBlock\": null,\n      \"contractEndBlock\": null,\n      \"reservedRate\": null,\n      \"quotaTotal\": null,\n      \"contractPricePerGn\": null,\n      \"bond\": null,\n      \"forwardOutcome\": null,\n      \"bondReleased\": null,\n      \"bondSlashed\": null,\n      \"buyerDamages\": null,\n      \"backupBounty\": null,\n      \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n      \"gpuSku\": null,\n      \"gpuSkuSource\": null,\n      \"assuranceTier\": \"Soft\",\n      \"calibrationVersion\": 3,\n      \"utilizationPpm\": 82949,\n      \"settledBlockHash\": \"0x0c173cb93aa92e059bd64d966b36477ec585143a1460b541968b8d39b3e4a272\",\n      \"extrinsicHash\": \"0x469ed46a6b74f15651a8e9a6edca460981d5db0bd73d5fff3595a866aea6217e\",\n      \"extrinsicIndex\": 3,\n      \"eventIndex\": 3,\n      \"callSection\": \"computeChannel\",\n      \"callMethod\": \"settle\",\n      \"selfTrade\": false\n    }\n  ],\n  \"pagination\": {\n    \"total\": 1,\n    \"limit\": 25,\n    \"offset\": 0,\n    \"hasMore\": false\n  }\n}",
+      "error": null,
+      "sha256": "0xcbeb99a25ed1c9b60e3ddb31afd7abb992ff2d6bca63139e317c3c8aef64c945"
+    },
+    {
+      "id": "block",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_get_block",
+      "args": {
+        "number": 2945246
+      },
+      "measuredAt": "2026-11-05T09:00:00.281Z",
+      "durationMs": 238,
+      "attempts": 1,
+      "raw": "{\n  \"block\": {\n    \"hash\": \"0x0c173cb93aa92e059bd64d966b36477ec585143a1460b541968b8d39b3e4a272\",\n    \"parentHash\": \"0xa09dfedcc0d051373eff11bd899fd7fc4a54976d894721578a7fc52d84fe9fbe\",\n    \"number\": 2945246,\n    \"timestamp\": 1793866215001,\n    \"extrinsicsCount\": 5,\n    \"specVersion\": 1014003\n  }\n}",
+      "error": null,
+      "sha256": "0xab38fb7241c9abf404c86e4d44530e94f290eb1937951e89b464248bab882f33"
+    },
+    {
+      "id": "transaction",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_indexer_query",
+      "args": {
+        "query": "query($hash: String!) { transaction(hash: $hash) { hash blockHash blockNumber indexInBlock section method args success timestamp } }",
+        "variables": {
+          "hash": "0x469ed46a6b74f15651a8e9a6edca460981d5db0bd73d5fff3595a866aea6217e"
+        }
+      },
+      "measuredAt": "2026-11-05T09:00:00.493Z",
+      "durationMs": 149,
+      "attempts": 1,
+      "raw": "{\n  \"transaction\": {\n    \"hash\": \"0x469ed46a6b74f15651a8e9a6edca460981d5db0bd73d5fff3595a866aea6217e\",\n    \"blockHash\": \"0x0c173cb93aa92e059bd64d966b36477ec585143a1460b541968b8d39b3e4a272\",\n    \"blockNumber\": 2945246,\n    \"indexInBlock\": 3,\n    \"section\": \"computeChannel\",\n    \"method\": \"settle\",\n    \"args\": \"[\\\"0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec\\\",\\\"0xf0ac9d332b58005677e3b4d284407811c3b4d4f9f80121f76797d2e06ff93326\\\",\\\"54\\\",\\\"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\\\",\\\"0xe68243d34818a10129fb91d25c2cd0115d7843da39275479973722ebbe03b6534dae9815298cf684ae0381dc414b13022b29795703f5f1627e5e7bce9552c687\\\",null,[{\\\"leafVersion\\\":\\\"V3\\\",\\\"turnIndex\\\":\\\"0\\\",\\\"hIn\\\":\\\"0xd905c221b733236d67397c3d4762ade12d52113dad62b1d76a87059453e9749d\\\",\\\"hOut\\\":\\\"0xbaa51f7a2c69a38e945937ccbcf39d050f4690b73102833b98aec983dbde71e4\\\",\\\"gN\\\":\\\"54\\\",\\\"decodePolicyHash\\\":\\\"0xeca6a3f9c5a9fa1556892182ffef15b1273c075146a2d1a87814ae83ecea3053\\\",\\\"hIds\\\":\\\"0x92f10f8066a1322482caaa960f07128f5945f4f467ae76b6b24440e06708c2b5\\\",\\\"toplocCommitmentHash\\\":\\\"0x0838b35024b116f090b61d546c5237be7ba2ef2e8cecceb324706c98b81d090f\\\",\\\"minerRecvMs\\\":\\\"1,346,614,729\\\",\\\"minerDoneMs\\\":\\\"1,346,615,351\\\",\\\"latencyMs\\\":\\\"622\\\",\\\"enclaveSig\\\":\\\"0x2cf47f5a73e684cc703803e7fa81957afec8faaac8c1d5014e58dfb11e63324aa3211ffc60727d6e27588bf2028533db63ea5e30e0c1edcfa88b4bbc2d03f58f\\\",\\\"merklePath\\\":[]}]]\",\n    \"success\": 1,\n    \"timestamp\": 1793866215001\n  }\n}",
+      "error": null,
+      "sha256": "0x01ade62ad23721717ae0a96a0f99cf96b38723a26484c85011aa16c3cabb85e0"
+    },
+    {
+      "id": "channel-index",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_indexer_query",
+      "args": {
+        "query": "query($id: String!) { computeChannel(channelId: $id) { channelId finalRoot challengeEnd verifierRef } }",
+        "variables": {
+          "id": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec"
+        }
+      },
+      "measuredAt": "2026-11-05T09:00:00.823Z",
+      "durationMs": 179,
+      "attempts": 1,
+      "raw": "{\n  \"computeChannel\": {\n    \"channelId\": \"0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec\",\n    \"finalRoot\": null,\n    \"challengeEnd\": null,\n    \"verifierRef\": null\n  }\n}",
+      "error": null,
+      "sha256": "0xa062706121b53fb77cccc14bbe99b5e69fe01e6c8192a10b0dccacfe7ea8919e"
+    },
+    {
+      "id": "models",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_discover_models",
+      "args": {
+        "max_results": 1000
+      },
+      "measuredAt": "2026-11-05T09:00:09.527Z",
+      "durationMs": 8584,
+      "attempts": 1,
+      "raw": "{\n  \"models\": [\n    {\n      \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n      \"modelName\": \"Qwen/Qwen3-8B\",\n      \"qualityScore\": 50,\n      \"matchScore\": 45,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 0,\n      \"served\": false,\n      \"servingMiners\": [],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": []\n    },\n    {\n      \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n      \"modelName\": \"Qwen/Qwen3.8-27B\",\n      \"qualityScore\": 50,\n      \"matchScore\": 45,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 0,\n      \"served\": false,\n      \"servingMiners\": [],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": []\n    },\n    {\n      \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n      \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n      \"qualityScore\": 50,\n      \"matchScore\": 61,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 8,\n      \"served\": true,\n      \"servingMiners\": [\n        \"5CLkcYRxUBiLsrJg2Dapupx7qWWhPR3p5FmnwGtXDF1KQt3v\",\n        \"5DCkDPn7n3qAuKjn9e2TRAF3ZcxByt7jkhwzGTZ7V3G8zHDd\",\n        \"5DLrV8MgKFPFM8Y23pAyoBV7QY6e6XBTzX5pf7ALnxozd43z\",\n        \"5DNyR8xJnNmiNbCzKaPum7MAHEVe7pyCw8djcdaG6ETX5Edr\",\n        \"5EHoo871PqP65tfSBuSVv87r4AxX6hMsEnaCSZwYbGu1dcJT\",\n        \"5EXP2EZmU3UFem9oYyfPkYQ6e1giGZwm97PhYNNSZrjKD9mb\",\n        \"5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN\",\n        \"5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1\"\n      ],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": [\n        \"nvidia_cc\"\n      ]\n    }\n  ],\n  \"totalMatches\": 3,\n  \"dataSource\": \"on-chain\",\n  \"availabilitySource\": \"gateway\",\n  \"filters\": {},\n  \"note\": \"onlineMinerCount and servingMiners come from the gateway catalog (GET /v1/models, x-flop.price_sources). served is false when the model is registered but that catalog is not serving it.\"\n}",
+      "error": null,
+      "sha256": "0x0aabf269e9beebe437b8e216f8604c108ba2e46aeed402a9bafd3c20e1072ac7"
+    },
+    {
+      "id": "trust-root",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_trust_root",
+      "args": {},
+      "measuredAt": "2026-11-05T09:00:09.656Z",
+      "durationMs": 128,
+      "attempts": 1,
+      "raw": "{\n  \"version\": 2,\n  \"snapshotHash\": \"0xaec345fc0e95361ed49fe6c67eb992ca539343a148b6c4a0b6af3040d69fda04\",\n  \"dstackVkeys\": [],\n  \"models\": [\n    {\n      \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n      \"verificationStatus\": 1,\n      \"supportedTeePlatforms\": [\n        0\n      ],\n      \"epochPricePerGflop\": \"3000000000000000\",\n      \"enforceMeasuredRoot\": true\n    },\n    {\n      \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n      \"verificationStatus\": 1,\n      \"supportedTeePlatforms\": [],\n      \"epochPricePerGflop\": \"3000000000000000\",\n      \"enforceMeasuredRoot\": true\n    },\n    {\n      \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n      \"verificationStatus\": 1,\n      \"supportedTeePlatforms\": [],\n      \"epochPricePerGflop\": \"3000000000000000\",\n      \"enforceMeasuredRoot\": true\n    }\n  ],\n  \"skuCeilings\": [],\n  \"attestedSkus\": [],\n  \"evidenceParams\": {\n    \"softTierSpotCheckRatePpm\": 25000\n  },\n  \"pouiCommittee\": [\n    \"0x38a07c3e7e58dcd4689f99050c6a28434d327168c166910809636b65595e076d\",\n    \"0x70b6dbd5e53eba79f7ede42332c5bce7f93f862d291ffba95e69a87304def30c\",\n    \"0x786d3bea8cd9c4fda4c50bf3f5f03fe47b09e695d5c53e95a5ad6c2326ba3871\",\n    \"0x80e81cf042ec7c2291a8660db3b3c6be656596193a79264c38a3a554a89fd27b\",\n    \"0xa03f6c8e1e35c187c4183b69fc98fbfd3beeab3ac212a3e47c387082bcc0ae07\",\n    \"0xa0c40b5121b28b836ee79761553681af8b4cbc9afbb6906f2e5a89ca7b90020c\",\n    \"0xa6c45476cb4f5e3af75c0ca18a3ea7f3d09a4a1bb4c02c9fb484f2d52704cd63\",\n    \"0xc8227ae5fc8cb2e5b429cb180df2c56ba7773a834abb1669ef41cbab3c45de23\",\n    \"0xc84e82febb99234aad033eb1d8bd817728b3f1e29c3aa91ac1c701f32573230e\",\n    \"0xe0825ae98d71567e9a5f5756a4702022f7a30283839420c90dcabf9b5d75d01f\"\n  ],\n  \"source\": \"runtime_api\"\n}",
+      "error": null,
+      "sha256": "0x6abfeccd3048285c7e4e910db40e27c8df03f160ae8f8ba63b2d6b1a3422c932"
+    },
+    {
+      "id": "head",
+      "source": "https://mcp.flop.network/mcp",
+      "tool": "flop_get_stats",
+      "args": {},
+      "measuredAt": "2026-11-05T09:00:10.247Z",
+      "durationMs": 420,
+      "attempts": 1,
+      "raw": "{\n  \"stats\": {\n    \"latestBlockNumber\": 2947945,\n    \"totalBlocks\": 2947945,\n    \"tps\": 2.03,\n    \"activeHTLCs\": 1,\n    \"totalHTLCs\": 1,\n    \"proofs24h\": 0,\n    \"activeOperators\": 0,\n    \"avgBlockTime\": 1000,\n    \"totalTransactions\": 5397120,\n    \"txVolume24h\": 170632,\n    \"totalAccounts\": 6072,\n    \"flopLocked\": \"2000000000000000000\"\n  }\n}",
+      "error": null,
+      "sha256": "0xd355e984da10e817083aaaa32386b7b0d0adc8cc7fd360a9931980e501e3eb80"
+    }
+  ],
+  "sha256": "0x0246dafce5bafa1df724c6cab0b96dcdd3ccdb9686022cf53f7dffee253f7078"
+}
