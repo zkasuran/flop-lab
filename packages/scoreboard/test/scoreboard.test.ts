@@ -124,6 +124,10 @@ describe("formula and confidence", () => {
     rows[0]!.cooperative = false;
     const row = rankSnapshot(s, { now: evaluated + WINDOW_MS / 2 }).find((r) => r.miner === miner)!;
     expect(row.score).toBeCloseTo(15 / 21 / 5, 12);
+    expect(rankSnapshot(s, { now: evaluated + WINDOW_MS / 4 }).find((r) => r.miner === miner)!.score).toBeCloseTo(
+      22.5 / 21 / 5,
+      12,
+    );
     expect(row.noncooperativeShare).toBe(1);
     expect(rankSnapshot(s, { now: evaluated + WINDOW_MS + 1 }).find((r) => r.miner === miner)!.score).toBeNull();
   });
@@ -243,13 +247,15 @@ describe("collector replay", () => {
     const c = new Collector({ fetch: fetcher, now: () => clock, sleep: async () => {} });
     const [a, b] = await Promise.all([c.snapshot(), c.snapshot()]);
     expect(a).toEqual(b);
-    expect(calls).toHaveLength(5);
+    expect(calls).toHaveLength(7);
+    expect(a.reliabilityError).toBeDefined();
+    expect(a.archive?.state).toBe("unavailable");
     a.records.length = 0;
     expect((await c.snapshot()).records).toHaveLength(5);
     expect(c.stats.cacheHits).toBe(1);
     clock += 60_000;
     await c.snapshot();
-    expect(calls).toHaveLength(10);
+    expect(calls).toHaveLength(14);
   });
   it("honors bounded backoff on 429 and 5xx", async () => {
     const { fetcher } = replay([429, 503]);
@@ -262,7 +268,7 @@ describe("collector replay", () => {
       },
     });
     const snapshot = await c.snapshot();
-    expect(snapshot.collection.requests).toBe(7);
+    expect(snapshot.collection.requests).toBe(9);
     expect(waits[0]).toBe(1000);
     expect(waits[1]).toBe(1000);
   });

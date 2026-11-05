@@ -56,6 +56,7 @@ export async function runHarness(options: RunOptions = {}): Promise<RunReport> {
     new Transport({
       maxRequests: Math.min(options.maxRequests ?? PROFILES[profile].maxRequests, PROFILES[profile].maxRequests),
     });
+  transport.restrictRequests(PROFILES[profile].maxRequests);
   const context = new Context(transport);
   const started = Date.now();
   const report: RunReport = {

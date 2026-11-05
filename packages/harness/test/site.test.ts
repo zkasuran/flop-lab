@@ -45,7 +45,7 @@ describe("recorded harness view", () => {
   });
   it("copies bounded workspace commands and refuses shell metacharacters", () => {
     expect(reproduceCommand("gateway-contract")).toBe(
-      "pnpm --filter @flop-lab/harness start run --only gateway-contract --max-requests 100 --max-flop 0",
+      "pnpm --filter @flop-lab/harness start run --only gateway-contract --max-requests 80 --max-flop 0",
     );
     expect(() => reproduceCommand("gateway-contract;exit")).toThrow("Invalid claim id");
   });

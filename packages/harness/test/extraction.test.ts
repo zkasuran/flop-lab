@@ -2,7 +2,8 @@
 import { readFile, stat } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { extractDocument, type SourceDocument } from "../src/extraction";
-import { loadInventory, parseDocument } from "../src/inventory";
+import { parseDocument } from "../src/inventory";
+import { loadInventory } from "../src/inventory-loader";
 import { loadClaims } from "../src/catalogue";
 const pages = await loadInventory();
 const root = new URL("../fixtures/sources/", import.meta.url);

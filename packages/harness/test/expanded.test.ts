@@ -60,9 +60,10 @@ describe("extracted public predicates", () => {
     const report = await runHarness({
       profile: "ci",
       claims,
-      transport: new Transport({ fetch: recordedFetch(), intervalMs: 0, maxRequests: 12, sleep: async () => {} }),
+      transport: new Transport({ fetch: recordedFetch(), intervalMs: 0, maxRequests: 100, sleep: async () => {} }),
     });
     expect(report.budget.requests).toBeLessThanOrEqual(12);
+    expect(report.budget.maxRequests).toBe(12);
     expect(
       report.results
         .filter((result) => result.reason !== "Not selected by ci profile")
