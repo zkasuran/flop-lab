@@ -1,0 +1,3 @@
+event: message
+data: {"result":{"content":[{"type":"text","text":"{\n  \"stats\": {\n    \"latestBlockNumber\": 2947039,\n    \"totalBlocks\": 2947039,\n    \"tps\": 2.03,\n    \"activeHTLCs\": 1,\n    \"totalHTLCs\": 1,\n    \"proofs24h\": 0,\n    \"activeOperators\": 0,\n    \"avgBlockTime\": 1052.6842105263158,\n    \"totalTransactions\": 5395235,\n    \"txVolume24h\": 170741,\n    \"totalAccounts\": 5958,\n    \"flopLocked\": \"2000000000000000000\"\n  }\n}"}]},"jsonrpc":"2.0","id":1}
+
