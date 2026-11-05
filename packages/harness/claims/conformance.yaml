@@ -5,10 +5,10 @@
     "check": "contracts",
     "expected": "assertModelList from @flop-labs/contracts@0.1.1 accepts the response",
     "source": {
-      "url": "https://www.npmjs.com/package/@flop-labs/contracts/v/0.1.1",
-      "quote": "Validation checks structure without coercion, default insertion, or removal of fields.",
-      "measuredAt": "2026-11-05T09:23:46.373Z",
-      "path": "dist/generated/schemas.js#ModelList"
+      "url": "https://docs.flop.network/docs/sdk-references",
+      "quote": "Structural types, JSON Schema exports and assert* validators for the public HTTP API: model listing, model lookup, and JSON chat completion requests, responses and stream frames. Node.js 22 or later.",
+      "path": "sdk-references-l32-18",
+      "measuredAt": "2026-11-05T22:44:42.355Z"
     },
     "kind": "http",
     "risk": "read-only"

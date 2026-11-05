@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { assertModelList } from "@flop-labs/contracts";
 import { escrowConserved, McpError, parseSettlement } from "@flop-lab/mcp";
+import { normalise, parseCatalog } from "@flop-lab/spec";
 import { Context, Unavailable } from "./context";
 import { array, integer, object, schemaErrors, text } from "./validation";
 import type { Claim, Observation } from "./types";
@@ -34,6 +35,76 @@ function page(raw: unknown, limit: number, offset: number) {
 export async function checkClaim(claim: Claim, context: Context): Promise<Observation> {
   if (claim.check === "unavailable")
     return unavailable(claim.reason ?? "The required evidence is not exposed by these read-only surfaces");
+  if (claim.check === "catalog-parameter") {
+    const value = await context.call("flop_knowledge_get", { id_or_path: "protocol-params" });
+    const catalog = parseCatalog({
+      source: "https://mcp.flop.network/mcp",
+      measuredAt: new Date().toISOString(),
+      raw: JSON.stringify(value),
+    });
+    const args = object(claim.args);
+    const row = catalog.parameters.find((row) => row.name === text(args.name));
+    if (!row) return unavailable("The public catalog has no row with this exact parameter identifier");
+    let expected = { value: text(args.value), unit: text(args.unit) };
+    if (!expected.unit && row.unit && expected.value.endsWith(` ${row.unit}`))
+      expected = { value: expected.value.slice(0, -row.unit.length - 1), unit: row.unit };
+    const a = normalise(expected.value, expected.unit);
+    const b = normalise(row.value, row.unit);
+    if (a.unit !== b.unit)
+      return unavailable(`Units cannot be compared: ${a.unit || "unspecified"} versus ${b.unit || "unspecified"}`);
+    const observed = {
+      name: row.name,
+      value: row.value,
+      unit: row.unit,
+      quote: row.evidence.quote,
+      warnings: catalog.warnings,
+    };
+    return a.value === b.value
+      ? pass(
+          observed,
+          "Exact value and unit agree with the public source catalog. Runtime enforcement is not verified.",
+        )
+      : fail(
+          observed,
+          "Source catalog value differs from the quoted specification in the same unit. This is source drift, not a runtime verdict.",
+        );
+  }
+  if (claim.check === "hosted-read-only") {
+    const tools = await context.tools();
+    if (!tools.length) return unavailable("No hosted tools were advertised");
+    const bad = tools
+      .filter((tool) => tool.name === "flop_run_session" || tool.annotations?.readOnlyHint !== true)
+      .map((tool) => tool.name);
+    return bad.length
+      ? fail(bad, "Hosted inventory advertises a write tool or omits its read-only annotation")
+      : pass(
+          { tools: tools.length },
+          "Advertised inventory is read-only and omits flop_run_session. Hidden methods and server-side effects are not tested.",
+        );
+  }
+  if (claim.check === "offer-miner-filter") {
+    const tool = (await context.tools()).find((tool) => tool.name === "flop_list_session_offers");
+    if (!tool) return unavailable("Session offer tool is not advertised");
+    const properties = object(object(tool.inputSchema).properties);
+    if (!properties.miner || object(properties.miner).type !== "string")
+      return fail(tool.inputSchema, "Offer tool does not advertise its documented miner string filter");
+    const args = await context.args({ miner: "$miner", limit: 1 });
+    const value = object(await context.call("flop_list_session_offers", args));
+    const rows = array(value.data).map(object);
+    // Empty rows establish input acceptance only. They cannot establish filter semantics.
+    if (!rows.length)
+      return unavailable(
+        "Miner filter is advertised and accepted, but there are no offers to test its selection semantics",
+      );
+    if (rows.some((row) => typeof row.miner !== "string"))
+      return unavailable("Offer rows do not expose a miner address");
+    return rows.every((row) => row.miner === args.miner)
+      ? pass(
+          value,
+          "Sampled offers match the requested miner. Pagination completeness and offer signatures are not verified.",
+        )
+      : fail(value, "A returned offer does not match the requested miner filter");
+  }
   if (claim.check === "contracts") {
     const value = await context.models();
     try {
