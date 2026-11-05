@@ -1,0 +1,55 @@
+// SPDX-License-Identifier: Apache-2.0
+plugins {
+    id 'io.kestra.gradle.repository-conventions' version '1.2.12'
+    id 'io.kestra.gradle.plugin-doc-lint' version '1.2.12'
+    id 'java-library'
+}
+
+repositories { mavenCentral() }
+group = 'io.kestra.plugin'
+description = 'FLOP devnet observations and settlement checks for Kestra'
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.add('-parameters')
+}
+dependencies {
+    annotationProcessor enforcedPlatform("io.kestra:platform:$kestraVersion")
+    implementation enforcedPlatform("io.kestra:platform:$kestraVersion")
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor "io.kestra:processor:$kestraVersion"
+    compileOnly "io.kestra:core:$kestraVersion"
+    testAnnotationProcessor enforcedPlatform("io.kestra:platform:$kestraVersion")
+    testImplementation enforcedPlatform("io.kestra:platform:$kestraVersion")
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'io.micronaut:micronaut-inject-java'
+    testAnnotationProcessor 'io.micronaut.validation:micronaut-validation-processor'
+    testAnnotationProcessor "io.kestra:processor:$kestraVersion"
+    testImplementation 'io.micronaut.test:micronaut-test-junit5'
+    testImplementation 'io.micronaut:micronaut-jackson-databind'
+    testImplementation "io.kestra:core:$kestraVersion"
+    testImplementation "io.kestra:tests:$kestraVersion"
+    testImplementation "io.kestra:repository-memory:$kestraVersion"
+    testImplementation "io.kestra:runner-memory:$kestraVersion"
+    testImplementation "io.kestra:storage-local:$kestraVersion"
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+test {
+    useJUnitPlatform()
+    maxHeapSize = '768m'
+    maxParallelForks = 1
+    testLogging { events 'failed', 'skipped'; exceptionFormat 'full' }
+}
+jar {
+    manifest {
+        attributes('X-Kestra-Name': project.name, 'X-Kestra-Title': 'FLOP',
+            'X-Kestra-Group': 'io.kestra.plugin.flop',
+            'X-Kestra-Description': project.description, 'X-Kestra-Version': project.version)
+    }
+}

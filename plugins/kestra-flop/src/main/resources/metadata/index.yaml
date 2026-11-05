@@ -1,0 +1,8 @@
+group: io.kestra.plugin.flop
+name: flop
+title: FLOP
+description: Read FLOP devnet observations and check settlement arithmetic.
+body: Tasks read counters, settlements and model sources. A trigger watches new settlements. The guarded chat task is mock-tested only. The icon is a neutral list symbol, not the FLOP logo.
+videos: []
+createdBy: flop-lab
+managedBy: flop-lab
