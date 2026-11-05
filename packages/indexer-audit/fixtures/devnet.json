@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "startedAt": "2026-11-05T23:12:16.453Z",
+  "completedAt": "2026-11-05T23:12:20.949Z",
+  "limit": 3,
+  "requests": 10,
+  "requestBudget": 20,
+  "durationMs": 4496,
+  "observations": [
+    {
+      "id": "indexer",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:12:17.233Z",
+      "request": {
+        "tool": "flop_indexer_query",
+        "query": "query Audit($limit: Int!) {\n  stats { latestBlockNumber totalBlocks totalTransactions totalAccounts }\n  blocks(limit: $limit) { number hash parentHash }\n  pouiLeaderboard(limit: $limit) { submitter totalWeight proofsCount }\n  settlementPrices(limit: $limit) {\n    pagination { total limit offset hasMore }\n    data { channelId settledBlock settledBlockHash settledAt agent miner escrow minerPaid burned unusedEscrow aggregateGn pricePerGflop marketKind }\n  }\n}",
+        "variables": {
+          "limit": 3
+        }
+      },
+      "raw": "{\n  \"blocks\": [\n    {\n      \"number\": 2997219,\n      \"hash\": \"0x34098d051f0a3f1fc0ffe29b3ed1303566be15d4e1fb950f9f58d4a767ac6359\",\n      \"parentHash\": \"0x23350f2f80d6b7e7b7c5ca17333ca60ca52f91d74b94f378a6b0f1d3ebcb437c\"\n    },\n    {\n      \"number\": 2997218,\n      \"hash\": \"0x23350f2f80d6b7e7b7c5ca17333ca60ca52f91d74b94f378a6b0f1d3ebcb437c\",\n      \"parentHash\": \"0x9e962b9927d0e4b47d1eba15598d94cfa04b192b59c922eb93dc3adb30a010f9\"\n    },\n    {\n      \"number\": 2997217,\n      \"hash\": \"0x9e962b9927d0e4b47d1eba15598d94cfa04b192b59c922eb93dc3adb30a010f9\",\n      \"parentHash\": \"0xd447bbf9a44e01c70c0e4e317ae3d00cfc7d326310026d7dc64e2b8c81df000e\"\n    }\n  ],\n  \"pouiLeaderboard\": [],\n  \"settlementPrices\": {\n    \"pagination\": {\n      \"total\": 345,\n      \"limit\": 3,\n      \"offset\": 0,\n      \"hasMore\": true\n    },\n    \"data\": [\n      {\n        \"channelId\": \"0x67a3adb51536ef184f03b1653b860d1e667b35d2b6cb7fbc62cd089142319809\",\n        \"settledBlock\": 2997176,\n        \"settledBlockHash\": \"0xbedd3ee1dddd35d799ad24ddb908901b9fe10273c471c7fa881be0b5af5c4cc5\",\n        \"settledAt\": 1793920292000,\n        \"agent\": \"5GsXb3TmNGixuEsbtixqHnqWr9UQJ2M8bkqBQWteNekgF98S\",\n        \"miner\": \"5HjfuzhkBCtJCPsWs1EQJLiqdzp62ijoKg53EFzvRN4eCZRh\",\n        \"escrow\": \"72000000000000009\",\n        \"minerPaid\": \"71280000000000009\",\n        \"burned\": \"0\",\n        \"unusedEscrow\": \"720000000000000\",\n        \"aggregateGn\": \"11\",\n        \"pricePerGflop\": \"6480000000000000.818181818181818181\",\n        \"marketKind\": \"spot\"\n      },\n      {\n        \"channelId\": \"0xdad6afc3f2a8914a45c41a05cec94fff002a3d6099949bcc02438f399c669dc8\",\n        \"settledBlock\": 2994492,\n        \"settledBlockHash\": \"0x182b6ab1f6f7c8895782624ef9ebdb06e6b25451d386d678831f34837dc320bb\",\n        \"settledAt\": 1793917604001,\n        \"agent\": \"5GsXb3TmNGixuEsbtixqHnqWr9UQJ2M8bkqBQWteNekgF98S\",\n        \"miner\": \"5FWqSj2pjtFoHkjpLcKHzNURaZTzGvuP4soqo7CnWaBazX8p\",\n        \"escrow\": \"1374000000000000111\",\n        \"minerPaid\": \"1360260000000000110\",\n        \"burned\": \"0\",\n        \"unusedEscrow\": \"13740000000000001\",\n        \"aggregateGn\": \"220\",\n        \"pricePerGflop\": \"6183000000000000.500000000000000000\",\n        \"marketKind\": \"spot\"\n      },\n      {\n        \"channelId\": \"0xeda44d4053757bf88f7147f16daf2576d4c6550e560dd10a9a524a3bd664ec8e\",\n        \"settledBlock\": 2993105,\n        \"settledBlockHash\": \"0xaa56f3ad07beaa69b1e70c1eb933fa0efe97d5dc686be2eb8a8278ed67bbd1ef\",\n        \"settledAt\": 1793916214000,\n        \"agent\": \"5GsXb3TmNGixuEsbtixqHnqWr9UQJ2M8bkqBQWteNekgF98S\",\n        \"miner\": \"5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN\",\n        \"escrow\": \"1284000000000000031\",\n        \"minerPaid\": \"1271160000000000031\",\n        \"burned\": \"0\",\n        \"unusedEscrow\": \"12840000000000000\",\n        \"aggregateGn\": \"207\",\n        \"pricePerGflop\": \"6140869565217391.454106280193236714\",\n        \"marketKind\": \"spot\"\n      }\n    ]\n  },\n  \"stats\": {\n    \"latestBlockNumber\": 2997215,\n    \"totalBlocks\": 2997215,\n    \"totalTransactions\": 5504549,\n    \"totalAccounts\": 11552\n  }\n}"
+    },
+    {
+      "id": "stats",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:12:17.930Z",
+      "request": {
+        "tool": "flop_get_stats"
+      },
+      "raw": "{\n  \"stats\": {\n    \"latestBlockNumber\": 2997215,\n    \"totalBlocks\": 2997215,\n    \"tps\": 1.9,\n    \"activeHTLCs\": 17,\n    \"totalHTLCs\": 17,\n    \"proofs24h\": 0,\n    \"activeOperators\": 0,\n    \"avgBlockTime\": 1000,\n    \"totalTransactions\": 5504549,\n    \"txVolume24h\": 174431,\n    \"totalAccounts\": 11552,\n    \"flopLocked\": \"36000000000000000000\"\n  }\n}"
+    },
+    {
+      "id": "explorer-stats",
+      "source": "https://explorer.devnet.flop.network/api/stats",
+      "measuredAt": "2026-11-05T23:12:18.354Z",
+      "request": {
+        "method": "GET"
+      },
+      "raw": "{\"latestBlockNumber\":2997215,\"totalBlocks\":2997215,\"tps\":1.9,\"activeHTLCs\":17,\"totalHTLCs\":17,\"proofs24h\":0,\"activeOperators\":0,\"avgBlockTime\":1000,\"totalTransactions\":5504549,\"txVolume24h\":174431,\"totalAccounts\":11552,\"flopLocked\":\"36000000000000000000\",\"activeValidators\":10,\"activeAgents\":71,\"totalSupply\":\"2457690981763383177400137376\",\"finality\":{\"bestBlock\":2997217,\"finalizedBlock\":2997213,\"finalizedLag\":4,\"state\":\"normal\",\"safeMode\":false,\"thresholds\":{\"warnBlocks\":30,\"freezeBlocks\":120,\"maxStallBlocks\":3600},\"affectedActions\":[],\"foreignTimeoutMargin\":{\"recommendedMinimumMarginBlocks\":3604,\"warning\":\"Foreign-chain HTLC clocks keep running; BTC/NEAR/Solana deadlines cannot be frozen by FLOP finality safe mode.\"}},\"protocolAccounts\":{\"status\":\"available\",\"finalizedHash\":\"0x572377db67fc142c2ffd2ba3b91d63990760c3a30fa73a82660ea3efe6eff9ae\",\"finalizedBlock\":2997214,\"subsidyActive\":true,\"subsidyEndBlock\":315360000,\"labs\":{\"address\":\"5ED9j9foJCyT6qysBsAcdviB8oWPzEw3wpQd2DhKFu73t2JW\",\"totalBalance\":\"23977583922086349575000000\",\"totalSubsidy\":\"23977712000000000000000000\",\"blockSubsidy\":\"8000000000000000000\"},\"foundation\":{\"address\":\"5EfE37TpzwYSbgHHrr9SqGA3Hf5mdTv9QyTVWe4xP6XGH5NM\",\"totalBalance\":\"24006835774543583310000000\",\"totalSubsidy\":\"23977712000000000000000000\",\"blockSubsidy\":\"8000000000000000000\"}},\"consensus\":{\"state\":\"healthy\",\"connected\":true,\"peers\":11,\"isSyncing\":false,\"shouldHavePeers\":false,\"headAgeSeconds\":0,\"observedAt\":1793920335337,\"reasons\":[]},\"liveUpdatedAt\":1793920335337,\"liveStatsAgeSeconds\":2}"
+    },
+    {
+      "id": "staking",
+      "source": "https://explorer.devnet.flop.network/api/staking/stats",
+      "measuredAt": "2026-11-05T23:12:19.318Z",
+      "request": {
+        "method": "GET"
+      },
+      "raw": "{\"totalStaked\":\"29094816160000000000000000\",\"totalDelegated\":\"100000000000000000000\",\"stakingRatio\":1.18,\"activeValidators\":10,\"totalDelegators\":1,\"averageCommission\":0,\"totalRewards24h\":\"829440000000000000000000\",\"validators\":{\"total\":10,\"active\":10,\"jailed\":0,\"selfStake\":\"29094716160000000000000000\",\"delegatedStake\":\"100000000000000000000\",\"sponsoredStake\":\"0\",\"sponsoredUnbonding\":\"0\",\"totalStake\":\"29094816160000000000000000\",\"delegators\":1,\"currentMinStake\":\"1200000000000000000000000\"},\"miners\":{\"total\":70,\"active\":64,\"blacklisted\":0,\"selfStake\":\"3260130000000000000000000\",\"delegatedStake\":\"0\",\"sponsoredStake\":\"60167023000000000000000000\",\"sponsoredUnbonding\":\"5000000000000000000000000\",\"totalStake\":\"3260130000000000000000000\"},\"sponsors\":{\"validators\":{\"active\":\"0\",\"unbonding\":\"0\",\"positions\":0},\"miners\":{\"active\":\"60167023000000000000000000\",\"unbonding\":\"5000000000000000000000000\",\"positions\":115}},\"rotation\":{\"lastRotationBlock\":0,\"lastRotationEpoch\":0,\"epochLength\":0}}"
+    },
+    {
+      "id": "miners",
+      "source": "https://explorer.devnet.flop.network/api/miners?limit=3",
+      "measuredAt": "2026-11-05T23:12:19.461Z",
+      "request": {
+        "method": "GET"
+      },
+      "raw": "{\"data\":[{\"address\":\"5DqNNUEbW86sqbYU2HmmuNupu7ZRfigFGeXhPbCn1RC2oxfo\",\"selfStake\":\"1522000000000000000000000\",\"sponsoredStake\":\"1000000000000000000\",\"declaredGpuInventory\":{\"gpus\":[{\"name\":\"NVIDIA A100-SXM4-80GB\",\"count\":1,\"memoryMib\":81920}],\"declaredAtBlock\":1807833,\"observationHead\":\"finalized\",\"source\":\"self_reported\"},\"delegatedStake\":\"0\",\"delegatorsCount\":0,\"commission\":10,\"isActive\":true,\"blacklisted\":false,\"strikes\":0,\"totalRewards\":\"0\",\"totalSlashed\":\"0\",\"registeredBlock\":1807984,\"calibration\":{\"phase\":\"Active\",\"gnMax\":200,\"pledgeBaseline\":17280000,\"efficiencyCoeff\":0},\"workerBuild\":{\"status\":\"not_reported\"}},{\"address\":\"5FpcgGhyP73JvTsRutafYQf7ocuAxLjAt8L6aYrbUmrtZc5p\",\"selfStake\":\"682840000000000000000000\",\"sponsoredStake\":\"2000000000000000000\",\"declaredGpuInventory\":null,\"delegatedStake\":\"0\",\"delegatorsCount\":0,\"commission\":10,\"isActive\":true,\"blacklisted\":false,\"strikes\":0,\"totalRewards\":\"0\",\"totalSlashed\":\"0\",\"registeredBlock\":1216954,\"calibration\":{\"phase\":\"Active\",\"gnMax\":89,\"pledgeBaseline\":7689600,\"efficiencyCoeff\":0},\"workerBuild\":{\"status\":\"not_reported\"}},{\"address\":\"5FWZ3SurpMWoMoBNc35ju3ZHSUZm9DHs31x1kokS75ehFQWq\",\"selfStake\":\"599680000000000000000000\",\"sponsoredStake\":\"4000000000000000000\",\"declaredGpuInventory\":null,\"delegatedStake\":\"0\",\"delegatorsCount\":0,\"commission\":10,\"isActive\":true,\"blacklisted\":false,\"strikes\":0,\"totalRewards\":\"15706207594936708860759493\",\"totalSlashed\":\"0\",\"registeredBlock\":87229,\"calibration\":{\"phase\":\"Active\",\"gnMax\":78,\"pledgeBaseline\":6739200,\"efficiencyCoeff\":0},\"workerBuild\":{\"status\":\"not_reported\"}}],\"pagination\":{\"total\":70,\"limit\":3,\"offset\":0,\"hasMore\":true}}"
+    },
+    {
+      "id": "block",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:12:19.732Z",
+      "request": {
+        "tool": "flop_get_block",
+        "number": 2997219
+      },
+      "raw": "{\n  \"block\": {\n    \"hash\": \"0x34098d051f0a3f1fc0ffe29b3ed1303566be15d4e1fb950f9f58d4a767ac6359\",\n    \"parentHash\": \"0x23350f2f80d6b7e7b7c5ca17333ca60ca52f91d74b94f378a6b0f1d3ebcb437c\",\n    \"number\": 2997219,\n    \"timestamp\": 1793920335000,\n    \"extrinsicsCount\": 2,\n    \"specVersion\": 1014003\n  }\n}"
+    },
+    {
+      "id": "channel-0",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:12:19.976Z",
+      "request": {
+        "tool": "flop_get_compute_channel",
+        "channel_id": "0x67a3adb51536ef184f03b1653b860d1e667b35d2b6cb7fbc62cd089142319809"
+      },
+      "raw": "{\n  \"channelId\": \"0x67a3adb51536ef184f03b1653b860d1e667b35d2b6cb7fbc62cd089142319809\",\n  \"agent\": \"5GsXb3TmNGixuEsbtixqHnqWr9UQJ2M8bkqBQWteNekgF98S\",\n  \"miner\": \"5HjfuzhkBCtJCPsWs1EQJLiqdzp62ijoKg53EFzvRN4eCZRh\",\n  \"escrow\": \"72000000000000009\",\n  \"measuredRoot\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"lineage\": null,\n  \"status\": \"settled\",\n  \"paymentStatus\": \"PAID\",\n  \"evidenceStatus\": \"WITNESS_ONLY\",\n  \"timeoutPath\": \"claimed_before_timeout\",\n  \"observationHead\": \"finalized\",\n  \"aggregateGn\": \"11\",\n  \"minerPaid\": \"71280000000000009\",\n  \"burned\": \"0\",\n  \"cooperative\": true,\n  \"marketKind\": \"spot\",\n  \"assuranceTier\": \"Soft\",\n  \"calibrationVersion\": 1,\n  \"capGflopsPerSec\": 130,\n  \"softTierSpotCheckRatePpm\": 25000,\n  \"openedBlock\": 2997043,\n  \"statusBlockNumber\": 2997176,\n  \"openedAt\": 1793920159000,\n  \"updatedAt\": 1793920292000,\n  \"settlement\": {\n    \"kind\": \"settled\",\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2997176,\n    \"blockHash\": \"0xbedd3ee1dddd35d799ad24ddb908901b9fe10273c471c7fa881be0b5af5c4cc5\",\n    \"timestamp\": 1793920292000,\n    \"extrinsicHash\": \"0x77df5ff4ee6b04af282477b4003e5caf34bff8bfa212c49017bfe24bf13c987b\",\n    \"extrinsicIndex\": 2,\n    \"eventIndex\": 3,\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\"\n  },\n  \"latestTransition\": {\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2997176,\n    \"blockHash\": \"0xbedd3ee1dddd35d799ad24ddb908901b9fe10273c471c7fa881be0b5af5c4cc5\",\n    \"extrinsicIndex\": 2,\n    \"eventIndex\": 3,\n    \"extrinsicHash\": \"0x77df5ff4ee6b04af282477b4003e5caf34bff8bfa212c49017bfe24bf13c987b\",\n    \"signer\": \"5HjfuzhkBCtJCPsWs1EQJLiqdzp62ijoKg53EFzvRN4eCZRh\",\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\",\n    \"data\": {\n      \"channelId\": \"0x67a3adb51536ef184f03b1653b860d1e667b35d2b6cb7fbc62cd089142319809\",\n      \"minerPaid\": \"71,280,000,000,000,009\",\n      \"burned\": \"0\",\n      \"aggregateGn\": \"11\",\n      \"cooperative\": true\n    },\n    \"timestamp\": 1793920292000,\n    \"observationHead\": \"finalized\"\n  }\n}"
+    },
+    {
+      "id": "channel-1",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:12:20.230Z",
+      "request": {
+        "tool": "flop_get_compute_channel",
+        "channel_id": "0xdad6afc3f2a8914a45c41a05cec94fff002a3d6099949bcc02438f399c669dc8"
+      },
+      "raw": "{\n  \"channelId\": \"0xdad6afc3f2a8914a45c41a05cec94fff002a3d6099949bcc02438f399c669dc8\",\n  \"agent\": \"5GsXb3TmNGixuEsbtixqHnqWr9UQJ2M8bkqBQWteNekgF98S\",\n  \"miner\": \"5FWqSj2pjtFoHkjpLcKHzNURaZTzGvuP4soqo7CnWaBazX8p\",\n  \"escrow\": \"1374000000000000111\",\n  \"measuredRoot\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"lineage\": null,\n  \"status\": \"settled\",\n  \"paymentStatus\": \"PAID\",\n  \"evidenceStatus\": \"WITNESS_ONLY\",\n  \"timeoutPath\": \"claimed_before_timeout\",\n  \"observationHead\": \"finalized\",\n  \"aggregateGn\": \"220\",\n  \"minerPaid\": \"1360260000000000110\",\n  \"burned\": \"0\",\n  \"cooperative\": true,\n  \"marketKind\": \"spot\",\n  \"assuranceTier\": \"Soft\",\n  \"calibrationVersion\": 1,\n  \"capGflopsPerSec\": 130,\n  \"softTierSpotCheckRatePpm\": 25000,\n  \"openedBlock\": 2994383,\n  \"statusBlockNumber\": 2994492,\n  \"openedAt\": 1793917495000,\n  \"updatedAt\": 1793917604001,\n  \"settlement\": {\n    \"kind\": \"settled\",\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2994492,\n    \"blockHash\": \"0x182b6ab1f6f7c8895782624ef9ebdb06e6b25451d386d678831f34837dc320bb\",\n    \"timestamp\": 1793917604001,\n    \"extrinsicHash\": \"0x89b4b00e6f4b762e00def7ba43201524bb6c2b5245fb618d4f66b67820fd0e8b\",\n    \"extrinsicIndex\": 2,\n    \"eventIndex\": 3,\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\"\n  },\n  \"latestTransition\": {\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2994492,\n    \"blockHash\": \"0x182b6ab1f6f7c8895782624ef9ebdb06e6b25451d386d678831f34837dc320bb\",\n    \"extrinsicIndex\": 2,\n    \"eventIndex\": 3,\n    \"extrinsicHash\": \"0x89b4b00e6f4b762e00def7ba43201524bb6c2b5245fb618d4f66b67820fd0e8b\",\n    \"signer\": \"5FWqSj2pjtFoHkjpLcKHzNURaZTzGvuP4soqo7CnWaBazX8p\",\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\",\n    \"data\": {\n      \"channelId\": \"0xdad6afc3f2a8914a45c41a05cec94fff002a3d6099949bcc02438f399c669dc8\",\n      \"minerPaid\": \"1,360,260,000,000,000,110\",\n      \"burned\": \"0\",\n      \"aggregateGn\": \"220\",\n      \"cooperative\": true\n    },\n    \"timestamp\": 1793917604001,\n    \"observationHead\": \"finalized\"\n  }\n}"
+    },
+    {
+      "id": "channel-2",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:12:20.489Z",
+      "request": {
+        "tool": "flop_get_compute_channel",
+        "channel_id": "0xeda44d4053757bf88f7147f16daf2576d4c6550e560dd10a9a524a3bd664ec8e"
+      },
+      "raw": "{\n  \"channelId\": \"0xeda44d4053757bf88f7147f16daf2576d4c6550e560dd10a9a524a3bd664ec8e\",\n  \"agent\": \"5GsXb3TmNGixuEsbtixqHnqWr9UQJ2M8bkqBQWteNekgF98S\",\n  \"miner\": \"5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN\",\n  \"escrow\": \"1284000000000000031\",\n  \"measuredRoot\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"lineage\": null,\n  \"status\": \"settled\",\n  \"paymentStatus\": \"PAID\",\n  \"evidenceStatus\": \"WITNESS_ONLY\",\n  \"timeoutPath\": \"claimed_before_timeout\",\n  \"observationHead\": \"finalized\",\n  \"aggregateGn\": \"207\",\n  \"minerPaid\": \"1271160000000000031\",\n  \"burned\": \"0\",\n  \"cooperative\": true,\n  \"marketKind\": \"spot\",\n  \"assuranceTier\": \"Soft\",\n  \"calibrationVersion\": 1,\n  \"capGflopsPerSec\": 32,\n  \"softTierSpotCheckRatePpm\": 25000,\n  \"openedBlock\": 2992963,\n  \"statusBlockNumber\": 2993105,\n  \"openedAt\": 1793916072000,\n  \"updatedAt\": 1793916214000,\n  \"settlement\": {\n    \"kind\": \"settled\",\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2993105,\n    \"blockHash\": \"0xaa56f3ad07beaa69b1e70c1eb933fa0efe97d5dc686be2eb8a8278ed67bbd1ef\",\n    \"timestamp\": 1793916214000,\n    \"extrinsicHash\": \"0x3846f646eb8578ed346dd16c1e3c34c08d67b4b5e61ab63cbe67ac1c68997a88\",\n    \"extrinsicIndex\": 2,\n    \"eventIndex\": 3,\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\"\n  },\n  \"latestTransition\": {\n    \"event\": \"computeChannel.Settled\",\n    \"blockNumber\": 2993105,\n    \"blockHash\": \"0xaa56f3ad07beaa69b1e70c1eb933fa0efe97d5dc686be2eb8a8278ed67bbd1ef\",\n    \"extrinsicIndex\": 2,\n    \"eventIndex\": 3,\n    \"extrinsicHash\": \"0x3846f646eb8578ed346dd16c1e3c34c08d67b4b5e61ab63cbe67ac1c68997a88\",\n    \"signer\": \"5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN\",\n    \"callSection\": \"computeChannel\",\n    \"callMethod\": \"settle\",\n    \"data\": {\n      \"channelId\": \"0xeda44d4053757bf88f7147f16daf2576d4c6550e560dd10a9a524a3bd664ec8e\",\n      \"minerPaid\": \"1,271,160,000,000,000,031\",\n      \"burned\": \"0\",\n      \"aggregateGn\": \"207\",\n      \"cooperative\": true\n    },\n    \"timestamp\": 1793916214000,\n    \"observationHead\": \"finalized\"\n  }\n}"
+    },
+    {
+      "id": "counters-after",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:12:20.949Z",
+      "request": {
+        "tool": "flop_indexer_query",
+        "query": "{ stats { latestBlockNumber totalBlocks totalTransactions totalAccounts } }"
+      },
+      "raw": "{\n  \"stats\": {\n    \"latestBlockNumber\": 2997220,\n    \"totalBlocks\": 2997220,\n    \"totalTransactions\": 5504557,\n    \"totalAccounts\": 11552\n  }\n}"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@flop-lab/indexer-audit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Dated, bounded consistency checks for the FLOP devnet indexer",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-indexer-audit": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*"
+  }
+}

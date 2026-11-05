@@ -83,6 +83,9 @@ importers:
       '@flop-lab/harness':
         specifier: workspace:*
         version: link:../harness
+      '@flop-lab/indexer-audit':
+        specifier: workspace:*
+        version: link:../indexer-audit
       '@flop-lab/mcpaudit':
         specifier: workspace:*
         version: link:../mcpaudit
@@ -130,6 +133,12 @@ importers:
       ajv:
         specifier: ^8.20.0
         version: 8.20.0
+
+  packages/indexer-audit:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/mcp: {}
 
