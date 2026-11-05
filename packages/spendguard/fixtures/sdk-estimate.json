@@ -1,0 +1,58 @@
+{
+  "measuredAt": "2026-11-05T09:50:20.509Z",
+  "source": "https://registry.npmjs.org/@flop-labs/sdk/-/sdk-0.4.0.tgz",
+  "description": "Real SDK output for synthetic token, calibration and price inputs. No network call.",
+  "input": {
+    "arch": {
+      "nLayer": "24",
+      "dModel": "896",
+      "nHeads": "14",
+      "nKvHeads": "2",
+      "dHead": "64",
+      "dFfn": "4864",
+      "nVocab": "151936",
+      "nExperts": "1",
+      "nActiveExperts": "1",
+      "gatedMlp": true,
+      "tiedEmbeddings": true
+    },
+    "turns": [
+      {
+        "contextTokens": "10",
+        "generatedTokens": "4"
+      }
+    ],
+    "capGflopsPerSec": "10000",
+    "flopPerGn": "0.1",
+    "blockTimeMs": "1000",
+    "basePerTurnRaw": "1"
+  },
+  "output": {
+    "turns": [
+      {
+        "contextTokens": "10",
+        "generatedTokens": "4",
+        "gn": "13",
+        "matmulFlops": "13830914048",
+        "attentionFlops": "9031680"
+      }
+    ],
+    "totalGn": "13",
+    "matmulFlops": "13830914048",
+    "attentionFlops": "9031680",
+    "channels": [
+      {
+        "firstTurn": 0,
+        "turnCount": 1,
+        "gn": "13",
+        "minBlocks": "1",
+        "costRaw": "1300000000000000000",
+        "escrowRaw": "1300000000000000000"
+      }
+    ],
+    "minBlocks": "1",
+    "minSeconds": "1",
+    "costRaw": "1300000000000000000",
+    "escrowRaw": "1300000000000000000"
+  }
+}
