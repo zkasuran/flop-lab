@@ -141,6 +141,32 @@ command and unknowns. Service bugs go to `https://github.com/flop-labs/network`.
 Search existing issues and PRs before publishing a draft. Issue #23 already covers
 the missing agent-pack tools and #80 covers the private source repository.
 
+## Recorded-run website
+
+The `/harness` page reads the committed `packages/harness/last-run.json`. It labels
+the run as last known and shows its original time, source URLs and available network
+identifiers. Missing genesis hashes and spec versions stay unavailable.
+
+Filter the catalogue by outcome or boundary. Search by claim, expected value or
+reason. Open a claim for its quoted source, expected predicate, observed attempts
+and request excerpts. Each row can copy a bounded workspace command. Commands run
+against the current devnet, so their results can differ from the recording.
+
+After a checkout and `pnpm install --frozen-lockfile`, run the site locally:
+
+```sh
+pnpm --filter web exec next dev --port 3320
+```
+
+Open `http://localhost:3320/harness`. To refresh the page's recording, run
+`pnpm --filter @flop-lab/harness record`, review the fixtures and commit the output.
+The page makes no FLOP API calls. Motion follows reading order, filtered rows,
+the detail drawer and recorded request durations. Reduced motion keeps the final
+values and disables travel.
+
+The harness package check includes the recorded site-view tests. Browser evidence
+for this milestone is retained with its PR.
+
 ## What this does not verify
 
 - Inference correctness, miner performance, receipt signatures or cryptographic proofs.

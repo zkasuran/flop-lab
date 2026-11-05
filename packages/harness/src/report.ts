@@ -100,7 +100,9 @@ export function parseReport(value: unknown): RunReport {
   if (!Number.isFinite(Date.parse(text(report.measuredAt)))) throw new Error("Invalid report measurement time");
   if (!Number.isFinite(Date.parse(text(report.finishedAt)))) throw new Error("Invalid report completion time");
   integer(report.durationMs);
-  array(report.source).forEach(text);
+  array(report.source).forEach((value) => {
+    if (!/^https?:$/.test(new URL(text(value)).protocol)) throw new Error("Invalid report source URL");
+  });
   const evidenceIds = new Set<number>();
   for (const value of array(report.evidence)) {
     const item = object(value);
@@ -128,8 +130,11 @@ export function parseReport(value: unknown): RunReport {
     text(claim.expected);
     text(claim.title);
     if (!["read-only", "spends-test-funds"].includes(text(claim.risk))) throw new Error("Invalid risk class");
-    text(object(claim.source).url);
-    text(object(claim.source).quote);
+    if (!["http", "mcp", "graphql", "chain", "sdk"].includes(text(claim.kind))) throw new Error("Invalid claim kind");
+    const claimSource = object(claim.source);
+    if (!/^https?:$/.test(new URL(text(claimSource.url)).protocol)) throw new Error("Invalid claim source URL");
+    text(claimSource.quote);
+    if (!Number.isFinite(Date.parse(text(claimSource.measuredAt)))) throw new Error("Invalid claim source time");
     if (!["PASS", "FAIL", "UNVERIFIABLE", "SKIPPED"].includes(text(result.status)) || typeof result.flaky !== "boolean")
       throw new Error("Invalid result status");
     text(result.reason);
