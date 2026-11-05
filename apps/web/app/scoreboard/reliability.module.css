@@ -1,0 +1,131 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+.card {
+  min-width: 0;
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.address {
+  overflow-wrap: anywhere;
+  font-family: var(--font-data);
+  font-size: var(--text-sm);
+  margin-block: var(--space-4);
+}
+.score {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.score strong {
+  font-family: var(--font-data);
+  font-size: var(--text-xl);
+}
+.score span {
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+.track {
+  height: 5px;
+  margin-block: var(--space-4);
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+.track > div {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left;
+}
+.facts {
+  margin-block: var(--space-6);
+}
+.facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+.facts dt {
+  color: var(--muted);
+}
+.facts dd {
+  text-align: right;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.source {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  margin-top: var(--space-4);
+}
+.timeline {
+  margin-block: var(--space-8);
+}
+.timeline label {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--muted);
+}
+.timeline select {
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+  font: inherit;
+  transition:
+    border-color var(--motion-fast),
+    outline-offset var(--motion-fast);
+}
+.timeline select:hover,
+.timeline select:focus {
+  border-color: var(--accent);
+  outline-offset: 2px;
+}
+.events {
+  list-style: none;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--border);
+}
+.events li {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+.events time,
+.events small {
+  color: var(--muted);
+}
+.history {
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-xs);
+}
+.history li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    padding: var(--space-4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline select {
+    transition: none;
+  }
+}

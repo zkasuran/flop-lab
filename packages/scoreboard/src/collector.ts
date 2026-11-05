@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
 import { McpClient, DEFAULT_USER_AGENT } from "../../mcp/src/index";
 import { SOURCES, parseSnapshot, object, type Observation, type Snapshot, type Surface } from "./schema";
+import { parseModels, parseSettlements } from "./schema";
+import { MAX_MINERS, RELIABILITY_SOURCE, reliabilityQuery, parseReliability } from "./reliability";
+import { fetchScoreHistory } from "./archive";
 
 export interface CollectorOptions {
   fetch?: typeof fetch;
   now?: () => number;
   sleep?: (ms: number) => Promise<void>;
   cacheTtlMs?: number;
+  reliability?: boolean;
+  archive?: boolean;
 }
 
 /** Cached read-only collector. Calls in flight are shared. @example const snapshot = await new Collector().snapshot(); */
@@ -19,12 +24,16 @@ export class Collector {
   private readonly fetcher: typeof fetch;
   private readonly mcp: McpClient;
   private readonly ttl: number;
+  private readonly includeReliability: boolean;
+  private readonly includeArchive: boolean;
 
   constructor(options: CollectorOptions = {}) {
     this.now = options.now ?? Date.now;
     this.sleep = options.sleep ?? ((ms) => new Promise((resolve) => setTimeout(resolve, ms)));
     this.fetcher = options.fetch ?? fetch;
     this.ttl = options.cacheTtlMs ?? 60_000;
+    this.includeReliability = options.reliability ?? true;
+    this.includeArchive = options.archive ?? true;
     if (!Number.isFinite(this.ttl) || this.ttl < 0 || this.ttl > 60_000)
       throw new Error("cache TTL must be between 0 and 60000 ms");
     this.mcp = new McpClient({ fetch: this.fetcher, now: this.now, sleep: this.sleep, retries: 2, timeoutMs: 10_000 });
@@ -92,7 +101,11 @@ export class Collector {
       ["settlements", "flop_list_settlements", { limit: 100, offset: 0 }],
       ["offers", "flop_list_session_offers", { limit: 100, offset: 0 }],
       ["leaderboard", "flop_get_poui_leaderboard", { limit: 100 }],
-      ["indexer", "flop_indexer_query", { query: "{ stats { latestBlockNumber totalAccounts } }" }],
+      [
+        "indexer",
+        "flop_indexer_query",
+        { query: "{ stats { latestBlockNumber totalAccounts } block(number: 0) { number hash } }" },
+      ],
     ];
     for (const [kind, tool, args] of tools) {
       const before = this.mcp.stats.requests;
@@ -103,10 +116,49 @@ export class Collector {
         this.stats.requests += this.mcp.stats.requests - before;
       }
     }
+    let reliability: Snapshot["reliability"];
+    let reliabilityError: string | undefined;
+    if (this.includeReliability) {
+      const before = this.mcp.stats.requests;
+      try {
+        const miners = [
+          ...new Set([
+            ...parseSettlements(records.find((r) => r.kind === "settlements")!).map((s) => s.miner),
+            ...parseModels(records[0]!).map((p) => p.miner),
+          ]),
+        ].slice(0, MAX_MINERS);
+        const to = this.now(),
+          from = to - 7 * 86_400_000;
+        const query = reliabilityQuery(miners, from, to);
+        const result = await this.mcp.callTool("flop_indexer_query", { query });
+        reliability = parseReliability({
+          source: RELIABILITY_SOURCE,
+          measuredAt: result.measuredAt,
+          miners,
+          from,
+          to,
+          query,
+          raw: result.value,
+        }).evidence;
+      } catch (error) {
+        reliabilityError = (error instanceof Error ? error.message : String(error)).slice(0, 2000);
+      } finally {
+        this.stats.requests += this.mcp.stats.requests - before;
+      }
+    }
+    const archive = this.includeArchive
+      ? await fetchScoreHistory(async (url, init) => {
+          this.stats.requests++;
+          return this.fetcher(url, init);
+        }, this.now())
+      : undefined;
     return parseSnapshot({
       schemaVersion: 1,
       measuredAt: new Date(this.now()).toISOString(),
       records,
+      ...(reliability ? { reliability } : {}),
+      ...(reliabilityError ? { reliabilityError } : {}),
+      ...(archive ? { archive } : {}),
       collection: { requests: this.stats.requests - count, durationMs: this.now() - started, cacheTtlMs: this.ttl },
     });
   }

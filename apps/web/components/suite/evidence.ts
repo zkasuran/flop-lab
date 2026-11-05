@@ -13,6 +13,7 @@ import spec from "../../../../packages/spec/fixtures/stats.json";
 import explorer from "../../../../packages/explorer/test/fixtures/block.json";
 import contracts from "../../../../packages/mcpaudit/last-run.json";
 import tclk from "../../../../packages/tclk-inspect/fixtures/htlcs.json";
+import indexer from "../../../../packages/indexer-audit/fixtures/devnet.json";
 import kestra from "../../app/kestra/observed.json";
 import consoleTools from "../../../../packages/console/fixtures/tools.json";
 import { pickResponse } from "@flop-lab/mcp";
@@ -48,6 +49,15 @@ const readers: Record<string, () => SuiteMetric | null> = {
       consoleTools.source,
       "packages/console/fixtures/tools.json",
       "Discovery only. Not every tool has an output schema or is enabled in the console.",
+    ),
+  indexer: () =>
+    metric(
+      indexer.requests,
+      "requests in recorded invariant audit",
+      indexer.completedAt,
+      mcp,
+      "packages/indexer-audit/fixtures/devnet.json",
+      "Also read explorer APIs. Consistency is not independent chain proof.",
     ),
   tclk: () =>
     metric(

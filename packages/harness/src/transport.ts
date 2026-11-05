@@ -11,7 +11,7 @@ export class BoundaryError extends Error {}
 export class Transport {
   readonly evidence: Evidence[] = [];
   readonly client: McpClient;
-  readonly maxRequests: number;
+  private ceiling: number;
   private count = 0;
   private readonly starts = new Map<string, number>();
   private readonly queues = new Map<string, Promise<unknown>>();
@@ -28,8 +28,8 @@ export class Transport {
       sleep?: (ms: number) => Promise<void>;
     } = {},
   ) {
-    this.maxRequests = options.maxRequests ?? 80;
-    if (!Number.isSafeInteger(this.maxRequests) || this.maxRequests < 0)
+    this.ceiling = options.maxRequests ?? 80;
+    if (!Number.isSafeInteger(this.ceiling) || this.ceiling < 0)
       throw new Error("max-requests must be a nonnegative safe integer");
     this.baseFetch = options.fetch ?? fetch;
     this.interval = options.intervalMs ?? 500;
@@ -45,6 +45,15 @@ export class Transport {
   }
   get requests(): number {
     return this.count;
+  }
+  get maxRequests(): number {
+    return this.ceiling;
+  }
+  /** Lower a transport ceiling for a run profile, including injected transports. @example transport.restrictRequests(12) */
+  restrictRequests(max: number): void {
+    if (!Number.isSafeInteger(max) || max < 0 || this.count > max)
+      throw new Error("Invalid profile ceiling or transport already exceeds it");
+    this.ceiling = Math.min(this.ceiling, max);
   }
   get exhausted(): boolean {
     return this.count >= this.maxRequests;

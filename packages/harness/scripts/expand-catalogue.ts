@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { readFile, writeFile } from "node:fs/promises";
 import { cells, splitValue } from "@flop-lab/spec";
-import { loadInventory } from "../src/inventory";
+import { loadInventory } from "../src/inventory-loader";
 import { serialize } from "../src/validation";
 import type { Claim } from "../src/types";
 const pages = await loadInventory();
