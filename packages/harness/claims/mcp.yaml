@@ -558,7 +558,7 @@
   },
   {
     "id": "mcp-knowledge-manifest",
-    "evidenceNeeded": "A complete manifest response within the harness capture limit, or a paginated manifest contract. mcpaudit can separately validate a larger response using compressed raw fixtures.",
+    "evidenceNeeded": "A complete manifest response within the harness capture limit or a paginated manifest contract. mcpaudit can separately validate a larger response using compressed raw fixtures.",
     "title": "flop_knowledge_manifest minimal input",
     "source": {
       "url": "https://mcp.flop.network/mcp",
