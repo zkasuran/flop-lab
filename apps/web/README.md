@@ -22,7 +22,9 @@ Add `app/<slug>/page.tsx` and export Next.js metadata with a page title and desc
 
 Use `app/tokens.css` for colours, type, spacing, radii and motion timing. Shared classes include `section`, `section-heading`, `panel`, `button`, `quiet-button`, `muted`, `mono`, `badge`, `success`, `warning` and `error`. Do not restyle the shell. The layout includes the independent-project notice and proof footer on every page.
 
-Use `motion/react` for animation and `useReducedMotion` for a static alternative. `components/reveal.tsx` supplies a scroll reveal. Fonts are bundled locally through `next/font` without a build-time font request.
+Use `motion/react` for animation and `useReducedMotion` for a static alternative. `components/motion.tsx` supplies `ReadingReveal`, `ReadingPath`, `MotionButton`, `MotionLink`, `ObservedNumber` and `Disclosure`. The shared `RouteSurface` animates route arrivals and keeps content readable throughout. `components/reveal.tsx` preserves the existing reveal API. Fonts are bundled locally through `next/font` without a build-time font request.
+
+`ReadingPath` uses scroll position to fill an explanatory line. It is reading progress, not a verification state. Reduced motion shows the full line. `ObservedNumber` moves the measured value as a whole; it never counts through invented intermediate values. Disclosure contents mount immediately and use layout motion. Controls act on the same click that starts their feedback. All timed transitions finish within 600 ms. There is no ambient loop.
 
 ## Observations and request budget
 
@@ -32,7 +34,9 @@ The server caches each source for 30 seconds and coalesces concurrent reads. Nex
 
 Last-good values are retained per server process. A cold process falls back to the committed real recordings in `tests/fixtures/`, with their original measurement times. This fallback is explicitly labelled last known. An empty successful response replaces the previous list. Empty lists and missing fields never become invented counts. Instances do not share their in-memory caches.
 
-The hero plots one node per recorded price-source address. Positions use an address hash, not geography or a performance score. Highlighted nodes occur in the returned settlement sample. New settlement observations pulse once. Reduced motion uses a static view. The address list and measurement time are available below the visual.
+The hero plots one node per recorded price-source address. A grid orders addresses by hash, not geography or a performance score. Filled centres occur in the returned settlement sample. The sample bar is the number of distinct price-source addresses found in that page divided by the total distinct price-source addresses. The exact numerator and denominator remain readable while the bar moves. Missing sources show an unavailable comparison. Empty price-source lists show zero addresses without dividing by zero.
+
+The map can filter to matching addresses. Its disclosure lists full addresses and both source times. A missing match is only absence from this page. New settlement observations pulse once. Motion stops when the map is off-screen or the tab is hidden. Reduced motion uses instant changes with the same numbers and labels. Observations in the comparison can have different measurement times; they are not an atomic network snapshot.
 
 Refresh the raw recordings with `pnpm --filter web exec tsx scripts/record-devnet.ts`. Review the recorded time and update the golden test expectations deliberately. Run the optional keyless live check with `FLOP_LIVE_TEST=1 pnpm --filter web test tests/devnet.test.ts`. It skips when the service is unreachable.
 

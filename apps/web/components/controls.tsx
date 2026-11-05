@@ -3,11 +3,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { tools, toolHref } from "@/content/tools";
+import { motion, useReducedMotion } from "motion/react";
+import { MotionButton, MotionLink } from "./motion";
 
 export function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) {
   const [status, setStatus] = useState(label);
   return (
-    <button
+    <MotionButton
       className="quiet-button"
       aria-live="polite"
       onClick={async () => {
@@ -20,7 +22,7 @@ export function CopyButton({ text, label = "Copy" }: { text: string; label?: str
       }}
     >
       {status}
-    </button>
+    </MotionButton>
   );
 }
 
@@ -30,7 +32,7 @@ export function ThemeToggle() {
     setLight(document.documentElement.dataset.theme === "light");
   }, []);
   return (
-    <button
+    <MotionButton
       className="quiet-button"
       aria-label="Light theme"
       aria-pressed={light}
@@ -46,11 +48,12 @@ export function ThemeToggle() {
       }}
     >
       {light ? "Dark" : "Light"}
-    </button>
+    </MotionButton>
   );
 }
 
 export function CommandPalette() {
+  const reduced = useReducedMotion() !== false;
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
@@ -75,9 +78,9 @@ export function CommandPalette() {
   const matches = tools.filter((tool) => `${tool.name} ${tool.tagline}`.toLowerCase().includes(query.toLowerCase()));
   return (
     <>
-      <button className="quiet-button" onClick={open}>
+      <MotionButton className="quiet-button" onClick={open}>
         Find tool <span className="shortcut mono">/</span>
-      </button>
+      </MotionButton>
       <dialog
         ref={dialog}
         aria-labelledby="palette-title"
@@ -101,12 +104,14 @@ export function CommandPalette() {
       >
         <div className="palette-head">
           <h2 id="palette-title">Find a tool</h2>
-          <button className="quiet-button" onClick={() => dialog.current?.close()}>
+          <MotionButton className="quiet-button" onClick={() => dialog.current?.close()}>
             Close
-          </button>
+          </MotionButton>
         </div>
-        <input
+        <motion.input
           ref={input}
+          whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
+          transition={{ duration: reduced ? 0 : 0.16 }}
           className="palette-search"
           aria-label="Search tools"
           placeholder="Search by name or task"
@@ -115,12 +120,12 @@ export function CommandPalette() {
         />
         <ul className="palette-list">
           {matches.map((tool) => (
-            <li key={tool.slug}>
-              <a href={toolHref(tool)} onClick={() => dialog.current?.close()}>
+            <motion.li key={tool.slug} layout={!reduced} transition={{ duration: reduced ? 0 : 0.2 }}>
+              <MotionLink href={toolHref(tool)} onClick={() => dialog.current?.close()}>
                 {tool.name}
                 <span className={`badge ${tool.status}`}>{tool.status}</span>
-              </a>
-            </li>
+              </MotionLink>
+            </motion.li>
           ))}
         </ul>
         {!matches.length && (
