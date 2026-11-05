@@ -2,7 +2,7 @@
 "use client";
 
 import { AnimatePresence, MotionConfig, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import Link from "next/link";
+import { MotionLink } from "@/components/motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   counts,
@@ -21,7 +21,6 @@ const build = process.env.NEXT_PUBLIC_BUILD_COMMIT;
 const revision = build && /^[a-f0-9]{40}$/.test(build) ? build : "main";
 const source = `https://github.com/zkasuran/flop-lab/tree/${revision}/packages/harness`;
 const rawRun = `https://github.com/zkasuran/flop-lab/blob/${revision}/packages/harness/last-run.json`;
-const MotionLink = motion.create(Link);
 const runCommand = "pnpm --filter @flop-lab/harness start run --class read-only --max-requests 100 --max-flop 0";
 const labels = {
   PASS: "Pass",
@@ -311,12 +310,7 @@ export function HarnessWorkbench({ report }: { report: RunReport | null }) {
   });
   return (
     <MotionConfig reducedMotion="user">
-      <motion.div
-        className={styles.workbench}
-        initial={false}
-        animate={{ x: reduced ? 0 : [8, 0] }}
-        transition={{ duration: reduced ? 0 : 0.2 }}
-      >
+      <div className={styles.workbench}>
         <MotionLink
           className={styles.back}
           href="/#tools"
@@ -609,7 +603,7 @@ export function HarnessWorkbench({ report }: { report: RunReport | null }) {
             <Detail key={selected.claim.id} result={selected} report={report} onClose={() => setSelected(null)} />
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </MotionConfig>
   );
 }
