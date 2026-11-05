@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zkasuran/flop-lab/scoreboard/snapshot-v1",
+  "title": "FLOP scoreboard snapshot v1",
+  "description": "Raw observations. parseSnapshot also validates the scored payload fields and cross-field invariants.",
+  "type": "object",
+  "required": ["schemaVersion", "measuredAt", "records", "collection"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "measuredAt": { "type": "string", "format": "date-time" },
+    "records": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["kind", "source", "measuredAt", "raw"],
+        "properties": {
+          "kind": { "enum": ["models", "settlements", "offers", "leaderboard", "indexer"] },
+          "source": { "type": "string", "format": "uri" },
+          "measuredAt": { "type": "string", "format": "date-time" },
+          "raw": { "type": "object" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "kind": { "const": "models" } } },
+            "then": {
+              "properties": {
+                "source": { "const": "https://api.flop.network/v1/models" },
+                "raw": {
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["id", "x-flop"],
+                        "properties": {
+                          "id": { "type": "string", "minLength": 1 },
+                          "x-flop": {
+                            "type": "object",
+                            "required": ["price_sources"],
+                            "properties": {
+                              "price_sources": { "type": "array", "items": { "$ref": "#/$defs/priceSource" } }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "kind": { "const": "settlements" } } },
+            "then": {
+              "properties": {
+                "source": { "const": "https://mcp.flop.network/mcp#flop_list_settlements" },
+                "raw": {
+                  "allOf": [{ "$ref": "#/$defs/page" }],
+                  "properties": { "data": { "items": { "$ref": "#/$defs/settlement" } } }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "kind": { "const": "offers" } } },
+            "then": {
+              "properties": {
+                "source": { "const": "https://mcp.flop.network/mcp#flop_list_session_offers" },
+                "raw": { "$ref": "#/$defs/page" }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "kind": { "const": "leaderboard" } } },
+            "then": {
+              "properties": {
+                "source": { "const": "https://mcp.flop.network/mcp#flop_get_poui_leaderboard" },
+                "raw": {
+                  "required": ["pouiLeaderboard"],
+                  "properties": { "pouiLeaderboard": { "type": "array", "items": { "type": "object" } } }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "kind": { "const": "indexer" } } },
+            "then": {
+              "properties": {
+                "source": { "const": "https://mcp.flop.network/mcp#flop_indexer_query" },
+                "raw": {
+                  "required": ["stats"],
+                  "properties": {
+                    "stats": {
+                      "type": "object",
+                      "required": ["latestBlockNumber", "totalAccounts"],
+                      "properties": {
+                        "latestBlockNumber": { "type": "number", "minimum": 0 },
+                        "totalAccounts": { "type": "number", "minimum": 0 }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "collection": {
+      "type": "object",
+      "required": ["requests", "durationMs", "cacheTtlMs"],
+      "properties": {
+        "requests": { "type": "integer", "minimum": 0 },
+        "durationMs": { "type": "number", "minimum": 0 },
+        "cacheTtlMs": { "type": "number", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "page": {
+      "type": "object",
+      "required": ["data", "pagination"],
+      "properties": {
+        "data": { "type": "array", "items": { "type": "object" } },
+        "pagination": {
+          "type": "object",
+          "required": ["total", "limit", "offset", "hasMore"],
+          "properties": {
+            "total": { "type": "integer", "minimum": 0 },
+            "limit": { "type": "integer", "minimum": 0 },
+            "offset": { "type": "integer", "minimum": 0 },
+            "hasMore": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "priceSource": {
+      "type": "object",
+      "required": ["miner_address", "source", "effective_at", "expires_at"],
+      "properties": {
+        "miner_address": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "minLength": 1 },
+        "effective_at": { "type": "string", "format": "date-time" },
+        "expires_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "amount": { "type": "string", "pattern": "^[0-9]{1,80}$" },
+    "settlement": {
+      "type": "object",
+      "required": [
+        "channelId",
+        "settledBlock",
+        "settledAt",
+        "agent",
+        "miner",
+        "escrow",
+        "minerPaid",
+        "burned",
+        "unusedEscrow",
+        "aggregateGn",
+        "pricePerGflop",
+        "cooperative",
+        "settlementKind",
+        "settlementEvent",
+        "marketKind",
+        "selfTrade"
+      ],
+      "properties": {
+        "channelId": { "type": "string", "minLength": 1 },
+        "settledBlock": { "type": "integer", "minimum": 0 },
+        "settledAt": { "type": "integer", "minimum": 0 },
+        "agent": { "type": "string", "minLength": 1 },
+        "miner": { "type": "string", "minLength": 1 },
+        "escrow": { "$ref": "#/$defs/amount" },
+        "minerPaid": { "$ref": "#/$defs/amount" },
+        "burned": { "$ref": "#/$defs/amount" },
+        "unusedEscrow": { "$ref": "#/$defs/amount" },
+        "aggregateGn": { "$ref": "#/$defs/amount" },
+        "pricePerGflop": { "type": "string", "pattern": "^[0-9]{1,80}(\\.[0-9]{1,80})?$" },
+        "cooperative": { "type": "boolean" },
+        "selfTrade": { "type": "boolean" },
+        "settlementKind": { "type": "string" },
+        "settlementEvent": { "type": "string" },
+        "marketKind": { "type": "string" }
+      }
+    }
+  }
+}
