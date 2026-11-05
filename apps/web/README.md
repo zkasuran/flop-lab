@@ -26,7 +26,7 @@ pnpm --filter web build
 pnpm --filter web start
 ```
 
-Open http://localhost:3300. Stop the dev server before starting the production server. Press `/` or Cmd-K to find a tool. Use arrows to move through results and Escape to close.
+Open http://localhost:3300. Stop the dev server before starting the production server. Press `/`, Ctrl-K or Cmd-K to search tools, sections and README headings. Use arrows to move through results and Escape to close.
 
 ## Add a tool page
 
@@ -34,11 +34,11 @@ Add `app/<slug>/page.tsx` and export Next.js metadata with a page title and desc
 
 Use `app/tokens.css` for colours, type, spacing, radii and motion timing. Token names are stable so tool pages inherit theme changes. `--pass`, `--fail`, `--unverifiable` and `--skipped` give each result one colour across the site. Unverifiable results also carry a hatch and skipped results a dashed outline, so colour is never the only signal. Shared classes include `section`, `section-heading`, `page-heading`, `panel`, `frame`, `button`, `quiet-button`, `icon-button`, `text-link`, `muted`, `mono`, `badge`, `status-dot`, `kbd`, `success`, `warning` and `error`. `frame` adds the corner marks used on instrument cards. Do not restyle the shell. The layout includes the sticky header, the independent-project notice and the proof footer on every page.
 
-Use `motion/react` for animation and `useReducedMotion` for a static alternative. `components/motion.tsx` supplies `ReadingReveal`, `ReadingPath`, `ReadingSteps`, `MotionButton`, `MotionLink`, `ObservedNumber`, `SwapValue`, `Disclosure` and the `useSeen` hook. `components/icons.tsx` supplies inline SVG icons and the mark, so arrows render the same on every system. The shared `RouteSurface` animates route arrivals and keeps content readable throughout. `components/reveal.tsx` preserves the existing reveal API. Fonts are bundled locally through `next/font` without a build-time font request.
+Use `motion/react` for animation and `useReducedMotion` for a static alternative. `components/motion.tsx` supplies `ReadingReveal`, `ReadingPath`, `ReadingSteps`, `MotionButton`, `MotionLink`, `ObservedNumber`, `SwapValue`, `Disclosure` and the `useSeen` hook. `components/icons.tsx` supplies inline SVG icons and the mark, so arrows render the same on every system. The shared `RouteSurface` animates route arrivals and keeps content readable throughout. It also keeps one layout group mounted across routes, so the `ToolMark` route marker on an index row travels into that tool's header. Do not give a nested `LayoutGroup` an `id` around a `ToolMark`, because the ID namespaces the marker and stops the travel. `components/reveal.tsx` preserves the existing reveal API. Fonts are bundled locally through `next/font` without a build-time font request.
 
 `ReadingPath` and `ReadingSteps` use scroll position to fill an explanatory line. It is reading progress, not a verification state. Reduced motion shows the full line. `ObservedNumber` and `SwapValue` move a recorded value as a whole; they never count through invented intermediate values. `useSeen` treats content that starts on screen as already seen, so a first paint never hides a final value. Disclosure contents mount immediately and use layout motion. Controls act on the same click that starts their feedback. All timed transitions finish within 600 ms, including staggers. There is no ambient loop. The static film grain and grid never move.
 
-The header gains a frosted background after the first scroll and marks the home section under the reading line. The palette groups tools by section and opens with `/` or Cmd-K. Enter opens the highlighted tool. The theme control uses a 520 ms view transition from the pointer where the browser supports it and switches at once otherwise.
+The header gains a frosted background after the first scroll and marks the home section under the reading line. The numbered section navigation below it marks the current section on section pages and tool pages. The palette groups results into sections, tools and docs. Groups follow the rank of their best match, so the highlighted first row is the result Enter opens from the input. Arrows move focus, Home returns to the input and Escape restores focus to the control that opened it. The theme control uses a 520 ms view transition from the pointer where the browser supports it and switches at once otherwise.
 
 ## Observations and request budget
 

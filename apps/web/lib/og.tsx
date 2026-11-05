@@ -57,15 +57,17 @@ export function OgMatrix({ statuses }: { statuses: ClaimStatus[] }) {
   );
 }
 
-/** The card frame: wordmark, title, a footer line and an optional visual on the right. */
+/** The card frame: wordmark, title, an optional subtitle, a footer line and an optional visual on the right. */
 export function OgCard({
   eyebrow,
   title,
+  subtitle,
   footer,
   visual,
 }: {
   eyebrow: string;
   title: string;
+  subtitle?: string;
   footer: string;
   visual?: ReactNode;
 }) {
@@ -105,6 +107,19 @@ export function OgCard({
           >
             {title}
           </div>
+          {subtitle && (
+            <div
+              style={{
+                display: "flex",
+                fontSize: 32,
+                lineHeight: 1.3,
+                color: ink.muted,
+                maxWidth: visual ? 600 : 960,
+              }}
+            >
+              {subtitle}
+            </div>
+          )}
         </div>
         <div style={{ display: "flex", fontSize: 22, color: ink.accent, maxWidth: visual ? 600 : 960 }}>{footer}</div>
       </div>

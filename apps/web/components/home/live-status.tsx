@@ -30,7 +30,7 @@ export function LiveStatus({ stats, renderedAt }: { stats: Observation<Stats>; r
       <span>
         Devnet block <span className="mono">{block === undefined ? "unavailable" : block.toLocaleString("en-US")}</span>
       </span>
-      <span className={styles.liveDivider} aria-hidden="true" />
+      <span className={`${styles.liveDivider} ${styles.liveDividerAge}`} aria-hidden="true" />
       <span className="muted">{age(stats.measuredAt, now)}</span>
     </p>
   );

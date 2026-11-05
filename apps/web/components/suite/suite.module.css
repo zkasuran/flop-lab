@@ -1,26 +1,52 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 .navigation {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: var(--space-3);
+  display: flex;
+  gap: var(--space-1);
   border-bottom: 1px solid var(--border);
+  counter-reset: suite-section;
 }
 .navigation a {
   position: relative;
-  padding: var(--space-4) var(--space-2);
-  text-align: center;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.8rem 0.75rem;
   color: var(--muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--motion-fast) var(--ease-out);
 }
+/* Numbers match the tool index. The empty alternative keeps them out of the link name. */
+.navigation a::before {
+  counter-increment: suite-section;
+  content: counter(suite-section, decimal-leading-zero) / "";
+  color: var(--subtle);
+  font: 500 0.6875rem / 1 var(--font-data);
+  letter-spacing: 0.06em;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.navigation a:first-child {
+  padding-left: 0;
+}
+.navigation a:hover,
 .navigation a[aria-current] {
   color: var(--foreground);
+}
+.navigation a[aria-current]::before {
+  color: var(--accent);
 }
 .active {
   position: absolute;
   bottom: 0;
-  left: 15%;
-  right: 15%;
+  left: 0.75rem;
+  right: 0.75rem;
   height: 2px;
+  border-radius: 2px;
   background: var(--accent);
+}
+.navigation a:first-child .active {
+  left: 0;
 }
 .header {
   min-width: 0;
@@ -175,11 +201,17 @@
 }
 @media (max-width: 560px) {
   .navigation {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 var(--space-3);
   }
   .navigation a {
-    padding-block: var(--space-3);
+    padding: 0.65rem 0;
+  }
+  .active,
+  .navigation a:first-child .active {
+    left: 0;
+    right: 0;
   }
   .cards {
     grid-template-columns: minmax(0, 1fr);

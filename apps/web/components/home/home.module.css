@@ -1296,7 +1296,8 @@
   .live {
     border-radius: var(--radius-md);
   }
-  .live .liveDivider:last-of-type {
+  /* The age wraps onto its own line here, so its divider would dangle at the end of the first line. */
+  .liveDividerAge {
     display: none;
   }
 }
