@@ -21,8 +21,8 @@ export const tools: readonly Tool[] = [
   {
     slug: "harness",
     name: "Conformance harness",
-    tagline: "Run repeatable checks against devnet protocol claims.",
-    status: "planned",
+    tagline: "Trace recorded protocol checks from claims to request evidence.",
+    status: "alpha",
     href: "/harness",
     repoPath: "packages/harness",
   },
@@ -37,8 +37,8 @@ export const tools: readonly Tool[] = [
   {
     slug: "spendguard",
     name: "Spend guard",
-    tagline: "Apply explicit budget limits to throwaway agent wallets.",
-    status: "planned",
+    tagline: "Edit a budget policy and inspect every decision on scripted requests.",
+    status: "alpha",
     href: "/spendguard",
     repoPath: "packages/spendguard",
   },

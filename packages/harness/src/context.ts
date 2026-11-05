@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import type { McpToolInfo } from "@flop-lab/mcp";
+import { pickResponse, type McpToolInfo } from "@flop-lab/mcp";
 import { Transport } from "./transport";
 import { array, object, schemaErrors } from "./validation";
 
@@ -57,6 +57,18 @@ export class Context {
   }
   models(): Promise<unknown> {
     return this.read("models", () => this.transport.models());
+  }
+  structuredOutput(name: string): unknown {
+    for (const item of [...this.transport.evidence].reverse()) {
+      if (!this.used.has(item.id) || !item.request.body) continue;
+      const request = object(JSON.parse(item.request.body));
+      if (!request.params || object(request.params).name !== name) continue;
+      const response = object(pickResponse(item.response, Number(request.id)).result);
+      if (!("structuredContent" in response))
+        throw new Unavailable("Advertised output schema has no structuredContent response to validate");
+      return response.structuredContent;
+    }
+    throw new Unavailable("No recorded structured response is available");
   }
   async args(args: Record<string, unknown>): Promise<Record<string, unknown>> {
     const resolved: Record<string, unknown> = {};

@@ -202,10 +202,11 @@ export async function checkClaim(claim: Claim, context: Context): Promise<Observ
     try {
       const value = await context.call(claim.tool, args);
       if (tool.outputSchema) {
-        const errors = schemaErrors(tool.outputSchema, value);
+        const structured = context.structuredOutput(claim.tool);
+        const errors = schemaErrors(tool.outputSchema, structured);
         return errors.length
-          ? fail({ errors, value }, "Response violates the advertised output schema")
-          : pass(value, "Minimal input returned a response matching the advertised output schema");
+          ? fail({ errors, value: structured }, "Response violates the advertised output schema")
+          : pass(structured, "Minimal input returned structuredContent matching the advertised output schema");
       }
       if (typeof value === "string")
         return {
