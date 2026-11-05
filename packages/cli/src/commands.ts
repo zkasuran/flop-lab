@@ -21,7 +21,7 @@ export const commands: readonly Command[] = [
     name: "contracts",
     pkg: "@flop-lab/mcpaudit",
     bin: "flop-mcpaudit",
-    section: "build",
+    section: "verify",
     summary: "Audit advertised MCP schemas and inspect dated trust material",
   },
   {
