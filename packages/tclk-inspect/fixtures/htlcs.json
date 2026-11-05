@@ -1,0 +1,183 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_indexer_query",
+  "query": "{ htlcs(limit: 100, offset: 0) { hashLock htlcId status amount sender recipient timeout blockNumber } }",
+  "value": {
+    "htlcs": [
+      {
+        "hashLock": "0x79abe3554fc8b5fd22b8c5c520ffb7f274a98d2d047691d491f467d0e78cf96a",
+        "htlcId": "0xdfeb523c1d43c3d2f57cc671a9bda54ea5755ba787b775f909fe1d6859e0ca41",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5E5Nbffr1cdFaq8fESrcWm4xrhXp2jTKW1v7QgMCprEXNS5T",
+        "recipient": "",
+        "timeout": 2989028,
+        "blockNumber": 2971028
+      },
+      {
+        "hashLock": "0xcfcbb80f31f5ed1f069019a8ce5637c9e2cece8120e425268c9eff30ed4ca628",
+        "htlcId": "0x96519e7e50af948419b8252cd4252fc89822cf7bd093cafbc425bcd1c4f4f7b5",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5H6qYbZmbskXtc55jpAT3nv18CNvBWh3QzMpeJtBK8RJPoPi",
+        "recipient": "",
+        "timeout": 2988973,
+        "blockNumber": 2970973
+      },
+      {
+        "hashLock": "0x516ffbedf5cf9892d50d6cd9cfbe307df5a8bb97e45c2176ac6127011f1821e4",
+        "htlcId": "0x15b50771473ffe94a0b198490f5e0f1a4007a358db8bb7a8bd51ca1e18811de4",
+        "status": "CREATED",
+        "amount": "10000000000000000000",
+        "sender": "5CwFhhZoS2LP5tWAzurDznL949zEemjePH1XBdw6grgyrEPB",
+        "recipient": "",
+        "timeout": 2981500,
+        "blockNumber": 2970700
+      },
+      {
+        "hashLock": "0xba9b98796632d1b0a9fc5ee8462d0fdeea79183b8ae61604a0cabd7d964e7d65",
+        "htlcId": "0xb230a914b2b69428b36b3d7142aa5b2fcd6f6376ec23f147ac9a9bfd9668f9e6",
+        "status": "CREATED",
+        "amount": "10000000000000000000",
+        "sender": "5CwFhhZoS2LP5tWAzurDznL949zEemjePH1XBdw6grgyrEPB",
+        "recipient": "",
+        "timeout": 2981355,
+        "blockNumber": 2970555
+      },
+      {
+        "hashLock": "0x31f38b89eb8ccf8448f82b227252421e5ffc9549c578f5bee4bd6bb3d9658537",
+        "htlcId": "0xf95cbfa62a5b63244e319999db373c1fbffa64286118030b5375fd7a4246f870",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5E5Nbffr1cdFaq8fESrcWm4xrhXp2jTKW1v7QgMCprEXNS5T",
+        "recipient": "",
+        "timeout": 2987431,
+        "blockNumber": 2969431
+      },
+      {
+        "hashLock": "0x21a8ae3d37015020d18302bd0db2899203849c1c287ab9a66beea47f3e6617c2",
+        "htlcId": "0x8538ce5ba622b228141a5f8490c309fea0e45cc9425d65b1c50254aaa33835b3",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5GN69jat5PXK1myAYnHKx8eCxAg5w4YyFvRmYdtBoTxFwZfH",
+        "recipient": "",
+        "timeout": 2987357,
+        "blockNumber": 2969357
+      },
+      {
+        "hashLock": "0xc29415e86e3eb6139c390b9d98a5f2598b3fa53dca9cc25f29dd96f14049ba1d",
+        "htlcId": "0x6e817feb3fdef9faab1442def09d60ab33c98c3703771d791cc00f9fe2db89b7",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5H6qYbZmbskXtc55jpAT3nv18CNvBWh3QzMpeJtBK8RJPoPi",
+        "recipient": "",
+        "timeout": 2987278,
+        "blockNumber": 2969278
+      },
+      {
+        "hashLock": "0xcd99dd9a80874719a6a9ed1601c02a71c6511e7af568a14621f84a438619d0cf",
+        "htlcId": "0x4d342320a8068e5f6988d18979474ddd14c9c221235e36c1597c9bfb4f008f1c",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5Ea2uz2x9jKzpMhUU5MY5LhcDiDjw5NcD9gjipcRk119QeUb",
+        "recipient": "",
+        "timeout": 2985926,
+        "blockNumber": 2967926
+      },
+      {
+        "hashLock": "0xcde01fac885a336a13dded928221843bc1094050444419945d1df7d9deb6a5df",
+        "htlcId": "0xb3f69a1409d3d09b15b6d4c1553996c7d1642379630ce7171e74fc89b4979149",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5GF77488mmEtF36d8n6FgPgheYBVDSSx29LijgA1UFMWPhjd",
+        "recipient": "",
+        "timeout": 2985853,
+        "blockNumber": 2967853
+      },
+      {
+        "hashLock": "0x1c9f344508c7749ce1e0ced0308f4a5d8fd420add64b84a95388c1f5daca38cf",
+        "htlcId": "0xb35ddfab5538b940bf1f95dd6c4f3146e02ecd19391f97993b83ff9f356f000f",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5EcfmRq5cDFmM4YsdDej5pTod5LYoTifau9XTt62NaBQdceR",
+        "recipient": "",
+        "timeout": 2985791,
+        "blockNumber": 2967791
+      },
+      {
+        "hashLock": "0x17bcdf9fcb2046571f5744626be9d6a13605a09d871cd53911c8ea49c95c5fdd",
+        "htlcId": "0x96cf258824f3e130bbe4ec6c5b0a0fa573835fe37c9ee6d615ffded7be1421d3",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5CiVeWKPGNN7htdpsUrYMGWt89mBtuugfGCxo5LG93LqfiqZ",
+        "recipient": "",
+        "timeout": 2985729,
+        "blockNumber": 2967729
+      },
+      {
+        "hashLock": "0x3579498daca1757ac23a85331664676b42dd3a5c9ed90dddc109c4877ee73893",
+        "htlcId": "0x623edf7d4119e9c1ca4436ba8694f0c11b413709fe20eaa00250c494b516b228",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5ENrkcob5Y7Zdi7P8unUQHHLzGo2xawJQuqWoAdroQagXtcy",
+        "recipient": "",
+        "timeout": 2985671,
+        "blockNumber": 2967671
+      },
+      {
+        "hashLock": "0xe19120393443cec7b6ec2bffa6e895f7f88933710cfd64827627ce2dae429894",
+        "htlcId": "0x85ab7cfc1664a110eda1d54f35205d7b12ee9f040bd59e15dcb6244d965569f9",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5FC8zoAirK5qRBS6wec2C1SazdSFmsAgysdXF2pLvd5txYzo",
+        "recipient": "",
+        "timeout": 2985607,
+        "blockNumber": 2967607
+      },
+      {
+        "hashLock": "0x9c37116da9781edcaecd78cae23079acb1a314e69a186f4733e5f57a49b43758",
+        "htlcId": "0x7041928ca1a13ee615fa4da9b37c35fff8e3e19488a439be3761ec17bc4426da",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5Grv4X3fbyCvgLaeuX4HexewW6A192xRKvU8FkQw1S7rrT9g",
+        "recipient": "",
+        "timeout": 2985541,
+        "blockNumber": 2967541
+      },
+      {
+        "hashLock": "0x11ec6069c925e6003a44a428b55bfb2eee99292fa7fb7dcedfe166c0390b13e5",
+        "htlcId": "0x19f0700a4962accfa5ef251821e3be1224f4637bb147ed5522c01c8d7c698bbe",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5GyAecnGfkpthQv8hXST8dGtHinWkWNC6CNseYoxgqHAmrJk",
+        "recipient": "",
+        "timeout": 2983514,
+        "blockNumber": 2965514
+      },
+      {
+        "hashLock": "0xa3042a4df459bbcadd8afa0260a0896bb805a837aa248e44fcc3caffd8ecde22",
+        "htlcId": "0x99e4e79b2e49dbca34e21de48bd98b4204329d7e7e5e008b9fcb0375a7dab41e",
+        "status": "CREATED",
+        "amount": "1000000000000000000",
+        "sender": "5GyAecnGfkpthQv8hXST8dGtHinWkWNC6CNseYoxgqHAmrJk",
+        "recipient": "",
+        "timeout": 2980866,
+        "blockNumber": 2962866
+      },
+      {
+        "hashLock": "0x233e1f4dd2f7b86a1ee35140bf53196440b8dc6c0e5c4bee6d48cfd2018b7afa",
+        "htlcId": "0x25b923964f973f0792a2399124fee9bb5dc05744e0ff8439e1d203f014e84114",
+        "status": "CREATED",
+        "amount": "2000000000000000000",
+        "sender": "5HjXA4yN3fKFQ8qac3DUmVNLGb7EnhHs357wNcZ2ePdswYxN",
+        "recipient": "",
+        "timeout": 2927787,
+        "blockNumber": 2909787
+      }
+    ]
+  },
+  "raw": "{\n  \"htlcs\": [\n    {\n      \"hashLock\": \"0x79abe3554fc8b5fd22b8c5c520ffb7f274a98d2d047691d491f467d0e78cf96a\",\n      \"htlcId\": \"0xdfeb523c1d43c3d2f57cc671a9bda54ea5755ba787b775f909fe1d6859e0ca41\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5E5Nbffr1cdFaq8fESrcWm4xrhXp2jTKW1v7QgMCprEXNS5T\",\n      \"recipient\": \"\",\n      \"timeout\": 2989028,\n      \"blockNumber\": 2971028\n    },\n    {\n      \"hashLock\": \"0xcfcbb80f31f5ed1f069019a8ce5637c9e2cece8120e425268c9eff30ed4ca628\",\n      \"htlcId\": \"0x96519e7e50af948419b8252cd4252fc89822cf7bd093cafbc425bcd1c4f4f7b5\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5H6qYbZmbskXtc55jpAT3nv18CNvBWh3QzMpeJtBK8RJPoPi\",\n      \"recipient\": \"\",\n      \"timeout\": 2988973,\n      \"blockNumber\": 2970973\n    },\n    {\n      \"hashLock\": \"0x516ffbedf5cf9892d50d6cd9cfbe307df5a8bb97e45c2176ac6127011f1821e4\",\n      \"htlcId\": \"0x15b50771473ffe94a0b198490f5e0f1a4007a358db8bb7a8bd51ca1e18811de4\",\n      \"status\": \"CREATED\",\n      \"amount\": \"10000000000000000000\",\n      \"sender\": \"5CwFhhZoS2LP5tWAzurDznL949zEemjePH1XBdw6grgyrEPB\",\n      \"recipient\": \"\",\n      \"timeout\": 2981500,\n      \"blockNumber\": 2970700\n    },\n    {\n      \"hashLock\": \"0xba9b98796632d1b0a9fc5ee8462d0fdeea79183b8ae61604a0cabd7d964e7d65\",\n      \"htlcId\": \"0xb230a914b2b69428b36b3d7142aa5b2fcd6f6376ec23f147ac9a9bfd9668f9e6\",\n      \"status\": \"CREATED\",\n      \"amount\": \"10000000000000000000\",\n      \"sender\": \"5CwFhhZoS2LP5tWAzurDznL949zEemjePH1XBdw6grgyrEPB\",\n      \"recipient\": \"\",\n      \"timeout\": 2981355,\n      \"blockNumber\": 2970555\n    },\n    {\n      \"hashLock\": \"0x31f38b89eb8ccf8448f82b227252421e5ffc9549c578f5bee4bd6bb3d9658537\",\n      \"htlcId\": \"0xf95cbfa62a5b63244e319999db373c1fbffa64286118030b5375fd7a4246f870\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5E5Nbffr1cdFaq8fESrcWm4xrhXp2jTKW1v7QgMCprEXNS5T\",\n      \"recipient\": \"\",\n      \"timeout\": 2987431,\n      \"blockNumber\": 2969431\n    },\n    {\n      \"hashLock\": \"0x21a8ae3d37015020d18302bd0db2899203849c1c287ab9a66beea47f3e6617c2\",\n      \"htlcId\": \"0x8538ce5ba622b228141a5f8490c309fea0e45cc9425d65b1c50254aaa33835b3\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5GN69jat5PXK1myAYnHKx8eCxAg5w4YyFvRmYdtBoTxFwZfH\",\n      \"recipient\": \"\",\n      \"timeout\": 2987357,\n      \"blockNumber\": 2969357\n    },\n    {\n      \"hashLock\": \"0xc29415e86e3eb6139c390b9d98a5f2598b3fa53dca9cc25f29dd96f14049ba1d\",\n      \"htlcId\": \"0x6e817feb3fdef9faab1442def09d60ab33c98c3703771d791cc00f9fe2db89b7\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5H6qYbZmbskXtc55jpAT3nv18CNvBWh3QzMpeJtBK8RJPoPi\",\n      \"recipient\": \"\",\n      \"timeout\": 2987278,\n      \"blockNumber\": 2969278\n    },\n    {\n      \"hashLock\": \"0xcd99dd9a80874719a6a9ed1601c02a71c6511e7af568a14621f84a438619d0cf\",\n      \"htlcId\": \"0x4d342320a8068e5f6988d18979474ddd14c9c221235e36c1597c9bfb4f008f1c\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5Ea2uz2x9jKzpMhUU5MY5LhcDiDjw5NcD9gjipcRk119QeUb\",\n      \"recipient\": \"\",\n      \"timeout\": 2985926,\n      \"blockNumber\": 2967926\n    },\n    {\n      \"hashLock\": \"0xcde01fac885a336a13dded928221843bc1094050444419945d1df7d9deb6a5df\",\n      \"htlcId\": \"0xb3f69a1409d3d09b15b6d4c1553996c7d1642379630ce7171e74fc89b4979149\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5GF77488mmEtF36d8n6FgPgheYBVDSSx29LijgA1UFMWPhjd\",\n      \"recipient\": \"\",\n      \"timeout\": 2985853,\n      \"blockNumber\": 2967853\n    },\n    {\n      \"hashLock\": \"0x1c9f344508c7749ce1e0ced0308f4a5d8fd420add64b84a95388c1f5daca38cf\",\n      \"htlcId\": \"0xb35ddfab5538b940bf1f95dd6c4f3146e02ecd19391f97993b83ff9f356f000f\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5EcfmRq5cDFmM4YsdDej5pTod5LYoTifau9XTt62NaBQdceR\",\n      \"recipient\": \"\",\n      \"timeout\": 2985791,\n      \"blockNumber\": 2967791\n    },\n    {\n      \"hashLock\": \"0x17bcdf9fcb2046571f5744626be9d6a13605a09d871cd53911c8ea49c95c5fdd\",\n      \"htlcId\": \"0x96cf258824f3e130bbe4ec6c5b0a0fa573835fe37c9ee6d615ffded7be1421d3\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5CiVeWKPGNN7htdpsUrYMGWt89mBtuugfGCxo5LG93LqfiqZ\",\n      \"recipient\": \"\",\n      \"timeout\": 2985729,\n      \"blockNumber\": 2967729\n    },\n    {\n      \"hashLock\": \"0x3579498daca1757ac23a85331664676b42dd3a5c9ed90dddc109c4877ee73893\",\n      \"htlcId\": \"0x623edf7d4119e9c1ca4436ba8694f0c11b413709fe20eaa00250c494b516b228\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5ENrkcob5Y7Zdi7P8unUQHHLzGo2xawJQuqWoAdroQagXtcy\",\n      \"recipient\": \"\",\n      \"timeout\": 2985671,\n      \"blockNumber\": 2967671\n    },\n    {\n      \"hashLock\": \"0xe19120393443cec7b6ec2bffa6e895f7f88933710cfd64827627ce2dae429894\",\n      \"htlcId\": \"0x85ab7cfc1664a110eda1d54f35205d7b12ee9f040bd59e15dcb6244d965569f9\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5FC8zoAirK5qRBS6wec2C1SazdSFmsAgysdXF2pLvd5txYzo\",\n      \"recipient\": \"\",\n      \"timeout\": 2985607,\n      \"blockNumber\": 2967607\n    },\n    {\n      \"hashLock\": \"0x9c37116da9781edcaecd78cae23079acb1a314e69a186f4733e5f57a49b43758\",\n      \"htlcId\": \"0x7041928ca1a13ee615fa4da9b37c35fff8e3e19488a439be3761ec17bc4426da\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5Grv4X3fbyCvgLaeuX4HexewW6A192xRKvU8FkQw1S7rrT9g\",\n      \"recipient\": \"\",\n      \"timeout\": 2985541,\n      \"blockNumber\": 2967541\n    },\n    {\n      \"hashLock\": \"0x11ec6069c925e6003a44a428b55bfb2eee99292fa7fb7dcedfe166c0390b13e5\",\n      \"htlcId\": \"0x19f0700a4962accfa5ef251821e3be1224f4637bb147ed5522c01c8d7c698bbe\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5GyAecnGfkpthQv8hXST8dGtHinWkWNC6CNseYoxgqHAmrJk\",\n      \"recipient\": \"\",\n      \"timeout\": 2983514,\n      \"blockNumber\": 2965514\n    },\n    {\n      \"hashLock\": \"0xa3042a4df459bbcadd8afa0260a0896bb805a837aa248e44fcc3caffd8ecde22\",\n      \"htlcId\": \"0x99e4e79b2e49dbca34e21de48bd98b4204329d7e7e5e008b9fcb0375a7dab41e\",\n      \"status\": \"CREATED\",\n      \"amount\": \"1000000000000000000\",\n      \"sender\": \"5GyAecnGfkpthQv8hXST8dGtHinWkWNC6CNseYoxgqHAmrJk\",\n      \"recipient\": \"\",\n      \"timeout\": 2980866,\n      \"blockNumber\": 2962866\n    },\n    {\n      \"hashLock\": \"0x233e1f4dd2f7b86a1ee35140bf53196440b8dc6c0e5c4bee6d48cfd2018b7afa\",\n      \"htlcId\": \"0x25b923964f973f0792a2399124fee9bb5dc05744e0ff8439e1d203f014e84114\",\n      \"status\": \"CREATED\",\n      \"amount\": \"2000000000000000000\",\n      \"sender\": \"5HjXA4yN3fKFQ8qac3DUmVNLGb7EnhHs357wNcZ2ePdswYxN\",\n      \"recipient\": \"\",\n      \"timeout\": 2927787,\n      \"blockNumber\": 2909787\n    }\n  ]\n}",
+  "measuredAt": "2026-11-05T22:36:03.718Z",
+  "durationMs": 91,
+  "attempts": 1
+}

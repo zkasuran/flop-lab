@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "tclk",
+    pkg: "@flop-lab/tclk-inspect",
+    bin: "flop-tclk",
+    section: "agents",
+    summary: "Inspect signed agent deals against the pinned TCLK protocol",
+  },
+  {
     name: "contracts",
     pkg: "@flop-lab/mcpaudit",
     bin: "flop-mcpaudit",
