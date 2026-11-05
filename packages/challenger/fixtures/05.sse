@@ -1,0 +1,3 @@
+event: message
+data: {"result":{"content":[{"type":"text","text":"{\n  \"block\": {\n    \"hash\": \"0x89f99184d18a9390f0196aa252b932372ed54750c9d7cbcb43b7460237d31fa0\",\n    \"parentHash\": \"0x3513c3159949b3f11b5168e061d474d528b9cc6cae13e57010d45ffe54a3fb5e\",\n    \"number\": 2947940,\n    \"timestamp\": 1793869198000,\n    \"extrinsicsCount\": 2,\n    \"specVersion\": 1014003\n  }\n}"}]},"jsonrpc":"2.0","id":5}
+

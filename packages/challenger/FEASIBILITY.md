@@ -1,0 +1,41 @@
+# Outside-audit feasibility
+
+Assessed on 2026-11-05. Scope: public hosted MCP tools, indexer query roots, a selected channel, trust root, protocol docs and the published SDK 0.4.0 interfaces. No private validator endpoint or wallet was used.
+
+## Evidence inspected
+
+- [Challenge design](https://docs.flop.network/docs/verification-stack), updated 2026-10-20. Describes DA retention, prefill checks, TOPLOC, bisection and a discretionary bond. Calls the design draft.
+- [Staking and slashing](https://docs.flop.network/docs/staking-and-slashing), updated 2026-10-20. Describes serve-or-slash and cryptographic fraud evidence.
+- [Session lifecycle](https://docs.flop.network/docs/inference-session-lifecycle), updated 2026-10-30. States the SOFT end-to-end settlement and dispute lane is still being specified.
+- [Protocol parameters](https://docs.flop.network/docs/protocol-parameters), updated 2026-10-26. Calls the challenge duration approximate and under review. The capacity-bond revocation constant is separate.
+- [SDK registry README](https://registry.npmjs.org/@flop-labs%2fsdk), version 0.4.0. Read before inspecting the published modules below. The README alone does not cover the full dispute tooling.
+- [SDK chain wrapper](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/chain.d.ts) and [implementation](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/chain.js). Cooperative `settle` has no standard dispute window. `forceSettle` returns `challengeEnd`; `finalize` pays after the window. The wrapper documents `reportToplocMismatch(channelId, miner, attestations)` for validator quorum evidence.
+- [SDK dispute tooling](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/dispute.d.ts) and [protocol types](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/protocol.d.ts). Define transcript audit, bisection helpers and `DisputeEvidence`, including versioned leaf fields, enclave signature and Merkle path. `open_dispute` is named but its positional call signature is not exposed in the inspected chain wrapper.
+- [SDK DA types](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/da.d.ts). Define canonical `TranscriptBlob`, `DataRef` and `DaSource.fetch(commitment)`. `HttpValidatorDa` is explicitly a legacy whole-blob transport. It does not establish assigned-provider custody or retention. Production requires registered session DA and reconstruction.
+- [SDK TOPLOC checker](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/toploc-checker.d.ts) and [evidence types](https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/toploc-evidence.d.ts). Define activation bindings, governance pins and an injected `ToplocPrefillExecutor`. The reference executor is a deterministic test path, not independent GPU inference.
+- `fixtures/01.sse.base64`: losslessly encoded raw hosted tool schemas. No dedicated audit-blob retrieval or dispute tool appears. Receipt metadata warns that other receipt fields are placeholders.
+- `fixtures/04.sse`: selected channel `0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec`. Reports `WITNESS_ONLY`, `Soft` and `observationHead: finalized`. Provides payout provenance but no turn transcript, DA commitment, enclave key or activation bindings.
+- `fixtures/07.sse`: trust root with model hashes and a soft-tier spot-check parameter. Not per-turn audit evidence or complete governed comparison pins.
+- `fixtures/08.sse`: introspected query roots. No dedicated DA audit retrieval or bisection root. Nested fields were not exhaustively inspected.
+- `fixtures/manifest.json` and `fixtures/sdk/manifest.json`: exact sources, requests or content hashes and capture times. SDK files use lossless base64 encoding.
+
+## Feasibility by step
+
+| Step                                  | Public capability                                                                      | Missing for this tape                                                                                     | Evidence                                                                  |
+| ------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Identify settlement and payment split | Available as indexer observations                                                      | Independent finalized-state proof                                                                         | Tape fixtures `02`, `09`, `10`, `11`; channel `04`                        |
+| Track a standard dispute window       | SDK defines posting and `challengeEnd`                                                 | Recorded rows are cooperative payouts. No standard window applies. Other audit lanes are not established. | SDK chain wrapper; recorded cooperative flags                             |
+| Estimate a force-settlement window    | Draft duration can be applied to an explicit posting event                             | The tape has no posting event or runtime `challengeEnd`. Never start an estimate at final payout.         | SDK `forceSettle` and `finalize`; challenge design                        |
+| Locate and fetch DA audit data        | SDK defines canonical transcript encoding and `DaSource.fetch`                         | Channel-bound commitment, assigned-provider retrieval location, custody and reconstruction inputs         | SDK DA types; channel `04`; tool schemas `01`                             |
+| Re-run one prefill                    | SDK exposes an independent executor interface                                          | Authenticated prompt bytes, exact model artifact and engine setup, activation binding and GPU executor    | SDK checker `PrefillCheckInput` and `ToplocPrefillExecutor`; channel `04` |
+| Compare TOPLOC fingerprints           | SDK defines commitments, distance and governed verdict inputs                          | Per-turn activation bytes, expected hashes and complete governance pins                                   | SDK checker and evidence types; trust root `07` is insufficient           |
+| Bisect a disagreement                 | SDK provides off-chain bisection state and helpers                                     | Authenticated final root, settled turn set, leaf hashes and live round state                              | SDK dispute module; channel `04`                                          |
+| Assemble signed turn evidence         | SDK defines `DisputeEvidence` and builders                                             | Actual versioned leaf preimages, enclave signature and Merkle path                                        | SDK protocol and dispute types; channel `04`                              |
+| Report TOPLOC mismatch                | Documented call: `computeChannel.reportToplocMismatch(channelId, miner, attestations)` | Independent recomputation, extrinsic-shaped validator-quorum attestations and runtime qualification       | SDK chain implementation and checker types                                |
+| Open discretionary dispute            | Named in the SDK and design docs                                                       | Qualified call argument order, runtime eligibility and actual contested-turn evidence                     | SDK dispute module; inspected chain wrapper has no `openDispute` method   |
+
+The broad docs describe a 100 FLOP discretionary bond, forfeited if frivolous, for a paying agent or active validator. That is not evidence of the bond or eligibility rules for the validator-quorum mismatch call. The tool does not post either call.
+
+## Conclusion
+
+Public SDK algorithms and evidence formats exist. The recorded public tape and selected channel do not provide the session-specific material needed to use them for an independent audit. The dossier names the documented mismatch call, lists its missing inputs and leaves the executable extrinsic null. No DA blob was retrieved, no prefill was run and no dispute was submitted. No standard dispute window is invented for the recorded cooperative payouts.

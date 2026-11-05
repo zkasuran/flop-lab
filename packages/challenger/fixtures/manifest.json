@@ -1,0 +1,183 @@
+[
+  {
+    "file": "01.sse.base64",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:00.819Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "tools/list"
+    },
+    "status": 200
+  },
+  {
+    "file": "02.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:01.058Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_list_settlements",
+        "arguments": {
+          "limit": 100,
+          "offset": 0
+        }
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "03.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:01.554Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_get_stats",
+        "arguments": {}
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "04.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:01.669Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_get_compute_channel",
+        "arguments": {
+          "channel_id": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec"
+        }
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "05.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:01.957Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_get_block",
+        "arguments": {
+          "number": 2947940
+        }
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "06.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:02.193Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 6,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_get_block",
+        "arguments": {
+          "number": 2947840
+        }
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "07.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:02.673Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 7,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_trust_root",
+        "arguments": {}
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "08.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:02.797Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 8,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_indexer_query",
+        "arguments": {
+          "query": "{ __schema { queryType { fields { name type { kind name ofType { kind name } } args { name type { kind name ofType { kind name } } } } } } }"
+        }
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "09.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:03.117Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 9,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_list_settlements",
+        "arguments": {
+          "limit": 100,
+          "offset": 100
+        }
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "10.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:03.415Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 10,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_list_settlements",
+        "arguments": {
+          "limit": 100,
+          "offset": 200
+        }
+      }
+    },
+    "status": 200
+  },
+  {
+    "file": "11.sse",
+    "source": "https://mcp.flop.network/mcp",
+    "measuredAt": "2026-11-05T09:00:03.613Z",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 11,
+      "method": "tools/call",
+      "params": {
+        "name": "flop_list_settlements",
+        "arguments": {
+          "limit": 100,
+          "offset": 300
+        }
+      }
+    },
+    "status": 200
+  }
+]
