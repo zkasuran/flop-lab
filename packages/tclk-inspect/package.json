@@ -1,0 +1,26 @@
+{
+  "name": "@flop-lab/tclk-inspect",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Inspect signed TCLK transcripts against a pinned protocol",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-tclk": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@noble/curves": "2.4.0",
+    "@noble/hashes": "2.4.0",
+    "@scure/base": "2.4.0",
+    "ajv": "8.17.1"
+  }
+}

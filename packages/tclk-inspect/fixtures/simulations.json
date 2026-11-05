@@ -1,0 +1,1478 @@
+{
+  "source": "https://github.com/flop-labs/tclk/tree/7d402db451ad952e3695e8ce9a8fcac99893950b",
+  "measuredAt": "2026-11-05T22:41:07.942Z",
+  "commit": "7d402db451ad952e3695e8ce9a8fcac99893950b",
+  "cases": [
+    {
+      "path": "happy",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "point",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x6d2d6b15aea3cdb9adc5a10b8917da565cfdfb243aae5b434d25095494cae50c\",\"lock\":\"point\",\"nonce\":\"01010101\",\"paymentKey\":\"0x031b84c5567b126440995d3ed5aaba0565d71e1834604819ff9c17f5e9d5dd078f\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "oOu9tRZGDtQRQ6B8hSEpHNosMOLGM0gaNiQyDOV0bXNRqKl3tmfga44xj4IO0BTeDTWvtjUMsy3dxJ0TmeuFBA"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0x0b48fd18b8ba174c654cb2ca62d74d3c295b306f33beb22f40998fc57f6fca30\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"paymentKey\":\"0x024d4b6cd1361032ca9bd2aeb9d900aa4d45d9ead80ac9423374c451a7254d0766\",\"ref\":\"0x6d2d6b15aea3cdb9adc5a10b8917da565cfdfb243aae5b434d25095494cae50c\",\"statement\":\"0x02531fe6068134503d2723133227c867ac8fa6c83c537e9a44c3c5bdbdcb1fe337\",\"type\":\"accept\"}",
+          "signature": "cY0jdDu12xF5jIgdekcSmY1kCc9PcPslP9FUC2jFs7VWsOezOLVxLPOzhiDtAAvHpiDvDyN_bw9xfKxHgSG7Aw"
+        },
+        {
+          "room": "mb-p-tclk-0b48fd18b8ba174c",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0x0b48fd18b8ba174c654cb2ca62d74d3c295b306f33beb22f40998fc57f6fca30\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "FQheQZJ_WvB4M-fVzSpkknRmljMR3c9MAVlrf6G8I4sQ6zAUHiMlmvM2n2H6rVhnasiGGb3InznvZkJhZEXTAA"
+        },
+        {
+          "room": "mb-p-tclk-0b48fd18b8ba174c",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0x0b48fd18b8ba174c654cb2ca62d74d3c295b306f33beb22f40998fc57f6fca30\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "I0iokAyDlvyT5nzVh5W0dyodOQZpah6qW1wBsDU-mAuG6P8CJHeUbMSz-sHLu2LxsVjRJ6ObzUfmV5-Z_pl6BQ"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "payee-offer",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x83500cfd3546705eaba2da5cb6f1e83fd4cd0b45aab36d86e8c11a06d91a5651\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payee\",\"type\":\"offer\"}",
+          "signature": "pUt1aGV_o-jXnGDYwmzkQOnt6Rex0N-y7pHoCyOv3Rr-Rhn0EEOWXoF2AGhsi23Yt8vvhBrJrPjS-wL1xqfIBQ"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xe0dd0075e9d2d01c4f9a9df489d93e23e97f7882335da75f9968a092b4ea89af\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x83500cfd3546705eaba2da5cb6f1e83fd4cd0b45aab36d86e8c11a06d91a5651\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "U4xFi_w_TynfOZN1-G2R1njpc9FPPn-Mb9la69ASeDG40JyvnJVdVdNTgKYDcRtEjVm5bHTD2pPDfrb6iWZRDg"
+        },
+        {
+          "room": "mb-p-tclk-e0dd0075e9d2d01c",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xe0dd0075e9d2d01c4f9a9df489d93e23e97f7882335da75f9968a092b4ea89af\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "FiWgj2RCJRi5UFIsjrWYglrq6f00W2hwVDO50DgD2EYNpKKXSFgO1zz37T56pWlHKz5YgRXN8QMFvuwU8s9RAg"
+        },
+        {
+          "room": "mb-p-tclk-e0dd0075e9d2d01c",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xe0dd0075e9d2d01c4f9a9df489d93e23e97f7882335da75f9968a092b4ea89af\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "60cSy6ZtyoGUOYlOhxpJtZSufHruCG-QfuMhS8KEMDbA41ss8aPM3qQXrDW3a_CjdIsH6fBx05yb8SE85nXJDQ"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "refund",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923220000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"ref\":\"simulated-escrow\",\"type\":\"refund\"}",
+          "signature": "ZnYkDSCL9l9qfJytGlC5SQB82JgmvGL3C1lcDfrQm5lnUpjvCxeX4ZeDEM5V3NWiA7QIEThUXcyYrwzEXkBwDQ"
+        }
+      ],
+      "upstream": {
+        "status": "refunded",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "timeout",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        }
+      ],
+      "upstream": {
+        "status": "locked",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "expired-accept",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923205000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        }
+      ],
+      "upstream": {
+        "status": "proposed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "offer has expired"
+          }
+        ]
+      }
+    },
+    {
+      "path": "double-accept",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "YA1i01WM-fN6eV8uf-TTFre23p-BqHeZpaWx6Py5QI4jsk5fHm3yYM871IGtwN6pXYcuPFbm1U8EaUSnnAqoDw"
+        }
+      ],
+      "upstream": {
+        "status": "accepted",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "accept in status accepted"
+          }
+        ]
+      }
+    },
+    {
+      "path": "wrong-preimage",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0101010101010101010101010101010101010101010101010101010101010101\",\"type\":\"reveal\"}",
+          "signature": "kW94ZrhUwg01mizlPfZAY3rRHoSkXDhfh_9Ri-fFo4TpJLz9JGbAwLdDKVLHTyPXbC0wZ71jnYhfb5Ohi5dzCA"
+        }
+      ],
+      "upstream": {
+        "status": "locked",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "secret does not open the statement"
+          }
+        ]
+      }
+    },
+    {
+      "path": "late-reveal",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923210001,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "reveal-at-refund",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923220000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "locked",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "refund window is open"
+          }
+        ]
+      }
+    },
+    {
+      "path": "early-refund",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"ref\":\"simulated-escrow\",\"type\":\"refund\"}",
+          "signature": "ZnYkDSCL9l9qfJytGlC5SQB82JgmvGL3C1lcDfrQm5lnUpjvCxeX4ZeDEM5V3NWiA7QIEThUXcyYrwzEXkBwDQ"
+        }
+      ],
+      "upstream": {
+        "status": "locked",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "refund window not open yet"
+          }
+        ]
+      }
+    },
+    {
+      "path": "cancel-proposed",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"type\":\"cancel\"}",
+          "signature": "WZQQFntCoB-_OtOSE2wy-r-GRJyW5liuWs2nes48Z_nmCNuEcwfMb4wtCoNOM0NiYXvFNdRYY-8fx1oPFRXrAA"
+        }
+      ],
+      "upstream": {
+        "status": "cancelled",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "cancel-accepted",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"type\":\"cancel\"}",
+          "signature": "0lhEWJrvXgHLejOqFxx0vTzeO0f6g8Ppco30H59zlL4_3g5mgJF5m4G7-9rygdR5lOuBJ6Qp7OCOhQiyNBwJBw"
+        }
+      ],
+      "upstream": {
+        "status": "cancelled",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "heartbeat",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"nonce\":\"abababab\",\"type\":\"heartbeat\"}",
+          "signature": "2W6XfrIKr60y276spxzLsHPNkMp2YiZBtBZ_AIUVJrRlkjeNcb1FKiy93Oq6Fbt2vJXNRfRTwLdVWYQY3lmDCQ"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "6LImB7MvbSEvrTkQqtBAbg-i2Op2AjOXaaHgAAGD-RmnK9qSsOvPwYPGP1Vb__NyVTnElzfFxidXyvVgOsS3BQ"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 4,
+          "timestampMs": 1793923204000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "104",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"nonce\":\"cdcdcdcd\",\"type\":\"heartbeat\"}",
+          "signature": "il9QTBpJtnsm9zgkrD9GQDtO4_arwuMehK1LHZmriV8ZPHeAg1Fx4otGCBzfZYROHlmISqzYteoHlutU54etBg"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 5,
+          "timestampMs": 1793923205000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "105",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "0FLuLEh0MyTgXWE7gSluwpTpoaFusPW33nFeZg_eHIWggfV_3LCE0tVXZtcqRtnXBf62UwNFzuOsLz_uZ-usBw"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "receipt",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 4,
+          "timestampMs": 1793923204000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "104",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"outcome\":\"claimed\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"receipt\"}",
+          "signature": "4RpEh3iOltOxS0UxhvmFocjPxzRG_Gjn59GU4lC9sWe2uIm_NxqRNn2kbtqlVPhjWo0hGKrax82Wz3UySMBOAA"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "wrong-ref",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"other-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "EpxT0NiYTQ-KmwLORv9HiU16i-1V5zgz7C-T-siUM31Ts6XBH7iz1FqVjkAuDmf75lpgZX70UnFLszR7SEwEDA"
+        }
+      ],
+      "upstream": {
+        "status": "locked",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "reveal names a different rail ref"
+          }
+        ]
+      }
+    },
+    {
+      "path": "wrong-room",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "ZcrjK3GUD7wFdBSorrhoHmuT0SgyX-ss7OVDAcd_MmTpB9gvGnDV6aIx0APjCY7jF-DhqkvFICCg7WFfN8uaDQ"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "accepted",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "lock must be posted in the derived deal room mb-p-tclk-b92c2ea186978474"
+          },
+          {
+            "ok": false,
+            "reason": "reveal in status accepted"
+          }
+        ]
+      }
+    },
+    {
+      "path": "mailbox-accept",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "mb-p-example",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "1klXPlK0e-EtKtWXAbElIq6KzAEG1_HdAf-Of7mSqvE04ELnzK5oOkRf_mYBq8iNCyVVQ9sh9lTuEQXIkaieBw"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "proposed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "accept must be posted in tclk-offers"
+          },
+          {
+            "ok": false,
+            "reason": "lock must be posted in tclk-offers"
+          },
+          {
+            "ok": false,
+            "reason": "reveal must be posted in tclk-offers"
+          }
+        ]
+      }
+    },
+    {
+      "path": "bad-signature",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"} ",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "accepted",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "record signature does not verify"
+          },
+          {
+            "ok": false,
+            "reason": "reveal in status accepted"
+          }
+        ]
+      }
+    },
+    {
+      "path": "replay-heartbeat",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"nonce\":\"abababab\",\"type\":\"heartbeat\"}",
+          "signature": "2W6XfrIKr60y276spxzLsHPNkMp2YiZBtBZ_AIUVJrRlkjeNcb1FKiy93Oq6Fbt2vJXNRfRTwLdVWYQY3lmDCQ"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"nonce\":\"abababab\",\"type\":\"heartbeat\"}",
+          "signature": "Vm37tQBd2K6Ndf2J9P9YUHikTb5TAI8FV5J59mjRnvrz3-VtIJrxHEy5HzREmUK3ymRahDhvA5U93Y46YEwBAw"
+        }
+      ],
+      "upstream": {
+        "status": "accepted",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "replay-receipt",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 4,
+          "timestampMs": 1793923204000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "104",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"outcome\":\"claimed\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"receipt\"}",
+          "signature": "4RpEh3iOltOxS0UxhvmFocjPxzRG_Gjn59GU4lC9sWe2uIm_NxqRNn2kbtqlVPhjWo0hGKrax82Wz3UySMBOAA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 5,
+          "timestampMs": 1793923205000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "105",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"outcome\":\"claimed\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"receipt\"}",
+          "signature": "enQpG2GPjTqrLBVYL8AD25DWSub-ERRU8fJcYGkiaZTNDqqgRnJqL7M_sCn45ZQqXXlvv5jftcQ8cT5KGToQDQ"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "noncanonical",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"type\":\"offer\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"role\":\"payer\",\"amount\":\"1000\",\"asset\":\"FLOP\",\"lock\":\"hash\",\"rails\":[\"flop-htlc\"],\"claimByMs\":1793923210000,\"refundAfterMs\":1793923220000,\"expiresMs\":1793923205000,\"nonce\":\"01010101\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\"}",
+          "signature": "DdFmYQmADMyqET70GmN3yKnK5S2D6HwrNOoWzhkch4JtCMz9Ttw1UHSwoGNS0IUI_5sfb32M7FHko1HfUF6mBQ"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "claimed",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "path": "wrong-contract",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0x0101010101010101010101010101010101010101010101010101010101010101\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "c50zKi3fxjYeEsvkWl-7H88QDuv-vKQbIq7wL3k9EeUkDhYH5XH6wBaMj8v731Yh2ZiIECft7JGtS9HXxzr4AQ"
+        }
+      ],
+      "upstream": {
+        "status": "locked",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "reveal names a different contract"
+          }
+        ]
+      }
+    },
+    {
+      "path": "wrong-payer",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ONNfRN5gm-_Gdu4wvuo60ppbb4cYTW4DYjX9ugbflVCy6mHb6rlgAwr7rUb2S9kRVTL-4_XWn0PB_MtfPycFCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "01AWksGDDeYB4DlMSuD8si3HUy5iO9aleXNSQVE0eRzgVsUWNQp7s60e5FNRSjhmKS6kCoiJJ0vHWiXsNvgaBg"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": "accepted",
+        "steps": [
+          {
+            "ok": true
+          },
+          {
+            "ok": true
+          },
+          {
+            "ok": false,
+            "reason": "only the payer locks"
+          },
+          {
+            "ok": false,
+            "reason": "reveal in status accepted"
+          }
+        ]
+      }
+    },
+    {
+      "path": "unknown-field",
+      "description": "Synthetic signed rehearsal. No venue messages or payments.",
+      "records": [
+        {
+          "room": "tclk-offers",
+          "seq": 0,
+          "timestampMs": 1793923200000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "100",
+          "line": "tclk1 {\"amount\":\"1000\",\"arbiter\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"asset\":\"FLOP\",\"claimByMs\":1793923210000,\"expiresMs\":1793923205000,\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"id\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"lock\":\"hash\",\"nonce\":\"01010101\",\"rails\":[\"flop-htlc\"],\"refundAfterMs\":1793923220000,\"role\":\"payer\",\"type\":\"offer\"}",
+          "signature": "ibXH3eRA3XntzFQEr_EbRozEdta3zJPfXn5aBMgM3qnsz03fHkWCovmk1bGBAvBwa3psf3bGAqjPhwu9J4KvCw"
+        },
+        {
+          "room": "tclk-offers",
+          "seq": 1,
+          "timestampMs": 1793923201000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "101",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"nonce\":\"02020202\",\"ref\":\"0x7fa81c728aafa29ec9f29f09b3b8f0f679f3a44c9e63128b4ec1e62456deb966\",\"statement\":\"0x648aa5c579fb30f38af744d97d6ec840c7a91277a499a0d780f3e7314eca090b\",\"type\":\"accept\"}",
+          "signature": "zgNUeGcapCkXLgJpUocUQ6Szd6hEuJH0HgJ0bw1D3oA0CYB3eQlfTsOba5tvkRlaZ0-nC4HCjbxp0AEqwuWxDA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 2,
+          "timestampMs": 1793923202000,
+          "sender": "did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX",
+          "nonce": "102",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mkon3Necd6NkkyfoGoHxid2znGc59LU3K7mubaRcFbLfLX\",\"rail\":\"flop-htlc\",\"ref\":\"simulated-escrow\",\"type\":\"lock\"}",
+          "signature": "uzovNPlSdL2tV3PhKX4EasXK4y_QAzkY5gBCECxp3aQZSx3-96TUoZ3793Wnx9dOmeBGlbu9luathYZorOjMCA"
+        },
+        {
+          "room": "mb-p-tclk-b92c2ea186978474",
+          "seq": 3,
+          "timestampMs": 1793923203000,
+          "sender": "did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH",
+          "nonce": "103",
+          "line": "tclk1 {\"contract\":\"0xb92c2ea1869784741323c82324badea105ebfeea0963138b9f23d152ccdb0bb7\",\"from\":\"did:key:z6Mko9hTggMwjSTEaJaPUfE6tqcy2xvU6BnNq3e3o8qVBiyH\",\"ref\":\"simulated-escrow\",\"secret\":\"0x0303030303030303030303030303030303030303030303030303030303030303\",\"type\":\"reveal\"}",
+          "signature": "vVz8IxPGt5Zi-eDU11RACYUCf7AtubXDiB3bMGFC-3k1B3wAG9fFbltW2UJVw4w9iYh4OTAVIOJeHW9hAdGrBw"
+        }
+      ],
+      "upstream": {
+        "status": null,
+        "steps": [
+          {
+            "ok": false,
+            "reason": "tclk: unknown field on offer: arbiter"
+          },
+          {
+            "ok": false,
+            "reason": "no contract open yet"
+          },
+          {
+            "ok": false,
+            "reason": "no contract open yet"
+          },
+          {
+            "ok": false,
+            "reason": "no contract open yet"
+          }
+        ]
+      }
+    }
+  ]
+}
