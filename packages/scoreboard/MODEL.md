@@ -1,4 +1,52 @@
-# Settlement evidence model v1
+# Miner evidence models
+
+## Evidence v2
+
+New collections attach a dated reliability query. Its fields were introspected from the hosted indexer. The query covers at most 32 miners, prioritizing settlement addresses before gateway listings. Events, ghost snapshots and proof leaders each have a limit of 100. The bounded lists do not establish the absence of other observations.
+
+`evidence-v2 = 0.5 * settlement-v1 + 20*A + 15*G + 10*O + 5*P`.
+
+These weights and smoothing counts are policy constants. They are not measured network parameters. All terms are in the range zero to one. Missing terms contribute no points. The score is null only when no settlement or reliability term has usable data. Existing snapshots without reliability fields retain settlement-v1.
+
+### Acknowledgements: A
+
+Use `minerReliabilitySeries` day buckets wholly inside the recorded `[from, to]` query window. Sum `forceOpenAcknowledged` as `ack` and `forceOpenExpired` as `expired`.
+
+`A = ack / (ack + expired + 5)`. No outcomes means unknown. The router uses the unsmoothed observed ratio `ack / (ack + expired)` and can require a minimum outcome count. These are event outcomes, not matched request cohorts. The captured window stays dated as the snapshot ages. It is not relabelled as a live rolling window. A capture older than the scoring window earns no reliability points. Future captures earn no points.
+
+### Ghost outcomes: G
+
+From the same complete-day series, sum `ghostCompleted` as `completed`. Sum `ghostExpired + ghostIncorrect` as `failed`.
+
+`windowGhost = completed / (completed + failed + 5)`.
+
+The latest `minerGhostStatsSnapshots` row inside the query window supplies cumulative counters when they are all non-null. Define `cap = totalCompleted / (totalCompleted + totalExpired + totalIncorrect)` when that denominator is positive. Otherwise use cap one. `G = min(windowGhost, cap)`. No window outcomes means unknown even when cumulative counters exist.
+
+Any observed expired or incorrect ghost outcome produces `failure-observed`. A complete-day completion without an observed failure produces `completion-observed`. Otherwise status is `unknown`. These labels do not claim registration or current serving capacity. A listed miner with no outcomes remains unknown. Ghost rows and reliability events stay visible as separate evidence; they are not added twice to the series score.
+
+### Cumulative outcome guard: O
+
+From `minerReliability`, let `settled = settledCount` and `adverse = timeoutCount + voidedCount + forceOpenExpiredCount + offerOpenFailedCount`.
+
+`O = settled / (settled + adverse + 5) / (1 + fraudUpheld)`.
+
+No settled or adverse outcomes means unknown. This is a cumulative evidence guard. It is not windowed uptime. Counters can overlap and do not form a session success rate. Upheld fraud reduces the term; pending disputes are not treated as proven fraud.
+
+### Proof activity: P
+
+The indexer query uses `pouiLeaderboard(since: from)`. For a returned miner with non-null `proofsCount`, `P = proofsCount / (proofsCount + 20)`. Missing leaders remain unknown, including an empty leaderboard. An explicit zero stays zero. The count covers activity since the cutoff through collection. It is not proof verification.
+
+### History and routing
+
+Recorder snapshots receive independent settlement-v1 rankings at their own observation times. Current rankings only pool channels when observed genesis hashes are non-null and equal. Channel IDs are deduplicated, with the current observation taking precedence. Partial samples retain the confidence cap. Missing genesis permits independent ranking but not pooling. Reliability continues to use indexer series because the recorder does not capture it.
+
+Router v2 accepts `minReliability`, `minReliabilityOutcomes`, `minProofs`, `rejectGhostFailures` and `maxReliabilityAgeMs`. A requested threshold fails when the needed evidence is missing. Required reliability evidence defaults to a one-day freshness limit. All legacy settlement, listing, confidence and price checks still apply. Each candidate reports every refusal reason.
+
+### Gaming and limits
+
+Acknowledgements and completions can be manufactured. Repeated activity can saturate the smoothing terms. Cumulative guards can mix old behavior with newer behavior. A bounded page can hide failures. Counts do not prove distinct useful tasks. Missing registration data prevents a registered-but-not-serving verdict. The timeline reports observed failure signals instead. These scores are not FLOP FRCR and are never presented as protocol reputation.
+
+## Settlement v1
 
 This is an ordering of observed settlement history. It is not a probability of successful inference. It is not a reliability guarantee.
 
@@ -40,7 +88,7 @@ A supplied ceiling always fails with `live-price-unknown` for the recorded gatew
 
 ## Sensitivity and gaming
 
-`sensitivity` multiplies each weight by 0.9 and 1.1 independently, renormalizes and reports every changed rank. A test uses conflicting recency and cooperation histories so the perturbation must change a rank. Tests also exercise the recorded snapshots.
+`sensitivity` multiplies each settlement weight by 0.9 and 1.1 independently, renormalizes and reports every changed rank. The reliability weights stay fixed. A test uses conflicting recency and cooperation histories so the perturbation must change a rank. Tests also exercise the recorded snapshots.
 
 - Count: miners can manufacture cheap sessions to inflate `n`. Self-trade exclusion does not detect collusion.
 - Agent diversity: one person can create many agent addresses to inflate `a`.

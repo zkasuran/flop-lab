@@ -8,6 +8,27 @@
   "properties": {
     "schemaVersion": { "const": 1 },
     "measuredAt": { "type": "string", "format": "date-time" },
+    "reliability": {
+      "type": "object",
+      "required": ["source", "measuredAt", "from", "to", "miners", "query", "raw"],
+      "properties": {
+        "source": { "const": "https://mcp.flop.network/mcp#flop_indexer_query" },
+        "measuredAt": { "type": "string", "format": "date-time" },
+        "from": { "type": "integer", "minimum": 0 },
+        "to": { "type": "integer", "minimum": 0 },
+        "miners": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "type": "string" } },
+        "query": { "type": "string" },
+        "raw": {
+          "type": "object",
+          "description": "parseReliability validates query equality, every selected field and cross-field invariants."
+        }
+      }
+    },
+    "reliabilityError": { "type": "string" },
+    "archive": {
+      "type": "object",
+      "description": "parseArchive validates source paths, times, genesis hashes and settlement fields."
+    },
     "records": {
       "type": "array",
       "minItems": 5,
