@@ -163,6 +163,37 @@ describe("hostile and empty results", () => {
 });
 
 describe("request budget and offline behavior", () => {
+  it.each([undefined, "flop_knowledge_get"])(
+    "runs the recorded transport end to end with filter %s",
+    async (selected) => {
+      const seen: string[] = [];
+      const report = await runAudit({
+        tool: selected,
+        minIntervalMs: 0,
+        fetch: async (_url, init) => {
+          const request = JSON.parse(String(init?.body)) as Trace["request"];
+          const record = traces.find(
+            (trace) =>
+              trace.request.method === request.method &&
+              JSON.stringify(trace.request.params) === JSON.stringify(request.params),
+          );
+          if (!record) throw new Error(`Unrecorded request: ${String(init?.body)}`);
+          if (request.params) seen.push(request.params.name);
+          return new Response(JSON.stringify({ ...pickResponse(record.raw, record.request.id), id: request.id }), {
+            status: record.status,
+          });
+        },
+      });
+      expect(report.discoveryError).toBeNull();
+      expect(report.requests).toBe(selected ? 5 : 96);
+      expect(report.tools.filter((tool) => tool.status === "VIOLATION")).toHaveLength(selected ? 1 : 2);
+      expect(
+        report.tools.flatMap((tool) => tool.observations).filter((observation) => observation.confirmed),
+      ).toHaveLength(selected ? 1 : 2);
+      if (selected) expect(new Set(seen)).toEqual(new Set([selected]));
+      else expect(report.tools).toHaveLength(tools.length);
+    },
+  );
   it("counts retry attempts and never exceeds its hard budget", async () => {
     let calls = 0;
     const report = await runAudit({
@@ -189,7 +220,7 @@ describe("request budget and offline behavior", () => {
   });
 });
 
-it("uses Intel's recorded dates, not the MCP date, and exposes empty keys", () => {
+it("uses recorded Intel dates and exposes empty keys", () => {
   const root = {
     version: 2,
     snapshotHash: "hash",
