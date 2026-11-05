@@ -1,0 +1,10 @@
+{
+  "id": "example-1",
+  "task": "summarize",
+  "model": "qwen/qwen2.5-0.5b-instruct",
+  "miner": "demo-miner",
+  "amount": "0.01",
+  "pricePerGflop": "0.0001",
+  "at": 1793865600000,
+  "dryRun": true
+}

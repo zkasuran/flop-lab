@@ -1,0 +1,7 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_list_session_offers",
+  "measuredAt": "2026-11-05T09:20:44.635Z",
+  "raw": "{\n  \"data\": [],\n  \"pagination\": {\n    \"total\": 0,\n    \"limit\": 5,\n    \"offset\": 0,\n    \"hasMore\": false\n  }\n}",
+  "requests": 1
+}
