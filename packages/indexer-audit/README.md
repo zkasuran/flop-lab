@@ -78,6 +78,10 @@ At `2026-11-05T23:12:20.949Z`, the recorded run made 10 HTTP requests in 4,496 m
 
 A second live run completed at `2026-11-05T23:16:38.404Z` with a row limit of 100. It made 107 requests in 30,181 ms. Its complete miner component sums passed and the same stake-total definition check failed. A separate cold Node CLI process replayed the small fixture in 29.521 ms on the build host. These are observations from those runs, not performance guarantees.
 
+## Browser board
+
+Open `/indexer` on the suite site to inspect the bundled recording. Filters keep FAIL, PASS and UNVERIFIABLE separate. Expand a row for both values, source dates, raw responses and its equation. Download the snapshot and pass it to `run --snapshot` to replay the same evidence. The page does not call FLOP services and does not label the recording as current data.
+
 ## What this does not verify
 
 This tool does not independently read node storage or verify chain proofs, signatures, inference or settlement execution. MCP and explorer can share a backend. Matching projections are not independent confirmation. It cannot reverify #75 or #76 from the current public fields and does not claim they are fixed. It does not enumerate all accounts or participants, infer missing balances, prove refunds from residuals or compare legacy spend with terminal receipts. Sequential samples can span head changes. Devnet can reset.
