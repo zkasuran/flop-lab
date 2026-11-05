@@ -47,7 +47,7 @@ const route = pickMiner(snapshot, {
 
 One collector shares calls in flight and caches a validated snapshot for 60 seconds. Returned snapshots are independent copies. A refresh failure throws instead of disguising cached data as live. Gateway calls have a 10-second timeout and at most two retries. Retries use exponential backoff for network errors, HTTP 429 and 5xx. Retry-After is honored up to 30 seconds. MCP uses the shared client's request spacing and backoff. `snapshot.collection` records request count and collection duration. `collector.stats` counts cumulative requests and cache hits. No background polling runs in the library.
 
-The newest settlement page is bounded to 100 rows. It is not a complete network scan. Coverage and the confidence cap are shown per miner. Prices and settlement histories are not blended across model identities for a price comparison. Rankings explicitly span models.
+The newest settlement page is bounded to 100 rows. It is not a complete network scan. Coverage and the confidence cap are shown per miner. Rankings and displayed historical medians summarize the included sample across models. Historical medians are not per-model quotes.
 
 ## Check and record
 
