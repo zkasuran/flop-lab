@@ -1,6 +1,18 @@
 # FLOP scoreboard
 
-Rank miners by observed settlement evidence. Inspect each score term. Ask a conservative router for a miner and its reasons.
+Which miner has settlement evidence I can compare? The scoreboard ranks miners from public settlements and price sources. Each score shows its inputs and confidence. A router explains its pick or why no miner meets the policy.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. This ranks a dated recording at its capture time:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/scoreboard build
+node packages/scoreboard/dist/cli.js rank --file packages/scoreboard/fixtures/snapshot-01.json --now 2026-11-05T08:56:16.581Z
+```
+
+## Sources and scoring
 
 The collector reads gateway models, settlements, session offers, the proof leaderboard and indexer stats through the shared MCP client. Each raw response carries its source and measurement time. Snapshots use [schema version 1](snapshot.schema.json) and are validated when read. The [model](MODEL.md) defines the score, confidence labels and how each term can be gamed.
 

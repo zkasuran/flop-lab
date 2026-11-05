@@ -1,6 +1,16 @@
 # FLOP settlement verifier
 
-Inspect what public settlement data supports. Save the evidence and replay the same checks offline. A passing arithmetic check does not mean inference was honest.
+Does this settlement add up? The verifier checks public settlement arithmetic with exact integers and shows what each check can establish. Save a channel's evidence to replay the checks offline. Missing evidence stays visible as UNVERIFIABLE.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. This checks the recent public settlement tape:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/verifier build
+node packages/verifier/dist/cli.js tape --limit 20
+```
 
 ## Run
 

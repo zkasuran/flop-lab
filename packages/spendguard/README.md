@@ -1,6 +1,16 @@
 # Spendguard
 
-Exact budget checks before an agent spends FLOP. A durable reservation is written before a trusted spending callback runs. Every decision includes a rule trace. Failed operations retain their reservation.
+Would my budget policy stop this request? Spendguard checks an agent's declared FLOP exposure before a spending callback runs. It reserves the budget in an append-only ledger and shows the rule behind each decision. Unresolved operations keep their reservation.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. This evaluates a scripted request without spending:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/spendguard build
+node packages/spendguard/dist/cli.js evaluate packages/spendguard/examples/policy.json packages/spendguard/examples/request.json --dry-run
+```
 
 ## Run
 

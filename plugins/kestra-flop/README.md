@@ -1,7 +1,22 @@
 # FLOP for Kestra
 
-Read the FLOP devnet and check its listed settlements from a Kestra flow.
-The plugin handles JSON-RPC, SSE responses, bounded retries and source timestamps.
+Can I check FLOP settlements from a Kestra flow? This plugin reads public network
+stats, models and settlements. It checks settlement arithmetic and can start a
+flow when its polling cursor finds a new record. Every network output keeps its
+source and measurement time.
+
+## Quick start
+
+From the repository root with Docker. Test the plugin and build its JAR. The last
+command restores ownership of the build files. Installation and the read-only
+example flow are below:
+
+```sh
+docker run --rm --memory 3g -v "$PWD/plugins/kestra-flop":/w -v fl-gradle-cache:/root/.gradle -w /w eclipse-temurin:21-jdk ./gradlew --no-daemon check
+docker run --rm --memory 3g -v "$PWD/plugins/kestra-flop":/w -v fl-gradle-cache:/root/.gradle -w /w eclipse-temurin:21-jdk ./gradlew --no-daemon jar
+docker run --rm -v "$PWD/plugins/kestra-flop":/w eclipse-temurin:21-jdk chown -R "$(id -u):$(id -g)" /w
+```
+
 Its icon is a neutral list symbol. It is not the FLOP logo.
 
 ## Tasks

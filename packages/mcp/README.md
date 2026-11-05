@@ -1,6 +1,18 @@
-# @flop-lab/mcp
+# FLOP MCP client
 
-Typed client for the hosted FLOP MCP server (`https://mcp.flop.network/mcp`). Every other package in this repository reads the network through it.
+How do I read FLOP's public data without rebuilding the transport? This shared client parses the hosted server's event stream, checks response shapes and returns each observation with its source and time. The tools in this repository use the same client and recorded responses.
+
+## Quick start
+
+From the repository root with Node 22 and pnpm. This reads public network stats:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/mcp check
+pnpm exec tsx -e 'import { McpClient, getStats } from "./packages/mcp/src/index.ts"; getStats(new McpClient()).then(console.log)'
+```
+
+## Transport and typed helpers
 
 - JSON-RPC 2.0 over POST, answered as server-sent events. Session-less.
 - Retries with backoff on network errors, timeouts, 429 and 5xx. `Retry-After` is honoured. 4xx other than 429 is never retried.

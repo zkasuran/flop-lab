@@ -1,17 +1,20 @@
 # FLOP challenger
 
-Read the settlement tape. Distinguish cooperative payouts from force-settlement window candidates. Rank settlements worth a human look and collect a dry-run dossier.
+Which settlements need a challenge-window review? Challenger separates cooperative payouts from force-settlement window candidates. It ranks records for a human to inspect and prepares a dossier with the evidence and missing checks. It never submits a dispute.
 
-No dispute is submitted. No wallet or API key is needed.
+## Quick start
 
-## Run
-
-From the repository root with Node 22 and pnpm:
+From the repository root with Node 22 and pnpm. This reads a recorded tape without a wallet or API key:
 
 ```sh
-pnpm install
+pnpm install --frozen-lockfile
 pnpm --filter @flop-lab/challenger build
 node packages/challenger/dist/cli.js watch --recorded --limit 5
+```
+
+## Read current data
+
+```sh
 node packages/challenger/dist/cli.js watch --limit 5
 node packages/challenger/dist/cli.js watch --sort priority --json
 ```
