@@ -202,11 +202,21 @@ export function DevnetPanel({ snapshot, visual = false }: { snapshot: Snapshot; 
   const previous = useRef(new Set(snapshot.settlements.value?.map((row) => row.channel)));
   const [pulses, setPulses] = useState<string[]>([]);
   useEffect(() => {
+    // The server-rendered page can itself be cached. Its render time is not the browser's current time.
+    setNow(Date.now());
+    const onVisibility = () => {
+      setNow(Date.now());
+      if (!visual && !document.hidden) router.refresh();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
     const timer = setInterval(() => {
       setNow(Date.now());
       if (!visual && !document.hidden) router.refresh();
     }, 30_000);
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, [router, visual]);
   useEffect(() => {
     const rows = snapshot.settlements.value ?? [];
