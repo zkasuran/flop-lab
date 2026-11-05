@@ -17,12 +17,15 @@ import {
   type RunReport,
 } from "./model";
 import styles from "./workbench.module.css";
+import { SourceCoverage } from "./coverage";
+import type { CoveragePage } from "./coverage-model";
+import type { ClaimHistory } from "../../../../packages/harness/src/history";
 
 const build = process.env.NEXT_PUBLIC_BUILD_COMMIT;
 const revision = build && /^[a-f0-9]{40}$/.test(build) ? build : "main";
 const source = `https://github.com/zkasuran/flop-lab/tree/${revision}/packages/harness`;
-const rawRun = `https://github.com/zkasuran/flop-lab/blob/${revision}/packages/harness/last-run.json`;
-const runCommand = "pnpm --filter @flop-lab/harness start run --class read-only --max-requests 100 --max-flop 0";
+const rawRun = `https://github.com/zkasuran/flop-lab/tree/${revision}/packages/harness/fixtures/coverage`;
+const runCommand = "pnpm --filter @flop-lab/harness start run --profile full --max-requests 80 --max-flop 0";
 const labels = {
   PASS: "Pass",
   FAIL: "Confirmed fail",
@@ -111,7 +114,7 @@ function Timeline({ report }: { report: RunReport }) {
     <section className={styles.timeline} ref={ref} aria-labelledby="timeline-title">
       <div className={styles.sectionHeading}>
         <div>
-          <p className="eyebrow">02 / The recorded run</p>
+          <p className="eyebrow">03 / The recorded run</p>
           <h2 id="timeline-title">From request to evidence.</h2>
         </div>
         <p className="muted">Reading progress follows this section. The bars below show recorded request durations.</p>
@@ -173,7 +176,17 @@ function Timeline({ report }: { report: RunReport }) {
   );
 }
 
-function Detail({ result, report, onClose }: { result: ClaimResult; report: RunReport; onClose: () => void }) {
+function Detail({
+  result,
+  report,
+  onClose,
+  history,
+}: {
+  result: ClaimResult;
+  report: RunReport;
+  onClose: () => void;
+  history: ClaimHistory;
+}) {
   const dialog = useRef<HTMLDialogElement>(null);
   const reduced = useReducedMotion();
   useEffect(() => {
@@ -220,6 +233,39 @@ function Detail({ result, report, onClose }: { result: ClaimResult; report: RunR
         <h2 id="claim-title">{result.claim.title}</h2>
         <code className="muted">{result.claim.id}</code>
         <p className={styles.reason}>{result.reason}</p>
+        <section className={styles.source} aria-label="Claim status over runs">
+          <h3>Status over recorder runs</h3>
+          {!history.runs.length ? (
+            <p>
+              No public recorder history is available for this claim. This result comes from the dated package
+              recording.
+            </p>
+          ) : (
+            <ol className={styles.historyRuns}>
+              {history.runs.map((run) => {
+                const point = run.claims.find((claim) => claim.id === result.claim.id);
+                return (
+                  <li key={run.id}>
+                    <time dateTime={run.measuredAt}>{utc(run.measuredAt)}</time>
+                    <strong>{point?.status ?? "NOT RECORDED"}</strong>
+                    {point ? (
+                      <p>
+                        {point.reason}
+                        <br />
+                        <a href={point.source}>Source ↗</a>
+                        {" · "}
+                        <time dateTime={point.measuredAt}>{utc(point.measuredAt)}</time>
+                      </p>
+                    ) : (
+                      <p>This run did not record this claim. No previous outcome is carried forward.</p>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          )}
+          <a href={history.source}>Recorder index ↗</a>
+        </section>
         <div className={styles.diff} aria-label="Expected versus observed">
           <section>
             <h3>− Expected from the claim</h3>
@@ -288,7 +334,15 @@ function Detail({ result, report, onClose }: { result: ClaimResult; report: RunR
   );
 }
 
-export function HarnessWorkbench({ report }: { report: RunReport | null }) {
+export function HarnessWorkbench({
+  report,
+  coverage,
+  history,
+}: {
+  report: RunReport | null;
+  coverage: CoveragePage[];
+  history: ClaimHistory;
+}) {
   const reduced = useReducedMotion();
   const [filter, setFilter] = useState<Filter>("ALL");
   const [kind, setKind] = useState("all");
@@ -324,14 +378,16 @@ export function HarnessWorkbench({ report }: { report: RunReport | null }) {
           <div>
             <ToolHeader slug="harness" />
             <motion.p className={styles.intro} {...enter(2)}>
-              Inspect repeatable protocol checks. Trace a result to its source. Copy the command and test it yourself.
+              Start with the docs. Find the checks they support, the recorded outcomes and the evidence still missing.
             </motion.p>
             <motion.div className={styles.heroActions} {...enter(3)}>
               <Control
                 className={styles.primary}
-                onClick={() => matrix.current?.scrollIntoView({ behavior: "instant", block: "start" })}
+                onClick={() =>
+                  document.getElementById("source-coverage")?.scrollIntoView({ behavior: "instant", block: "start" })
+                }
               >
-                Inspect the claims ↓
+                Inspect source coverage ↓
               </Control>
               <a href={`${source}#readme`}>Runner guide ↗</a>
             </motion.div>
@@ -417,10 +473,17 @@ export function HarnessWorkbench({ report }: { report: RunReport | null }) {
           </section>
         )}
 
+        <SourceCoverage
+          pages={coverage}
+          results={results}
+          history={history}
+          onSelect={(id) => setSelected(results.find((result) => result.claim.id === id) ?? null)}
+        />
+
         <section className={styles.matrix} ref={matrix} aria-labelledby="matrix-title">
           <div className={styles.sectionHeading}>
             <div>
-              <p className="eyebrow">01 / Claim catalogue</p>
+              <p className="eyebrow">02 / Claim catalogue</p>
               <h2 id="matrix-title">Every result has a reason.</h2>
             </div>
             <p className="muted">
@@ -556,7 +619,7 @@ export function HarnessWorkbench({ report }: { report: RunReport | null }) {
         <section className={styles.reproduce} aria-labelledby="reproduce-title">
           <div className={styles.sectionHeading}>
             <div>
-              <p className="eyebrow">03 / Reproduce it</p>
+              <p className="eyebrow">04 / Reproduce it</p>
               <h2 id="reproduce-title">Bring your own observation.</h2>
             </div>
             <p className="muted">
@@ -594,7 +657,13 @@ export function HarnessWorkbench({ report }: { report: RunReport | null }) {
         </section>
         <AnimatePresence>
           {selected && report && (
-            <Detail key={selected.claim.id} result={selected} report={report} onClose={() => setSelected(null)} />
+            <Detail
+              key={selected.claim.id}
+              result={selected}
+              report={report}
+              history={history}
+              onClose={() => setSelected(null)}
+            />
           )}
         </AnimatePresence>
       </div>

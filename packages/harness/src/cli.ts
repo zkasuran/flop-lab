@@ -8,7 +8,7 @@ import { resolve } from "node:path";
 import { runHarness } from "./runner";
 import { parseReport, renderBugDraft, renderMarkdown } from "./report";
 import { loadClaims } from "./catalogue";
-import { loadInventory } from "./inventory";
+import { loadInventory } from "./inventory-loader";
 import { claimTimeline, fetchClaimHistory } from "./history";
 import { serialize } from "./validation";
 import type { Risk } from "./types";

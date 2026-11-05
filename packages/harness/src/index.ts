@@ -6,5 +6,6 @@ export { Transport } from "./transport";
 export type { Claim, ClaimResult, Evidence, RunReport, Risk, Status } from "./types";
 export { extractDocument, type SourceDocument, type SourceUnit } from "./extraction";
 export { loadCoverageRecording } from "./recording";
-export { loadInventory, inventoryPage, parseDocument, type InventoryPage, type InventoryUnit } from "./inventory";
+export { inventoryPage, parseDocument, type InventoryPage, type InventoryUnit } from "./inventory";
+export { loadInventory } from "./inventory-loader";
 export { fetchClaimHistory, parseClaimHistory, claimTimeline, type ClaimHistory, type HistoryRun } from "./history";
