@@ -38,6 +38,12 @@ importers:
 
   packages/mcp: {}
 
+  packages/verifier:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+
 packages:
 
   '@cacheable/memory@2.2.0':

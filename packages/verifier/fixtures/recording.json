@@ -1,0 +1,344 @@
+{
+  "capturedAt": "2026-11-05T08:59:59.311Z",
+  "source": "https://mcp.flop.network/mcp",
+  "tapeRows": 336,
+  "complete": true,
+  "requests": {
+    "requests": 39,
+    "retries": 0,
+    "failures": 0
+  },
+  "tapeExitCode": 0,
+  "reports": [
+    {
+      "channelId": "0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb0a72e39e9c47edee1681ef766deec",
+      "bytes": 15003,
+      "checks": [
+        {
+          "id": "bundle-integrity",
+          "status": "PASS",
+          "detail": "Hashes match. An unsigned bundle can be edited and rehashed; this is not source authentication."
+        },
+        {
+          "id": "settlement-record",
+          "status": "PASS",
+          "detail": "One matching settlement in the captured pages."
+        },
+        {
+          "id": "escrow-conservation",
+          "status": "PASS",
+          "detail": "The reported split conserves escrow exactly. This does not prove funds moved."
+        },
+        {
+          "id": "display-price-ratio",
+          "status": "PASS",
+          "detail": "Display-ratio consistency only. No conversion from G_n to GFLOP is established."
+        },
+        {
+          "id": "channel-consistency",
+          "status": "PASS",
+          "detail": "The two indexed views agree. Both are served through the same public MCP."
+        },
+        {
+          "id": "price-consistency",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an invertible G_n-to-GFLOP definition, per-turn compute and the agreed historical price. A derived tape ratio is not a pricing proof."
+        },
+        {
+          "id": "model-registry",
+          "status": "PASS",
+          "detail": "Hash membership matches these snapshots. This does not verify weights ran or historical registry membership."
+        },
+        {
+          "id": "settlement-event",
+          "status": "PASS",
+          "detail": "Indexed event, call and header references agree. No consensus or storage proof was checked."
+        },
+        {
+          "id": "assurance-tier",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing authenticated co-signed transcript and activation evidence. WITNESS_ONLY and signatures without verification are not proof."
+        },
+        {
+          "id": "challenge-window",
+          "status": "UNVERIFIABLE",
+          "detail": "The docs specify about seven days, bounded by DA retention. Missing the exact historical runtime window and authenticated head. No exact expiry is inferred."
+        },
+        {
+          "id": "merkle-inclusion",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an authoritative leaf and node encoding plus an authenticated transcript root. Published witness merklePath fields alone are not inclusion proof."
+        },
+        {
+          "id": "tee-quote-digest",
+          "status": "NOT_APPLICABLE",
+          "detail": "This captured Soft compute channel declares no HTLC link or hardware quote."
+        }
+      ]
+    },
+    {
+      "channelId": "0x776c2e77b664b3670d351da75abe3e44ff09cc5deba41f60958cef86af3c0bab",
+      "bytes": 56033,
+      "checks": [
+        {
+          "id": "bundle-integrity",
+          "status": "PASS",
+          "detail": "Hashes match. An unsigned bundle can be edited and rehashed; this is not source authentication."
+        },
+        {
+          "id": "settlement-record",
+          "status": "PASS",
+          "detail": "One matching settlement in the captured pages."
+        },
+        {
+          "id": "escrow-conservation",
+          "status": "PASS",
+          "detail": "The reported split conserves escrow exactly. This does not prove funds moved."
+        },
+        {
+          "id": "display-price-ratio",
+          "status": "PASS",
+          "detail": "Display-ratio consistency only. No conversion from G_n to GFLOP is established."
+        },
+        {
+          "id": "channel-consistency",
+          "status": "PASS",
+          "detail": "The two indexed views agree. Both are served through the same public MCP."
+        },
+        {
+          "id": "price-consistency",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an invertible G_n-to-GFLOP definition, per-turn compute and the agreed historical price. A derived tape ratio is not a pricing proof."
+        },
+        {
+          "id": "model-registry",
+          "status": "PASS",
+          "detail": "Hash membership matches these snapshots. This does not verify weights ran or historical registry membership."
+        },
+        {
+          "id": "settlement-event",
+          "status": "PASS",
+          "detail": "Indexed event, call and header references agree. No consensus or storage proof was checked."
+        },
+        {
+          "id": "assurance-tier",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing authenticated co-signed transcript and activation evidence. WITNESS_ONLY and signatures without verification are not proof."
+        },
+        {
+          "id": "challenge-window",
+          "status": "UNVERIFIABLE",
+          "detail": "The docs specify about seven days, bounded by DA retention. Missing the exact historical runtime window and authenticated head. No exact expiry is inferred."
+        },
+        {
+          "id": "merkle-inclusion",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an authoritative leaf and node encoding plus an authenticated transcript root. Published witness merklePath fields alone are not inclusion proof."
+        },
+        {
+          "id": "tee-quote-digest",
+          "status": "NOT_APPLICABLE",
+          "detail": "This captured Soft compute channel declares no HTLC link or hardware quote."
+        }
+      ]
+    },
+    {
+      "channelId": "0x89e1c22519f49c195162d68f447d7e0177f015de371b2e7cdccd7221fb48fe19",
+      "bytes": 71675,
+      "checks": [
+        {
+          "id": "bundle-integrity",
+          "status": "PASS",
+          "detail": "Hashes match. An unsigned bundle can be edited and rehashed; this is not source authentication."
+        },
+        {
+          "id": "settlement-record",
+          "status": "PASS",
+          "detail": "One matching settlement in the captured pages."
+        },
+        {
+          "id": "escrow-conservation",
+          "status": "PASS",
+          "detail": "The reported split conserves escrow exactly. This does not prove funds moved."
+        },
+        {
+          "id": "display-price-ratio",
+          "status": "PASS",
+          "detail": "Display-ratio consistency only. No conversion from G_n to GFLOP is established."
+        },
+        {
+          "id": "channel-consistency",
+          "status": "PASS",
+          "detail": "The two indexed views agree. Both are served through the same public MCP."
+        },
+        {
+          "id": "price-consistency",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an invertible G_n-to-GFLOP definition, per-turn compute and the agreed historical price. A derived tape ratio is not a pricing proof."
+        },
+        {
+          "id": "model-registry",
+          "status": "PASS",
+          "detail": "Hash membership matches these snapshots. This does not verify weights ran or historical registry membership."
+        },
+        {
+          "id": "settlement-event",
+          "status": "PASS",
+          "detail": "Indexed event, call and header references agree. No consensus or storage proof was checked."
+        },
+        {
+          "id": "assurance-tier",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing authenticated co-signed transcript and activation evidence. WITNESS_ONLY and signatures without verification are not proof."
+        },
+        {
+          "id": "challenge-window",
+          "status": "UNVERIFIABLE",
+          "detail": "The docs specify about seven days, bounded by DA retention. Missing the exact historical runtime window and authenticated head. No exact expiry is inferred."
+        },
+        {
+          "id": "merkle-inclusion",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an authoritative leaf and node encoding plus an authenticated transcript root. Published witness merklePath fields alone are not inclusion proof."
+        },
+        {
+          "id": "tee-quote-digest",
+          "status": "NOT_APPLICABLE",
+          "detail": "This captured Soft compute channel declares no HTLC link or hardware quote."
+        }
+      ]
+    },
+    {
+      "channelId": "0x1b2097dee5708648f175f177c8b9b863593a49eac492b1ba2dabb112d0e9f7e4",
+      "bytes": 59222,
+      "checks": [
+        {
+          "id": "bundle-integrity",
+          "status": "PASS",
+          "detail": "Hashes match. An unsigned bundle can be edited and rehashed; this is not source authentication."
+        },
+        {
+          "id": "settlement-record",
+          "status": "PASS",
+          "detail": "One matching settlement in the captured pages."
+        },
+        {
+          "id": "escrow-conservation",
+          "status": "PASS",
+          "detail": "The reported split conserves escrow exactly. This does not prove funds moved."
+        },
+        {
+          "id": "display-price-ratio",
+          "status": "PASS",
+          "detail": "Display-ratio consistency only. No conversion from G_n to GFLOP is established."
+        },
+        {
+          "id": "channel-consistency",
+          "status": "PASS",
+          "detail": "The two indexed views agree. Both are served through the same public MCP."
+        },
+        {
+          "id": "price-consistency",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an invertible G_n-to-GFLOP definition, per-turn compute and the agreed historical price. A derived tape ratio is not a pricing proof."
+        },
+        {
+          "id": "model-registry",
+          "status": "PASS",
+          "detail": "Hash membership matches these snapshots. This does not verify weights ran or historical registry membership."
+        },
+        {
+          "id": "settlement-event",
+          "status": "PASS",
+          "detail": "Indexed event, call and header references agree. No consensus or storage proof was checked."
+        },
+        {
+          "id": "assurance-tier",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing authenticated co-signed transcript and activation evidence. WITNESS_ONLY and signatures without verification are not proof."
+        },
+        {
+          "id": "challenge-window",
+          "status": "UNVERIFIABLE",
+          "detail": "The docs specify about seven days, bounded by DA retention. Missing the exact historical runtime window and authenticated head. No exact expiry is inferred."
+        },
+        {
+          "id": "merkle-inclusion",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an authoritative leaf and node encoding plus an authenticated transcript root. Published witness merklePath fields alone are not inclusion proof."
+        },
+        {
+          "id": "tee-quote-digest",
+          "status": "NOT_APPLICABLE",
+          "detail": "This captured Soft compute channel declares no HTLC link or hardware quote."
+        }
+      ]
+    },
+    {
+      "channelId": "0xa03f4ef3a4c9f064db5e39c035c86c61eae22c296ec35ca2b261cba5470c4725",
+      "bytes": 61737,
+      "checks": [
+        {
+          "id": "bundle-integrity",
+          "status": "PASS",
+          "detail": "Hashes match. An unsigned bundle can be edited and rehashed; this is not source authentication."
+        },
+        {
+          "id": "settlement-record",
+          "status": "PASS",
+          "detail": "One matching settlement in the captured pages."
+        },
+        {
+          "id": "escrow-conservation",
+          "status": "PASS",
+          "detail": "The reported split conserves escrow exactly. This does not prove funds moved."
+        },
+        {
+          "id": "display-price-ratio",
+          "status": "PASS",
+          "detail": "Display-ratio consistency only. No conversion from G_n to GFLOP is established."
+        },
+        {
+          "id": "channel-consistency",
+          "status": "PASS",
+          "detail": "The two indexed views agree. Both are served through the same public MCP."
+        },
+        {
+          "id": "price-consistency",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an invertible G_n-to-GFLOP definition, per-turn compute and the agreed historical price. A derived tape ratio is not a pricing proof."
+        },
+        {
+          "id": "model-registry",
+          "status": "PASS",
+          "detail": "Hash membership matches these snapshots. This does not verify weights ran or historical registry membership."
+        },
+        {
+          "id": "settlement-event",
+          "status": "PASS",
+          "detail": "Indexed event, call and header references agree. No consensus or storage proof was checked."
+        },
+        {
+          "id": "assurance-tier",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing authenticated co-signed transcript and activation evidence. WITNESS_ONLY and signatures without verification are not proof."
+        },
+        {
+          "id": "challenge-window",
+          "status": "UNVERIFIABLE",
+          "detail": "The docs specify about seven days, bounded by DA retention. Missing the exact historical runtime window and authenticated head. No exact expiry is inferred."
+        },
+        {
+          "id": "merkle-inclusion",
+          "status": "UNVERIFIABLE",
+          "detail": "Missing an authoritative leaf and node encoding plus an authenticated transcript root. Published witness merklePath fields alone are not inclusion proof."
+        },
+        {
+          "id": "tee-quote-digest",
+          "status": "NOT_APPLICABLE",
+          "detail": "This captured Soft compute channel declares no HTLC link or hardware quote."
+        }
+      ]
+    }
+  ]
+}
