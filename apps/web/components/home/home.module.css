@@ -896,7 +896,7 @@
 .toolRow {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) 4.75rem 12.5rem;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) 4.75rem 13.5rem;
   align-items: center;
   gap: var(--space-4);
   min-height: 3.9rem;
@@ -957,12 +957,17 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  max-width: 100%;
   color: var(--muted);
   font-size: var(--text-sm);
   transition: color var(--motion-fast) var(--ease-out);
 }
 .toolGo code {
+  min-width: 0;
+  overflow: hidden;
   font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .toolRow svg {
   transition: transform var(--motion-fast) var(--ease-out);
@@ -1199,19 +1204,21 @@
     grid-column: 2;
   }
 }
+@media (max-width: 1180px) {
+  .indexSection {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .indexHead {
+    position: static;
+  }
+}
 @media (max-width: 860px) {
   .observeGrid,
   .processGrid {
     grid-template-columns: 1fr;
   }
   .observeNotes {
-    position: static;
-  }
-  .indexSection {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-  .indexHead {
     position: static;
   }
 }

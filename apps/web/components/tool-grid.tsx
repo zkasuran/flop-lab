@@ -76,7 +76,7 @@ export function ToolGrid() {
                         {STATUS[tool.status]}
                       </span>
                       <span className={styles.toolGo}>
-                        {planned ? <code>{tool.repoPath}</code> : <ToolMark slug={tool.slug} />}
+                        {planned ? <code title={tool.repoPath}>{tool.repoPath}</code> : <ToolMark slug={tool.slug} />}
                         {planned ? <ArrowUpRight size={14} /> : <ArrowRight size={14} />}
                       </span>
                     </Link>
