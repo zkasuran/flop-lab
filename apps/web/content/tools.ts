@@ -62,7 +62,7 @@ export const tools: readonly Tool[] = [
     slug: "challenger",
     name: "Challenge watcher",
     tagline: "Which settlements need a challenge-window review?",
-    status: "planned",
+    status: "alpha",
     href: "/challenger",
     repoPath: "packages/challenger",
   },
