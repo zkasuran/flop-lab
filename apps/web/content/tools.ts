@@ -118,7 +118,7 @@ export const tools: readonly Tool[] = [
     section: "verify",
     name: "MCP contract audit",
     tagline: "Do the network's tools return what they advertise?",
-    status: "planned",
+    status: "alpha",
     href: "/contracts",
     repoPath: "packages/mcpaudit",
   },

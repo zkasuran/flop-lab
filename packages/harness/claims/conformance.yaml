@@ -86,7 +86,7 @@
   },
   {
     "id": "offer-pagination",
-    "evidenceNeeded": "A nonempty standing-offer list with stable ordering across adjacent and combined pages, or a snapshot token. An empty list cannot demonstrate offset movement.",
+    "evidenceNeeded": "A nonempty standing-offer list with stable ordering across adjacent and combined pages or a snapshot token. An empty list cannot demonstrate offset movement.",
     "title": "Offer pagination",
     "check": "pagination",
     "expected": "limit and offset are honoured, hasMore matches total and adjacent slices match",
