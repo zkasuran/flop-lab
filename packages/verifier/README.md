@@ -1,15 +1,15 @@
 # FLOP settlement verifier
 
-Does this settlement add up? The verifier checks public settlement arithmetic with exact integers and shows what each check can establish. Save a channel's evidence to replay the checks offline. Missing evidence stays visible as UNVERIFIABLE.
+Do the settlement, receipt and attestation agree? The verifier checks public settlement arithmetic, cross-checks indexed views and inspects linked HTLC and quote evidence. Save a channel's evidence to replay the checks offline. Missing evidence stays visible as UNVERIFIABLE.
 
 ## Quick start
 
-From the repository root with Node 22 and pnpm. This checks the recent public settlement tape:
+From the repository root with Node 22 and pnpm. The recorded v2 bundle exits `3` because public evidence is incomplete:
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter @flop-lab/verifier build
-node packages/verifier/dist/cli.js tape --limit 20
+node packages/verifier/dist/cli.js bundle packages/verifier/fixtures/v2-channel.json --json
 ```
 
 ## Run
@@ -26,6 +26,8 @@ node packages/verifier/dist/cli.js channel 0xa5d0a1722a5c7b8b86d7489ff1e76d0c3eb
 ```
 
 The package exposes the `flop-verify` binary. The repository commands above invoke its built entry directly. The example channel is from a dated devnet fixture. A devnet reset can remove it. `--out` creates a new file and refuses to overwrite an existing one. `--json` prints machine-readable results. Offline replay never follows URLs in a bundle.
+
+The suite also exposes `flop verify` with the same arguments. Build `@flop-lab/cli` to use `node packages/cli/dist/cli.js verify --help` from a checkout.
 
 Exit codes: `0` means every executed check is PASS or NOT_APPLICABLE. `1` means at least one FAIL or invalid CLI input. `3` means UNVERIFIABLE with no FAIL. The recorded channel command exits `3`. An empty tape also exits `3`. Tape mode executes only escrow and display-ratio arithmetic. Its `0` is not a full verification result.
 
@@ -63,6 +65,30 @@ Every check names its claim, inputs and observation ids. Status is `PASS`, `FAIL
 | `merkle-inclusion`    | Unverifiable without authoritative leaf/node encoding and an authenticated root. A published `merklePath` does not establish encoding.                         |
 | `tee-quote-digest`    | Unverifiable without raw quote bytes, documented hashing and independent authentication. Not applicable to a captured Soft channel with no HTLC link or quote. |
 
+### Additional v2 checks
+
+| Id | Claim and boundary |
+| --- | --- |
+| `indexer-channel` | Compare channel amounts, parties, state, model and tier against `computeChannel`. |
+| `indexer-settlement` | Compare tape amounts, price text, block, event and tier against `settlementPrice`. |
+| `htlc-link` | Require an explicit matching hash lock in the channel or settlement. Never use a channel id as a hash lock. |
+| `indexer-htlc` | Compare the bound `flop_check_htlc` response against the indexed HTLC. |
+| `htlc-preimage` | SHA-256 over hex-decoded public preimages matches the linked hash lock. Requires an explicit `hashAlgorithm: "sha256"` declaration. |
+| `htlc-timelock` | Compare indexed HTLC block and timeout with the captured head. Refund before timeout fails. Expiry alone does not imply refund. |
+| `htlc-amount` | Linked HTLC amount equals settlement escrow in raw units. |
+| `receipt-amount` | Compare explicit `minerPaid` with settlement payment. Mismatches fail. Matching placeholder fields remain unverifiable. |
+| `quote-structure` | Validate the SDK v1 quote envelope and hex fields. Check its HTLC and miner references. This is not raw hardware quote validation. |
+| `quote-digest` | SHA-256 over hex-decoded quote bytes equals `teeQuoteDigest`. Requires `teeQuoteDigestAlgorithm: "sha256"`. Does not authenticate that digest. |
+| `attestation-trust` | Inspect `dstackVkeys`. Empty keys are unverifiable. Compare explicit platform and measurement bindings when supplied. Authentication remains unverifiable. |
+| `attestation-tcb` | Bind TCB advisory platform and version to the quote. A reported vulnerable TCB fails. Matching advisory data is not authenticated appraisal. |
+| `tee-service-simulation` | Display captured simulation answers separately. Even `verified: true` cannot become PASS. |
+
+Disagreements are FAIL of the captured data. The report retains both values. Missing fields do not hide a disagreement in another compared field. Hash-lock request arguments and response subjects must agree before linked evidence is used. Plain-text service unavailability is preserved as UNVERIFIABLE.
+
+Quote envelopes follow the [SDK 0.4.0 README](https://unpkg.com/@flop-labs/sdk@0.4.0/README.md), read during capture on 2026-11-05. The supported envelope contains `version`, `miner_address`, `task_reference`, `compute_output` and `attestation`. Arbitrary quote URLs and opaque references are never fetched. Raw SGX, TDX, Nitro and GPU attestation formats and signature chains are not parsed or authenticated.
+
+The successful linked-receipt and attestation paths have **synthetic fixture coverage only**. They are not evidence of a working public appraisal path. Explicit digest algorithms, `attestation.measurement_hash`, `attestation.tcb_version` and trust entries shaped as `{platform, measurementHash}` are optional self-described evidence fields. Their encoding is not claimed as a deployed FLOP API contract. Opaque dstack verification keys are never treated as measurements. A positive label match stays UNVERIFIABLE without authentication. Unsupported algorithms, encodings and TCB platforms stay UNVERIFIABLE.
+
 ### Price semantics
 
 The [glossary](https://docs.flop.network/docs/core-terms), read on 2026-11-05, defines G_n as:
@@ -87,7 +113,7 @@ The MCP tool description explicitly says that receipt fields other than authenti
 
 ## Evidence format and boundaries
 
-Version `1` bundles contain `network`, `channelId`, `capturedAt`, `observations` and `sha256`. Each observation contains its source URL, tool, arguments, receive time, attempt count, request duration and exact MCP tool text in `raw`. Transport failures record `error` instead. SSE and JSON-RPC transport are handled by `@flop-lab/mcp`. The bundle saves the tool text, not the transport envelope. Parsed values are derived again for each offline run.
+Version `1` and `2` bundles contain `network`, `channelId`, `capturedAt`, `observations` and `sha256`. New captures use version `2`. Version `1` replays its original checks unchanged. Version `2` adds expanded channel queries, a settlement query and linked receipt, HTLC and TCB observations when public references allow collection. Each observation contains its source URL, tool, arguments, receive time, attempt count, request duration and exact MCP tool text in `raw`. Transport failures record `error` instead. SSE and JSON-RPC transport are handled by `@flop-lab/mcp`. The bundle saves the tool text, not the transport envelope. Parsed values are derived again for each offline run.
 
 Each hash covers UTF-8 canonical JSON of all fields except its own `sha256`. Object keys are sorted lexicographically. Arrays preserve order. Numbers use JSON serialization. Raw strings preserve their exact bytes after UTF-8 encoding. Only finite JSON values are allowed. The outer hash also covers the observation hashes and metadata. This is a format-local content hash, not a signature or a claim to implement a general JSON canonicalization standard.
 
@@ -106,6 +132,12 @@ pnpm --filter @flop-lab/verifier record
 ```
 
 Tests replay recorded tool answers through the shared client's `replayFetch`. They also rehash synthetic corruptions so arithmetic and provenance checks must detect contradictions independently of file integrity. CLI replay is tested without live requests. Default tests need no network.
+
+`fixtures/v2-recording.json` records a channel capture at `2026-11-05T22:15:48.754Z` from the hosted MCP. The recording made 10 HTTP requests including the initial tape lookup with no retries. Both new indexer comparisons passed. The channel had no explicit HTLC link or inline quote. The captured trust root had an empty `dstackVkeys` array.
+
+`fixtures/v2-settled-htlcs.json` records an empty settled-HTLC query. A created HTLC was available through the indexer while the HTLC and receipt tools returned unavailable messages. The raw answers, request arguments and receive times are in `v2-htlc-index.json`, `v2-htlc-check.json` and `v2-receipt.json`. These answers do not establish a defect or a settlement link. GraphQL fields were introspected before use and saved in the v2 schema fixtures. `test/public.test.ts` labels all synthetic quote and successful receipt data.
+
+To refresh these fixtures explicitly, run `pnpm exec tsx packages/verifier/scripts/record-v2.ts` and `pnpm exec tsx packages/verifier/scripts/record-htlc.ts`. These commands overwrite only their named fixture files. Default tests never require live access.
 
 ## Browser workbench
 

@@ -4,12 +4,12 @@ import { canonical, sealEvidence, sealObservation } from "./bundle";
 import { checkArithmetic, resultCode } from "./checks/index";
 import { array, boolean, hash, height, object } from "./schema";
 import type { Check, Evidence, Observation } from "./types";
+import { publicHashLock, publicQuote } from "./checks/public";
+import { CHANNEL_QUERY, HTLC_QUERY, SETTLEMENT_QUERY } from "./queries";
 
 const SOURCE = "https://mcp.flop.network/mcp";
 const TX_QUERY =
   "query($hash: String!) { transaction(hash: $hash) { hash blockHash blockNumber indexInBlock section method args success timestamp } }";
-const CHANNEL_QUERY =
-  "query($id: String!) { computeChannel(channelId: $id) { channelId finalRoot challengeEnd verifierRef } }";
 
 export interface TapeReport {
   capturedAt: string;
@@ -163,15 +163,38 @@ export class EvidenceFetcher {
     }
     observations.push(
       await this.observe("channel-index", "flop_indexer_query", { query: CHANNEL_QUERY, variables: { id } }),
+      await this.observe("settlement-index", "flop_indexer_query", { query: SETTLEMENT_QUERY, variables: { id } }),
     );
     observations.push(await this.observe("models", "flop_discover_models", { max_results: 1000 }));
     observations.push(await this.observe("trust-root", "flop_trust_root"));
     observations.push(await this.observe("head", "flop_get_stats"));
-    const receiptLink = c.hashLock ?? c.hash_lock ?? rows[0]?.hashLock ?? rows[0]?.hash_lock;
-    if (typeof receiptLink === "string" && /^0x[0-9a-fA-F]{64}$/.test(receiptLink))
-      observations.push(await this.observe("receipt", "flop_get_inference_receipt", { hash_lock: receiptLink }));
+    let receiptData: Record<string, unknown> = {};
+    try {
+      const hashLock = publicHashLock(c, rows[0] ?? {});
+      const receipt = await this.observe("receipt", "flop_get_inference_receipt", { hash_lock: hashLock });
+      observations.push(receipt);
+      observations.push(await this.observe("htlc", "flop_check_htlc", { hash_lock: hashLock }));
+      observations.push(
+        await this.observe("htlc-index", "flop_indexer_query", { query: HTLC_QUERY, variables: { hash: hashLock } }),
+      );
+      receiptData = this.data(receipt);
+    } catch {
+      // Missing or contradictory links remain in raw observations. Do not guess a hash lock.
+    }
+    try {
+      const quote = publicQuote(c, rows[0] ?? {}, receiptData);
+      const attestation = object(quote.attestation, "attestation");
+      const platform = attestation.tee_type;
+      if (platform === "intel-sgx" || platform === "aws-nitro" || platform === "amd-sev") {
+        const args: Record<string, unknown> = { platform };
+        if (typeof attestation.tcb_version === "string") args.tcb_version = attestation.tcb_version;
+        observations.push(await this.observe("tcb", "flop_get_tcb_status", args));
+      }
+    } catch {
+      // Opaque references have no public resolver. Replay explains the missing evidence.
+    }
     return sealEvidence({
-      version: 1,
+      version: 2,
       network: "flop-devnet",
       channelId: id,
       capturedAt: new Date(this.now()).toISOString(),

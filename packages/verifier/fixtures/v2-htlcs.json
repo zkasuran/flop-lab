@@ -1,0 +1,55 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_indexer_query",
+  "args": {
+    "query": "{ htlcs(limit: 10) { hashLock status } }"
+  },
+  "value": {
+    "htlcs": [
+      {
+        "hashLock": "0x79abe3554fc8b5fd22b8c5c520ffb7f274a98d2d047691d491f467d0e78cf96a",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0xcfcbb80f31f5ed1f069019a8ce5637c9e2cece8120e425268c9eff30ed4ca628",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0x516ffbedf5cf9892d50d6cd9cfbe307df5a8bb97e45c2176ac6127011f1821e4",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0xba9b98796632d1b0a9fc5ee8462d0fdeea79183b8ae61604a0cabd7d964e7d65",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0x31f38b89eb8ccf8448f82b227252421e5ffc9549c578f5bee4bd6bb3d9658537",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0x21a8ae3d37015020d18302bd0db2899203849c1c287ab9a66beea47f3e6617c2",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0xc29415e86e3eb6139c390b9d98a5f2598b3fa53dca9cc25f29dd96f14049ba1d",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0xcd99dd9a80874719a6a9ed1601c02a71c6511e7af568a14621f84a438619d0cf",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0xcde01fac885a336a13dded928221843bc1094050444419945d1df7d9deb6a5df",
+        "status": "CREATED"
+      },
+      {
+        "hashLock": "0x1c9f344508c7749ce1e0ced0308f4a5d8fd420add64b84a95388c1f5daca38cf",
+        "status": "CREATED"
+      }
+    ]
+  },
+  "raw": "{\n  \"htlcs\": [\n    {\n      \"hashLock\": \"0x79abe3554fc8b5fd22b8c5c520ffb7f274a98d2d047691d491f467d0e78cf96a\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0xcfcbb80f31f5ed1f069019a8ce5637c9e2cece8120e425268c9eff30ed4ca628\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0x516ffbedf5cf9892d50d6cd9cfbe307df5a8bb97e45c2176ac6127011f1821e4\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0xba9b98796632d1b0a9fc5ee8462d0fdeea79183b8ae61604a0cabd7d964e7d65\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0x31f38b89eb8ccf8448f82b227252421e5ffc9549c578f5bee4bd6bb3d9658537\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0x21a8ae3d37015020d18302bd0db2899203849c1c287ab9a66beea47f3e6617c2\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0xc29415e86e3eb6139c390b9d98a5f2598b3fa53dca9cc25f29dd96f14049ba1d\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0xcd99dd9a80874719a6a9ed1601c02a71c6511e7af568a14621f84a438619d0cf\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0xcde01fac885a336a13dded928221843bc1094050444419945d1df7d9deb6a5df\",\n      \"status\": \"CREATED\"\n    },\n    {\n      \"hashLock\": \"0x1c9f344508c7749ce1e0ced0308f4a5d8fd420add64b84a95388c1f5daca38cf\",\n      \"status\": \"CREATED\"\n    }\n  ]\n}",
+  "measuredAt": "2026-11-05T22:11:07.708Z",
+  "durationMs": 126,
+  "attempts": 1
+}

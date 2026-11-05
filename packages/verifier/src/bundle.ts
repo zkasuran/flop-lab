@@ -47,7 +47,8 @@ export function parseEvidence(value: unknown): Evidence {
   const serialized = canonical(value);
   if (new TextEncoder().encode(serialized).length > MAX_BUNDLE_BYTES) throw new Error("Bundle exceeds 1 MB");
   const o = object(value, "bundle");
-  if (o.version !== 1 || o.network !== "flop-devnet") throw new Error("Unsupported bundle version or network");
+  if ((o.version !== 1 && o.version !== 2) || o.network !== "flop-devnet")
+    throw new Error("Unsupported bundle version or network");
   hash(o.channelId, "channelId");
   date(o.capturedAt, "capturedAt");
   hash(o.sha256, "sha256");
