@@ -1,0 +1,13 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_list_swaps",
+  "args": {
+    "pair": "FLOP_BTC",
+    "status": "open",
+    "limit": 20
+  },
+  "raw": "{\n  \"page\": 1,\n  \"swaps\": [],\n  \"total\": 0\n}",
+  "measuredAt": "2026-11-06T02:19:40.772Z",
+  "durationMs": 71,
+  "attempts": 1
+}

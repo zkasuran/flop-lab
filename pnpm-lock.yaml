@@ -134,6 +134,9 @@ importers:
       '@flop-lab/staking':
         specifier: workspace:*
         version: link:../staking
+      '@flop-lab/swaps':
+        specifier: workspace:*
+        version: link:../swaps
       '@flop-lab/tclk-inspect':
         specifier: workspace:*
         version: link:../tclk-inspect
@@ -303,6 +306,12 @@ importers:
   packages/spendguard: {}
 
   packages/staking:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+
+  packages/swaps:
     dependencies:
       '@flop-lab/mcp':
         specifier: workspace:*

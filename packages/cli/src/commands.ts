@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Calculate reference-work units and inspect dated calibration lease evidence",
   },
   {
+    name: "swap",
+    pkg: "@flop-lab/swaps",
+    bin: "flop-swaps",
+    section: "agents",
+    summary: "Plan HTLC timing, generate local hash locks and inspect dated swaps",
+  },
+  {
     name: "finality",
     pkg: "@flop-lab/finality",
     bin: "flop-finality",

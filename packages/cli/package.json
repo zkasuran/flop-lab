@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@flop-lab/metering": "workspace:*",
+    "@flop-lab/swaps": "workspace:*",
     "@flop-lab/finality": "workspace:*",
     "@flop-lab/proofs": "workspace:*",
     "@flop-lab/did": "workspace:*",
