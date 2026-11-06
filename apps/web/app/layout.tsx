@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { CommandPalette, ThemeToggle } from "@/components/controls";
 import { Footer } from "@/components/footer";
-import { repository } from "@/content/tools";
-import { MotionLink, RouteSurface } from "@/components/motion";
-import { SectionNavigation } from "@/components/suite/navigation";
+import { RouteSurface } from "@/components/motion";
+import { SiteHeader } from "@/components/site-header";
 import { paletteEntries } from "@/components/suite/docs";
+import { SectionNavigation } from "@/components/suite/navigation";
 import "./globals.css";
 
 const text = localFont({
@@ -25,11 +24,17 @@ export const metadata: Metadata = {
   description:
     "Does a settlement add up? Does the network match its docs? Independent FLOP devnet tools with dated findings you can inspect and rerun.",
 };
+export const viewport: Viewport = { themeColor: "#0a0d0b" };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const entries = await paletteEntries();
   return (
-    <html lang="en" suppressHydrationWarning className={`${text.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+      className={`${text.variable} ${mono.variable}`}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -42,20 +47,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <a className="skip" href="#main">
           Skip to content
         </a>
-        <header className="topbar container">
-          <MotionLink className="wordmark" href="/">
-            flop<span>-lab</span>
-          </MotionLink>
-          <nav aria-label="Main navigation">
-            <MotionLink href="/#tools">Tools</MotionLink>
-            <MotionLink href="/about">About</MotionLink>
-            <MotionLink className="nav-repo" href={repository}>
-              Source ↗
-            </MotionLink>
-            <CommandPalette entries={entries} />
-            <ThemeToggle />
-          </nav>
-        </header>
+        <SiteHeader entries={entries} />
         <SectionNavigation />
         <main id="main" className="container">
           <RouteSurface>{children}</RouteSurface>
