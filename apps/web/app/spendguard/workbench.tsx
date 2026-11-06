@@ -215,7 +215,7 @@ export function Workbench({ tapes }: { tapes: ReplayTape[] }) {
           </div>
           <div className={styles.actions}>
             <Control
-            className="button"
+              className="button"
               disabled={!result.value || count === tape.rows.length}
               onClick={() => run(count + 1)}
             >
