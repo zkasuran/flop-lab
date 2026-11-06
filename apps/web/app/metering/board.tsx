@@ -570,7 +570,9 @@ export function MeteringBoard({
             <p>
               <MotionLink href={rule.source}>Pinned source ↗</MotionLink> · Recorded <time>{rule.measuredAt}</time>
             </p>
-            <pre className={styles.quote}>{rule.quote}</pre>
+            <pre className={styles.quote} tabIndex={0} aria-label="Scrollable source quotation">
+              {rule.quote}
+            </pre>
           </Disclosure>
         ))}
       </section>
