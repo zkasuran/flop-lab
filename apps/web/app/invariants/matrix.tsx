@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { CopyButton } from "@/components/controls";
 import { MotionButton, MotionLink, ObservedNumber, ReadingReveal } from "@/components/motion";
@@ -132,16 +132,21 @@ export function Matrix({ initial }: { initial: Report }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Signal | "ALL">("ALL");
   const [kind, setKind] = useState<Entry["kind"] | "ALL">("failure");
+  const [page, setPage] = useState(0);
   const [selected, setSelected] = useState<Entry | null>(null);
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState<Suite[]>(suites);
   const [message, setMessage] = useState("Recorded evidence. No devnet requests on this page.");
   const lock = useRef(false);
   const guide = useRef<HTMLElement>(null);
+  const board = useRef<HTMLElement>(null);
+  const boardVisible = useInView(board, { once: true, margin: "100px" });
   const reduced = useReducedMotion() !== false;
   const { scrollYProgress } = useScroll({ target: guide, offset: ["start 85%", "end 45%"] });
   const reading = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const entries = visibleEntries(initial.entries, query, filter, kind);
+  const matching = visibleEntries(initial.entries, query, filter, kind);
+  const pageCount = Math.max(1, Math.ceil(matching.length / 16));
+  const entries = matching.slice(page * 16, (page + 1) * 16);
   const groups = [...new Set(entries.map(groupName))];
   const duration = reduced ? 0 : 0.32;
   const observations = initial.entries
@@ -255,7 +260,7 @@ export function Matrix({ initial }: { initial: Report }) {
         </div>
       </section>
 
-      <section className={styles.board} aria-labelledby="matrix-title">
+      <section ref={board} className={styles.board} aria-labelledby="matrix-title">
         <div className={styles.boardHeading}>
           <div>
             <span className="eyebrow">Actor by failure</span>
@@ -292,7 +297,10 @@ export function Matrix({ initial }: { initial: Report }) {
             Search rules
             <motion.input
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setPage(0);
+              }}
               placeholder="Model swap, M1, replay..."
               whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
               transition={{ duration: reduced ? 0 : 0.16 }}
@@ -300,7 +308,13 @@ export function Matrix({ initial }: { initial: Report }) {
           </label>
           <label className={styles.select}>
             Source group
-            <select value={kind} onChange={(e) => setKind(e.target.value as typeof kind)}>
+            <select
+              value={kind}
+              onChange={(e) => {
+                setKind(e.target.value as typeof kind);
+                setPage(0);
+              }}
+            >
               <option value="ALL">All source rows</option>
               <option value="failure">Actor failures</option>
               <option value="invariant">Security invariants</option>
@@ -314,7 +328,10 @@ export function Matrix({ initial }: { initial: Report }) {
             <MotionButton
               key={value}
               className={styles.filter}
-              onClick={() => setFilter(value as typeof filter)}
+              onClick={() => {
+                setFilter(value as typeof filter);
+                setPage(0);
+              }}
               aria-pressed={filter === value}
             >
               {filter === value && (
@@ -329,8 +346,21 @@ export function Matrix({ initial }: { initial: Report }) {
           ))}
         </div>
         <p className={styles.resultCount} aria-live="polite">
-          {entries.length} of {initial.entries.length} source rows shown. Open a cell for its quote and checks.
+          {matching.length} of {initial.entries.length} source rows match. Open a cell for its quote and checks.
         </p>
+        {matching.length > 0 && (
+          <div className={styles.pagination} aria-label="Matrix pages">
+            <MotionButton className={styles.button} disabled={page === 0} onClick={() => setPage(page - 1)}>
+              Previous cases
+            </MotionButton>
+            <span>
+              Page {page + 1} of {pageCount}
+            </span>
+            <MotionButton className={styles.button} disabled={page + 1 >= pageCount} onClick={() => setPage(page + 1)}>
+              Next cases
+            </MotionButton>
+          </div>
+        )}
         {!entries.length && (
           <div className={styles.empty}>
             <h3>No rules match these filters.</h3>
@@ -340,6 +370,7 @@ export function Matrix({ initial }: { initial: Report }) {
                 setFilter("ALL");
                 setKind("ALL");
                 setQuery("");
+                setPage(0);
               }}
             >
               Clear filters
@@ -359,13 +390,13 @@ export function Matrix({ initial }: { initial: Report }) {
                       return (
                         <motion.div
                           key={entry.id}
-                          layout={reduced ? false : "position"}
+                          layout={reduced || !boardVisible ? false : "position"}
                           initial={{ opacity: 1, y: reduced ? 0 : 6 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0 }}
                           transition={{ duration }}
                         >
-                          <MotionButton
+                          <button
                             className={styles.cell}
                             data-rule={entry.id}
                             data-signal={pending ? "PENDING" : entry.signal}
@@ -380,7 +411,7 @@ export function Matrix({ initial }: { initial: Report }) {
                             <strong>{entry.title}</strong>
                             <span className={styles.cellState}>{pending ? "Checking" : labels[entry.signal]}</span>
                             {entry.flags.length > 0 && <span className={styles.flags}>{entry.flags.join(" / ")}</span>}
-                          </MotionButton>
+                          </button>
                         </motion.div>
                       );
                     })}

@@ -202,6 +202,17 @@
 .matrix {
   margin-top: var(--space-6);
 }
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  font: var(--text-xs)/1.5 var(--font-data);
+}
+.pagination button:disabled {
+  cursor: default;
+}
 .actor {
   display: grid;
   grid-template-columns: 150px minmax(0, 1fr);
@@ -237,11 +248,16 @@
   border-radius: var(--radius-sm);
   transition:
     background var(--motion-base),
-    border-color var(--motion-base);
+    border-color var(--motion-base),
+    transform var(--motion-fast);
 }
 .cell:hover {
+  transform: translateY(-1px);
   border-color: var(--state);
   background: color-mix(in oklab, var(--state) 12%, var(--surface));
+}
+.cell:active {
+  transform: scale(0.98);
 }
 .cellId {
   display: flex;
@@ -338,8 +354,12 @@
   gap: var(--space-4);
   margin-bottom: var(--space-6);
 }
-.detailTop .eyebrow {
-  max-width: 65%;
+.detailTop > span {
+  min-width: 0;
+}
+.detailTop .button {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .signal {
   color: var(--state);
@@ -479,6 +499,10 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .cell:hover,
+  .cell:active {
+    transform: none;
+  }
   .page *,
   .dialog * {
     transition-duration: 0s !important;
