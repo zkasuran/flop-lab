@@ -36,6 +36,7 @@ import { parseSections } from "../../../../packages/invariants/src/parser";
 import swaps from "../../../../packages/swaps/fixtures/swaps.json";
 import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
+import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -58,6 +59,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  knowledge: () => {
+    const observation = knowledgeManifest();
+    return metric(
+      observation.value?.concepts.length,
+      "concepts in the recorded knowledge manifest",
+      observation.measuredAt,
+      observation.source,
+      "packages/knowledge/fixtures/manifest.json",
+      "Catalog declarations. Source provenance and runtime behavior are not verified.",
+    );
+  },
   invariants: () =>
     metric(
       parseSections([invariantSource]).filter((row) => row.kind === "failure").length,

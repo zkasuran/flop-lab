@@ -1,0 +1,11 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_get_agent_card",
+  "args": {
+    "agent_id": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "measuredAt": "2026-11-06T03:07:50.416Z",
+  "status": "reported",
+  "encoding": "text",
+  "raw": "no agent registered for id 0x0000000000000000000000000000000000000000000000000000000000000000"
+}
