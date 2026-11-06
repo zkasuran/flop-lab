@@ -93,3 +93,16 @@ it("verifies every tracked byte and rejects tampering, omissions and symlink sub
     await rm(dir, { recursive: true });
   }
 });
+it("verifies a build above the former 200000 character bound and still refuses one above 400000", async () => {
+  const rows = (count: number) =>
+    Array.from({ length: count }, (_, i) => `${hash("x")}  f/${String(i).padStart(6, "0")}.txt`).join("\n");
+  const big = `${header}\n${rows(3000)}`;
+  expect(big.length).toBeGreaterThan(200_000);
+  expect(big.length).toBeLessThanOrEqual(400_000);
+  expect(parseManifest(big).files).toHaveLength(3000);
+  expect((await verifyBuild(await envelope(big))).status).toBe("verified");
+  const huge = `${header}\n${rows(6000)}`;
+  expect(huge.length).toBeGreaterThan(400_000);
+  const verdict = await verifyBuild(await envelope(huge));
+  expect(verdict.status).toBe("invalid");
+});

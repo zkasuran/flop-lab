@@ -17,7 +17,7 @@ export function text(value: unknown, max = 200_000): string {
 
 /** Parse canonical signed manifest rows. Example: parseManifest(build.manifest). */
 export function parseManifest(value: string): Manifest {
-  if (value.length > 200_000 || value.includes("\r") || value.endsWith("\n"))
+  if (value.length > 400_000 || value.includes("\r") || value.endsWith("\n"))
     throw new Error("Manifest must use LF with no final LF");
   const [header = "", ...rows] = value.split("\n");
   const match = /^flop-lab ([a-f0-9]{40})(?: ([a-zA-Z0-9][a-zA-Z0-9/_.-]*))?$/.exec(header);
@@ -49,7 +49,7 @@ export function parseBuild(input: unknown): Build {
     did: text(row.did, 56),
     fingerprint: text(row.fingerprint, 16),
     commit: text(row.commit, 40),
-    manifest: text(row.manifest),
+    manifest: text(row.manifest, 400_000),
     signature: text(row.signature, 86),
   };
   decodeDidKey(build.did);
