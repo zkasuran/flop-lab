@@ -208,7 +208,7 @@ export const tools: readonly Tool[] = [
     section: "observe",
     name: "Session lifecycle",
     tagline: "Where is each compute channel in its lifecycle?",
-    status: "planned",
+    status: "alpha",
     href: "/sessions",
     repoPath: "packages/sessions",
   },
