@@ -20,6 +20,7 @@ import kestra from "../../app/kestra/observed.json";
 import consoleTools from "../../../../packages/console/fixtures/tools.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
+import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 
@@ -44,6 +45,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  sessions: () =>
+    metric(
+      rows(object(object(JSON.parse(sessions.raw) as unknown).computeChannels).data).length,
+      "channel rows in the first recorded page",
+      sessions.measuredAt,
+      sessions.source,
+      "packages/sessions/test/fixtures/live/page-0.json",
+      "One recorded page. The lifecycle view joins the full bounded crawl with settlement evidence.",
+    ),
   models: () => {
     const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");
     return metric(
