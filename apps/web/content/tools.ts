@@ -54,7 +54,7 @@ export const tools: readonly Tool[] = [
     slug: "spendguard",
     section: "agents",
     name: "Spend guard",
-    tagline: "Would my budget policy stop this request?",
+    tagline: "Will my policy hold when agents share one budget?",
     status: "alpha",
     href: "/spendguard",
     repoPath: "packages/spendguard",
