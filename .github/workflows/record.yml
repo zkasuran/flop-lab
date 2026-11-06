@@ -21,12 +21,13 @@ jobs:
     permissions:
       contents: write
     env:
-      ARCHIVE: ${{ runner.temp }}/flop-history-data
       GIT_AUTHOR_NAME: github-actions[bot]
       GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
       GIT_COMMITTER_NAME: github-actions[bot]
       GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
     steps:
+      - name: Choose the archive path
+        run: echo "ARCHIVE=$RUNNER_TEMP/flop-history-data" >> "$GITHUB_ENV"
       - name: Check out trusted main
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
