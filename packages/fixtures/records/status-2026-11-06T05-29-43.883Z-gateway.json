@@ -1,5 +1,6 @@
 {
-  "service": "gateway",
+  "sha256": "7d14744ac75c11968de0d1062f5c80e504440c0bf8e041b71ae08a5f3b15ad83",
+  "bytes": 5934,
   "source": "https://api.flop.network/v1/models",
   "measuredAt": "2026-11-06T05:29:44.242Z",
   "httpStatus": 200,

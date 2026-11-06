@@ -5,11 +5,20 @@
   "type": "module",
   "license": "Apache-2.0",
   "description": "Bounded public service probes and sample-based availability history",
-  "exports": { ".": "./src/index.ts" },
-  "bin": { "flop-status": "./dist/cli.js" },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-status": "./dist/cli.js"
+  },
   "scripts": {
     "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
     "build": "tsup"
   },
-  "dependencies": { "@flop-lab/mcp": "workspace:*" }
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*"
+  },
+  "devDependencies": {
+    "@flop-lab/fixtures": "workspace:*"
+  }
 }

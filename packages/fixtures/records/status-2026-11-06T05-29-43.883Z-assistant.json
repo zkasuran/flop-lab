@@ -1,5 +1,6 @@
 {
-  "service": "assistant",
+  "sha256": "79afc78aebbe2d2afce53589dcdef4ccbab4437c56a76b0bc4ec13e6af8e1226",
+  "bytes": 165,
   "source": "https://ask.flop.finance/mcp",
   "measuredAt": "2026-11-06T05:29:44.737Z",
   "httpStatus": 200,

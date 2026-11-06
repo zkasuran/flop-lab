@@ -2,7 +2,7 @@
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFixture } from "@flop-lab/fixtures";
 import { describe, expect, it, vi } from "vitest";
 import { appendRun } from "../src/archive";
 import { analyzeHistory, uniqueRuns } from "../src/history";
@@ -12,15 +12,13 @@ import { parseHistory, parseRun, type Run } from "../src/schema";
 import { SERVICES, checkContent } from "../src/services";
 
 const recording = recordings[0]!;
-const fixtureDir = fileURLToPath(new URL("./fixtures/2026-11-06T05-23-46.400Z/", import.meta.url));
 async function replay(url: string | URL | Request) {
   const id = SERVICES.find((s) => s.url === String(url))!.id;
-  const meta = JSON.parse(await readFile(join(fixtureDir, `${id}.meta.json`), "utf8")) as {
-    httpStatus: number;
-    contentType: string;
-  };
-  const body: string = JSON.parse(await readFile(join(fixtureDir, `${id}.body.json`), "utf8"));
-  return new Response(body, { status: meta.httpStatus, headers: { "Content-Type": meta.contentType } });
+  const response = readFixture(`status-2026-11-06T05-23-46.400Z-${id}`);
+  return new Response(response.body, {
+    status: response.httpStatus,
+    headers: { "Content-Type": response.contentType },
+  });
 }
 function sample(hour: number, failed = false, observer = "test"): Run {
   const copy = structuredClone(recording);
@@ -44,17 +42,13 @@ const window = { from: "2026-11-06T00:00:00.000Z", to: "2026-11-07T00:00:00.000Z
 describe("bounded probes", () => {
   it("replays the second recorded round without substituting its values", async () => {
     const expected = recordings[1]!;
-    const directory = fileURLToPath(new URL(`./fixtures/${expected.startedAt.replaceAll(":", "-")}/`, import.meta.url));
     const run = await probeServices({
       fetch: async (url) => {
         const id = SERVICES.find((s) => s.url === String(url))!.id;
-        const meta = JSON.parse(await readFile(join(directory, `${id}.meta.json`), "utf8")) as {
-          httpStatus: number;
-          contentType: string;
-        };
-        return new Response(JSON.parse(await readFile(join(directory, `${id}.body.json`), "utf8")) as string, {
-          status: meta.httpStatus,
-          headers: { "Content-Type": meta.contentType },
+        const response = readFixture(`status-${expected.startedAt.replaceAll(":", "-")}-${id}`);
+        return new Response(response.body, {
+          status: response.httpStatus,
+          headers: { "Content-Type": response.contentType },
         });
       },
     });
