@@ -33,6 +33,8 @@ import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
 import invariantSource from "../../../../packages/harness/fixtures/sources/paper-2301.json";
 import { parseSections } from "../../../../packages/invariants/src/parser";
+import swaps from "../../../../packages/swaps/fixtures/swaps.json";
+import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
@@ -65,6 +67,15 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "packages/harness/fixtures/sources/paper-2301.json",
       "Quoted source coverage. A scoped check does not verify a whole security rule.",
       "Pinned yellowpaper",
+    ),
+  swaps: () =>
+    metric(
+      parseSwapPage(JSON.parse(swaps.raw) as unknown).total,
+      "open FLOP_BTC orders in the recorded response",
+      swaps.measuredAt,
+      swaps.source,
+      "packages/swaps/fixtures/swaps.json",
+      "Orders and indexed HTLCs are distinct. No chain-pair completion is verified.",
     ),
   metering: () => {
     const report = meteringReport();
