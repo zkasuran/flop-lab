@@ -18,6 +18,34 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "mcp",
+    pkg: "@flop-lab/mcp-server",
+    bin: "flop-lab-mcp",
+    section: "agents",
+    summary: "Serve read-only suite tools over schema-checked stdio MCP",
+  },
+  {
+    name: "status",
+    pkg: "@flop-lab/status",
+    bin: "flop-status",
+    section: "observe",
+    summary: "Probe public service responses and inspect measured availability",
+  },
+  {
+    name: "export",
+    pkg: "@flop-lab/export",
+    bin: "flop-export",
+    section: "build",
+    summary: "Export dated devnet rows with hashes and resumable parts",
+  },
+  {
+    name: "community",
+    pkg: "@flop-lab/community",
+    bin: "flop-community",
+    section: "observe",
+    summary: "Inspect dated public requests, response times and access-form fields",
+  },
+  {
     name: "watch",
     pkg: "@flop-lab/watch",
     bin: "flop-watch",

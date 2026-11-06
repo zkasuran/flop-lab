@@ -1,0 +1,19 @@
+{
+  "name": "@flop-lab/community",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Dated community requests and public response-time evidence",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-community": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx src/record.ts"
+  }
+}
