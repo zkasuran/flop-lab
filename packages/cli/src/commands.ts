@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Model exact emission and compare dated settlement fees with the paper",
   },
   {
+    name: "sessions",
+    pkg: "@flop-lab/sessions",
+    bin: "flop-sessions",
+    section: "observe",
+    summary: "Classify compute channel lifecycle states with dated evidence",
+  },
+  {
     name: "models",
     pkg: "@flop-lab/models",
     bin: "flop-models",
