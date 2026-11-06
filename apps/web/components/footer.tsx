@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
 import { MotionLink } from "./motion";
 import { CONTRIBUTOR_DID, FINGERPRINT } from "@/lib/constants";
-import { repository, toolHref, tools } from "@/content/tools";
+import { repository, sections, toolHref, toolsIn } from "@/content/tools";
 import { CopyButton } from "./controls";
 import { ArrowRight, ArrowUpRight } from "./icons";
 
 export function Footer() {
   const commit = process.env.NEXT_PUBLIC_BUILD_COMMIT ?? "unknown";
-  const available = tools.filter((tool) => tool.status !== "planned");
+  const groups = sections
+    .map((section) => ({ section, list: toolsIn(section.id).filter((tool) => tool.status !== "planned") }))
+    .filter((group) => group.list.length > 0);
   return (
     <footer className="site-footer">
       <div className="container">
@@ -44,16 +46,22 @@ export function Footer() {
               </MotionLink>
             </p>
           </div>
-          <div>
-            <h3>Tools</h3>
-            <ul>
-              {available.map((tool) => (
-                <li key={tool.slug}>
-                  <MotionLink href={toolHref(tool)}>{tool.name}</MotionLink>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <nav aria-label="Tools by section" className="footer-tools">
+            {groups.map(({ section, list }) => (
+              <div key={section.id} className="footer-group">
+                <h3>
+                  <MotionLink href={`/sections/${section.id}`}>{section.title}</MotionLink>
+                </h3>
+                <ul>
+                  {list.map((tool) => (
+                    <li key={tool.slug}>
+                      <MotionLink href={toolHref(tool)}>{tool.name}</MotionLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
           <div>
             <h3>Project</h3>
             <ul>
@@ -88,9 +96,11 @@ export function Footer() {
           </p>
         </div>
       </div>
-      <p className="footer-wordmark" aria-hidden="true">
-        flop-lab
-      </p>
+      <div className="container footer-mark">
+        <p className="footer-wordmark" aria-hidden="true">
+          flop-lab
+        </p>
+      </div>
     </footer>
   );
 }

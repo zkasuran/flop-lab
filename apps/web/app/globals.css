@@ -612,10 +612,11 @@ code,
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 2.2fr) minmax(0, 0.8fr);
   gap: var(--space-12);
   padding-block: var(--space-12);
   font-size: var(--text-sm);
+  align-items: start;
 }
 .footer-grid h3 {
   font: 500 var(--text-xs) / 1.5 var(--font-data);
@@ -623,6 +624,13 @@ code,
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: var(--space-4);
+}
+.footer-grid h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.footer-grid h3 a:hover {
+  color: var(--foreground);
 }
 .footer-grid ul {
   list-style: none;
@@ -642,10 +650,17 @@ code,
 .footer-grid li a:hover {
   color: var(--foreground);
 }
+.footer-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: var(--space-8) var(--space-8);
+  align-content: start;
+}
 .proof-key {
-  margin-block: var(--space-3) var(--space-3);
+  margin-block: var(--space-3);
   display: flex;
-  align-items: start;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-3);
 }
 .proof-key .quiet-button {
@@ -653,8 +668,10 @@ code,
   white-space: nowrap;
 }
 .proof-key code {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
   overflow-wrap: anywhere;
-  max-width: 52ch;
   padding: 0.65rem 0.8rem;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
@@ -665,6 +682,7 @@ code,
 }
 .footer-note {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
   gap: var(--space-6);
   flex-wrap: wrap;
@@ -673,24 +691,32 @@ code,
   color: var(--muted);
   font-size: var(--text-sm);
 }
+.footer-mark {
+  container-type: inline-size;
+  overflow: hidden;
+  /* Show the top of the lettering only and fade it out, so it reads as a quiet signature. */
+  max-height: clamp(4rem, 15vw, 13rem);
+  -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
+}
 .footer-wordmark {
   margin: 0;
-  padding-top: var(--space-6);
-  font-size: clamp(5rem, 21vw, 20rem);
+  /* "flop-lab" is about 3.3em wide: size it to span the container exactly. */
+  font-size: calc(100cqw / 3.3);
   font-weight: 640;
-  line-height: 0.74;
+  line-height: 0.9;
   letter-spacing: -0.075em;
   white-space: nowrap;
   color: transparent;
   background: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--foreground) 11%, transparent) 10%,
-    color-mix(in oklab, var(--foreground) 2%, transparent) 85%
+    color-mix(in oklab, var(--foreground) 14%, transparent) 10%,
+    color-mix(in oklab, var(--foreground) 3%, transparent) 85%
   );
   -webkit-background-clip: text;
   background-clip: text;
   user-select: none;
-  translate: -0.03em 0;
+  margin-left: -0.04em;
 }
 .footer-verify {
   margin-top: var(--space-4);
@@ -1228,7 +1254,8 @@ summary {
   .footer-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
-  .footer-grid > :first-child {
+  .footer-grid > :first-child,
+  .footer-tools {
     grid-column: 1 / -1;
   }
 }
@@ -1273,8 +1300,13 @@ summary {
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }
-  .proof-key {
+  .footer-tools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .footer-note {
     flex-direction: column;
+    gap: var(--space-2);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1288,7 +1320,7 @@ summary {
 @media print {
   body::after,
   .site-header,
-  .footer-wordmark {
+  .footer-mark {
     display: none;
   }
 }
