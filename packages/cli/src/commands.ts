@@ -20,6 +20,7 @@ export type Command = {
 export const commands: readonly Command[] = [
   {
     name: "mcp",
+    tagline: "How does my agent call every flop-lab tool?",
     pkg: "@flop-lab/mcp-server",
     bin: "flop-lab-mcp",
     section: "agents",

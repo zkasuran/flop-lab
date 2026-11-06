@@ -45,6 +45,7 @@ operate
 agents
   challenge   Find settlements that need a challenge-window review
   guard       Evaluate an agent's spend against a budget policy
+  mcp         Serve read-only suite tools over schema-checked stdio MCP
   score       Rank miners by observed settlement evidence
   swap        Plan HTLC timing, generate local hash locks and inspect dated swaps
   tclk        Inspect signed agent deals against the pinned TCLK protocol
