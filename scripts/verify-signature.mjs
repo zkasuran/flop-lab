@@ -13,7 +13,7 @@ import { parseManifest, parseSignedBuild, verifyDidSignature } from "../apps/web
 export async function verifyCheckout(signaturePath, checkoutPath, expectedDid = CONTRIBUTOR_DID) {
   const root = await realpath(checkoutPath);
   const raw = await readFile(signaturePath, "utf8");
-  if (raw.length > 200000) throw new Error("Signed build exceeds the size limit");
+  if (raw.length > 400000) throw new Error("Signed build exceeds the size limit");
   const signed = parseSignedBuild(JSON.parse(raw));
   if (signed.did !== expectedDid || signed.fingerprint !== FINGERPRINT)
     throw new Error("Unexpected signer or fingerprint");
