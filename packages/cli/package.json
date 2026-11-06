@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@flop-lab/openapi": "workspace:*",
+    "@flop-lab/status": "workspace:*",
+    "@flop-lab/export": "workspace:*",
     "@flop-lab/watch": "workspace:*",
     "@flop-lab/upgrades": "workspace:*",
     "@flop-lab/knowledge": "workspace:*",
