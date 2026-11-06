@@ -1,16 +1,18 @@
 // SPDX-License-Identifier: Apache-2.0
 import { MotionLink, ObservedNumber, ReadingReveal } from "./motion";
 import type { Snapshot } from "@/lib/devnet";
-import { readRecording } from "@/app/harness/data";
-import { counts } from "@/app/harness/model";
-import { checkArithmetic } from "../../../packages/verifier/src/checks/index";
-import { array, object } from "../../../packages/verifier/src/schema";
-import tape from "../../../packages/verifier/fixtures/settlements-0.json";
+import type { ClaimRun, SettlementTape } from "@/lib/evidence";
+import { compareSample } from "@/lib/observation-view";
+import { statusLabel } from "@/lib/status";
+import { repository } from "@/content/tools";
 import models from "../tests/fixtures/models.json";
 import { parseModels } from "../../../packages/scoreboard/src/schema";
+import { ArrowRight, ArrowUpRight } from "./icons";
+import { OutcomeBar } from "./home/outcome-bar";
+import { SectionHeading } from "./home/section-heading";
+import { SettlementSpecimen } from "./home/settlement-specimen";
+import styles from "./home/home.module.css";
 
-const rows = array(object(JSON.parse(tape.raw), "recorded tape").data, "settlements").slice(0, 20);
-const checks = rows.flatMap((row) => checkArithmetic(row));
 const prices = parseModels({
   kind: "models",
   source: models.source,
@@ -21,114 +23,151 @@ const nominal = prices.length > 0 && prices.every((price) => price.source === "d
 
 function RecordedAt({ at, href, label }: { at: string; href: string; label: string }) {
   return (
-    <p className="muted">
-      <time dateTime={at}>{at.replace("T", " ").replace("Z", " UTC")}</time>
-      <br />
-      <MotionLink href={href}>{label} ↗</MotionLink>
+    <p className={styles.recorded}>
+      <time className="mono" dateTime={at}>
+        {at.replace("T", " ").replace("Z", " UTC")}
+      </time>
+      <MotionLink href={href}>
+        {label} <ArrowUpRight size={13} />
+      </MotionLink>
     </p>
   );
 }
 
-/** Explain recorded results with the same inputs and checks as the tools. Example: <Findings snapshot={snapshot} />. */
-export function Findings({ snapshot }: { snapshot: Snapshot }) {
-  const report = readRecording();
-  const outcomes = report ? counts(report.results) : null;
+/** Explain recorded results with the same inputs and checks as the tools. Example: <Findings snapshot={snapshot} run={run} tape={tape} />. */
+export function Findings({ snapshot, run, tape }: { snapshot: Snapshot; run: ClaimRun | null; tape: SettlementTape }) {
+  const comparison = compareSample(snapshot.miners.value, snapshot.settlements.value);
+  const addresses = snapshot.miners.value ?? [];
+  const sampled = new Set(comparison?.matches ?? []);
+  const failures = run?.claims.filter((claim) => claim.status === "FAIL") ?? [];
   return (
-    <section className="section" aria-labelledby="findings-heading">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">What we found so far</p>
-          <h2 id="findings-heading">The arithmetic passes. The questions stay open.</h2>
-        </div>
-        <p className="muted">
-          Dated observations from a disposable devnet. These samples describe what the tools saw at the times below.
-        </p>
-      </div>
-      <div className="tool-grid">
-        <ReadingReveal>
-          <article className="tool-card">
-            <h3>A settlement can add up.</h3>
-            <p>
-              <ObservedNumber value={rows.length} /> recorded settlements gave{" "}
-              <ObservedNumber value={checks.filter((check) => check.status === "PASS").length} /> passing escrow and
-              display-price checks. <ObservedNumber value={checks.filter((check) => check.status === "FAIL").length} />{" "}
-              failed.
-            </p>
-            <p>
-              That checks the arithmetic. Agreed pricing, transcript inclusion, hardware quotes and the exact challenge
-              window still need evidence.
-            </p>
-            <RecordedAt
-              at={tape.measuredAt}
-              href="https://github.com/zkasuran/flop-lab/blob/main/packages/verifier/fixtures/settlements-0.json"
-              label="Recorded MCP settlement page"
-            />
-            <MotionLink className="card-link" href="/verify">
-              Check a settlement →
-            </MotionLink>
+    <section className="section" id="findings" aria-labelledby="findings-heading">
+      <SectionHeading
+        index="01"
+        eyebrow="What we found so far"
+        id="findings-heading"
+        title="The arithmetic passes. The questions stay open."
+      >
+        Dated observations from a disposable devnet. These samples describe what the tools saw at the times below.
+      </SectionHeading>
+      <div className={styles.bento}>
+        <ReadingReveal className={styles.bentoWide}>
+          <article className={`${styles.finding} ${styles.findingSplit} frame`}>
+            <div className={styles.findingCopy}>
+              <p className="eyebrow">Settlement verifier / recorded tape</p>
+              <h3>A settlement can add up.</h3>
+              <p className="muted">
+                <ObservedNumber value={tape.rows.length} /> recorded settlements gave{" "}
+                <ObservedNumber value={tape.pass} /> passing escrow and display-price checks.{" "}
+                <ObservedNumber value={tape.fail} /> failed.
+              </p>
+              <p className="muted">
+                That checks the arithmetic. Agreed pricing, transcript inclusion, hardware quotes and the exact
+                challenge window still need evidence.
+              </p>
+              <div className={styles.findingFoot}>
+                <RecordedAt at={tape.measuredAt} href={tape.recording} label="Recorded MCP settlement page" />
+                <MotionLink className="text-link" href="/verify">
+                  Check a settlement <ArrowRight />
+                </MotionLink>
+              </div>
+            </div>
+            <SettlementSpecimen tape={tape} />
           </article>
         </ReadingReveal>
-        <ReadingReveal order={1}>
-          <article className="tool-card">
+        <ReadingReveal order={1} className={styles.bentoSide}>
+          <article className={`${styles.finding} frame`}>
+            <p className="eyebrow">Conformance harness / recorded run</p>
             <h3>A documented claim can fail.</h3>
-            {report && outcomes ? (
+            {run ? (
               <>
-                <p>
-                  Of <ObservedNumber value={report.results.length} /> claims in a harness run,{" "}
-                  <ObservedNumber value={outcomes.PASS} /> passed, <ObservedNumber value={outcomes.FAIL} /> failed,{" "}
-                  <ObservedNumber value={outcomes.UNVERIFIABLE} /> could not be verified from outside and{" "}
-                  <ObservedNumber value={outcomes.SKIPPED} /> were skipped.
+                <p className="muted">
+                  Of <ObservedNumber value={run.claims.length} /> claims in a harness run,{" "}
+                  <ObservedNumber value={run.counts.PASS} /> passed, <ObservedNumber value={run.counts.FAIL} /> failed,{" "}
+                  <ObservedNumber value={run.counts.UNVERIFIABLE} /> could not be verified from outside and{" "}
+                  <ObservedNumber value={run.counts.SKIPPED} /> were skipped.
                 </p>
-                <RecordedAt
-                  at={report.measuredAt}
-                  href="https://github.com/zkasuran/flop-lab/blob/main/packages/harness/last-run.json"
-                  label="Recorded gateway and MCP checks"
-                />
+                <OutcomeBar counts={run.counts} />
+                <ul className={styles.failList}>
+                  {failures.map((claim) => (
+                    <li key={claim.id}>
+                      <span className={styles.statusChip} data-status={claim.status}>
+                        {statusLabel(claim.status)}
+                      </span>
+                      <span>
+                        <code>{claim.title}</code>
+                        <span className="muted">{claim.reason}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </>
             ) : (
-              <p>Recorded harness results are unavailable. Open the harness for its evidence.</p>
+              <p className="muted">Recorded harness results are unavailable. Open the harness for its evidence.</p>
             )}
-            <p>
+            <p className="muted">
               One failure is filed upstream:{" "}
               <MotionLink href="https://github.com/flop-labs/network/issues/87">
-                a tool returns fields its own schema forbids ↗
+                a tool returns fields its own schema forbids <ArrowUpRight size={13} />
               </MotionLink>
-              .
             </p>
-            <MotionLink className="card-link" href="/harness">
-              Inspect the claims →
-            </MotionLink>
+            <div className={styles.findingFoot}>
+              {run && <RecordedAt at={run.measuredAt} href={run.recording} label="Recorded gateway and MCP checks" />}
+              <MotionLink className="text-link" href="/harness">
+                Inspect the claims <ArrowRight />
+              </MotionLink>
+            </div>
           </article>
         </ReadingReveal>
-        <ReadingReveal order={2}>
-          <article className="tool-card">
+        <ReadingReveal order={2} className={styles.bentoSide}>
+          <article className={`${styles.finding} frame`}>
+            <p className="eyebrow">Gateway / price sources</p>
             <h3>A listed miner is not an uptime record.</h3>
-            <p>
+            <p className="muted">
               The {snapshot.miners.stale ? "last-known" : "observed"} gateway response lists{" "}
-              <ObservedNumber value={snapshot.miners.value?.length} /> price-source addresses. The map above shows which
-              appear in the sampled settlements.
+              <ObservedNumber value={snapshot.miners.value?.length} /> price-source addresses.{" "}
+              {comparison ? (
+                <>
+                  <ObservedNumber value={comparison.matches.length} /> of them appear in the sampled settlement page.
+                </>
+              ) : (
+                "The settlement sample is unavailable for comparison."
+              )}
             </p>
-            {snapshot.miners.measuredAt && (
-              <RecordedAt
-                at={snapshot.miners.measuredAt}
-                href={snapshot.miners.source}
-                label="Public gateway model list"
-              />
+            {addresses.length > 0 && (
+              <div
+                className={styles.addressDots}
+                role="img"
+                aria-label={`${addresses.length} price-source addresses. ${comparison ? `${comparison.matches.length} in the settlement sample.` : "Sample unavailable."}`}
+              >
+                {addresses.map((address) => (
+                  <span key={address} title={address} data-sampled={sampled.has(address)} />
+                ))}
+              </div>
             )}
-            <p>
+            <p className="muted">
               {nominal
                 ? "Every price source in the earlier recorded response was marked devnet-nominal."
                 : "The earlier recorded response preserves the gateway's price-source labels."}{" "}
               A scoreboard can rank settlement evidence. It cannot rank uptime.
             </p>
-            <RecordedAt
-              at={models.measuredAt}
-              href="https://github.com/zkasuran/flop-lab/blob/main/apps/web/tests/fixtures/models.json"
-              label="Recorded price-source labels"
-            />
-            <MotionLink className="card-link" href="/scoreboard">
-              Compare the evidence →
-            </MotionLink>
+            <div className={styles.findingFoot}>
+              {snapshot.miners.measuredAt && (
+                <RecordedAt
+                  at={snapshot.miners.measuredAt}
+                  href={snapshot.miners.source}
+                  label="Public gateway model list"
+                />
+              )}
+              <RecordedAt
+                at={models.measuredAt}
+                href={`${repository}/blob/main/apps/web/tests/fixtures/models.json`}
+                label="Recorded price-source labels"
+              />
+              <MotionLink className="text-link" href="/scoreboard">
+                Compare the evidence <ArrowRight />
+              </MotionLink>
+            </div>
           </article>
         </ReadingReveal>
       </div>
