@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Model quoted stake requirements and inspect indexed stake evidence",
   },
   {
+    name: "models",
+    pkg: "@flop-lab/models",
+    bin: "flop-models",
+    section: "observe",
+    summary: "Join model listings, registry hashes and dated price sources",
+  },
+  {
     name: "call",
     pkg: "@flop-lab/console",
     bin: "flop-console",

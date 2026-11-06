@@ -95,6 +95,9 @@ importers:
       '@flop-lab/mcpaudit':
         specifier: workspace:*
         version: link:../mcpaudit
+      '@flop-lab/models':
+        specifier: workspace:*
+        version: link:../models
       '@flop-lab/recorder':
         specifier: workspace:*
         version: link:../recorder
@@ -195,6 +198,15 @@ importers:
       ajv-formats:
         specifier: ^3.0.1
         version: 3.0.1(ajv@8.20.0)
+
+  packages/models:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+      '@flop-lab/recorder':
+        specifier: workspace:*
+        version: link:../recorder
 
   packages/recorder:
     dependencies:

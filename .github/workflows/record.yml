@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Record devnet history
+
+on:
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devnet-history-data
+  cancel-in-progress: false
+
+jobs:
+  record:
+    if: github.repository == 'zkasuran/flop-lab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      GIT_AUTHOR_NAME: github-actions[bot]
+      GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+      GIT_COMMITTER_NAME: github-actions[bot]
+      GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+    steps:
+      - name: Choose the archive path
+        run: echo "ARCHIVE=$RUNNER_TEMP/flop-history-data" >> "$GITHUB_ENV"
+      - name: Check out trusted main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          # Checkout uses only the job's GITHUB_TOKEN. Its post step removes credentials.
+          persist-credentials: true
+      - name: Set up pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install and build recorder
+        run: pnpm install --frozen-lockfile && pnpm --filter @flop-lab/recorder build
+      - name: Open the archive worktree
+        id: archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --heads origin refs/heads/data >/dev/null; then
+            git fetch --no-tags --depth=1 origin refs/heads/data
+            git worktree add --detach "$ARCHIVE" FETCH_HEAD
+          else
+            status=$?
+            # Exit 2 means the branch is absent. Network and auth failures must stop.
+            if [ "$status" -ne 2 ]; then exit "$status"; fi
+            git worktree add --detach "$ARCHIVE" HEAD
+            git -C "$ARCHIVE" switch --orphan data
+          fi
+      - name: Record bounded public observations
+        run: node packages/recorder/dist/cli.js record --store "$ARCHIVE"
+      - name: Validate and publish archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          node packages/recorder/dist/cli.js analyze --store "$ARCHIVE" >/dev/null
+          git -C "$ARCHIVE" add -- index.json snapshots
+          if git -C "$ARCHIVE" diff --cached --quiet; then exit 0; fi
+          git -C "$ARCHIVE" commit -m "chore(data): record devnet snapshot"
+          # Only data moves. A concurrent external update fails without overwriting it.
+          git -C "$ARCHIVE" push origin HEAD:refs/heads/data

@@ -18,6 +18,7 @@
   "dependencies": {
     "@flop-lab/staking": "workspace:*",
     "@flop-lab/console": "workspace:*",
+    "@flop-lab/models": "workspace:*",
     "@flop-lab/create-flop-agent": "workspace:*",
     "@flop-lab/indexer-audit": "workspace:*",
     "@flop-lab/tclk-inspect": "workspace:*",
