@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-import { runHarness, Transport, type Claim } from "@flop-lab/harness";
+import { Transport } from "../../harness/src/transport";
+import { Context } from "../../harness/src/context";
+import { checkClaim } from "../../harness/src/checks";
+import type { Claim } from "@flop-lab/harness";
 import { auditSnapshot } from "@flop-lab/indexer-audit";
 import { compare, recordedSpec, runtimeFromRecordings, object, parseRecording } from "@flop-lab/spec";
 import { verifyEvidence, parseEvidence } from "@flop-lab/verifier";
@@ -40,7 +43,6 @@ async function harness(input: unknown): Promise<Check[]> {
     auditResults.find((r) => r.claim.id === "audit-rate")!,
   ];
   const claims = selected.map((r) => r.claim) as Claim[];
-  const used: typeof captures = [];
   const transport = new Transport({
     intervalMs: 0,
     sleep: async () => {},
@@ -49,7 +51,6 @@ async function harness(input: unknown): Promise<Check[]> {
       const body = String(init?.body);
       const capture = captures.find((c) => identity(c.body) === identity(body));
       if (!capture) throw new Error("No recorded response for this exact request");
-      used.push(capture);
       const id = object(JSON.parse(body)).id;
       // Only the JSON-RPC correlation id changes. Tool response bytes remain untouched.
       return new Response(capture.raw.replace(/"id"\s*:\s*\d+/, `"id":${Number(id)}`), {
@@ -57,14 +58,35 @@ async function harness(input: unknown): Promise<Check[]> {
       });
     },
   });
-  const result = await runHarness({ claims, transport, maxFlop: "0" });
-  return result.results.map((r) => ({
-    id: `harness:${r.claim.id}`,
-    suite: "harness",
-    status: r.status === "SKIPPED" ? "UNVERIFIABLE" : r.status,
-    reason: `${r.reason} This is replayed recorded input, not a fresh confirmation.`,
-    evidence: [...new Set(used)].map((c) => ({ source: c.source, measuredAt: c.measuredAt, detail: c.body })),
-  }));
+  // Import the existing predicate API directly. The full CLI runner also imports
+  // filesystem catalogue loaders, which server bundlers cannot resolve as modules.
+  const context = new Context(transport);
+  const results: Check[] = [];
+  for (const claim of claims) {
+    context.used.clear();
+    try {
+      const result = await checkClaim(claim, context);
+      const used = transport.evidence.filter((e) => context.used.has(e.id));
+      results.push({
+        id: `harness:${claim.id}`,
+        suite: "harness",
+        status: result.status,
+        reason: `${result.reason} This is replayed recorded input, not a fresh confirmation.`,
+        evidence: captures
+          .filter((c) => used.some((e) => e.request.body && identity(e.request.body) === identity(c.body)))
+          .map((c) => ({ source: c.source, measuredAt: c.measuredAt, detail: c.body })),
+      });
+    } catch (error) {
+      results.push({
+        id: `harness:${claim.id}`,
+        suite: "harness",
+        status: "UNVERIFIABLE",
+        reason: error instanceof Error ? error.message : String(error),
+        evidence: [],
+      });
+    }
+  }
+  return results;
 }
 
 /** Execute one existing suite library against native raw inputs. This function makes no network calls.

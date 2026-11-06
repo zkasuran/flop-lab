@@ -166,4 +166,14 @@ describe("native suite replay", () => {
     expect(result.entries.find((r) => r.id === "R11.2a")?.signal).toBe("NO_DATA");
     expect(result.entries.find((r) => r.id === "INV-M06")?.boundary).toContain("Atomic rollback");
   });
+  it("runs harness predicates with only the recorded evidence each one uses", async () => {
+    const checks = await runSuite("harness", recordedInputs().harness);
+    const registry = checks.find((c) => c.id === "harness:model-registry")!;
+    const rate = checks.find((c) => c.id === "harness:audit-rate")!;
+    expect(registry.status).toBe("PASS");
+    expect(rate.status).toBe("PASS");
+    expect(registry.evidence.some((e) => e.detail.includes("flop_discover_models"))).toBe(true);
+    expect(rate.evidence.some((e) => e.detail.includes("flop_discover_models"))).toBe(false);
+    expect(rate.evidence.some((e) => e.detail.includes("flop_trust_root"))).toBe(true);
+  });
 });

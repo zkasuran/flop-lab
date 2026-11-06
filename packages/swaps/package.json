@@ -1,0 +1,22 @@
+{
+  "name": "@flop-lab/swaps",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Read-only HTLC timing planner and local hash locks",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-swaps": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*"
+  }
+}
