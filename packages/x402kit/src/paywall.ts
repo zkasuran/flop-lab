@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { createHash, randomBytes } from "node:crypto";
 import type { MiddlewareHandler } from "hono";
-import { bindRequest, flopUnits, hex, object, parseProof, PaymentError, quoteHeaders, text } from "./protocol.js";
+import { flopUnits, hex, object, parseProof, PaymentError, quoteHeaders, text } from "./protocol.js";
+import { bindRequest } from "./binding.js";
 import type { Proof, Quote } from "./protocol.js";
 import { MemoryStore } from "./store.js";
 import type { ReplayStore, SavedResponse } from "./store.js";
@@ -147,9 +148,11 @@ export function paywall(options: PaywallOptions) {
         await store.transaction((state) => {
           const stored = state.entries[key];
           if (!stored || stored.proof) throw new PaymentError("payment_pending_reconciliation", 409);
-          if (state.used[proof.tx_hash]) throw new PaymentError("payment_replayed", 409);
+          if (state.used[proof.tx_hash] || state.used[`htlc:${proof.htlc_id}`])
+            throw new PaymentError("payment_replayed", 409);
           stored.proof = canonical;
           state.used[proof.tx_hash] = key;
+          state.used[`htlc:${proof.htlc_id}`] = key;
         });
         let response: SavedResponse;
         try {

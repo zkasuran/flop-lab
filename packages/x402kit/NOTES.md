@@ -77,6 +77,54 @@ The reference requires `X-Flop-Request-Id` and emits `X-Flop-Request-Hash`,
 These are local extensions. Stock `x402Fetch` does not enforce them.
 The network label `flop-devnet` is a local allowlist, not a claimed CAIP-2 ID.
 
+## Checker rulebook
+
+`src/rules.ts` quotes the retained SDK JavaScript and declarations for each external
+rule. Tests compare every quote with the original recorded bytes. The README's
+helper signatures differ from those bytes. No undocumented standard x402 v2
+requirement is inferred from them.
+
+The following are explicit local policies used by the checker:
+
+- The checker rejects ambiguous headers and numeric prefixes. This is stricter than the SDK parser.
+- The reference requires explicit flop-devnet and FLOP labels and X-Payment-Required: true.
+- The reference binds retries to a request ID and rejects changed method, URL, body or application headers.
+- A transaction or HTLC cannot pay for another request. An identical completed request may return its cached response.
+- The reference rejects a proof retry at or after the quote expiry time.
+- A transcript needs a source, a capture time and ordered request/response pairs. Missing rounds are not a passing handshake.
+
+`sdk-0.4.0` permits the SDK's missing asset and network defaults. `reference`
+requires the local headers above. Both profiles use strict decimal, hash and
+header syntax checks. A quote timeout must be an integer from 1 through 7200.
+That bound is local policy. Both profiles expect a declared paywalled resource.
+A free endpoint returning 200 is reported as the wrong status for that purpose.
+
+Each round stores raw header pairs, status and body plus its capture time. Pairs
+retain case and duplicates in pasted transcripts. Fetch-based loopback recordings
+contain the header values exposed by Node Fetch, which folds duplicate fields.
+The checker cannot recover duplicates that a recorder already discarded.
+
+The checker keeps the first challenge. Another unpaid request for the same binding
+is a client deviation, including the SDK class behavior in network issue #89.
+Proofs use plain JSON with exactly the three snake_case string fields. Duplicate
+JSON keys are rejected before they can be silently replaced. An exact cached
+retry is permitted. Transport response dates do not determine cached equality.
+The checker compares request fields but does not recompute the server's hash.
+
+`bindRequest` excludes Node's transport-owned `sec-fetch-mode` field. The client
+sets the `accept` and `accept-language` defaults before hashing so its binding
+matches the actual Node HTTP request. Explicit caller values remain bound.
+
+`serve-mock` is a separate local simulation. Its deterministic mock proof is
+publicly forgeable. Its verifier uses a synthetic ledger and its response says
+`mock: true`. `X-Flop-Mock: true` marks that route. `X-Flop-Executable: true`
+only means the mock callback is configured. The default public-data demo still
+fails closed. Neither server sends a chain transaction.
+
+The replay store now claims HTLC IDs as well as transaction hashes. Existing stores
+created by older kit versions lack HTLC tombstones for their old entries. Start a
+new mock store for this release. This is not a production store migration.
+
 Amounts are decimal FLOP strings converted to 18-decimal integers. The public MCP
 client documents those decimals. Exact payment is required. Overpayment is rejected
 because refund semantics are not implemented. Timeout blocks and wall-clock expiry
