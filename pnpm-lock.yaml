@@ -140,6 +140,9 @@ importers:
       '@flop-lab/staking':
         specifier: workspace:*
         version: link:../staking
+      '@flop-lab/status':
+        specifier: workspace:*
+        version: link:../status
       '@flop-lab/swaps':
         specifier: workspace:*
         version: link:../swaps
@@ -342,6 +345,12 @@ importers:
   packages/spendguard: {}
 
   packages/staking:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+
+  packages/status:
     dependencies:
       '@flop-lab/mcp':
         specifier: workspace:*

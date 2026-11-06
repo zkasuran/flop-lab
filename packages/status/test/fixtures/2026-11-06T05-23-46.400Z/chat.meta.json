@@ -1,0 +1,7 @@
+{
+  "service": "chat",
+  "source": "https://technocore.chat/healthz",
+  "measuredAt": "2026-11-06T05:23:46.940Z",
+  "httpStatus": 200,
+  "contentType": "text/plain; charset=utf-8"
+}

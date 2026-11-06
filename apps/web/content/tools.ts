@@ -235,7 +235,7 @@ export const tools: readonly Tool[] = [
     section: "observe",
     name: "Service status",
     tagline: "Are FLOP's public services answering?",
-    status: "planned",
+    status: "alpha",
     href: "/status",
     repoPath: "packages/status",
   },
