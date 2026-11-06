@@ -7,7 +7,7 @@ From the repository root with Node 22 and pnpm:
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter @flop-lab/knowledge build
-pnpm --filter @flop-lab/knowledge exec flop-knowledge explain R9.5 --json
+node packages/knowledge/dist/cli.js explain R9.5 --json
 ```
 
 ## Commands
@@ -16,12 +16,12 @@ After building the suite, use `flop knowledge`. The package binary is `flop-know
 Default commands replay bundled observations. Use `--live` to read the public MCP.
 
 ```sh
-pnpm --filter @flop-lab/knowledge exec flop-knowledge catalog
-pnpm --filter @flop-lab/knowledge exec flop-knowledge search agent
-pnpm --filter @flop-lab/knowledge exec flop-knowledge get overview --live --json
-pnpm --filter @flop-lab/knowledge exec flop-knowledge pack --live --json
-pnpm --filter @flop-lab/knowledge exec flop-knowledge skill flop-knowledge-catalog --live --json
-pnpm --filter @flop-lab/knowledge exec flop-knowledge guidance --json
+node packages/knowledge/dist/cli.js catalog
+node packages/knowledge/dist/cli.js search agent
+node packages/knowledge/dist/cli.js get overview --live --json
+node packages/knowledge/dist/cli.js pack --live --json
+node packages/knowledge/dist/cli.js skill flop-knowledge-catalog --live --json
+node packages/knowledge/dist/cli.js guidance --json
 ```
 
 `card <0x-H256>` reads a supplied agent ID. The bundled all-zero ID is a negative discovery probe. Its response does not describe a registered agent or establish the size of the agent registry.
