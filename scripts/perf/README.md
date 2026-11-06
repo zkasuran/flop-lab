@@ -36,6 +36,8 @@ Next 16 no longer prints route byte sizes in its build table. The runner reads e
 
 `index.ts` exposes runtime validation, median budgeting, sitemap route selection and emitted-byte measurement. The web package's `check` command type-checks, lints and tests these helpers. The recorded fixture is an unchanged subset of a local Lighthouse report. Its metadata identifies the original compressed report by hash. Boundary tests cover missing observations and strict thresholds.
 
+The [recorded before and after report](./MEASUREMENTS.md) covers the measured sitemap. It retains budget breaches and links to every sample's values and capture time.
+
 ## What this does not verify
 
 This is a local lab navigation audit. It does not establish deployed performance, real phone field data, interaction responsiveness, network uptime or correctness of the page's evidence. Pages outside the sitemap are outside this command's coverage. API refreshes can change content between runs. Other work on the host can affect timings. Compare the same Chrome version and host with the same load. A passing median does not say that every run passed.
