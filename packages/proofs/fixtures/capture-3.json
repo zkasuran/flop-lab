@@ -1,0 +1,1 @@
+{"source":"https://mcp.flop.network/mcp","tool":"flop_indexer_query","args":{"query":"query($limit:Int,$offset:Int){pouiProofs(limit:$limit,offset:$offset){id blockHash blockNumber submitter gnWeight successCount taskHash timestamp}}","variables":{"limit":100,"offset":0}},"measuredAt":"2026-11-06T01:30:05.133Z","raw":"{\n  \"pouiProofs\": []\n}","error":null}

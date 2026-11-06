@@ -1,0 +1,22 @@
+{
+  "name": "@flop-lab/proofs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Dated proof observations and explicit settlement coverage limits",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-proofs": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/recorder": "workspace:*"
+  }
+}

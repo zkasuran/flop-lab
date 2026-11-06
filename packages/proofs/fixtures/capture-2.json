@@ -1,0 +1,1 @@
+{"source":"https://mcp.flop.network/mcp","tool":"flop_indexer_query","args":{"query":"query($limit:Int){pouiLeaderboard(limit:$limit){submitter totalWeight proofsCount}}","variables":{"limit":20}},"measuredAt":"2026-11-06T01:30:04.621Z","raw":"{\n  \"pouiLeaderboard\": []\n}","error":null}
