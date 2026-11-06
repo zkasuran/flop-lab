@@ -114,6 +114,26 @@ export class McpClient {
   }
 
   /**
+   * Make one initialize RPC through the shared transport. This does not open a persistent session.
+   * Validate the returned server capabilities for the caller's use case.
+   * @example const answer = await new McpClient({ retries: 0 }).initialize();
+   */
+  async initialize(): Promise<CallResult<unknown>> {
+    const r = await this.rpc("initialize", {
+      protocolVersion: "2024-11-05",
+      capabilities: {},
+      clientInfo: { name: "flop-lab", version: "0.1.0" },
+    });
+    return {
+      value: r.result,
+      raw: JSON.stringify(r.result),
+      measuredAt: r.measuredAt,
+      durationMs: r.durationMs,
+      attempts: r.attempts,
+    };
+  }
+
+  /**
    * Calls one tool. The tool's first text content is parsed as JSON when it is JSON, otherwise returned as a string.
    * A tool-level failure (`isError`) and an unknown tool both throw `McpError`.
    */
