@@ -1,0 +1,23 @@
+{
+  "name": "@flop-lab/upgrades",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Dated spec diffs and observed release history for FLOP",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-upgrades": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/recorder": "workspace:*",
+    "@flop-lab/spec": "workspace:*"
+  }
+}

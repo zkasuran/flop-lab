@@ -163,7 +163,7 @@ export function buildReader(paper: { raw: string; sha: string; measuredAt: strin
         inLabel = true;
         const label = this.parser.parseInline(token.tokens);
         inLabel = false;
-        return `<h${Math.max(2, token.depth)} id="${escape(heading.id)}"><a href="#${escape(heading.id)}">${label}</a></h${Math.max(2, token.depth)}>\n`;
+        return `<h${Math.max(2, token.depth)} id="${escape(heading.id)}">${label}</h${Math.max(2, token.depth)}>\n`;
       },
       html(token) {
         // Source HTML cannot create active elements or attributes. Only known parameter anchors and inert typography survive.
