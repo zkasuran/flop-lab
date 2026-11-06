@@ -19,16 +19,16 @@ const schema = await client.callTool("flop_indexer_query", {
 await save("schema.json", { source: "https://mcp.flop.network/mcp", ...schema });
 const channels = await readIndexer(client, "computeChannels", { status: "settling", limit: 50, offset: 0 });
 await save("channels.json", channels);
-console.log(JSON.stringify(channels.value).slice(0, 5000));
+console.log(JSON.stringify({ forcedClaims: channels.value.data.length, measuredAt: channels.measuredAt }));
 const pin = (await fetch("https://api.github.com/repos/flop-labs/yellowpaper/commits/main").then((r) => r.json())) as {
   sha: string;
 };
-for (const path of ["params/flop-protocol-params.yaml", "evidence/compute-channel.py"]) {
+for (const path of ["params/flop-protocol-params.yaml"]) {
   const source = `https://raw.githubusercontent.com/flop-labs/yellowpaper/${pin.sha}/${path}`;
   const response = await fetch(source);
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const raw = await response.text();
-  await save(path.endsWith("yaml") ? "parameters.json" : "reference.json", {
+  await save("parameters.json", {
     source,
     measuredAt: new Date().toISOString(),
     raw,

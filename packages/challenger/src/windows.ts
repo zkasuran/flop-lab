@@ -246,6 +246,7 @@ export function analyzeWindows(capture: WindowCapture): WindowReport {
   } catch (error) {
     result.rows = [];
     result.complete = false;
+    result.total = null;
     result.warnings.push(error instanceof Error ? error.message : "Window data unavailable");
   }
   const order = { closing: 0, open: 1, unknown: 2, closed: 3 };
