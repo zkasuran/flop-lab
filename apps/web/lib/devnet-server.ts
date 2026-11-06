@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { McpClient, McpError, getStats, listSettlements, pickResponse } from "@flop-lab/mcp";
 import { unstable_cache } from "next/cache";
+import { publicFetch } from "./security/transport";
 import stats from "../tests/fixtures/stats.json";
 import settlements from "../tests/fixtures/settlements.json";
 import models from "../tests/fixtures/models.json";
@@ -8,13 +9,11 @@ import {
   MCP_URL,
   MODELS_URL,
   FetchFailure,
-  boundedFetch,
   retryDeadline,
   observationCache,
   parseMiners,
   parseSettlements,
   parseStats,
-  readPublic,
   type Snapshot,
 } from "./devnet";
 
@@ -30,7 +29,7 @@ const client = new McpClient({
   fetch: async (url, init) => {
     // Check again when a queued MCP request reaches the transport.
     if (Date.now() < retryAt) throw new FetchFailure("MCP backoff active", retryAt);
-    const response = await boundedFetch(url, init);
+    const response = await publicFetch(url, init);
     if (!response.ok) retryAt = Math.max(retryAt, retryDeadline(response.headers));
     return response;
   },
@@ -58,10 +57,18 @@ const readSettlements = observationCache(
   `${MCP_URL} / flop_list_settlements?limit=5`,
   { value: parseSettlements(recorded(settlements.raw)), measuredAt: settlements.measuredAt },
 );
-const readMiners = observationCache(async () => parseMiners(JSON.parse(await readPublic(MODELS_URL))), MODELS_URL, {
-  value: parseMiners(JSON.parse(models.raw)),
-  measuredAt: models.measuredAt,
-});
+const readMiners = observationCache(
+  async () => {
+    const response = await publicFetch(MODELS_URL);
+    if (!response.ok) throw new FetchFailure(`HTTP ${response.status}`, retryDeadline(response.headers));
+    return parseMiners(await response.json());
+  },
+  MODELS_URL,
+  {
+    value: parseMiners(JSON.parse(models.raw)),
+    measuredAt: models.measuredAt,
+  },
+);
 
 /** Read independent dated observations through the shared MCP client. Example: await getSnapshot(). */
 export async function getSnapshot(): Promise<Snapshot> {

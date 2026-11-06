@@ -9,6 +9,7 @@ import { recordedEvidence, recordedWindows } from "../../../../packages/challeng
 import type { Tape } from "../../../../packages/challenger/src/types";
 import { createSiteService } from "./data";
 import { withClient } from "./collect";
+import { publicFetch } from "../../lib/security/transport";
 
 export const fallbackTape: Tape = { ...snapshot, mode: "recorded", settlements: snapshot.settlements.map(settlement) };
 
@@ -20,7 +21,7 @@ export const challenger = createSiteService(
     dossier: async (report, id, windows) =>
       report.tape.mode === "recorded"
         ? draftDossier(report, id, new McpClient(), undefined, { bundle: await recordedEvidence(id), windows })
-        : withClient((client) => draftDossier(report, id, client, undefined, { windows }), fetch, 20_000),
+        : withClient((client) => draftDossier(report, id, client, undefined, { windows }), publicFetch, 20_000),
   },
   fallbackTape,
   Date.now,
