@@ -151,8 +151,7 @@ export function Playground({ seed }: { seed: CatalogSeed | null }) {
             <h2 id="replay-heading">A budget you can inspect.</h2>
           </div>
           <p className="muted">
-            Allowed requests reserve their full escrow.
-            <br />
+            Allowed requests reserve their full escrow. <br />
             Denied requests leave the ledger untouched.
           </p>
         </motion.div>
