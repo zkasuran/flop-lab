@@ -1,6 +1,6 @@
 # Staking
 
-What stake does my miner or validator need, and what can it lose? This tool applies quoted FLOP devnet parameters to a declared capacity. It separates a documented scenario from indexed balances and current runtime eligibility.
+What stake does my miner or validator need and what can it lose? This tool applies quoted FLOP devnet parameters to a declared capacity. It separates a documented scenario from indexed balances and current runtime eligibility.
 
 ## Quick start
 
