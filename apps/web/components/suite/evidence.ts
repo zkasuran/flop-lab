@@ -33,6 +33,7 @@ import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
 import swaps from "../../../../packages/swaps/fixtures/swaps.json";
 import { parseSwapPage } from "../../../../packages/swaps/src/observed";
+import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -64,6 +65,17 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "packages/swaps/fixtures/swaps.json",
       "Orders and indexed HTLCs are distinct. No chain-pair completion is verified.",
     ),
+  metering: () => {
+    const report = meteringReport();
+    return metric(
+      report.errors.length ? undefined : report.miners.filter((miner) => miner.gnMax !== null).length,
+      "calibration objects in the recorded miner page",
+      report.sources[0]?.measuredAt,
+      report.sources[0]?.source,
+      "packages/metering/fixtures/miners.json",
+      "Indexed cap fields. Acceptance and expiry blocks are missing; lease validity is unobservable.",
+    );
+  },
   finality: () =>
     metric(
       analyzeRecording(parseRecording(finality)).lag,

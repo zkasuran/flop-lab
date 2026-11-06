@@ -262,7 +262,7 @@ export const tools: readonly Tool[] = [
     section: "verify",
     name: "Metering and calibration",
     tagline: "How is effective FLOP measured and calibrated?",
-    status: "planned",
+    status: "alpha",
     href: "/metering",
     repoPath: "packages/metering",
   },
