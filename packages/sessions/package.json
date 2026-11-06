@@ -1,0 +1,22 @@
+{
+  "name": "@flop-lab/sessions",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Evidence-led compute channel lifecycle inspection",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-sessions": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/recorder": "workspace:*"
+  }
+}
