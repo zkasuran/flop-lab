@@ -17,6 +17,7 @@ import indexer from "../../../../packages/indexer-audit/fixtures/devnet.json";
 import modelCatalogue from "../../../../packages/models/test/fixtures/devnet.json";
 import { parseGateway } from "../../../../packages/models/src/schema";
 import kestra from "../../app/kestra/observed.json";
+import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 
@@ -50,6 +51,17 @@ const readers: Record<string, () => SuiteMetric | null> = {
       observation?.source,
       "packages/models/test/fixtures/devnet.json",
       "Advertised listings. No inference or miner availability is verified.",
+    );
+  },
+  start: () => {
+    const observation = starter.observations.find((row) => row.tool === "flop_discover_models");
+    return metric(
+      rows(object(JSON.parse(observation?.raw ?? "null") as unknown).models).length,
+      "registered models in starter replay",
+      observation?.measuredAt,
+      observation?.source,
+      "packages/create-flop-agent/fixtures/devnet.json",
+      "Recorded discovery. No current offer or spending quote.",
     );
   },
   indexer: () =>
