@@ -15,6 +15,8 @@ import contracts from "../../../../packages/mcpaudit/last-run.json";
 import tclk from "../../../../packages/tclk-inspect/fixtures/htlcs.json";
 import indexer from "../../../../packages/indexer-audit/fixtures/devnet.json";
 import kestra from "../../app/kestra/observed.json";
+import consoleTools from "../../../../packages/console/fixtures/tools.json";
+import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
@@ -40,6 +42,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  console: () =>
+    metric(
+      rows(object(pickResponse(consoleTools.raw, consoleTools.request.id).result).tools).length,
+      "tools in recorded MCP discovery",
+      consoleTools.measuredAt,
+      consoleTools.source,
+      "packages/console/fixtures/tools.json",
+      "Discovery only. Not every tool has an output schema or is enabled in the console.",
+    ),
   start: () => {
     const observation = starter.observations.find((row) => row.tool === "flop_discover_models");
     return metric(
