@@ -39,6 +39,8 @@ import { recordedReport as meteringReport } from "../../../../packages/metering/
 import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/recorded";
 import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
+import exportBlocks from "../../../../packages/export/fixtures/blocks.json";
+import { parseIndexerData } from "@flop-lab/mcp";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -61,6 +63,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  export: () => {
+    const capture = exportBlocks[0]!;
+    return metric(
+      parseIndexerData("blocks", JSON.parse(capture.raw)).length,
+      "block rows in the export recording",
+      capture.measuredAt,
+      capture.source,
+      "packages/export/fixtures/blocks.json",
+      "Bounded recorded rows. Export completion does not establish chain completeness.",
+    );
+  },
   yellowpaper: () => {
     const paper = yellowpaperSpec();
     return metric(

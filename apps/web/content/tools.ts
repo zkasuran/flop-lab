@@ -307,7 +307,7 @@ export const tools: readonly Tool[] = [
     section: "build",
     name: "Data export",
     tagline: "How do I get devnet data into a spreadsheet or notebook?",
-    status: "planned",
+    status: "alpha",
     href: "/export",
     repoPath: "packages/export",
   },
