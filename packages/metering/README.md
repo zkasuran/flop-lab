@@ -37,7 +37,7 @@ Section 4 states: "Work **MUST** be accounted in versioned reference-work units 
 
 Declare non-overlapping reference-work components from your chosen meter profile. The library sums them as integers and floors once. For example, supply separately accounted prompt, generation, attention and embedding terms if your profile separates them. Do not count a term twice. The calculator does not infer those terms from a model name, token count or GPU label. The public paper does not publish the complete executable primitive needed for that conversion. It says the primitive is `hp_poui::flop_meter` with a Python mirror.
 
-R4.4 says: "Implementations **MUST** floor once at `F_eff / 10⁹`, reject a value outside the destination width, and use checked aggregation". `--bits 64` checks the direct rail. The default width is 128 for a session work value. This is a single-work calculator, not a session-leaf aggregator. Cache reuse does not reduce the billed prompt term in wire profile v1. Physical operations, energy and latency are separate measurements.
+R4.4 requires implementations to "floor once at `F_eff / 10⁹`", "reject a value outside the destination width" and "use checked aggregation". `--bits 64` checks the direct rail. The default width is 128 for a session work value. This is a single-work calculator, not a session-leaf aggregator. Cache reuse does not reduce the billed prompt term in wire profile v1. Physical operations, energy and latency are separate measurements.
 
 ### Decay weights rewards, not settled work
 
@@ -83,7 +83,7 @@ The benchmark calculator checks zero cap, minimum duration, job count and work c
 
 ### Lease boundaries and renewal
 
-R7.2 says: "At the exact expiry boundary every registration, PoUI, stake/vesting, and compute-channel consumer **MUST** fail closed." With `A` as the latest successful acceptance or renewal block and `L` as the lease length:
+R7.2 says that "At the exact expiry boundary" all cap consumers "**MUST** fail closed." With `A` as the latest successful acceptance or renewal block and `L` as the lease length:
 
 | Block window | Model state |
 | --- | --- |
