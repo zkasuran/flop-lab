@@ -14,9 +14,14 @@ import {
 import type { HTMLMotionProps } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useId, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
+import { ChevronRight } from "./icons";
 
 const LinkWithMotion = motion.create(Link);
+
+/** Shared easing. Every timed transition on the site finishes within 600 ms. */
+export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+export const EASE_IN_OUT = [0.65, 0, 0.35, 1] as const;
 
 /** Immediate actions with transform-only feedback. Example: <MotionButton onClick={copy}>Copy</MotionButton>. */
 export function MotionButton(props: HTMLMotionProps<"button">) {
@@ -25,8 +30,7 @@ export function MotionButton(props: HTMLMotionProps<"button">) {
     <motion.button
       whileHover={{ y: reduced ? 0 : -1 }}
       whileTap={{ scale: reduced ? 1 : 0.97 }}
-      whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
-      transition={{ duration: reduced ? 0 : 0.16 }}
+      transition={{ duration: reduced ? 0 : 0.16, ease: EASE_OUT }}
       {...props}
     />
   );
@@ -37,16 +41,18 @@ export function MotionLink(props: React.ComponentProps<typeof LinkWithMotion>) {
   const reduced = useReducedMotion() !== false;
   return (
     <LinkWithMotion
-      whileHover={{ y: reduced ? 0 : -2 }}
+      whileHover={{ y: reduced ? 0 : -1 }}
       whileTap={{ scale: reduced ? 1 : 0.98 }}
-      whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
-      transition={{ duration: reduced ? 0 : 0.18 }}
+      transition={{ duration: reduced ? 0 : 0.18, ease: EASE_OUT }}
       {...props}
     />
   );
 }
 
-/** Route arrivals preserve visible server-rendered content. Example: <RouteSurface>{children}</RouteSurface>. */
+/**
+ * Route arrivals preserve visible server-rendered content. The layout group stays mounted across routes,
+ * so a shared tool marker can travel from an index row to the tool header. Example: <RouteSurface>{children}</RouteSurface>.
+ */
 export function RouteSurface({ children }: { children: ReactNode }) {
   const path = usePathname();
   const reduced = useReducedMotion() !== false;
@@ -56,9 +62,9 @@ export function RouteSurface({ children }: { children: ReactNode }) {
         <motion.div
           className="route-surface"
           key={path}
-          initial={{ y: reduced ? 0 : 8 }}
+          initial={{ y: reduced ? 0 : 10 }}
           animate={{ y: 0 }}
-          transition={{ duration: reduced ? 0 : 0.24 }}
+          transition={{ duration: reduced ? 0 : 0.32, ease: EASE_OUT }}
         >
           {children}
         </motion.div>
@@ -67,18 +73,44 @@ export function RouteSurface({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * True once an element has been seen. Elements that start on screen count as seen at once, so their
+ * final state is never hidden. Example: const shown = useSeen(ref);
+ */
+export function useSeen<T extends Element>(ref: RefObject<T | null>, amount = 0.35): boolean {
+  const inView = useInView(ref, { once: true, amount });
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    const box = ref.current?.getBoundingClientRect();
+    if (box && (box.top > window.innerHeight || box.bottom < 0)) setArmed(true);
+  }, [ref]);
+  return !armed || inView;
+}
+
 /** Reveal content in reading order without hiding its final value. Example: <ReadingReveal order={1}>...</ReadingReveal>. */
-export function ReadingReveal({ children, order = 0 }: { children: ReactNode; order?: number }) {
+export function ReadingReveal({
+  children,
+  order = 0,
+  className,
+}: {
+  children: ReactNode;
+  order?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const visible = useInView(ref, { once: true, margin: "0px 0px -24px 0px" });
   const reduced = useReducedMotion() !== false;
   return (
     <motion.div
       ref={ref}
-      className="reading-reveal"
+      className={className ? `reading-reveal ${className}` : "reading-reveal"}
       initial={false}
-      animate={{ y: reduced || visible ? 0 : 14 }}
-      transition={{ duration: reduced ? 0 : 0.32, delay: reduced ? 0 : Math.min(order * 0.06, 0.24) }}
+      animate={{ y: reduced || visible ? 0 : 16 }}
+      transition={{
+        duration: reduced ? 0 : 0.36,
+        ease: EASE_OUT,
+        delay: reduced ? 0 : Math.min(order * 0.06, 0.24),
+      }}
     >
       {children}
     </motion.div>
@@ -95,10 +127,33 @@ export function ObservedNumber({ value }: { value: number | undefined }) {
       initial={{ y: reduced ? 0 : 7 }}
       whileInView={{ y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: reduced ? 0 : 0.36 }}
+      transition={{ duration: reduced ? 0 : 0.36, ease: EASE_OUT }}
     >
       {value?.toLocaleString("en-US") ?? "No data"}
     </motion.span>
+  );
+}
+
+/**
+ * Replace one displayed value with the next as a whole. The old value leaves, the new one arrives.
+ * Nothing in between is shown. Example: <SwapValue value={row.escrow} />.
+ */
+export function SwapValue({ value, className }: { value: string; className?: string }) {
+  const reduced = useReducedMotion() !== false;
+  return (
+    <span className={`swap-value ${className ?? ""}`}>
+      <AnimatePresence initial={false} mode="popLayout">
+        <motion.span
+          key={value}
+          initial={{ y: reduced ? 0 : "70%", opacity: reduced ? 1 : 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: reduced ? 0 : "-70%", opacity: 0 }}
+          transition={{ duration: reduced ? 0 : 0.26, ease: EASE_OUT }}
+        >
+          {value}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
 }
 
@@ -108,7 +163,7 @@ export function Disclosure({ title, children }: { title: string; children: React
   const id = useId();
   const reduced = useReducedMotion() !== false;
   return (
-    <motion.div className="disclosure" layout={!reduced} transition={{ duration: reduced ? 0 : 0.24 }}>
+    <motion.div className="disclosure" layout={!reduced} transition={{ duration: reduced ? 0 : 0.24, ease: EASE_OUT }}>
       <MotionButton
         className="disclosure-toggle"
         aria-expanded={open}
@@ -118,9 +173,9 @@ export function Disclosure({ title, children }: { title: string; children: React
         <motion.span
           aria-hidden="true"
           animate={{ rotate: open ? 90 : 0 }}
-          transition={{ duration: reduced ? 0 : 0.18 }}
+          transition={{ duration: reduced ? 0 : 0.18, ease: EASE_OUT }}
         >
-          ›
+          <ChevronRight size={12} />
         </motion.span>
         {title}
       </MotionButton>
@@ -132,7 +187,7 @@ export function Disclosure({ title, children }: { title: string; children: React
             initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: reduced ? 0 : 0.18 }}
+            transition={{ duration: reduced ? 0 : 0.18, ease: EASE_OUT }}
           >
             {children}
           </motion.div>
@@ -142,33 +197,42 @@ export function Disclosure({ title, children }: { title: string; children: React
   );
 }
 
-/** Scroll progress describes reading, never verification completion. Example: <ReadingPath title="Follow the evidence" steps={[{ title: "Read", text: "Public data." }]} />. */
-export function ReadingPath({ title, steps }: { title: string; steps: { title: string; text: string }[] }) {
-  const ref = useRef<HTMLElement>(null);
-  const id = useId();
+type Step = { title: string; text: string };
+
+/** Numbered steps with a rail that fills with scroll. It tracks reading, not verification. Example: <ReadingSteps steps={steps} />. */
+export function ReadingSteps({ steps }: { steps: Step[] }) {
+  const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion() !== false;
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 50%"] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 55%"] });
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
   return (
-    <section ref={ref} className="section reading-path" aria-labelledby={id}>
+    <div ref={ref} className="reading-steps">
+      <div className="reading-track" aria-hidden="true">
+        <motion.div className="reading-progress" style={{ scaleY: reduced ? 1 : scaleY }} />
+      </div>
+      {steps.map((step, index) => (
+        <ReadingReveal key={step.title} order={index}>
+          <article>
+            <h3>{step.title}</h3>
+            <p className="muted">{step.text}</p>
+          </article>
+        </ReadingReveal>
+      ))}
+    </div>
+  );
+}
+
+/** Scroll progress describes reading, never verification completion. Example: <ReadingPath title="Follow the evidence" steps={[{ title: "Read", text: "Public data." }]} />. */
+export function ReadingPath({ title, steps }: { title: string; steps: Step[] }) {
+  const id = useId();
+  return (
+    <section className="section reading-path" aria-labelledby={id}>
       <div>
         <p className="eyebrow">Reading guide</p>
         <h2 id={id}>{title}</h2>
         <p className="muted reading-note">The line tracks your place in this explanation.</p>
       </div>
-      <div className="reading-steps">
-        <div className="reading-track" aria-hidden="true">
-          <motion.div className="reading-progress" style={{ scaleY: reduced ? 1 : scaleY }} />
-        </div>
-        {steps.map((step, index) => (
-          <ReadingReveal key={step.title} order={index}>
-            <article>
-              <h3>{step.title}</h3>
-              <p className="muted">{step.text}</p>
-            </article>
-          </ReadingReveal>
-        ))}
-      </div>
+      <ReadingSteps steps={steps} />
     </section>
   );
 }
