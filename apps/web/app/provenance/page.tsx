@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import type { Metadata } from "next";
 import { ProvenanceBrowser } from "@/components/provenance-browser";
-import { ReadingPath, ReadingReveal } from "@/components/motion";
+import { ReadingPath } from "@/components/motion";
+import { PageHero } from "@/components/page-hero";
 export const metadata: Metadata = {
   title: "Contribution provenance",
   description: "Inspect the public signing identity for flop-lab contributions.",
@@ -9,20 +10,12 @@ export const metadata: Metadata = {
 export default function Provenance() {
   return (
     <>
-      <header className="page-heading">
-        <ReadingReveal>
-          <p className="eyebrow">Open source / Provenance</p>
-        </ReadingReveal>
-        <ReadingReveal order={1}>
-          <h1>Check the signature.</h1>
-        </ReadingReveal>
-        <ReadingReveal order={2}>
-          <p className="muted">
-            Verify exact manifest bytes with the public DID in the footer. Checks run locally with Ed25519 WebCrypto.
-            Flip one byte to see a valid signature fail.
-          </p>
-        </ReadingReveal>
-      </header>
+      <PageHero
+        eyebrow="Open source / Provenance"
+        lines={["Check the", "signature."]}
+        accent={1}
+        lede="Verify exact manifest bytes with the public DID in the footer. Checks run locally with Ed25519 WebCrypto. Flip one byte to see a valid signature fail."
+      />
       <section className="panel">
         <h2>What a signature tells you</h2>
         <p>

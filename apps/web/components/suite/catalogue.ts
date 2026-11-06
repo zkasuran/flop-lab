@@ -22,8 +22,40 @@ export type SearchEntry = {
   title: string;
   detail: string;
   href: string;
-  kind: "Tool" | "Section" | "Docs";
+  kind: "Tool" | "Section" | "Page" | "Docs";
 };
+
+/** Site pages outside the tool registry. They are searchable and listed in the sitemap. */
+export const sitePages: readonly SearchEntry[] = [
+  {
+    id: "page:network",
+    title: "Network",
+    detail: "Latest devnet block, accounts, price sources and the sampled settlement page",
+    href: "/network",
+    kind: "Page",
+  },
+  {
+    id: "page:findings",
+    title: "Findings",
+    detail: "Dated results from the settlement verifier, the conformance harness and the gateway",
+    href: "/findings",
+    kind: "Page",
+  },
+  {
+    id: "page:about",
+    title: "How flop-lab was made",
+    detail: "Agents write the code, a gate checks it and a person merges",
+    href: "/about",
+    kind: "Page",
+  },
+  {
+    id: "page:provenance",
+    title: "Contribution provenance",
+    detail: "Check pull request and build signatures in your browser",
+    href: "/provenance",
+    kind: "Page",
+  },
+];
 
 /** Read registry routes without confusing tool and section names. @example sectionHref("verify") */
 export function sectionHref(id: Section): string {
@@ -40,6 +72,7 @@ export function navigationEntries(): SearchEntry[] {
       href: sectionHref(section.id),
       kind: "Section",
     })),
+    ...sitePages,
     ...tools.map((tool): SearchEntry => ({
       id: `tool:${tool.slug}`,
       title: tool.name,

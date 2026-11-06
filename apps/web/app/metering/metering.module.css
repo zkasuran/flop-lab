@@ -21,6 +21,7 @@
   border: 1px solid var(--border);
   border-left: 3px solid var(--warning);
   background: var(--surface);
+  border-radius: var(--radius-md);
 }
 .notice p {
   margin-block: var(--space-3);

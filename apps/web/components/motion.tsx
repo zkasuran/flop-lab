@@ -3,23 +3,34 @@
 
 import {
   AnimatePresence,
-  LayoutGroup,
   motion,
   MotionConfig,
   useInView,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from "motion/react";
 import type { HTMLMotionProps } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
+import {
+  Fragment,
+  ViewTransition,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+  type RefObject,
+} from "react";
 import { ChevronRight } from "./icons";
 
 const LinkWithMotion = motion.create(Link);
 
-/** Shared easing. Every timed transition on the site finishes within 600 ms. */
+/** Shared easing. Interface feedback finishes within 600 ms. Decorative loops live in their own components. */
 export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 export const EASE_IN_OUT = [0.65, 0, 0.35, 1] as const;
 
@@ -50,26 +61,84 @@ export function MotionLink(props: React.ComponentProps<typeof LinkWithMotion>) {
 }
 
 /**
- * Route arrivals preserve visible server-rendered content. The layout group stays mounted across routes,
- * so a shared tool marker can travel from an index row to the tool header. Example: <RouteSurface>{children}</RouteSurface>.
+ * Route changes run through React's ViewTransition. The old page fades out and the new one rises in, while a named
+ * ToolMark morphs from its card into the tool header. The first paint is never animated, so server-rendered content
+ * stays visible. Browsers without view transitions switch at once. Example: <RouteSurface>{children}</RouteSurface>.
  */
 export function RouteSurface({ children }: { children: ReactNode }) {
   const path = usePathname();
-  const reduced = useReducedMotion() !== false;
   return (
     <MotionConfig reducedMotion="user">
-      <LayoutGroup id="suite-routes">
-        <motion.div
-          className="route-surface"
-          key={path}
-          initial={{ y: reduced ? 0 : 10 }}
-          animate={{ y: 0 }}
-          transition={{ duration: reduced ? 0 : 0.32, ease: EASE_OUT }}
-        >
-          {children}
-        </motion.div>
-      </LayoutGroup>
+      <ViewTransition key={path} enter="route-enter" exit="route-exit" default="none">
+        <div className="route-surface">{children}</div>
+      </ViewTransition>
     </MotionConfig>
+  );
+}
+
+/**
+ * Pull a control a few pixels toward the pointer. The wrapper widens the hover area, so the pull starts just
+ * before the pointer reaches the control. Mouse only. Reduced motion keeps it still.
+ * Example: <Magnetic><MotionLink className="button" href="/verify">Check</MotionLink></Magnetic>.
+ */
+export function Magnetic({
+  children,
+  strength = 0.3,
+  limit = 10,
+  className,
+}: {
+  children: ReactNode;
+  strength?: number;
+  limit?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const reduced = useReducedMotion() !== false;
+  const spring = { stiffness: 240, damping: 16, mass: 0.5 };
+  const x = useSpring(0, spring);
+  const y = useSpring(0, spring);
+  const clamp = (value: number) => Math.max(-limit, Math.min(limit, value));
+  const move = (event: ReactPointerEvent<HTMLSpanElement>) => {
+    if (reduced || event.pointerType !== "mouse") return;
+    const box = ref.current?.getBoundingClientRect();
+    if (!box) return;
+    x.set(clamp((event.clientX - (box.left + box.width / 2)) * strength));
+    y.set(clamp((event.clientY - (box.top + box.height / 2)) * strength));
+  };
+  const reset = () => {
+    x.set(0);
+    y.set(0);
+  };
+  return (
+    <motion.span
+      ref={ref}
+      className={className ? `magnetic ${className}` : "magnetic"}
+      style={{ x, y }}
+      onPointerMove={move}
+      onPointerLeave={reset}
+    >
+      {children}
+    </motion.span>
+  );
+}
+
+/**
+ * Headline words rise into place once at first paint, driven by CSS so the text never waits for hydration.
+ * Reduced motion shows the words at once. Example: <SplitWords text="See the network." />.
+ */
+export function SplitWords({ text, start = 0, className }: { text: string; start?: number; className?: string }) {
+  const words = text.split(" ");
+  return (
+    <span className={className ? `split-words ${className}` : "split-words"}>
+      {words.map((word, index) => (
+        <Fragment key={`${word}-${index}`}>
+          <span className="split-word">
+            <span style={{ "--i": start + index } as CSSProperties}>{word}</span>
+          </span>
+          {index < words.length - 1 ? " " : null}
+        </Fragment>
+      ))}
+    </span>
   );
 }
 

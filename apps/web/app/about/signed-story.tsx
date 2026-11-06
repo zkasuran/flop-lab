@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Disclosure, MotionButton, MotionLink, ObservedNumber, ReadingPath, ReadingReveal } from "@/components/motion";
+import { ArrowRight, ArrowUpRight } from "@/components/icons";
 import { extractProof, verifyContribution } from "@/lib/provenance";
 import { parseManifest, type Verification } from "@/lib/did";
 import type { Story } from "./recording";
@@ -40,7 +41,10 @@ export function SignedStory({ story }: { story: Story }) {
               <h2 id="example-heading">The site shell, from branch to merge.</h2>
             </div>
             <p className="muted">
-              Recorded from <MotionLink href={story.source}>GitHub's public API ↗</MotionLink>
+              Recorded from{" "}
+              <MotionLink href={story.source}>
+                GitHub&apos;s public API <ArrowUpRight size={13} />
+              </MotionLink>
               <br />
               <time dateTime={story.measuredAt}>{story.measuredAt.replace("T", " ").replace("Z", " UTC")}</time>
             </p>
@@ -52,7 +56,9 @@ export function SignedStory({ story }: { story: Story }) {
               Pull request <ObservedNumber value={story.pr.number} />
             </p>
             <h3>
-              <MotionLink href={story.pr.html_url}>{story.pr.title} ↗</MotionLink>
+              <MotionLink href={story.pr.html_url}>
+                {story.pr.title} <ArrowUpRight size={16} />
+              </MotionLink>
             </h3>
             <p>
               <ObservedNumber value={manifest?.files.length} /> file hashes in the signed manifest. The signature covers
@@ -125,7 +131,9 @@ export function SignedStory({ story }: { story: Story }) {
           </Disclosure>
         )}
         <p>
-          <MotionLink href="/provenance">Read current pull request proofs and the build signature →</MotionLink>
+          <MotionLink className="text-link" href="/provenance">
+            Read current pull request proofs and the build signature <ArrowRight />
+          </MotionLink>
         </p>
       </section>
     </div>

@@ -19,6 +19,7 @@
   border: 1px solid var(--border);
   border-left: 3px solid var(--warning);
   background: var(--surface);
+  border-radius: var(--radius-md);
 }
 .finding h2 {
   font-size: var(--text-xl);
@@ -45,6 +46,7 @@
   padding: var(--space-6);
   display: grid;
   gap: 0.5rem;
+  border-radius: var(--radius-md);
 }
 .metric strong {
   font: 3rem/1.1 var(--font-data);
@@ -261,6 +263,7 @@
   background: var(--surface);
   padding: 1rem;
   margin-bottom: 1rem;
+  border-radius: var(--radius-md);
 }
 .command code {
   min-width: 0;

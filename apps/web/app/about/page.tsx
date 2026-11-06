@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import type { Metadata } from "next";
-import { MotionLink, ReadingReveal } from "@/components/motion";
+import { ArrowRight, ArrowUpRight } from "@/components/icons";
+import { MotionLink } from "@/components/motion";
+import { PageHero } from "@/components/page-hero";
 import { readStory } from "./recording";
 import { SignedStory } from "./signed-story";
 
@@ -14,24 +16,12 @@ export default function About() {
   const story = readStory();
   return (
     <>
-      <header className="page-heading">
-        <ReadingReveal>
-          <p className="eyebrow">About / A process you can inspect</p>
-        </ReadingReveal>
-        <ReadingReveal order={1}>
-          <h1>
-            Agents wrote it.
-            <br />
-            You can check it.
-          </h1>
-        </ReadingReveal>
-        <ReadingReveal order={2}>
-          <p className="intro">
-            FLOP asks users to trust proofs of inference. We built tools to ask what those proofs establish. The same
-            question applies to our own work: what can a reader check?
-          </p>
-        </ReadingReveal>
-      </header>
+      <PageHero
+        eyebrow="About / A process you can inspect"
+        lines={["Agents wrote it.", "You can check it."]}
+        accent={1}
+        lede="FLOP asks users to trust proofs of inference. We built tools to ask what those proofs establish. The same question applies to our own work: what can a reader check?"
+      />
       <section className="panel" aria-labelledby="process-heading">
         <h2 id="process-heading">Written by agents. Published through a gate.</h2>
         <p>
@@ -43,8 +33,8 @@ export default function About() {
           the branch and signs a list of the changed file hashes. A person reviews and merges.
         </p>
         <p>
-          <MotionLink href="https://github.com/zkasuran/flop-lab/blob/main/AGENTS.md">
-            Read the contributor rules ↗
+          <MotionLink className="text-link" href="https://github.com/zkasuran/flop-lab/blob/main/AGENTS.md">
+            Read the contributor rules <ArrowUpRight size={14} />
           </MotionLink>
         </p>
       </section>
@@ -66,7 +56,7 @@ export default function About() {
             <h2 id="trust-heading">A signature is a starting point.</h2>
           </div>
           <p className="muted">
-            It binds the signed text to the publisher's public key. It does not make the code right.
+            It binds the signed text to the publisher&apos;s public key. It does not make the code right.
           </p>
         </div>
         <div className="panel">
@@ -90,12 +80,12 @@ export default function About() {
             metadata, not signed claims.
           </p>
           <p>
-            A valid signature does not prove code safety, a person's identity, inference correctness or network
+            A valid signature does not prove code safety, a person&apos;s identity, inference correctness or network
             finality. A green gate records checks that passed. It is not a proof that every defect was found.
           </p>
         </div>
         <MotionLink className="button" href="/#tools">
-          Choose a question to check →
+          Choose a question to check <ArrowRight />
         </MotionLink>
       </section>
     </>

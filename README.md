@@ -60,7 +60,7 @@ The signature covers the hash of every changed file and the recipe to check it i
 ## Repository map
 
 ```
-apps/web            the site (Next.js, Motion)
+apps/web            the site (Next.js, Motion, Lenis)
 packages/           mcp, verifier, scoreboard, harness, spendguard, challenger
 plugins/kestra-flop the Kestra plugin (Java)
 scripts/            offline signature checker

@@ -1,0 +1,575 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Site header, mega menu, Trust dropdown, block reading and small-screen menu. */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--header-height);
+}
+/* The frosted layer sits on a pseudo-element, so fixed menus inside the header still use the viewport. */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--header-bg);
+  backdrop-filter: saturate(1.6) blur(18px);
+  -webkit-backdrop-filter: saturate(1.6) blur(18px);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+.header[data-scrolled="true"]::before,
+.header[data-open="true"]::before {
+  opacity: 1;
+}
+.inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  font-size: 1.125rem;
+  font-weight: 640;
+  letter-spacing: -0.05em;
+  text-decoration: none;
+  border-radius: 0.5rem;
+}
+.brandSuffix {
+  color: var(--muted);
+}
+.nav {
+  margin-left: var(--space-4);
+}
+.links {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* The mega panel is placed against the header container, so its list item stays static. */
+.megaItem {
+  position: static;
+}
+.dropItem {
+  position: relative;
+}
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 2.25rem;
+  padding: 0 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.link:hover,
+.link[data-active="true"],
+.link[aria-expanded="true"] {
+  color: var(--foreground);
+}
+.label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.chevron {
+  opacity: 0.7;
+  transition: transform var(--motion-base) var(--ease-out);
+}
+.chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+.indicator,
+.hover {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+}
+.indicator {
+  border: 1px solid var(--glass-border);
+  background: color-mix(in oklab, var(--foreground) 7%, transparent);
+}
+.hover {
+  background: color-mix(in oklab, var(--foreground) 4%, transparent);
+}
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.cta {
+  min-height: 2.25rem;
+  padding: 0 0.95rem;
+  font-size: var(--text-sm);
+}
+/* The action classes sit beside global control classes, so they carry the container for specificity. */
+.actions .ctaWrap {
+  margin-left: var(--space-1);
+}
+.actions .menuButton {
+  display: none;
+}
+
+/* Mega menu */
+.mega {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 15.5rem minmax(0, 1fr) 17rem;
+  gap: var(--space-2);
+  max-height: calc(100dvh - var(--header-height) - 2rem);
+  overflow: auto;
+  padding: var(--space-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  /* Menus are opaque, so page text never shows through where backdrop blur is unavailable. */
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--foreground) 3%, transparent), transparent 30%), var(--surface);
+  box-shadow: var(--shadow-lg), var(--inner-light);
+  transform-origin: top center;
+}
+/* An invisible bridge keeps the menu open while the pointer crosses the gap. */
+.mega::before,
+.dropdown::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 1.5rem;
+}
+.rail {
+  display: grid;
+  align-content: start;
+  gap: 0.15rem;
+  padding: var(--space-2);
+  border-right: 1px solid var(--border);
+}
+.railItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.6rem;
+  border: 0;
+  border-radius: 0.9rem;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.railItem[aria-pressed="true"] {
+  color: var(--foreground);
+}
+.railPill {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.9rem;
+  background: color-mix(in oklab, var(--foreground) 6%, transparent);
+  box-shadow: inset 0 0 0 1px var(--glass-border);
+}
+.railIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--accent);
+}
+.railText {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+}
+.railTitle {
+  font-weight: 560;
+  letter-spacing: -0.02em;
+}
+.railMeta {
+  font: 0.6875rem / 1.4 var(--font-data);
+  color: var(--subtle);
+  white-space: nowrap;
+}
+.pane {
+  position: relative;
+  min-width: 0;
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  overflow: hidden;
+}
+.paneInner {
+  display: grid;
+  gap: var(--space-3);
+}
+.paneHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding: 0 0.7rem var(--space-3);
+  border-bottom: 1px dashed var(--border);
+}
+.paneQuestion {
+  max-width: 38ch;
+  font-size: 1.05rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+}
+.paneHead :global(.text-link) {
+  font-size: var(--text-sm);
+}
+.paneList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.15rem 0.5rem;
+}
+.paneLink {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name badge"
+    "tag tag";
+  gap: 0.15rem 0.75rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.8rem;
+  text-decoration: none;
+  transition: background-color var(--motion-fast) var(--ease-out);
+}
+.paneLink:hover,
+.paneLink:focus-visible {
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+}
+.paneName {
+  grid-area: name;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+  font-weight: 540;
+}
+.paneLink[data-status="planned"] .paneName {
+  color: var(--muted);
+}
+.paneTag {
+  grid-area: tag;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+}
+.paneLink :global(.badge) {
+  grid-area: badge;
+  align-self: start;
+}
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4) var(--space-4);
+  border: 1px solid var(--glass-border);
+  border-radius: calc(var(--radius-xl) - 0.45rem);
+  background:
+    radial-gradient(120% 80% at 100% 0%, var(--accent-soft), transparent 60%),
+    radial-gradient(100% 80% at 0% 100%, var(--accent-2-soft), transparent 60%), var(--surface);
+}
+.featureTitle {
+  font-size: 1.2rem;
+  font-weight: 580;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.featureText {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.feature :global(.button) {
+  align-self: start;
+  margin-top: auto;
+}
+.featureHint {
+  color: var(--subtle);
+  font-size: var(--text-xs);
+}
+
+/* Trust dropdown */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 1.375rem);
+  left: -0.75rem;
+  width: 22rem;
+  padding: var(--space-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  /* Menus are opaque, so page text never shows through where backdrop blur is unavailable. */
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--foreground) 3%, transparent), transparent 30%), var(--surface);
+  box-shadow: var(--shadow-lg), var(--inner-light);
+  transform-origin: top left;
+}
+.dropList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.1rem;
+}
+.dropLink {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.8rem;
+  text-decoration: none;
+  transition: background-color var(--motion-fast) var(--ease-out);
+}
+.dropLink:hover,
+.dropLink:focus-visible {
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+}
+.dropTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+  font-weight: 540;
+}
+.dropText {
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+.dropKey {
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+  margin-top: var(--space-2);
+  padding: var(--space-3) 0.75rem 0.5rem;
+  border-top: 1px dashed var(--border);
+}
+.dropKey code {
+  color: var(--foreground);
+  font-size: 0.75rem;
+}
+
+/* Block reading */
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.25rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface) 60%, transparent);
+  color: var(--muted);
+  font-size: var(--text-xs);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+.live:hover {
+  color: var(--foreground);
+  border-color: var(--border-strong);
+}
+.live :global(.status-dot) {
+  color: var(--accent);
+}
+.live[data-stale="true"] :global(.status-dot) {
+  color: var(--warning);
+}
+.liveState {
+  color: var(--muted);
+}
+.liveValue {
+  color: var(--foreground);
+  font-size: 0.8rem;
+}
+.liveSkeleton {
+  width: 4.5rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--border), var(--border-strong), var(--border));
+  background-size: 200% 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .live[data-stale="false"] :global(.status-dot) {
+    animation: live-ring 2.4s var(--ease-out) infinite;
+  }
+  .liveSkeleton {
+    animation: shimmer 1.4s linear infinite;
+  }
+}
+@keyframes live-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Small-screen menu */
+.mobile {
+  position: fixed;
+  z-index: 39;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-top: 1px solid var(--glass-border);
+  background: var(--background);
+  outline: none;
+}
+.mobileInner {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: var(--space-6) var(--space-16);
+}
+.mobileInner > div:first-child {
+  justify-self: start;
+}
+.mobileLabel {
+  margin-top: var(--space-2);
+}
+.mobileSections {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  border-top: 1px solid var(--border);
+}
+.mobileSections > li {
+  border-bottom: 1px solid var(--border);
+}
+.mobileSection {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.5rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+  text-align: left;
+}
+.mobileCount {
+  color: var(--subtle);
+  font: 0.75rem var(--font-data);
+}
+.mobileChevron {
+  display: inline-grid;
+  color: var(--muted);
+}
+.mobileTools {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--space-3) 2.75rem;
+  overflow: hidden;
+}
+.mobileTool {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+.mobileTool[aria-current="page"] {
+  color: var(--accent);
+}
+.mobileLinks {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  display: grid;
+}
+.mobileLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 3.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+.mobileLink[aria-current="page"] {
+  color: var(--accent);
+}
+.mobileFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 1240px) {
+  .liveDesktop {
+    display: none;
+  }
+}
+@media (max-width: 1120px) {
+  .mega {
+    grid-template-columns: 14rem minmax(0, 1fr);
+  }
+  .feature {
+    display: none;
+  }
+}
+@media (max-width: 960px) {
+  .nav,
+  .actions .ctaWrap,
+  .actions .repo {
+    display: none;
+  }
+  .actions .menuButton {
+    display: inline-grid;
+  }
+}

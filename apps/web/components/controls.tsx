@@ -115,7 +115,12 @@ export function ThemeToggle() {
 }
 
 const RESULT_LIMIT = 30;
-const GROUP_LABEL: Record<SearchEntry["kind"], string> = { Section: "Sections", Tool: "Tools", Docs: "Docs" };
+const GROUP_LABEL: Record<SearchEntry["kind"], string> = {
+  Section: "Sections",
+  Page: "Pages",
+  Tool: "Tools",
+  Docs: "Docs",
+};
 const toolsBySearchId = new Map(tools.map((tool) => [`tool:${tool.slug}`, tool]));
 
 /**
@@ -216,9 +221,9 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
           <input
             ref={input}
             className="palette-search"
-            aria-label="Search tools, sections and docs"
+            aria-label="Search tools, pages, sections and docs"
             aria-describedby="palette-help"
-            placeholder="Tool, section or docs heading"
+            placeholder="Tool, page, section or docs heading"
             value={query}
             onFocus={() => setFocused(null)}
             onChange={(event) => {
@@ -285,7 +290,7 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
           )}
           {!matches.length && (
             <p className="palette-empty muted" role="status">
-              No tools, sections or docs match this search.
+              No tools, pages, sections or docs match this search.
             </p>
           )}
         </div>
