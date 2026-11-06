@@ -22,7 +22,7 @@ node packages/challenger/dist/cli.js windows --json
 
 The binary is `flop-challenger`. The direct Node command works from a checkout without a global install.
 
-This private workspace package imports the shared MCP and verifier source directly, matching the existing package layout. The suite also exposes `flop challenger`. No second MCP client is implemented.
+This private workspace package imports the shared MCP and verifier source directly, matching the existing package layout. The suite also exposes `flop challenge`. No second MCP client is implemented.
 
 Build a dossier for the channel in the recorded sample:
 
