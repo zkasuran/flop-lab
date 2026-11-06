@@ -53,6 +53,8 @@ export async function guardedSpend<T>(
   let decision: Decision;
   try {
     decision = await options.ledger.transact((state) => {
+      if (state.events.some((event) => event.kind === "sharedPolicy"))
+        throw new Error("Use SharedBudget for a policy-bound shared ledger");
       request.at = (options.now ?? Date.now)();
       const matching = state.events.some(
         (e) =>

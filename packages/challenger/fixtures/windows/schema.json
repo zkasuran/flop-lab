@@ -1,0 +1,341 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "value": {
+    "__type": {
+      "fields": [
+        {
+          "name": "channelId",
+          "description": null,
+          "type": {
+            "name": null,
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "agent",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "miner",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "escrow",
+          "description": null,
+          "type": {
+            "name": null,
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "measuredRoot",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "modelHash",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "lineage",
+          "description": null,
+          "type": {
+            "name": "SessionLineage",
+            "kind": "OBJECT"
+          }
+        },
+        {
+          "name": "status",
+          "description": null,
+          "type": {
+            "name": null,
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "paymentStatus",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "evidenceStatus",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "verifierRef",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "timeoutPath",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "observationHead",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "aggregateGn",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "minerPaid",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "burned",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "cooperative",
+          "description": null,
+          "type": {
+            "name": "Boolean",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "finalRoot",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "challengeEnd",
+          "description": null,
+          "type": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "refunded",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "marketKind",
+          "description": null,
+          "type": {
+            "name": null,
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "forwardStartBlock",
+          "description": null,
+          "type": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardEndBlock",
+          "description": null,
+          "type": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardReservedRate",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardQuotaTotal",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardPricePerGn",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardBond",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardOutcome",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardBondReleased",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardBondSlashed",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardBuyerDamages",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "forwardBackupBounty",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "assuranceTier",
+          "description": null,
+          "type": {
+            "name": "String",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "calibrationVersion",
+          "description": null,
+          "type": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "capGflopsPerSec",
+          "description": null,
+          "type": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "softTierSpotCheckRatePpm",
+          "description": null,
+          "type": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "openedBlock",
+          "description": null,
+          "type": {
+            "name": null,
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "statusBlockNumber",
+          "description": null,
+          "type": {
+            "name": "Int",
+            "kind": "SCALAR"
+          }
+        },
+        {
+          "name": "openedAt",
+          "description": null,
+          "type": {
+            "name": null,
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "updatedAt",
+          "description": null,
+          "type": {
+            "name": null,
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "settlement",
+          "description": null,
+          "type": {
+            "name": "SettlementReference",
+            "kind": "OBJECT"
+          }
+        }
+      ]
+    }
+  },
+  "raw": "{\n  \"__type\": {\n    \"fields\": [\n      {\n        \"name\": \"channelId\",\n        \"description\": null,\n        \"type\": {\n          \"name\": null,\n          \"kind\": \"NON_NULL\"\n        }\n      },\n      {\n        \"name\": \"agent\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"miner\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"escrow\",\n        \"description\": null,\n        \"type\": {\n          \"name\": null,\n          \"kind\": \"NON_NULL\"\n        }\n      },\n      {\n        \"name\": \"measuredRoot\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"modelHash\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"lineage\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"SessionLineage\",\n          \"kind\": \"OBJECT\"\n        }\n      },\n      {\n        \"name\": \"status\",\n        \"description\": null,\n        \"type\": {\n          \"name\": null,\n          \"kind\": \"NON_NULL\"\n        }\n      },\n      {\n        \"name\": \"paymentStatus\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"evidenceStatus\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"verifierRef\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"timeoutPath\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"observationHead\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"aggregateGn\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"minerPaid\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"burned\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"cooperative\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Boolean\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"finalRoot\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"challengeEnd\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Int\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"refunded\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"marketKind\",\n        \"description\": null,\n        \"type\": {\n          \"name\": null,\n          \"kind\": \"NON_NULL\"\n        }\n      },\n      {\n        \"name\": \"forwardStartBlock\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Int\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardEndBlock\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Int\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardReservedRate\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardQuotaTotal\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardPricePerGn\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardBond\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardOutcome\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardBondReleased\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardBondSlashed\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardBuyerDamages\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"forwardBackupBounty\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"assuranceTier\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"String\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"calibrationVersion\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Int\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"capGflopsPerSec\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Int\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"softTierSpotCheckRatePpm\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Int\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"openedBlock\",\n        \"description\": null,\n        \"type\": {\n          \"name\": null,\n          \"kind\": \"NON_NULL\"\n        }\n      },\n      {\n        \"name\": \"statusBlockNumber\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"Int\",\n          \"kind\": \"SCALAR\"\n        }\n      },\n      {\n        \"name\": \"openedAt\",\n        \"description\": null,\n        \"type\": {\n          \"name\": null,\n          \"kind\": \"NON_NULL\"\n        }\n      },\n      {\n        \"name\": \"updatedAt\",\n        \"description\": null,\n        \"type\": {\n          \"name\": null,\n          \"kind\": \"NON_NULL\"\n        }\n      },\n      {\n        \"name\": \"settlement\",\n        \"description\": null,\n        \"type\": {\n          \"name\": \"SettlementReference\",\n          \"kind\": \"OBJECT\"\n        }\n      }\n    ]\n  }\n}",
+  "measuredAt": "2026-11-06T03:49:30.029Z",
+  "durationMs": 250,
+  "attempts": 1
+}
