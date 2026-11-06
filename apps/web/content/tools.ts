@@ -253,7 +253,7 @@ export const tools: readonly Tool[] = [
     section: "verify",
     name: "Emission and fees",
     tagline: "Do rewards, emission and fees follow the spec?",
-    status: "planned",
+    status: "alpha",
     href: "/economics",
     repoPath: "packages/economics",
   },

@@ -26,6 +26,7 @@ import proofs from "../../../../packages/proofs/fixtures/capture-3.json";
 import { parseProofs } from "../../../../packages/proofs/src/model";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
+import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -75,6 +76,17 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "packages/staking/fixtures/miners.json",
       "Indexed balances and capacity. Not a runtime eligibility or calibration lease proof.",
     ),
+  economics: () => {
+    const observation = economicsObservation();
+    return metric(
+      observation.data.settlements?.length,
+      "settlements in the economics comparison sample",
+      observation.measuredAt,
+      observation.source,
+      "packages/economics/fixtures/devnet.json",
+      "Compared with a pinned target. No issuance or reward receipt is verified.",
+    );
+  },
   models: () => {
     const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");
     return metric(
