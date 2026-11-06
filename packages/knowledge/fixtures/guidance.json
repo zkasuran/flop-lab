@@ -1,0 +1,13 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_agent_pack_install",
+  "args": {
+    "target": "generic",
+    "mode": "remote"
+  },
+  "measuredAt": "2026-11-06T03:07:49.763Z",
+  "status": "unavailable",
+  "error": "agent pack missing; set FLOP_AGENT_PACK_DIR or checkout knowledge/agent-pack",
+  "encoding": "text",
+  "raw": "agent pack missing; set FLOP_AGENT_PACK_DIR or checkout knowledge/agent-pack"
+}
