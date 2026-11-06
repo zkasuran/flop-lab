@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Compare dated spec revisions and observe package release history",
   },
   {
+    name: "knowledge",
+    pkg: "@flop-lab/knowledge",
+    bin: "flop-knowledge",
+    section: "build",
+    summary: "Browse catalog relationships, cited requirements and agent-pack responses",
+  },
+  {
     name: "spec-read",
     pkg: "@flop-lab/yellowpaper",
     bin: "flop-yellowpaper",

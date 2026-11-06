@@ -104,6 +104,9 @@ importers:
       '@flop-lab/invariants':
         specifier: workspace:*
         version: link:../invariants
+      '@flop-lab/knowledge':
+        specifier: workspace:*
+        version: link:../knowledge
       '@flop-lab/mcpaudit':
         specifier: workspace:*
         version: link:../mcpaudit
@@ -247,6 +250,12 @@ importers:
       '@flop-lab/verifier':
         specifier: workspace:*
         version: link:../verifier
+
+  packages/knowledge:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/mcp: {}
 

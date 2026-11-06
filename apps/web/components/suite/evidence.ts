@@ -37,6 +37,7 @@ import swaps from "../../../../packages/swaps/fixtures/swaps.json";
 import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
 import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
+import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -70,6 +71,17 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "packages/upgrades/src/data.ts",
       "Pinned spec text changes. No deployed runtime upgrade is established.",
       "Pinned yellowpaper",
+    );
+  },
+  knowledge: () => {
+    const observation = knowledgeManifest();
+    return metric(
+      observation.value?.concepts.length,
+      "concepts in the recorded knowledge manifest",
+      observation.measuredAt,
+      observation.source,
+      "packages/knowledge/fixtures/manifest.json",
+      "Catalog declarations. Source provenance and runtime behavior are not verified.",
     );
   },
   invariants: () =>

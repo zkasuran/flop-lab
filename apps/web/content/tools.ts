@@ -298,7 +298,7 @@ export const tools: readonly Tool[] = [
     section: "build",
     name: "Knowledge catalog",
     tagline: "What does the network's own knowledge catalog say?",
-    status: "planned",
+    status: "alpha",
     href: "/knowledge",
     repoPath: "packages/knowledge",
   },
