@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@flop-lab/openapi": "workspace:*",
+    "@flop-lab/mcp-server": "workspace:*",
     "@flop-lab/status": "workspace:*",
     "@flop-lab/export": "workspace:*",
     "@flop-lab/community": "workspace:*",

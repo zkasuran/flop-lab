@@ -1,0 +1,8 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "measuredAt": "2026-11-06T06:29:13.694Z",
+  "tool": "flop_agent_pack_manifest",
+  "args": {},
+  "error": true,
+  "raw": "agent pack missing; set FLOP_AGENT_PACK_DIR or checkout knowledge/agent-pack"
+}

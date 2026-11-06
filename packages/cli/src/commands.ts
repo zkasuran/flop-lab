@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Read dated suite results and generate their OpenAPI contract",
   },
   {
+    name: "mcp",
+    pkg: "@flop-lab/mcp-server",
+    bin: "flop-lab-mcp",
+    section: "agents",
+    summary: "Serve read-only suite tools over schema-checked stdio MCP",
+  },
+  {
     name: "status",
     pkg: "@flop-lab/status",
     bin: "flop-status",
