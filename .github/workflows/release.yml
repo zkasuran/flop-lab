@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Draft package release
+
+on:
+  workflow_dispatch:
+    inputs:
+      create_draft:
+        description: Attach artifacts to a new unsigned GitHub release draft
+        type: boolean
+        default: false
+      tag:
+        description: New draft tag, required when create_draft is enabled
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: draft-package-release
+  cancel-in-progress: false
+
+jobs:
+  artifacts:
+    if: github.repository == 'zkasuran/flop-lab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the dispatched revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Run the workspace gate
+        run: pnpm install --frozen-lockfile && pnpm check && pnpm build
+      - name: Pack unsigned dry-run candidates
+        run: pnpm --filter @flop-lab/release pack --out "$RUNNER_TEMP/flop-release"
+      - name: Verify artifact bytes
+        working-directory: ${{ runner.temp }}/flop-release
+        run: sha256sum -c SHA256SUMS
+      - name: Keep draft artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-candidates
+          if-no-files-found: error
+          path: |
+            ${{ runner.temp }}/flop-release/*.tgz
+            ${{ runner.temp }}/flop-release/SHA256SUMS
+            ${{ runner.temp }}/flop-release/release-plan.json
+            ${{ runner.temp }}/flop-release/RELEASE.md
+
+  draft:
+    needs: artifacts
+    if: inputs.create_draft && github.repository == 'zkasuran/flop-lab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Get this run's artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-candidates
+          path: artifacts
+      - name: Create an unsigned draft
+        working-directory: artifacts
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^draft-[a-z0-9][a-z0-9.-]{0,80}$ ]] || { echo "Use a new draft-... tag" >&2; exit 1; }
+          sha256sum -c SHA256SUMS
+          gh release create "$RELEASE_TAG" --draft --prerelease --target "$GITHUB_SHA" --title "$RELEASE_TAG" --notes-file RELEASE.md ./*.tgz SHA256SUMS release-plan.json
