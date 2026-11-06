@@ -1,0 +1,36 @@
+{
+  "observations": [
+    {
+      "tool": "flop_health",
+      "source": "https://mcp.flop.network/mcp",
+      "raw": "{\n  \"connected\": true,\n  \"chain\": \"FLOP Devnet\",\n  \"syncing\": false,\n  \"peers\": 11\n}",
+      "measuredAt": "2026-11-05T23:39:24.128Z",
+      "durationMs": 650,
+      "attempts": 1
+    },
+    {
+      "tool": "flop_discover_models",
+      "source": "https://mcp.flop.network/mcp",
+      "raw": "{\n  \"models\": [\n    {\n      \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n      \"modelName\": \"Qwen/Qwen3-8B\",\n      \"qualityScore\": 50,\n      \"matchScore\": 45,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 0,\n      \"served\": false,\n      \"servingMiners\": [],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": []\n    },\n    {\n      \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n      \"modelName\": \"Qwen/Qwen3.8-27B\",\n      \"qualityScore\": 50,\n      \"matchScore\": 45,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 0,\n      \"served\": false,\n      \"servingMiners\": [],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": []\n    },\n    {\n      \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n      \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n      \"qualityScore\": 50,\n      \"matchScore\": 65,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 22,\n      \"served\": true,\n      \"servingMiners\": [\n        \"5CLkcYRxUBiLsrJg2Dapupx7qWWhPR3p5FmnwGtXDF1KQt3v\",\n        \"5CceYG4rpnXFvKUaPAwAbGtFtzW5hSC4efMUHXK95WrgQAF8\",\n        \"5DCkDPn7n3qAuKjn9e2TRAF3ZcxByt7jkhwzGTZ7V3G8zHDd\",\n        \"5DLrV8MgKFPFM8Y23pAyoBV7QY6e6XBTzX5pf7ALnxozd43z\",\n        \"5DkyfWjukrF6RJ8ZSii1eAQ8A7AAxZsHwdoJ1CHmAWY6NzqU\",\n        \"5DtBZLkEpjaBJb3w7JF5csBu6s1WTozzFvatefeWywdrJKab\",\n        \"5E7fmybfFjCw2jL6Huu2ZvEZZyutiQtptw32soHUREMyfQ4h\",\n        \"5E9uT15GJ8GQ3ztKfRvcP6UWAnKPjtSHKNdgM33b5mtLDyty\",\n        \"5ED68Tgj9G6xtPnWKxzBkr7cij6nPR3kVXUYQ2RT27igsrH2\",\n        \"5EHoo871PqP65tfSBuSVv87r4AxX6hMsEnaCSZwYbGu1dcJT\",\n        \"5EJL1VV8xRdLj24TD7zJFUzGiSWnMte1S5LL7ZeaKtuwG6QC\",\n        \"5EPbzxwX2DKkFwqsaVhK1KEc997odUCvBV4La2kVHwToKRNU\",\n        \"5EXP2EZmU3UFem9oYyfPkYQ6e1giGZwm97PhYNNSZrjKD9mb\",\n        \"5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN\",\n        \"5FWqSj2pjtFoHkjpLcKHzNURaZTzGvuP4soqo7CnWaBazX8p\",\n        \"5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1\",\n        \"5GBqWiFDhG3DSHRAWixidaXkVnsefNofAsdUht1uaFB8DgAU\",\n        \"5GmjrKG5bDmyYS6q5SWiQfFzvjTL3UU8HuTYrdu76soHDMrV\",\n        \"5GprqmpoSNP3XkY4Cy14i8B3uPm8Ghja5QwbvwsMu6xKXn5i\",\n        \"5H3Nzd5NMmSBaYSHuD1bgVj2SqkPEgVYhWk8wN7ubqmuXpru\",\n        \"5Hb9YKuWTejdAXrtzP1a91me3AzmNFmWQ1q5k6PdGn1chTNf\",\n        \"5HjfuzhkBCtJCPsWs1EQJLiqdzp62ijoKg53EFzvRN4eCZRh\"\n      ],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": [\n        \"nvidia_cc\"\n      ]\n    }\n  ],\n  \"totalMatches\": 3,\n  \"dataSource\": \"on-chain\",\n  \"availabilitySource\": \"gateway\",\n  \"filters\": {},\n  \"note\": \"onlineMinerCount and servingMiners come from the gateway catalog (GET /v1/models, x-flop.price_sources). served is false when the model is registered but that catalog is not serving it.\"\n}",
+      "measuredAt": "2026-11-05T23:39:33.115Z",
+      "durationMs": 8987,
+      "attempts": 1
+    }
+  ],
+  "snapshot": {
+    "schemaVersion": 1,
+    "measuredAt": "2026-11-05T23:39:49.134Z",
+    "records": [
+      "models.json",
+      "settlements.json",
+      "offers.json",
+      "leaderboard.json",
+      "indexer.json"
+    ],
+    "collection": {
+      "requests": 6,
+      "durationMs": 16019,
+      "cacheTtlMs": 60000
+    }
+  }
+}

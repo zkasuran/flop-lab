@@ -77,6 +77,9 @@ importers:
       '@flop-lab/console':
         specifier: workspace:*
         version: link:../console
+      '@flop-lab/create-flop-agent':
+        specifier: workspace:*
+        version: link:../create-flop-agent
       '@flop-lab/doctor':
         specifier: workspace:*
         version: link:../doctor
@@ -131,6 +134,21 @@ importers:
       graphql:
         specifier: ^16.11.0
         version: 16.15.0
+
+  packages/create-flop-agent:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+      '@flop-lab/scoreboard':
+        specifier: workspace:*
+        version: link:../scoreboard
+      '@flop-lab/spendguard':
+        specifier: workspace:*
+        version: link:../spendguard
+      '@flop-lab/verifier':
+        specifier: workspace:*
+        version: link:../verifier
 
   packages/doctor: {}
 

@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Call read-only MCP tools and compare dated devnet cost estimates",
   },
   {
+    name: "start",
+    pkg: "@flop-lab/create-flop-agent",
+    bin: "create-flop-agent",
+    section: "build",
+    summary: "Generate a devnet-only agent with fixture-backed dry runs",
+  },
+  {
     name: "indexer",
     pkg: "@flop-lab/indexer-audit",
     bin: "flop-indexer-audit",
