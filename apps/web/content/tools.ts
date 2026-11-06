@@ -217,7 +217,7 @@ export const tools: readonly Tool[] = [
     section: "observe",
     name: "Finality monitor",
     tagline: "Is the chain producing and finalizing blocks on time?",
-    status: "planned",
+    status: "alpha",
     href: "/finality",
     repoPath: "packages/finality",
   },
