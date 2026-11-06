@@ -1,0 +1,24 @@
+{
+  "name": "@flop-lab/invariants",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Quoted security invariants and externally observable failure evidence",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-invariants": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@flop-lab/harness": "workspace:*",
+    "@flop-lab/indexer-audit": "workspace:*",
+    "@flop-lab/spec": "workspace:*",
+    "@flop-lab/verifier": "workspace:*"
+  }
+}

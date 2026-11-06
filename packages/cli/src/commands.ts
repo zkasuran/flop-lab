@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "invariants",
+    pkg: "@flop-lab/invariants",
+    bin: "flop-invariants",
+    section: "verify",
+    summary: "Map quoted security rules to scoped checks and public evidence gaps",
+  },
+  {
     name: "finality",
     pkg: "@flop-lab/finality",
     bin: "flop-finality",
