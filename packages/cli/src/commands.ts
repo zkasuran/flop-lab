@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "sessions",
+    pkg: "@flop-lab/sessions",
+    bin: "flop-sessions",
+    section: "observe",
+    summary: "Classify compute channel lifecycle states with dated evidence",
+  },
+  {
     name: "indexer",
     pkg: "@flop-lab/indexer-audit",
     bin: "flop-indexer-audit",
