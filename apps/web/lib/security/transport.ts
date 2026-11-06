@@ -74,6 +74,7 @@ export function allowedSource(input: string | URL | Request): URL {
     "https://mcp.flop.network/mcp",
     "https://api.flop.network/v1/models",
     "https://raw.githubusercontent.com/zkasuran/flop-lab/main/SIGNATURE.json",
+    "https://raw.githubusercontent.com/zkasuran/flop-lab/data/status/recent.jsonl",
   ];
   const data =
     url.origin === "https://raw.githubusercontent.com" &&

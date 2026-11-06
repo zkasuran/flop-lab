@@ -33,6 +33,8 @@ export function routePolicy(path: string): { methods: string[]; query: string[] 
       "/scoreboard/snapshot",
       "/x402/preview",
       "/spec/report",
+      "/status/recording",
+      "/community/report.json",
       "/upgrades/report.json",
       "/kestra/evidence",
       ...["indexer", "proofs", "metering", "economics", "models", "sessions", "x402"].map(
