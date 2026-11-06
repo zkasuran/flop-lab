@@ -1,0 +1,23 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "value": {
+    "stats": {
+      "latestBlockNumber": 3007426,
+      "totalBlocks": 3007426,
+      "tps": 1.93,
+      "activeHTLCs": 17,
+      "totalHTLCs": 17,
+      "proofs24h": 0,
+      "activeOperators": 0,
+      "avgBlockTime": 999.9473684210526,
+      "totalTransactions": 5524887,
+      "txVolume24h": 175976,
+      "totalAccounts": 11558,
+      "flopLocked": "36000000000000000000"
+    }
+  },
+  "raw": "{\n  \"stats\": {\n    \"latestBlockNumber\": 3007426,\n    \"totalBlocks\": 3007426,\n    \"tps\": 1.93,\n    \"activeHTLCs\": 17,\n    \"totalHTLCs\": 17,\n    \"proofs24h\": 0,\n    \"activeOperators\": 0,\n    \"avgBlockTime\": 999.9473684210526,\n    \"totalTransactions\": 5524887,\n    \"txVolume24h\": 175976,\n    \"totalAccounts\": 11558,\n    \"flopLocked\": \"36000000000000000000\"\n  }\n}",
+  "measuredAt": "2026-11-06T02:02:37.379Z",
+  "durationMs": 402,
+  "attempts": 1
+}

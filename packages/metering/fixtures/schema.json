@@ -1,0 +1,273 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "query": "{ __schema { queryType { fields { name type { kind name ofType { kind name } } } } } }",
+  "value": {
+    "__schema": {
+      "queryType": {
+        "fields": [
+          {
+            "name": "stats",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Stats"
+              }
+            }
+          },
+          {
+            "name": "blocks",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "block",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Block",
+              "ofType": null
+            }
+          },
+          {
+            "name": "transactions",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "transaction",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Transaction",
+              "ofType": null
+            }
+          },
+          {
+            "name": "htlcs",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "htlc",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Htlc",
+              "ofType": null
+            }
+          },
+          {
+            "name": "pouiProofs",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "pouiLeaderboard",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "account",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Account",
+              "ofType": null
+            }
+          },
+          {
+            "name": "inferenceSpend",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "InferenceSpend"
+              }
+            }
+          },
+          {
+            "name": "inferenceReceived",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "InferenceReceived"
+              }
+            }
+          },
+          {
+            "name": "htlcPaid",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "HtlcPaid"
+              }
+            }
+          },
+          {
+            "name": "htlcReceived",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "HtlcReceived"
+              }
+            }
+          },
+          {
+            "name": "sponsorPositions",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "computeChannels",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ComputeChannelConnection"
+              }
+            }
+          },
+          {
+            "name": "computeChannel",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ComputeChannel",
+              "ofType": null
+            }
+          },
+          {
+            "name": "settlementPrices",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "SettlementPriceConnection"
+              }
+            }
+          },
+          {
+            "name": "settlementPrice",
+            "type": {
+              "kind": "OBJECT",
+              "name": "SettlementPrice",
+              "ofType": null
+            }
+          },
+          {
+            "name": "reliabilityEvents",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ReliabilityEventConnection"
+              }
+            }
+          },
+          {
+            "name": "minerGhostStatsSnapshots",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MinerGhostStatsSnapshotConnection"
+              }
+            }
+          },
+          {
+            "name": "minerReliability",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MinerReliability"
+              }
+            }
+          },
+          {
+            "name": "minerReliabilitySeries",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "networkValue",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "NetworkValue"
+              }
+            }
+          },
+          {
+            "name": "termCurve",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TermCurve"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "raw": "{\n  \"__schema\": {\n    \"queryType\": {\n      \"fields\": [\n        {\n          \"name\": \"stats\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"Stats\"\n            }\n          }\n        },\n        {\n          \"name\": \"blocks\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"block\",\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Block\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"transactions\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"transaction\",\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Transaction\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"htlcs\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"htlc\",\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Htlc\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"pouiProofs\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"pouiLeaderboard\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"account\",\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"Account\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"inferenceSpend\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"InferenceSpend\"\n            }\n          }\n        },\n        {\n          \"name\": \"inferenceReceived\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"InferenceReceived\"\n            }\n          }\n        },\n        {\n          \"name\": \"htlcPaid\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"HtlcPaid\"\n            }\n          }\n        },\n        {\n          \"name\": \"htlcReceived\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"HtlcReceived\"\n            }\n          }\n        },\n        {\n          \"name\": \"sponsorPositions\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"computeChannels\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"ComputeChannelConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"computeChannel\",\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"ComputeChannel\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"settlementPrices\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"SettlementPriceConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"settlementPrice\",\n          \"type\": {\n            \"kind\": \"OBJECT\",\n            \"name\": \"SettlementPrice\",\n            \"ofType\": null\n          }\n        },\n        {\n          \"name\": \"reliabilityEvents\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"ReliabilityEventConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"minerGhostStatsSnapshots\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"MinerGhostStatsSnapshotConnection\"\n            }\n          }\n        },\n        {\n          \"name\": \"minerReliability\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"MinerReliability\"\n            }\n          }\n        },\n        {\n          \"name\": \"minerReliabilitySeries\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"LIST\",\n              \"name\": null\n            }\n          }\n        },\n        {\n          \"name\": \"networkValue\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"NetworkValue\"\n            }\n          }\n        },\n        {\n          \"name\": \"termCurve\",\n          \"type\": {\n            \"kind\": \"NON_NULL\",\n            \"name\": null,\n            \"ofType\": {\n              \"kind\": \"OBJECT\",\n              \"name\": \"TermCurve\"\n            }\n          }\n        }\n      ]\n    }\n  }\n}",
+  "measuredAt": "2026-11-06T02:02:36.587Z",
+  "durationMs": 110,
+  "attempts": 1
+}
