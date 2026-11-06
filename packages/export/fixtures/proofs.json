@@ -1,0 +1,1 @@
+[{"dataset":"proofs","source":"https://mcp.flop.network/mcp","measuredAt":"2026-11-06T04:47:20.561Z","query":"query Explorer($offset: Int, $limit: Int) { pouiProofs(offset: $offset, limit: $limit) { id  blockHash  blockNumber  submitter  gnWeight  successCount  taskHash  timestamp  } }","variables":{"offset":0,"limit":5},"raw":"{\n  \"pouiProofs\": []\n}"}]

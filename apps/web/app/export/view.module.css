@@ -1,0 +1,305 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+.page {
+  padding-block: var(--space-12) var(--space-16);
+}
+.intro {
+  max-width: 65ch;
+  font-size: var(--text-lg);
+  margin-block: var(--space-6) var(--space-8);
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.6fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+.builder,
+.preview,
+.command {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  min-width: 0;
+  padding: var(--space-6);
+}
+.builder h2,
+.preview h2,
+.command h2 {
+  font-size: var(--text-xl);
+  margin-top: var(--space-2);
+}
+.builder select,
+.builder input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: var(--space-3);
+  font: inherit;
+  min-width: 0;
+}
+.builder select:focus-visible,
+.builder input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.field {
+  display: block;
+  margin-block: var(--space-6) var(--space-2);
+}
+.hint,
+.dates,
+.caption {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+.hint {
+  margin-block: var(--space-3) var(--space-4);
+}
+.range {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.range label {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+.formats,
+.mode {
+  border: 0;
+  padding: 0;
+  margin-top: var(--space-5);
+}
+.formats legend,
+.mode legend {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+}
+.formats > div {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1);
+}
+.format {
+  flex: 1;
+  position: relative;
+  padding: var(--space-3) var(--space-2);
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: 500 var(--text-xs) var(--font-data);
+  border-radius: var(--radius-sm);
+}
+.format > span:last-child {
+  position: relative;
+}
+.format[aria-pressed="true"] {
+  color: var(--text);
+}
+.selection {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-raised);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+.mode {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.mode button[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.previewHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+.count {
+  display: grid;
+  text-align: right;
+  gap: var(--space-1);
+  white-space: nowrap;
+}
+.count > span:first-child {
+  font: 500 2.5rem var(--font-data);
+}
+.count > span:last-child {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+.bar {
+  background: var(--surface-raised);
+  height: 4px;
+  margin-block: var(--space-5);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar > div {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left;
+}
+.dates time {
+  display: block;
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  overflow-wrap: anywhere;
+}
+.tableWrap {
+  overflow-x: auto;
+  min-height: 380px;
+  margin-top: var(--space-5);
+}
+.tableWrap table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+  font: var(--text-xs) var(--font-data);
+}
+.caption {
+  text-align: left;
+  caption-side: bottom;
+  margin-block: var(--space-3);
+}
+.tableWrap th {
+  color: var(--muted);
+  font-weight: 500;
+}
+.tableWrap th,
+.tableWrap td {
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) var(--space-2);
+  white-space: nowrap;
+}
+.tableWrap td > span {
+  display: block;
+  max-width: 110px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.tableWrap em {
+  color: var(--muted);
+}
+.tableWrap button {
+  white-space: nowrap;
+  font-size: var(--text-xs);
+  padding-inline: var(--space-2);
+}
+.empty {
+  padding: var(--space-8) var(--space-3);
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 52ch;
+}
+.detail {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+.detail h3 {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-3);
+}
+.detail pre,
+.command pre {
+  font: var(--text-xs)/1.7 var(--font-data);
+  background: var(--bg);
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: auto;
+  max-height: 400px;
+}
+.command {
+  margin-top: var(--space-6);
+}
+.command > div:first-child > p:last-child {
+  margin-block: var(--space-3) var(--space-5);
+  color: var(--muted);
+  max-width: 75ch;
+}
+.command > pre {
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-4);
+}
+.schema {
+  margin-top: var(--space-6);
+}
+.schema p,
+.schema ul {
+  margin-block: var(--space-4);
+  color: var(--muted);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.schema ul {
+  padding-left: var(--space-5);
+}
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-block: var(--space-4);
+}
+.columns > div {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow-wrap: anywhere;
+}
+.columns span {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+.limits {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-6);
+}
+.limits h2 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+.limits p {
+  color: var(--muted);
+  max-width: 80ch;
+  line-height: 1.75;
+}
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tableWrap {
+    min-height: 300px;
+  }
+}
+@media (max-width: 500px) {
+  .builder,
+  .preview,
+  .command {
+    padding: var(--space-4);
+  }
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .previewHead {
+    align-items: start;
+  }
+  .preview h2 {
+    max-width: 12ch;
+  }
+  .count > span:first-child {
+    font-size: 2rem;
+  }
+}
