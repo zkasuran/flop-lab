@@ -12,7 +12,7 @@ pnpm --filter @flop-lab/export build
 node packages/export/dist/cli.js settlements --recorded --format parquet --out "$(mktemp -d)"
 ```
 
-The example uses a bundled recording. It makes no network requests. After building the workspace, `pnpm --filter @flop-lab/cli exec flop export --help` runs the same CLI. The package binary is `flop-export`.
+The example uses a bundled recording. It makes no network requests. After building the workspace, `node packages/cli/dist/cli.js export --help` runs the same CLI. The package binary is `flop-export`. In the commands below, replace `flop` with `node packages/cli/dist/cli.js` when running from this checkout.
 
 ## Choose a dataset and range
 
