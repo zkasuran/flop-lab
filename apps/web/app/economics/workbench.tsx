@@ -53,7 +53,7 @@ function Curve({ head }: { head: number | null }) {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion() !== false;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 95%", "end 40%"] });
-  const drawn = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const remaining = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const marked = head === null ? null : BigInt(head);
   const visible = marked !== null && marked <= 6n * H;
   return (
@@ -85,7 +85,9 @@ function Curve({ head }: { head: number | null }) {
             fill="none"
             stroke="var(--accent)"
             strokeWidth="4"
-            style={{ pathLength: reduced ? 1 : drawn }}
+            pathLength={1}
+            strokeDasharray="1"
+            style={{ strokeDashoffset: reduced ? 0 : remaining }}
           />
           {visible && (
             <g>
@@ -109,7 +111,7 @@ function Curve({ head }: { head: number | null }) {
       </p>
       <div className={styles.eras}>
         {eras.map((e, i) => (
-          <ReadingReveal key={i} order={i}>
+          <div key={i}>
             <div>
               <span className="eyebrow">
                 Era {i}
@@ -123,7 +125,7 @@ function Curve({ head }: { head: number | null }) {
                 {i === 0 ? " (reward starts at 1)" : ""}
               </span>
             </div>
-          </ReadingReveal>
+          </div>
         ))}
       </div>
       <p className="muted">
