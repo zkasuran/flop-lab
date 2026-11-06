@@ -57,14 +57,14 @@ function SourceDrawer({ concept, close }: { concept: Concept; close: () => void 
     };
   }, [concept.id]);
   return (
-    <dialog ref={dialog} className={styles.drawer} aria-labelledby="source-title" onCancel={close} onClose={close}>
+    <dialog ref={dialog} className={styles.drawer} aria-labelledby="source-title" onClose={close}>
       <motion.div initial={{ x: reduced ? 0 : 28 }} animate={{ x: 0 }} transition={{ duration: reduced ? 0 : 0.24 }}>
         <div className={styles.drawerHead}>
           <div>
             <p className="eyebrow">Recorded source</p>
             <h2 id="source-title">{concept.title}</h2>
           </div>
-          <MotionButton autoFocus className={styles.button} onClick={close}>
+          <MotionButton autoFocus className={styles.button} onClick={() => dialog.current?.close()}>
             Close source
           </MotionButton>
         </div>
@@ -96,7 +96,8 @@ function ConceptGraph({
   select: (id: string) => void;
 }) {
   const reduced = useReducedMotion() !== false;
-  const [page, setPage] = useState(0);
+  const [neighborhoodPage, setNeighborhoodPage] = useState({ id: selected.id, page: 0 });
+  const page = neighborhoodPage.id === selected.id ? neighborhoodPage.page : 0;
   const neighborhood = edges.filter((e) => e.source === selected.id || e.target === selected.id);
   const ids = [
     ...new Set(
@@ -157,9 +158,7 @@ function ConceptGraph({
               animate={{ pathLength: 1 }}
               transition={{ duration: reduced ? 0 : 0.35 }}
             >
-              <title>
-                {edge.source} {edge.relation} {edge.target}
-              </title>
+              <title>{`${edge.source} ${edge.relation} ${edge.target}`}</title>
             </motion.line>
           );
         })}
@@ -205,7 +204,10 @@ function ConceptGraph({
           semantic weight.
         </p>
         {ids.length > 8 && (
-          <MotionButton className={styles.button} onClick={() => setPage((page + 1) * 8 >= ids.length ? 0 : page + 1)}>
+          <MotionButton
+            className={styles.button}
+            onClick={() => setNeighborhoodPage({ id: selected.id, page: (page + 1) * 8 >= ids.length ? 0 : page + 1 })}
+          >
             Next neighbors
           </MotionButton>
         )}
@@ -268,7 +270,7 @@ export function KnowledgeView({
     setSelectedId(id);
   }
   return (
-    <div className={`container ${styles.page}`}>
+    <div className={styles.page}>
       <section className={styles.hero}>
         <ToolHeader slug="knowledge" />
         <ReadingReveal order={3}>
@@ -430,7 +432,7 @@ export function KnowledgeView({
           </div>
           {selected ? (
             <div>
-              <ConceptGraph key={selected.id} manifest={manifest} selected={selected} edges={edges} select={select} />
+              <ConceptGraph manifest={manifest} selected={selected} edges={edges} select={select} />
               <motion.article
                 className={styles.detail}
                 layout={reduced ? false : "position"}
