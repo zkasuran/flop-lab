@@ -1,0 +1,7 @@
+{
+  "service": "npm",
+  "source": "https://registry.npmjs.org/@flop-labs/sdk/latest",
+  "measuredAt": "2026-11-06T05:23:46.866Z",
+  "httpStatus": 200,
+  "contentType": "application/json"
+}

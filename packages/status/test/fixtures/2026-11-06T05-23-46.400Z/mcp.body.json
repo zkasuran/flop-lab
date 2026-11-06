@@ -1,0 +1,1 @@
+"event: message\ndata: {\"result\":{\"protocolVersion\":\"2024-11-05\",\"capabilities\":{\"tools\":{\"listChanged\":true},\"resources\":{\"listChanged\":true},\"completions\":{}},\"serverInfo\":{\"name\":\"flop-network\",\"version\":\"0.2.0\"}},\"jsonrpc\":\"2.0\",\"id\":1}\n\n"
