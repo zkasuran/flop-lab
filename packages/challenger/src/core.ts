@@ -7,15 +7,15 @@ export const CHALLENGE_DOC = "https://docs.flop.network/docs/verification-stack"
 export const SDK_CHAIN_SOURCE = "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/chain.d.ts";
 export const WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 export const ASSUMPTIONS = [
-  `Estimated window: seven wall-clock days only for an explicit SettlementPosted observation. Source: ${CHALLENGE_DOC}, read 2026-11-05. The docs say approximately seven days and draft design.`,
+  "Block windows use indexed challengeEnd and the reported finalized head. The pinned channel_dispute_window_blocks parameter is 604800 blocks. Runtime parameters and head authenticity remain unverified.",
   `SDK 0.4.0 says cooperative settle has no standard dispute window. forceSettle opens a window and finalize pays after it closes. Source: ${SDK_CHAIN_SOURCE}. Other audit lanes are not established here.`,
-  "The exact runtime duration and challengeEnd are not verified. A final payout timestamp is not a challenge start. Estimated expiry is not a filing deadline or a claim of eligibility.",
+  "A final payout timestamp is not a challenge start. Missing challengeEnd stays unknown. Time estimates use measured recent block cadence and do not establish filing eligibility.",
   "The capacity-bond revocation constant is not used as a challenge deadline. Block cadence is measured separately and does not set the window.",
   "Settlement timestamps and hashes come from the hosted indexer. Finality is not independently verified. Pages are not an atomic snapshot.",
   "Review priority is a policy over observed tape fields, not a fraud probability. Miner stake and slashing history are not observed.",
 ];
 
-/** Estimate a draft window at an explicit time. @example estimateWindow(row, Date.now()) */
+/** Classify tape-only evidence without inventing a wall-clock deadline. @example estimateWindow(row, Date.now()) */
 export function estimateWindow(row: Settlement, now: number): WindowEstimate {
   timestamp(now, "now");
   timestamp(row.settledAt, "settledAt");
@@ -42,12 +42,12 @@ export function estimateWindow(row: Settlement, now: number): WindowEstimate {
       reason:
         "No unambiguous force-settlement posting timestamp or challengeEnd is present. Final payout must not start a new estimated window.",
     };
-  const expiry = row.settledAt + WINDOW_MS;
   return {
-    status: now < expiry ? "estimated-open" : "estimated-expired",
-    estimatedExpiry: new Date(expiry).toISOString(),
-    remainingMs: Math.max(0, expiry - now),
-    reason: "Draft seven-day assumption. Actual runtime expiry is unverified.",
+    status: "unknown",
+    estimatedExpiry: null,
+    remainingMs: null,
+    reason:
+      "A posting timestamp alone does not establish a block deadline. Use the forced-claim window capture and its explicit challengeEnd.",
   };
 }
 

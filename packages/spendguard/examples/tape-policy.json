@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "budgets": { "task": "10", "hour": "10", "day": "10", "total": "10" },
+  "maxPricePerGflop": "1",
+  "maxEscrowPerSession": "5",
+  "allowModels": ["0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306"],
+  "allowMiners": [
+    "5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN",
+    "5GNcm2SyEsvF3Mo9N6UwKBM2j1tmrktHGJZPs1uYUrZgQa6J",
+    "5DCkDPn7n3qAuKjn9e2TRAF3ZcxByt7jkhwzGTZ7V3G8zHDd",
+    "5DkyfWjukrF6RJ8ZSii1eAQ8A7AAxZsHwdoJ1CHmAWY6NzqU",
+    "5Cg2zpWqJBaopQY31TuAEDJimhTbRAGgury3DQM4zMNjATex",
+    "5FWqSj2pjtFoHkjpLcKHzNURaZTzGvuP4soqo7CnWaBazX8p",
+    "5Hb9YKuWTejdAXrtzP1a91me3AzmNFmWQ1q5k6PdGn1chTNf",
+    "5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1",
+    "5HjfuzhkBCtJCPsWs1EQJLiqdzp62ijoKg53EFzvRN4eCZRh",
+    "5DCYZ8eLJMHU5LfNs7v1vEh1Y1yWRFejMjxhGXUDFF49YwHv"
+  ],
+  "denyMiners": [], "modelCaps": {}, "minerCaps": {}, "requireDryRun": true, "cooldown": 0
+}
