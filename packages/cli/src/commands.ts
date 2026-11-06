@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Join model listings, registry hashes and dated price sources",
   },
   {
+    name: "call",
+    pkg: "@flop-lab/console",
+    bin: "flop-console",
+    section: "build",
+    summary: "Call read-only MCP tools and compare dated devnet cost estimates",
+  },
+  {
     name: "start",
     pkg: "@flop-lab/create-flop-agent",
     bin: "create-flop-agent",
