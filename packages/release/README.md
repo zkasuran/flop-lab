@@ -30,7 +30,7 @@ pnpm build
 pnpm --filter @flop-lab/release run pack --out /tmp/flop-release-artifacts
 ```
 
-Packing refuses a dirty checkout or an existing output directory. It stages tracked package files and built `dist/` files, adds the licence and generated changelog, converts workspace references to candidate versions and uses `pnpm pack`. It checks every declared export and binary path in each archive. Pack lifecycle scripts are disabled because the gate already built the checkout. Private-package guards remain enabled. The staging directories remain available for review.
+Packing refuses a dirty checkout or an existing output directory. It stages tracked package files and built `dist/` files, adds the licence and generated changelog, converts workspace references to candidate versions and uses `pnpm pack`. It checks every declared export and binary path in each archive. Staged manifests omit lifecycle scripts because the gate already built the checkout. Private-package guards remain enabled. The staging directories remain available for review.
 
 `SHA256SUMS` covers the tarballs, `release-plan.json` and `RELEASE.md`. Verify from the artifact directory with `sha256sum -c SHA256SUMS`. `packages/release` is development infrastructure with source scripts. It has no suite binary or site route.
 

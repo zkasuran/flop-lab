@@ -206,7 +206,7 @@ export function packRepository(root: string, output: string): ReleasePlan {
     delete manifest.scripts;
     writeFileSync(join(staging, "package.json"), json(manifest));
     const archive = `${pkg.name.replace("@", "").replace("/", "-")}-${manifest.version}.tgz`;
-    execFileSync("pnpm", ["--ignore-scripts", "pack", "--out", join(resolve(output), archive)], {
+    execFileSync("pnpm", ["pack", "--out", join(resolve(output), archive)], {
       cwd: staging,
       stdio: "pipe",
     });
