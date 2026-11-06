@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Probe public service responses and inspect measured availability",
   },
   {
+    name: "watch",
+    pkg: "@flop-lab/watch",
+    bin: "flop-watch",
+    section: "operate",
+    summary: "Watch dated network changes with persisted rules and bounded delivery",
+  },
+  {
     name: "upgrades",
     pkg: "@flop-lab/upgrades",
     bin: "flop-upgrades",

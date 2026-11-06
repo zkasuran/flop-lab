@@ -9,8 +9,9 @@ import { CopyButton } from "@/components/controls";
 import type recordedRun from "../../../../packages/x402kit/fixtures/run.json";
 import { amountRatio, formatFlop, parsePreview, type Preview } from "./data";
 import styles from "./x402.module.css";
+import { HandshakeChecker } from "./handshake";
 
-const command = "pnpm --filter @flop-lab/x402kit build && node packages/x402kit/dist/cli.js serve 3350";
+const command = "pnpm --filter @flop-lab/x402kit build && node packages/x402kit/dist/cli.js serve 3590";
 const steps = [
   {
     name: "Request",
@@ -109,11 +110,11 @@ export function X402Workbench({ run, initialPreview }: { run: typeof recordedRun
           </MotionLink>
           <ToolHeader slug="x402" />
           <p className={styles.lead}>
-            Trace the headers. Bound the spend. See exactly where chain verification is missing.
+            Check both sides of a FLOP 402 exchange. Expand each header and find where a retry goes wrong.
           </p>
           <div className={styles.actions}>
-            <MotionLink className="button" href="#flow">
-              Inspect the flow <span aria-hidden="true">↓</span>
+            <MotionLink className="button" href="#handshake">
+              Check a handshake <span aria-hidden="true">↓</span>
             </MotionLink>
             <MotionLink className="quiet-button" href="https://github.com/zkasuran/flop-lab/tree/main/packages/x402kit">
               Source and protocol note ↗
@@ -163,11 +164,13 @@ export function X402Workbench({ run, initialPreview }: { run: typeof recordedRun
         <div className={styles.boundary}>
           <span aria-hidden="true">⊘</span>
           <p>
-            <strong>Payment execution is blocked.</strong> This reference has no verified chain adapter. The flow below
-            replays recorded local headers. It is not a successful devnet payment.
+            <strong>Real payment execution is unverified.</strong> The checker uses recorded mock exchanges. The
+            public-data demo fails closed. Neither is a successful devnet payment.
           </p>
         </div>
       </ReadingReveal>
+
+      <HandshakeChecker />
 
       <section ref={timeline} id="flow" className={styles.flow} aria-labelledby="flow-title">
         <ReadingReveal>
@@ -363,7 +366,7 @@ export function X402Workbench({ run, initialPreview }: { run: typeof recordedRun
             <CopyButton text={command} label="Copy command" />
           </div>
           <p className="muted">
-            Open <code>http://127.0.0.1:3350/preview</code>. The protected route asks for payment but cannot accept a
+            Open <code>http://127.0.0.1:3590/preview</code>. The protected route asks for payment but cannot accept a
             proof without an audited adapter.
           </p>
         </section>
