@@ -18,12 +18,14 @@ import modelCatalogue from "../../../../packages/models/test/fixtures/devnet.jso
 import { parseGateway } from "../../../../packages/models/src/schema";
 import kestra from "../../app/kestra/observed.json";
 import consoleTools from "../../../../packages/console/fixtures/tools.json";
+import staking from "../../../../packages/staking/fixtures/miners.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import didSearch from "../../../../packages/did/fixtures/github.json";
 import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
+import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -64,6 +66,26 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "packages/sessions/test/fixtures/live/page-0.json",
       "One recorded page. The lifecycle view joins the full bounded crawl with settlement evidence.",
     ),
+  staking: () =>
+    metric(
+      rows(object(JSON.parse(staking.raw) as unknown).data).length,
+      "miners in the recorded stake page",
+      staking.measuredAt,
+      staking.source,
+      "packages/staking/fixtures/miners.json",
+      "Indexed balances and capacity. Not a runtime eligibility or calibration lease proof.",
+    ),
+  economics: () => {
+    const observation = economicsObservation();
+    return metric(
+      observation.data.settlements?.length,
+      "settlements in the economics comparison sample",
+      observation.measuredAt,
+      observation.source,
+      "packages/economics/fixtures/devnet.json",
+      "Compared with a pinned target. No issuance or reward receipt is verified.",
+    );
+  },
   models: () => {
     const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");
     return metric(
