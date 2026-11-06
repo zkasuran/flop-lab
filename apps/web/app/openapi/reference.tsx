@@ -38,9 +38,15 @@ export function Reference({ entries }: { entries: Entry[] }) {
         </ReadingReveal>
         <ReadingReveal order={4}>
           <div className={styles.actions}>
-            <MotionLink className={styles.link} href="/api/v1/openapi.json">
+            <motion.a
+              className={styles.link}
+              href="/api/v1/openapi.json"
+              whileHover={{ y: reduced ? 0 : -1 }}
+              whileTap={{ scale: reduced ? 1 : 0.98 }}
+              transition={{ duration: reduced ? 0 : 0.16 }}
+            >
               OpenAPI 3.1 document ↗
-            </MotionLink>
+            </motion.a>
             <span className="badge">GET + HEAD</span>
             <span className="badge">No key</span>
           </div>
