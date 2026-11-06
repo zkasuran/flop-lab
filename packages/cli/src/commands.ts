@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Browse catalog relationships, cited requirements and agent-pack responses",
   },
   {
+    name: "spec-read",
+    pkg: "@flop-lab/yellowpaper",
+    bin: "flop-yellowpaper",
+    section: "build",
+    summary: "Read pinned sections, terms and parameters beside dated catalog evidence",
+  },
+  {
     name: "metering",
     pkg: "@flop-lab/metering",
     bin: "flop-metering",

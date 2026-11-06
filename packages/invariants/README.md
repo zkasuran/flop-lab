@@ -70,6 +70,23 @@ pnpm --filter @flop-lab/invariants check
 
 Tests cover source completeness, exact quotes, source drift, malformed inputs, offline execution, native suite contradictions and absence of evidence. A one-unit change in recorded escrow components must produce a mismatch.
 
+## Matrix page
+
+`/invariants` opens on actor failures. Choose another source group to inspect the security invariants, degraded-state rules or penalty table. Search all quotes and filter by scoped result. The grid shows a bounded page of cases with previous and next controls. Each cell opens its exact source, violation signal, missing evidence and dated suite results.
+
+The recheck control reruns the existing suite libraries on the server against the same immutable recordings. Its progress advances when each library completes. It does not refresh the devnet. Download the raw inputs for CLI replay or the displayed report for review. The raw-input download has a five-minute HTTP cache. Replay responses use `no-store`.
+
+Display punctuation uses plain hyphens. JSON downloads retain the original quoted source text.
+
+To run the production page from this repository:
+
+```sh
+pnpm --filter web build
+pnpm --filter web exec next start --port 3650
+```
+
+Open `http://localhost:3650/invariants`. Keyboard controls and reduced-motion preferences retain the same evidence.
+
 ## What this does not verify
 
 This tool does not prove runtime enforcement, finality, payout atomicity, complete historical no-double-settle behavior, inference execution, attestation authenticity or honest validators. It does not execute failure scenarios, formal models, writes or independent re-execution. Catalog agreement is not runtime storage. Public view agreement is not independent confirmation. Unsigned recordings can be edited and rehashed. Gaps in public evidence are not proof that an invariant holds or that a violation occurred.

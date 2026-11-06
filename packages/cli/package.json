@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@flop-lab/knowledge": "workspace:*",
+    "@flop-lab/yellowpaper": "workspace:*",
     "@flop-lab/metering": "workspace:*",
     "@flop-lab/invariants": "workspace:*",
     "@flop-lab/swaps": "workspace:*",

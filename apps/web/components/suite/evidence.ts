@@ -31,6 +31,8 @@ import { parseProofs } from "../../../../packages/proofs/src/model";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
+import invariantSource from "../../../../packages/harness/fixtures/sources/paper-2301.json";
+import { parseSections } from "../../../../packages/invariants/src/parser";
 import swaps from "../../../../packages/swaps/fixtures/swaps.json";
 import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
@@ -68,6 +70,16 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "Catalog declarations. Source provenance and runtime behavior are not verified.",
     );
   },
+  invariants: () =>
+    metric(
+      parseSections([invariantSource]).filter((row) => row.kind === "failure").length,
+      "actor failure rows in the pinned matrix",
+      invariantSource.measuredAt,
+      invariantSource.url,
+      "packages/harness/fixtures/sources/paper-2301.json",
+      "Quoted source coverage. A scoped check does not verify a whole security rule.",
+      "Pinned yellowpaper",
+    ),
   swaps: () =>
     metric(
       parseSwapPage(JSON.parse(swaps.raw) as unknown).total,
