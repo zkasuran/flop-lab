@@ -11,7 +11,8 @@
     "dev": "next dev --port 3300",
     "start": "next start --port 3300",
     "build": "next build",
-    "check": "next typegen && tsc --noEmit && eslint . ../../scripts/verify-signature.mjs --ignore-pattern next-env.d.ts && prettier --check app components content lib scripts tests '*.ts' ../../scripts/verify-signature.mjs && vitest run",
+    "check": "next typegen && tsc --noEmit && eslint . ../../scripts/verify-signature.mjs ../../scripts/perf --ignore-pattern next-env.d.ts && prettier --check app components content lib scripts tests '*.ts' ../../scripts/verify-signature.mjs ../../scripts/perf && vitest run",
+    "perf": "tsx scripts/perf.ts",
     "test": "vitest run"
   },
   "dependencies": {
@@ -25,6 +26,8 @@
   },
   "devDependencies": {
     "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0"
+    "@types/react-dom": "^19.2.0",
+    "chrome-launcher": "1.2.2",
+    "lighthouse": "13.6.0"
   }
 }
