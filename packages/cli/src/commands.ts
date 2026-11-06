@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Measure linked block times and compare reported finality lag with pinned rules",
   },
   {
+    name: "proofs",
+    pkg: "@flop-lab/proofs",
+    bin: "flop-proofs",
+    section: "verify",
+    summary: "Inspect proof submissions and explain settlement coverage limits",
+  },
+  {
     name: "economics",
     pkg: "@flop-lab/economics",
     bin: "flop-economics",

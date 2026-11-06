@@ -104,6 +104,9 @@ importers:
       '@flop-lab/models':
         specifier: workspace:*
         version: link:../models
+      '@flop-lab/proofs':
+        specifier: workspace:*
+        version: link:../proofs
       '@flop-lab/recorder':
         specifier: workspace:*
         version: link:../recorder
@@ -221,6 +224,15 @@ importers:
         version: 3.0.1(ajv@8.20.0)
 
   packages/models:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+      '@flop-lab/recorder':
+        specifier: workspace:*
+        version: link:../recorder
+
+  packages/proofs:
     dependencies:
       '@flop-lab/mcp':
         specifier: workspace:*
