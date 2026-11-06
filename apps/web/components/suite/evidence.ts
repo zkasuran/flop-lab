@@ -22,6 +22,7 @@ import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
+import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -44,6 +45,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  economics: () => {
+    const observation = economicsObservation();
+    return metric(
+      observation.data.settlements?.length,
+      "settlements in the economics comparison sample",
+      observation.measuredAt,
+      observation.source,
+      "packages/economics/fixtures/devnet.json",
+      "Compared with a pinned target. No issuance or reward receipt is verified.",
+    );
+  },
   models: () => {
     const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");
     return metric(
