@@ -1,0 +1,18 @@
+{
+  "name": "flop-lab",
+  "version": "0.1.0",
+  "description": "Read-only suite checks with dated evidence and strict MCP contracts",
+  "skills": [
+    { "id": "flop-lab-tools", "path": "skills/flop-lab-tools/SKILL.md", "description": "Choose a bounded suite operation and interpret its evidence" }
+  ],
+  "mcp": {
+    "transport": "stdio",
+    "command": "node",
+    "args": ["/absolute/path/to/flop-lab/packages/mcp-server/dist/cli.js"],
+    "mode": "read-only",
+    "hostedNetwork": "https://mcp.flop.network/mcp"
+  },
+  "catalog": { "docs": "https://docs.flop.network", "discoveryTool": "flop_knowledge_get", "concept": "agent-pack" },
+  "install": { "workspace": "pnpm install && pnpm --filter @flop-lab/mcp-server build", "config": "mcp-config.json" },
+  "compatibility": "Follows the documented skills, MCP metadata and catalog-pointer layout. Hosted manifest validation is unavailable because the service reports agent pack missing."
+}

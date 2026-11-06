@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "flop-lab": {
+      "command": "node",
+      "args": ["/absolute/path/to/flop-lab/packages/mcp-server/dist/cli.js"]
+    }
+  }
+}

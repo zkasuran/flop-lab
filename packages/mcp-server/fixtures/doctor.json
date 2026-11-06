@@ -1,0 +1,453 @@
+{
+  "schemaVersion": 1,
+  "role": "miner",
+  "measuredAt": "2026-11-06T06:34:45.093Z",
+  "status": "UNKNOWN",
+  "inventory": {
+    "os": {
+      "source": "node:os platform/arch",
+      "measuredAt": "2026-11-06T06:34:45.094Z",
+      "durationMs": 0,
+      "value": {
+        "platform": "linux",
+        "arch": "x64"
+      },
+      "reason": null
+    },
+    "gpu": {
+      "source": "nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits",
+      "measuredAt": "2026-11-06T06:34:45.094Z",
+      "durationMs": 8,
+      "value": null,
+      "reason": "Probe unavailable (ENOENT)"
+    },
+    "disk": {
+      "source": "df -B1 --output=size,avail -- [selected path redacted]",
+      "measuredAt": "2026-11-06T06:34:45.102Z",
+      "durationMs": 5,
+      "value": {
+        "totalBytes": 518434521088,
+        "availableBytes": 55756488704
+      },
+      "reason": null
+    },
+    "memory": {
+      "source": "/proc/meminfo: MemTotal and MemAvailable",
+      "measuredAt": "2026-11-06T06:34:45.107Z",
+      "durationMs": 1,
+      "value": {
+        "totalBytes": 33042915328,
+        "availableBytes": 9555636224
+      },
+      "reason": null
+    },
+    "cpu": {
+      "source": "nproc",
+      "measuredAt": "2026-11-06T06:34:45.109Z",
+      "durationMs": 4,
+      "value": 22,
+      "reason": null
+    },
+    "docker": {
+      "source": "docker version --format {{.Server.Version}}",
+      "measuredAt": "2026-11-06T06:34:45.112Z",
+      "durationMs": 77,
+      "value": "29.8.1",
+      "reason": null
+    },
+    "compose": {
+      "source": "docker compose version --short",
+      "measuredAt": "2026-11-06T06:34:45.189Z",
+      "durationMs": 87,
+      "value": "5.5.1",
+      "reason": null
+    },
+    "images": {
+      "worker": {
+        "source": "docker image inspect: worker",
+        "measuredAt": "2026-11-06T06:34:45.276Z",
+        "durationMs": 0,
+        "value": null,
+        "reason": "No image reference supplied"
+      },
+      "backend": {
+        "source": "docker image inspect: backend",
+        "measuredAt": "2026-11-06T06:34:45.276Z",
+        "durationMs": 0,
+        "value": null,
+        "reason": "No image reference supplied"
+      }
+    },
+    "ports": [
+      {
+        "source": "loopback TCP 80",
+        "measuredAt": "2026-11-06T06:34:45.276Z",
+        "durationMs": 0,
+        "value": null,
+        "reason": "Port probes disabled"
+      },
+      {
+        "source": "loopback TCP 443",
+        "measuredAt": "2026-11-06T06:34:45.276Z",
+        "durationMs": 0,
+        "value": null,
+        "reason": "Port probes disabled"
+      },
+      {
+        "source": "loopback TCP 8645",
+        "measuredAt": "2026-11-06T06:34:45.276Z",
+        "durationMs": 0,
+        "value": null,
+        "reason": "Port probes disabled"
+      }
+    ],
+    "clocks": [
+      {
+        "source": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T06:34:45.276Z",
+        "durationMs": 0,
+        "value": null,
+        "reason": "Offline mode: HTTPS Date not requested"
+      },
+      {
+        "source": "https://explorer.devnet.flop.network",
+        "measuredAt": "2026-11-06T06:34:45.276Z",
+        "durationMs": 0,
+        "value": null,
+        "reason": "Offline mode: HTTPS Date not requested"
+      }
+    ],
+    "models": {
+      "source": "https://api.flop.network/v1/models",
+      "measuredAt": "2026-11-06T06:34:45.276Z",
+      "durationMs": 0,
+      "value": null,
+      "reason": "Offline mode: catalogue not requested"
+    }
+  },
+  "requirements": [
+    {
+      "id": "os",
+      "title": "Supported host OS",
+      "status": "READY",
+      "detail": "linux/x64. This profile checks the documented Linux amd64 deployment path.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Run a FLOP miner on a GPU host",
+        "quote": "The runnable path is both services on one Docker-capable NVIDIA VM or owned Linux host"
+      },
+      "evidence": [
+        {
+          "source": "node:os platform/arch",
+          "measuredAt": "2026-11-06T06:34:45.094Z",
+          "durationMs": 0,
+          "value": {
+            "platform": "linux",
+            "arch": "x64"
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "gpu",
+      "title": "GPU participation floor",
+      "status": "UNKNOWN",
+      "detail": "Probe unavailable (ENOENT)",
+      "source": {
+        "url": "https://docs.flop.network/docs/miner-and-validator-economics",
+        "locator": "Are H100s required?",
+        "quote": "The minimum miner spec is any GPU with at least 16GB of VRAM."
+      },
+      "evidence": [
+        {
+          "source": "nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits",
+          "measuredAt": "2026-11-06T06:34:45.094Z",
+          "durationMs": 8,
+          "value": null,
+          "reason": "Probe unavailable (ENOENT)"
+        }
+      ]
+    },
+    {
+      "id": "model-fit",
+      "title": "Exact model fit and TOPLOC",
+      "status": "UNKNOWN",
+      "detail": "Catalogue: no data. No exact checkpoint, KV cache budget or runtime memory measurement was supplied. A GPU name or aggregate VRAM does not establish fit.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Choose a host",
+        "quote": "Other NVIDIA cards may work if they fit the model, but each needs its own throughput and TOPLOC check."
+      },
+      "evidence": [
+        {
+          "source": "nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits",
+          "measuredAt": "2026-11-06T06:34:45.094Z",
+          "durationMs": 8,
+          "value": null,
+          "reason": "Probe unavailable (ENOENT)"
+        },
+        {
+          "source": "https://api.flop.network/v1/models",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "Offline mode: catalogue not requested"
+        }
+      ]
+    },
+    {
+      "id": "cpu",
+      "title": "CPU guidance",
+      "status": "UNKNOWN",
+      "detail": "22 available logical processors. The quoted recommendation is specific to two RTX 5090 cards, not a generic minimum.",
+      "source": {
+        "url": "https://docs.flop.network/docs/miner-and-validator-economics",
+        "locator": "Recommended build for one or two RTX 5090s",
+        "quote": "a 16-core CPU for two cards"
+      },
+      "evidence": [
+        {
+          "source": "nproc",
+          "measuredAt": "2026-11-06T06:34:45.109Z",
+          "durationMs": 4,
+          "value": 22,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ram",
+      "title": "RAM guidance",
+      "status": "UNKNOWN",
+      "detail": "33042915328 total bytes; 9555636224 available bytes. The quoted guidance is for RTX 5090 builds. Generic miner RAM minimum is unspecified.",
+      "source": {
+        "url": "https://docs.flop.network/docs/miner-and-validator-economics",
+        "locator": "Recommended build for one or two RTX 5090s",
+        "quote": "64GB of system RAM for one card, 128GB for two; a 2TB NVMe drive"
+      },
+      "evidence": [
+        {
+          "source": "/proc/meminfo: MemTotal and MemAvailable",
+          "measuredAt": "2026-11-06T06:34:45.107Z",
+          "durationMs": 1,
+          "value": {
+            "totalBytes": 33042915328,
+            "availableBytes": 9555636224
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "disk",
+      "title": "Checkpoint disk capacity",
+      "status": "UNKNOWN",
+      "detail": "518434521088 filesystem capacity bytes; 55756488704 available bytes at the selected path. df does not measure installed device capacity or NVMe quality. Required space depends on the exact checkpoint plus headroom. Neither checkpoint allocation nor persistence is verified.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Choose a host",
+        "quote": "Enough disk for the exact checkpoint; persistent env, seed and worker volume"
+      },
+      "evidence": [
+        {
+          "source": "df -B1 --output=size,avail -- [selected path redacted]",
+          "measuredAt": "2026-11-06T06:34:45.102Z",
+          "durationMs": 5,
+          "value": {
+            "totalBytes": 518434521088,
+            "availableBytes": 55756488704
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "docker",
+      "title": "Docker daemon access",
+      "status": "READY",
+      "detail": "Observed version 29.8.1. No container was started.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Choose a host",
+        "quote": "Full VM or owned host with Docker, Compose, NVIDIA driver and Container Toolkit"
+      },
+      "evidence": [
+        {
+          "source": "docker version --format {{.Server.Version}}",
+          "measuredAt": "2026-11-06T06:34:45.112Z",
+          "durationMs": 77,
+          "value": "29.8.1",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "compose",
+      "title": "Docker Compose availability",
+      "status": "READY",
+      "detail": "Observed version 5.5.1. No container was started.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Choose a host",
+        "quote": "Full VM or owned host with Docker, Compose, NVIDIA driver and Container Toolkit"
+      },
+      "evidence": [
+        {
+          "source": "docker compose version --short",
+          "measuredAt": "2026-11-06T06:34:45.189Z",
+          "durationMs": 87,
+          "value": "5.5.1",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "container-gpu",
+      "title": "GPU inside the runtime",
+      "status": "UNKNOWN",
+      "detail": "Host nvidia-smi does not verify NVIDIA Container Toolkit or GPU visibility inside the backend. No container was started.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Choose a host",
+        "quote": "Full VM or owned host with Docker, Compose, NVIDIA driver and Container Toolkit"
+      },
+      "evidence": [
+        {
+          "source": "nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits",
+          "measuredAt": "2026-11-06T06:34:45.094Z",
+          "durationMs": 8,
+          "value": null,
+          "reason": "Probe unavailable (ENOENT)"
+        }
+      ]
+    },
+    {
+      "id": "image-worker",
+      "title": "worker image pin and local digest",
+      "status": "UNKNOWN",
+      "detail": "No image reference supplied",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Operate and troubleshoot",
+        "quote": "For deployment, use the version-and-digest-qualified references from the operator's reviewed release bundle"
+      },
+      "evidence": [
+        {
+          "source": "docker image inspect: worker",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "No image reference supplied"
+        }
+      ]
+    },
+    {
+      "id": "image-backend",
+      "title": "backend image pin and local digest",
+      "status": "UNKNOWN",
+      "detail": "No image reference supplied",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Operate and troubleshoot",
+        "quote": "For deployment, use the version-and-digest-qualified references from the operator's reviewed release bundle"
+      },
+      "evidence": [
+        {
+          "source": "docker image inspect: backend",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "No image reference supplied"
+        }
+      ]
+    },
+    {
+      "id": "ports",
+      "title": "Local port binding",
+      "status": "UNKNOWN",
+      "detail": "loopback TCP 80: Port probes disabled; loopback TCP 443: Port probes disabled; loopback TCP 8645: Port probes disabled. Binding tests availability only. A busy port can already belong to the intended service. It does not prove firewall, NAT or ingress. Public HTTPS can use your own tunnel; raw worker port 8645 stays on loopback.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Set up with your agent",
+        "quote": "The DNS name must resolve to this host and inbound ports 80 and 443 must reach it."
+      },
+      "evidence": [
+        {
+          "source": "loopback TCP 80",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "Port probes disabled"
+        },
+        {
+          "source": "loopback TCP 443",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "Port probes disabled"
+        },
+        {
+          "source": "loopback TCP 8645",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "Port probes disabled"
+        }
+      ]
+    },
+    {
+      "id": "reachability",
+      "title": "Inbound peer reachability",
+      "status": "UNKNOWN",
+      "detail": "Run the external HTTPS command from a second host after deployment. An unauthenticated 401 shows the session path, not admission.",
+      "source": {
+        "url": "https://docs.flop.network/docs/run-miner",
+        "locator": "Set up with your agent",
+        "quote": "The DNS name must resolve to this host and inbound ports 80 and 443 must reach it."
+      },
+      "evidence": []
+    },
+    {
+      "id": "clock",
+      "title": "Clock offset diagnostic",
+      "status": "UNKNOWN",
+      "detail": "Need uncached Date headers from two distinct public HTTPS hosts. This is not an NTP measurement.",
+      "source": {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/main/yellowpaper.md#param-timing_max_clock_skew_ms",
+        "locator": "Compute-channel timing bounds",
+        "quote": "Maximum clock skew (in ms) tolerated between miner and agent wall clocks when classifying timing as Eligible vs Ambiguous."
+      },
+      "evidence": [
+        {
+          "source": "https://api.flop.network/v1/models",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "Offline mode: HTTPS Date not requested"
+        },
+        {
+          "source": "https://explorer.devnet.flop.network",
+          "measuredAt": "2026-11-06T06:34:45.276Z",
+          "durationMs": 0,
+          "value": null,
+          "reason": "Offline mode: HTTPS Date not requested"
+        }
+      ]
+    },
+    {
+      "id": "admission",
+      "title": "Registration and calibration",
+      "status": "UNKNOWN",
+      "detail": "Hardware readiness does not establish stake, accepted calibration, model identity, DA retention or paid-session admission.",
+      "source": {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/main/yellowpaper.md",
+        "locator": "7.1 Entry",
+        "quote": "The capacity deposit **MUST** be present before cap activation."
+      },
+      "evidence": []
+    }
+  ],
+  "requests": 0,
+  "durationMs": 183
+}

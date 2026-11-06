@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "mcp",
+    pkg: "@flop-lab/mcp-server",
+    bin: "flop-lab-mcp",
+    section: "agents",
+    summary: "Serve read-only suite tools over schema-checked stdio MCP",
+  },
+  {
     name: "status",
     pkg: "@flop-lab/status",
     bin: "flop-status",
