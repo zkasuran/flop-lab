@@ -1,0 +1,7 @@
+{
+  "service": "explorer",
+  "source": "https://explorer.devnet.flop.network/",
+  "measuredAt": "2026-11-06T05:29:44.470Z",
+  "httpStatus": 200,
+  "contentType": "text/html; charset=utf-8"
+}

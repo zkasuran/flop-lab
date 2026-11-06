@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Record public service status
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# The recorder uses this same group. Both workflows write the data branch.
+concurrency:
+  group: devnet-history-data
+  cancel-in-progress: false
+
+jobs:
+  status:
+    if: github.repository == 'zkasuran/flop-lab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      GIT_AUTHOR_NAME: github-actions[bot]
+      GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+      GIT_COMMITTER_NAME: github-actions[bot]
+      GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: true
+      - name: Set up pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install and build status
+        run: pnpm install --frozen-lockfile && pnpm --filter @flop-lab/status build
+      - name: Open the data archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCHIVE="$RUNNER_TEMP/flop-status-data"
+          echo "ARCHIVE=$ARCHIVE" >> "$GITHUB_ENV"
+          if git ls-remote --exit-code --heads origin refs/heads/data >/dev/null; then
+            git fetch --no-tags --depth=1 origin refs/heads/data
+            git worktree add --detach "$ARCHIVE" FETCH_HEAD
+          else
+            status=$?
+            # Exit 2 alone means no branch. Auth and network failures stop the job.
+            if [ "$status" -ne 2 ]; then exit "$status"; fi
+            git worktree add --detach "$ARCHIVE" HEAD
+            git -C "$ARCHIVE" switch --orphan data
+          fi
+      - name: Probe once and retain failed observations
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=0
+          node packages/status/dist/cli.js probe --archive "$ARCHIVE" --observer github-actions --json > "$RUNNER_TEMP/flop-status-round.json" || status=$?
+          # Exit 1 is measured service failure. Archive it; do not retry the probe.
+          if [ "$status" -gt 1 ]; then exit "$status"; fi
+          node packages/status/dist/cli.js history --file "$ARCHIVE/status/recent.jsonl" --json >/dev/null
+      - name: Publish only status history
+        shell: bash
+        run: |
+          set -euo pipefail
+          DAY=$(node --input-type=module -e 'import { readFileSync } from "node:fs"; const r = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/flop-status-round.json", "utf8")); if (!/^\d{4}-\d{2}-\d{2}T/.test(r.startedAt)) throw new Error("Invalid capture date"); console.log(r.startedAt.slice(0, 10).replaceAll("-", "/"));')
+          git -C "$ARCHIVE" add -- "status/$DAY.jsonl" status/recent.jsonl
+          if git -C "$ARCHIVE" diff --cached --quiet; then exit 0; fi
+          git -C "$ARCHIVE" commit -m "chore(data): record public service probes"
+          # No force push. An external concurrent writer makes this push fail safely.
+          git -C "$ARCHIVE" push origin HEAD:refs/heads/data

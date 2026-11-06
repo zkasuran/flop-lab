@@ -1,0 +1,7 @@
+{
+  "service": "mcp",
+  "source": "https://mcp.flop.network/mcp",
+  "measuredAt": "2026-11-06T05:29:44.264Z",
+  "httpStatus": 200,
+  "contentType": "text/event-stream"
+}

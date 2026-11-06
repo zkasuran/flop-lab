@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: Apache-2.0
+/** Copyable recorded calls. Monetary inputs are local examples, not observed prices. @example examples.lab_verify_tape */
+export const examples: Record<string, Record<string, unknown>> = {
+  lab_status_history: {},
+  lab_export_preview: { dataset: "settlements", format: "ndjson", limit: 3 },
+  lab_community_requests: { repo: "network", limit: 3 },
+  lab_verify_channel: {
+    mode: "recorded",
+    channelId: "0xeda44d4053757bf88f7147f16daf2576d4c6550e560dd10a9a524a3bd664ec8e",
+  },
+  lab_verify_tape: { mode: "recorded", limit: 3 },
+  lab_score_rank: { mode: "recorded" },
+  lab_score_route: { mode: "recorded", model: "qwen/qwen2.5-0.5b-instruct", maxPricePerGflop: "0.01" },
+  lab_spendguard_evaluate: {
+    policy: {
+      version: 1,
+      budgets: { task: "1", hour: "1", day: "1", total: "1" },
+      maxPricePerGflop: "0.1",
+      maxEscrowPerSession: "1",
+      allowModels: [],
+      allowMiners: [],
+      denyMiners: [],
+      modelCaps: {},
+      minerCaps: {},
+      requireDryRun: true,
+      cooldown: 0,
+    },
+    request: {
+      id: "example",
+      task: "example",
+      model: "example",
+      miner: "example",
+      amount: "2",
+      pricePerGflop: "0.01",
+      at: 1793904000000,
+      dryRun: true,
+    },
+    reservations: [],
+  },
+  lab_harness_run: { mode: "recorded", maxRequests: 4 },
+  lab_challenger_watch: { mode: "recorded", limit: 3 },
+  lab_spec_diff: { mode: "recorded" },
+  lab_mcp_audit: { mode: "recorded" },
+  lab_explorer_lookup: { mode: "recorded", query: "block:2990806" },
+  lab_indexer_audit: { mode: "recorded", limit: 3 },
+  lab_did_trail: { query: "did:key:z6MkoA8xuzKJRGtHa5hr6znFCZq164mb45JHx6kktdJ6tMdL" },
+  lab_doctor: { role: "miner" },
+};
