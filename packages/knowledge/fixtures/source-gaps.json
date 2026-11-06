@@ -1,0 +1,11 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_knowledge_get",
+  "args": {
+    "id_or_path": "source-gaps"
+  },
+  "measuredAt": "2026-11-06T03:07:47.265Z",
+  "status": "reported",
+  "encoding": "text",
+  "raw": "{\n  \"concept\": {\n    \"id\": \"source-gaps\",\n    \"path\": \"source-gaps.md\",\n    \"title\": \"FLOP Source Gap Catalog\",\n    \"type\": \"Source Gap Catalog\",\n    \"description\": \"0 unresolved source references detected while generating catalog concepts.\",\n    \"tags\": [\n      \"source-gap\",\n      \"navigation\",\n      \"needs-review\"\n    ],\n    \"resource\": \"https://github.com/flop-labs/flop-core/blob/main/tools/knowledge-catalog/build.mjs\",\n    \"source_paths\": [\n      \"INDEX.md\",\n      \"docs/INDEX.md\",\n      \"tools/knowledge-catalog/build.mjs\"\n    ],\n    \"generated_by\": \"tools/knowledge-catalog/build.mjs\",\n    \"updated_at\": \"2026-06-19\",\n    \"confidence\": \"source-backed\",\n    \"owner\": \"FLOP Labs\",\n    \"lifecycle\": \"generated\",\n    \"relationships\": {\n      \"depends_on\": [\n        \"/repo-domains.md\",\n        \"/docs-navigation.md\"\n      ]\n    }\n  },\n  \"content\": \"---\\ntype: \\\"Source Gap Catalog\\\"\\ntitle: \\\"FLOP Source Gap Catalog\\\"\\ndescription: \\\"0 unresolved source references detected while generating catalog concepts.\\\"\\nresource: \\\"https://github.com/flop-labs/flop-core/blob/main/tools/knowledge-catalog/build.mjs\\\"\\ntags: [\\\"source-gap\\\", \\\"navigation\\\", \\\"needs-review\\\"]\\nsource_paths: [\\\"INDEX.md\\\", \\\"docs/INDEX.md\\\", \\\"tools/knowledge-catalog/build.mjs\\\"]\\nexposes: []\\ndepends_on: [\\\"/repo-domains.md\\\", \\\"/docs-navigation.md\\\"]\\ngenerated_by: \\\"tools/knowledge-catalog/build.mjs\\\"\\nupdated_at: \\\"2026-06-19\\\"\\nconfidence: \\\"source-backed\\\"\\nowner: \\\"FLOP Labs\\\"\\nlifecycle: \\\"generated\\\"\\n---\\n# Purpose\\n\\nThis catalog keeps stale navigation references visible to agents. Missing paths are generated as needs-review concepts instead of being silently dropped.\\n\\n# Gaps\\n\\nNo unresolved source references detected.\\n\",\n  \"warnings\": [\n    \"provenance unavailable: repo sources are not mounted next to the catalog\"\n  ]\n}"
+}

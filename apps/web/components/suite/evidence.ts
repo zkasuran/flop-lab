@@ -37,6 +37,7 @@ import swaps from "../../../../packages/swaps/fixtures/swaps.json";
 import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
 import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/recorded";
+import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -69,6 +70,17 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "packages/spec/fixtures/paper-0.json",
       "Pinned specification rows. Catalog agreement does not verify deployed runtime storage.",
       "Pinned paper",
+    );
+  },
+  knowledge: () => {
+    const observation = knowledgeManifest();
+    return metric(
+      observation.value?.concepts.length,
+      "concepts in the recorded knowledge manifest",
+      observation.measuredAt,
+      observation.source,
+      "packages/knowledge/fixtures/manifest.json",
+      "Catalog declarations. Source provenance and runtime behavior are not verified.",
     );
   },
   invariants: () =>
