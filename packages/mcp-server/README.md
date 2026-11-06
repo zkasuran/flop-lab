@@ -55,7 +55,7 @@ The server and page derive declarations from one registry. Inputs reject unknown
 
 ## Bounds and checks
 
-Successful non-local results cache for 30 seconds with at most 64 keys. Package collectors also keep their documented caches. Calls serialize with at most 8 pending operations. A request line is limited to 128 KiB. The shared network boundary limits each call to 40 HTTP attempts, a 60-second request-start window and 192 KiB per response. Each HTTP attempt has an 8-second timeout covering body reads. Existing package clients own retry backoff for 429 and 5xx. Smaller operation-specific budgets still apply. There is no background polling.
+Successful non-local results cache for 30 seconds with at most 64 keys. Route decisions bypass this cache so quote expiry is re-evaluated on every call. Package collectors also keep their documented caches. Calls serialize with at most 8 pending operations. A request line is limited to 128 KiB. The shared network boundary limits each call to 40 HTTP attempts, a 60-second request-start window and 192 KiB per response. Each HTTP attempt has an 8-second timeout covering body reads. Existing package clients own retry backoff for 429 and 5xx. Smaller operation-specific budgets still apply. There is no background polling.
 
 Run `pnpm --filter @flop-lab/mcp-server check`. Tests spawn the server, perform initialization, list tools, call every operation with retained observations and validate structured results with an independent JSON Schema validator. Policy denial, expired routes, unknown fields, wrong identifiers, cache expiry and transport limits have negative checks.
 

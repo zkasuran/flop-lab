@@ -47,12 +47,16 @@ export function recordedDoctor() {
 export function recordedSettlements() {
   const record = z.object({ ...provenance.shape, raw: z.string() }).parse(read("verifier/fixtures/settlements-0.json"));
   const page = z
-    .object({ data: z.array(z.record(z.string(), z.unknown())), pagination: z.object({ hasMore: z.boolean() }) })
+    .object({
+      data: z.array(z.record(z.string(), z.unknown())),
+      pagination: z.object({ hasMore: z.boolean(), total: z.number().int().nonnegative() }),
+    })
     .parse(JSON.parse(record.raw));
   return {
     evidence: [{ source: record.source, measuredAt: record.measuredAt }],
     rows: page.data,
     complete: !page.pagination.hasMore,
+    total: page.pagination.total,
   };
 }
 

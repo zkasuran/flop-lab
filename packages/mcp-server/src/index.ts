@@ -60,7 +60,7 @@ export function createSuite(options: { recorded?: boolean; definitions?: ToolDef
       requests,
       ...result,
     }) as Record<string, unknown>;
-    if (result.mode !== "local") {
+    if (result.mode !== "local" && name !== "lab_score_route") {
       if (cache.size >= 64) cache.delete(cache.keys().next().value!);
       cache.set(key, { expires: now() + CACHE_TTL_MS, value: structuredClone(output) });
     }
