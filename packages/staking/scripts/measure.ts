@@ -6,9 +6,23 @@ import { createObserver, recordedReport } from "../src/index";
 const output = process.argv[2];
 if (!output) throw new Error("Pass an evidence output path");
 const start = performance.now();
-const cli = spawnSync(process.execPath, ["packages/staking/dist/cli.js", "miner", "--gflop", "1", "--json"], {
-  encoding: "utf8",
-});
+const instrument =
+  "let requests = 0; const original = globalThis.fetch; globalThis.fetch = (...args) => { requests++; return original(...args); }; process.on('exit', () => process.stderr.write(JSON.stringify({ requests })));";
+const cli = spawnSync(
+  process.execPath,
+  [
+    "--import",
+    `data:text/javascript,${encodeURIComponent(instrument)}`,
+    "packages/staking/dist/cli.js",
+    "miner",
+    "--gflop",
+    "1",
+    "--json",
+  ],
+  {
+    encoding: "utf8",
+  },
+);
 const coldStartMs = performance.now() - start;
 if (cli.status !== 0) throw new Error(cli.stderr);
 const observer = createObserver();
@@ -18,7 +32,7 @@ const report = recordedReport();
 const result = {
   measuredAt: new Date().toISOString(),
   coldStartMs,
-  cliRequests: 0,
+  cliRequests: (JSON.parse(cli.stderr) as { requests: number }).requests,
   recorded: {
     miners: report.miners.length,
     calibrated: report.miners.filter((r) => r.capacityGflop !== null).length,
