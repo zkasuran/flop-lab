@@ -4,6 +4,18 @@ import type { Command } from "./commands";
 // These child operations already emit one JSON value and do not accept --json.
 // Streaming operations and text-producing operations are deliberately absent.
 export const nativeJsonOperations: Readonly<Record<string, readonly string[]>> = {
+  "@flop-lab/export": [
+    "settlements",
+    "channels",
+    "blocks",
+    "transactions",
+    "accounts",
+    "models",
+    "price-sources",
+    "proofs",
+    "snapshots",
+  ],
+  "@flop-lab/community": ["lint-access"],
   "@flop-lab/watch": ["check"],
   "@flop-lab/swaps": ["plan", "generate", "check", "observe"],
   "@flop-lab/recorder": ["record", "analyze", "verify"],

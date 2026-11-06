@@ -5,6 +5,9 @@ import { join } from "node:path";
 export function jsonProbes(root: string, temp: string): Record<string, string[]> {
   const file = (path: string) => join(root, "packages", path);
   return {
+    status: ["history", "--file", file("status/test/fixtures/history.jsonl"), "--json"],
+    community: ["--json"],
+    export: ["blocks", "--recorded", "--rows", "1", "--out", join(temp, "export"), "--json"],
     watch: ["check", "--rules", join(temp, "watch.yaml"), "--json"],
     upgrades: ["--json"],
     knowledge: ["catalog", "--json"],

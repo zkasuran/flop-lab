@@ -1,10 +1,10 @@
 # Suite CLI audit
 
-Measured on 2026-11-06 against origin/main `b421a4a0db776b7f7f0409d3c0afe25a4c611c96` plus this CLI change. Node v22.22.2. pnpm 11.25.0. Linux. The audit records the built wrapper's SHA-256 separately from the base revision.
+Measured on 2026-11-06 against origin/main `f6829f7` plus this CLI change. Node v22.22.2. pnpm 11.25.0. Linux. The audit records the built wrapper's SHA-256 separately from the base revision. Status, export and community were added in the final inventory pass.
 
 ## Method
 
-The reverse inventory found 30 tool binaries and 30 registered subcommands. Every tool returned nonempty help with exit 0 through the corrected wrapper. All sections matched the site's registry. The CLI itself is the dispatcher and the MCP client has no binary.
+The reverse inventory found 33 tool binaries and 33 registered subcommands. Every tool returned nonempty help with exit 0 through the corrected wrapper. All sections matched the site's registry. The CLI itself is the dispatcher and the MCP client has no binary.
 
 The audit ran each built command with `--help`, bare `--json`, an unknown option and an explicit output probe. Network access was blocked. Commands ran in a temporary directory. No wallet or live FLOP request was used. Explicit probes use bundled recordings, offline local checks or deliberate empty inputs as identified below. These are CLI behavior measurements, not a fresh devnet audit.
 
@@ -14,38 +14,41 @@ Run `pnpm exec tsx packages/cli/scripts/audit.ts /tmp/flop-cli-audit` after buil
 
 `J` means stdout parsed as one complete JSON value. `text` includes empty stdout. The bare probe is `flop NAME --json`, without an operation. The invalid probe is `flop NAME --cli-audit-invalid`.
 
-| Command    | Bare JSON exit / output | Invalid exit | Explicit probe                              | Exit / output |
-| ---------- | ----------------------- | ------------ | ------------------------------------------- | ------------- |
-| watch      | 1 / text                | 1            | check generated example rules, JSON adapter | 0 / J         |
-| upgrades   | 0 / J                   | 1            | bundled recordings                          | 0 / J         |
-| knowledge  | 0 / text                | 1            | catalog recording                           | 0 / J         |
-| spec-read  | 0 / J                   | 1            | pinned index                                | 0 / J         |
-| metering   | 0 / text                | 2            | observe recording                           | 0 / J         |
-| invariants | 0 / J                   | 2            | catalogue                                   | 0 / J         |
-| swap       | 2 / text                | 2            | observe recorded, JSON adapter              | 0 / J         |
-| finality   | 2 / text                | 2            | snapshot recorded                           | 0 / J         |
-| proofs     | 0 / J                   | 1            | coverage recording                          | 0 / J         |
-| did        | 0 / text                | 1            | recorded signer trail                       | 0 / J         |
-| economics  | 0 / text                | 1            | compare recording                           | 0 / J         |
-| sessions   | 3 / J                   | 1            | list with network blocked                   | 3 / J         |
-| models     | 0 / J                   | 2            | recorded devnet input                       | 0 / J         |
-| call       | 0 / text                | 1            | list with network blocked                   | 1 / text      |
-| start      | 1 / text                | 1            | bare flag, no JSON mode                     | 1 / text      |
-| indexer    | 2 / text                | 2            | recorded devnet snapshot                    | 1 / J         |
-| tclk       | 2 / J                   | 2            | empty object transcript, offline            | 1 / J         |
-| contracts  | 2 / text                | 2            | stats audit with network blocked            | 2 / J         |
-| history    | 1 / text                | 1            | empty local store, JSON adapter             | 0 / J         |
-| explore    | 1 / text                | 1            | block:1 with network blocked                | 3 / J         |
-| doctor     | 64 / text               | 64           | miner offline, skip ports                   | 2 / J         |
-| spec       | 2 / text                | 2            | diff recorded                               | 0 / J         |
-| verify     | 1 / J                   | 1            | empty object evidence bundle                | 1 / J         |
-| harness    | 2 / text                | 2            | list catalogue, JSON adapter                | 0 / J         |
-| score      | 1 / text                | 1            | rank recorded snapshot                      | 0 / J         |
-| guard      | 1 / text                | 1            | lint example policy, JSON adapter           | 0 / J         |
-| challenge  | 1 / text                | 1            | windows recorded                            | 0 / J         |
-| x402       | 1 / text                | 1            | inspect recorded headers, JSON adapter      | 0 / J         |
-| sdk        | 2 / text                | 2            | scripted SDK scenarios, network blocked     | 1 / J         |
-| stake      | 0 / text                | 1            | observed recording                          | 0 / J         |
+| Command    | Bare JSON exit / output | Invalid exit | Explicit probe                                  | Exit / output |
+| ---------- | ----------------------- | ------------ | ----------------------------------------------- | ------------- |
+| watch      | 1 / text                | 1            | check generated example rules, JSON adapter     | 0 / J         |
+| status     | 1 / J                   | 2            | recorded history                                | 0 / J         |
+| export     | 1 / text                | 1            | recorded block to temporary files, JSON adapter | 0 / J         |
+| community  | 0 / J                   | 2            | bundled snapshot                                | 0 / J         |
+| upgrades   | 0 / J                   | 1            | bundled recordings                              | 0 / J         |
+| knowledge  | 0 / text                | 1            | catalog recording                               | 0 / J         |
+| spec-read  | 0 / J                   | 1            | pinned index                                    | 0 / J         |
+| metering   | 0 / text                | 2            | observe recording                               | 0 / J         |
+| invariants | 0 / J                   | 2            | catalogue                                       | 0 / J         |
+| swap       | 2 / text                | 2            | observe recorded, JSON adapter                  | 0 / J         |
+| finality   | 2 / text                | 2            | snapshot recorded                               | 0 / J         |
+| proofs     | 0 / J                   | 1            | coverage recording                              | 0 / J         |
+| did        | 0 / text                | 1            | recorded signer trail                           | 0 / J         |
+| economics  | 0 / text                | 1            | compare recording                               | 0 / J         |
+| sessions   | 3 / J                   | 1            | list with network blocked                       | 3 / J         |
+| models     | 0 / J                   | 2            | recorded devnet input                           | 0 / J         |
+| call       | 0 / text                | 1            | list with network blocked                       | 1 / text      |
+| start      | 1 / text                | 1            | bare flag, no JSON mode                         | 1 / text      |
+| indexer    | 2 / text                | 2            | recorded devnet snapshot                        | 1 / J         |
+| tclk       | 2 / J                   | 2            | empty object transcript, offline                | 1 / J         |
+| contracts  | 2 / text                | 2            | stats audit with network blocked                | 2 / J         |
+| history    | 1 / text                | 1            | empty local store, JSON adapter                 | 0 / J         |
+| explore    | 1 / text                | 1            | block:1 with network blocked                    | 3 / J         |
+| doctor     | 64 / text               | 64           | miner offline, skip ports                       | 2 / J         |
+| spec       | 2 / text                | 2            | diff recorded                                   | 0 / J         |
+| verify     | 1 / J                   | 1            | empty object evidence bundle                    | 1 / J         |
+| harness    | 2 / text                | 2            | list catalogue, JSON adapter                    | 0 / J         |
+| score      | 1 / text                | 1            | rank recorded snapshot                          | 0 / J         |
+| guard      | 1 / text                | 1            | lint example policy, JSON adapter               | 0 / J         |
+| challenge  | 1 / text                | 1            | windows recorded                                | 0 / J         |
+| x402       | 1 / text                | 1            | inspect recorded headers, JSON adapter          | 0 / J         |
+| sdk        | 2 / text                | 2            | scripted SDK scenarios, network blocked         | 1 / J         |
+| stake      | 0 / text                | 1            | observed recording                              | 0 / J         |
 
 ## Fixes in this package
 
@@ -63,9 +66,9 @@ Reproduce with `pnpm exec tsx packages/cli/scripts/benchmark.ts`. Suite discover
 
 ## Differences for package owners
 
-Usage errors still return 1 in watch, upgrades, knowledge, spec-read, proofs, did, economics, sessions, call, start, history, explore, verify, score, guard, challenge, x402 and stake. Doctor uses 64. The wrapper preserves these codes.
+Usage errors still return 1 in export, watch, upgrades, knowledge, spec-read, proofs, did, economics, sessions, call, start, history, explore, verify, score, guard, challenge, x402 and stake. Doctor uses 64. The wrapper preserves these codes.
 
-Doctor's UNKNOWN is 2. Guard's deny and lint findings use 2. Finality and contracts also use 2 for incomplete evidence. These meanings overlap the suite usage convention. They require owner changes to standardize without losing meaning.
+Doctor's UNKNOWN is 2. Guard's deny and lint findings use 2. Finality and contracts also use 2 for incomplete evidence. Export uses 2 for partial output. These meanings overlap the suite usage convention. They require owner changes to standardize without losing meaning.
 
 Bare `--json` can print help, fail usage or perform a default operation. Call and explore have no offline replay flag in their help. Call's blocked-network failure produced no JSON stdout. Start has no JSON mode. Watch has streaming and JSON Lines operations that do not fit a single-value JSON contract.
 

@@ -8,11 +8,13 @@ Suite commands
   completions <shell>    Print bash, zsh or fish completion script
 
 observe
+  community   Inspect dated public requests, response times and access-form fields
   explore     Search devnet entities and inspect dated query evidence
   finality    Measure linked block times and compare reported finality lag with pinned rules
   history     Record devnet snapshots and compare reset signals and claim changes
   models      Join model listings, registry hashes and dated price sources
   sessions    Classify compute channel lifecycle states with dated evidence
+  status      Probe public service responses and inspect measured availability
   upgrades    Compare dated spec revisions and observe package release history
 
 verify
@@ -28,6 +30,7 @@ verify
 
 build
   call        Call read-only MCP tools and compare dated devnet cost estimates
+  export      Export dated devnet rows with hashes and resumable parts
   knowledge   Browse catalog relationships, cited requirements and agent-pack responses
   sdk         Check published SDK behaviour with offline request traces
   spec-read   Read pinned sections, terms and parameters beside dated catalog evidence

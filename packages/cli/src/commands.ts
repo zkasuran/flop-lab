@@ -20,6 +20,7 @@ export type Command = {
 export const commands: readonly Command[] = [
   {
     name: "status",
+    tagline: "Are FLOP's public services answering?",
     pkg: "@flop-lab/status",
     bin: "flop-status",
     section: "observe",
@@ -27,6 +28,7 @@ export const commands: readonly Command[] = [
   },
   {
     name: "export",
+    tagline: "How do I get devnet data into a spreadsheet or notebook?",
     pkg: "@flop-lab/export",
     bin: "flop-export",
     section: "build",
@@ -34,6 +36,7 @@ export const commands: readonly Command[] = [
   },
   {
     name: "community",
+    tagline: "What are operators and builders asking for?",
     pkg: "@flop-lab/community",
     bin: "flop-community",
     section: "observe",

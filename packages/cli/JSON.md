@@ -12,16 +12,18 @@ Use `flop <command> <operation> ... --json`. The wrapper inherits stdout and std
 
 Most tools handle `--json` themselves. These operations already output one JSON value. The wrapper accepts and removes a single trailing `--json` for them:
 
-| Command   | JSON-native operations                                                   |
-| --------- | ------------------------------------------------------------------------ |
-| `watch`   | `check`                                                                  |
-| `swap`    | `plan`, `generate`, `check`, `observe`                                   |
-| `history` | `record`, `analyze`, `verify`                                            |
-| `harness` | `run`, `list`, `coverage`, `history`                                     |
-| `guard`   | `init`, `verify`, `evaluate`, `lint`, `replay`, `shared-init`, `reserve` |
-| `x402`    | `inspect`, `check`, `client`                                             |
+| Command     | JSON-native operations                                                                                            |
+| ----------- | ----------------------------------------------------------------------------------------------------------------- |
+| `export`    | `settlements`, `channels`, `blocks`, `transactions`, `accounts`, `models`, `price-sources`, `proofs`, `snapshots` |
+| `community` | `lint-access`                                                                                                     |
+| `watch`     | `check`                                                                                                           |
+| `swap`      | `plan`, `generate`, `check`, `observe`                                                                            |
+| `history`   | `record`, `analyze`, `verify`                                                                                     |
+| `harness`   | `run`, `list`, `coverage`, `history`                                                                              |
+| `guard`     | `init`, `verify`, `evaluate`, `lint`, `replay`, `shared-init`, `reserve`                                          |
+| `x402`      | `inspect`, `check`, `client`                                                                                      |
 
-The adapter leaves a repeated flag, a flag before the last argument and arguments after `--` unchanged. It does not claim that these forms work in every child. Unknown operations also pass through unchanged for the child to reject. Help remains the child's own text.
+The adapter leaves a repeated flag, a flag before the last argument and arguments after `--` unchanged. It does not claim that these forms work in every child. Unknown operations also pass through unchanged for the child to reject. Help remains the child's own text. Export stdout is a JSON summary of the files it wrote. Its `--resume` form has no JSON adapter; omit `--json` when resuming.
 
 `watch replay` produces JSON Lines, one value per recording. `watch run` and `watch drain` have streaming delivery and stderr diagnostics. These operations have no single-result adapter. `start` generates local project files and has no JSON mode. `harness report` emits a Markdown draft. Server-starting operations emit text. Do not feed those outputs to a single-value JSON parser.
 
