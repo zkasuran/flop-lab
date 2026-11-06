@@ -22,6 +22,8 @@ import staking from "../../../../packages/staking/fixtures/miners.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.json";
+import proofs from "../../../../packages/proofs/fixtures/capture-3.json";
+import { parseProofs } from "../../../../packages/proofs/src/model";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 
@@ -46,6 +48,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  proofs: () =>
+    metric(
+      parseProofs(JSON.parse(proofs.raw) as unknown).length,
+      "proof rows in the recorded indexer query",
+      proofs.measuredAt,
+      proofs.source,
+      "packages/proofs/fixtures/capture-3.json",
+      "Empty direct-rail data does not establish missing paid-channel evidence.",
+    ),
   sessions: () =>
     metric(
       rows(object(object(JSON.parse(sessions.raw) as unknown).computeChannels).data).length,
