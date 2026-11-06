@@ -39,6 +39,7 @@ import { recordedReport as meteringReport } from "../../../../packages/metering/
 import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/recorded";
 import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
+import { recordings as statusRecordings } from "../../../../packages/status/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -61,6 +62,18 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  status: () => {
+    const probe = statusRecordings.at(-1)?.probes.find((p) => p.service === "gateway");
+    return metric(
+      probe?.latencyMs,
+      "ms elapsed in the recorded gateway probe",
+      probe?.measuredAt,
+      probe?.source,
+      "packages/status/test/fixtures/history.jsonl",
+      "One dated response including its body. This is not current health or continuous uptime.",
+      "Gateway model list",
+    );
+  },
   yellowpaper: () => {
     const paper = yellowpaperSpec();
     return metric(
