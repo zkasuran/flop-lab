@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Probe public service responses and inspect measured availability",
   },
   {
+    name: "export",
+    pkg: "@flop-lab/export",
+    bin: "flop-export",
+    section: "build",
+    summary: "Export dated devnet rows with hashes and resumable parts",
+  },
+  {
     name: "watch",
     pkg: "@flop-lab/watch",
     bin: "flop-watch",

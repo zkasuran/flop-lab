@@ -40,6 +40,8 @@ import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/r
 import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 import { recordings as statusRecordings } from "../../../../packages/status/src/recorded";
+import exportBlocks from "../../../../packages/export/fixtures/blocks.json";
+import { parseIndexerData } from "@flop-lab/mcp";
 import watch from "../../../../packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json";
 
 const mcp = "https://mcp.flop.network/mcp";
@@ -73,6 +75,17 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "packages/status/test/fixtures/history.jsonl",
       "One dated response including its body. This is not current health or continuous uptime.",
       "Gateway model list",
+    );
+  },
+  export: () => {
+    const capture = exportBlocks[0]!;
+    return metric(
+      parseIndexerData("blocks", JSON.parse(capture.raw)).length,
+      "block rows in the export recording",
+      capture.measuredAt,
+      capture.source,
+      "packages/export/fixtures/blocks.json",
+      "Bounded recorded rows. Export completion does not establish chain completeness.",
     );
   },
   watch: () =>
