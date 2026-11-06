@@ -21,6 +21,7 @@ import consoleTools from "../../../../packages/console/fixtures/tools.json";
 import staking from "../../../../packages/staking/fixtures/miners.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
+import didSearch from "../../../../packages/did/fixtures/github.json";
 import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.json";
 import proofs from "../../../../packages/proofs/fixtures/capture-3.json";
 import { parseProofs } from "../../../../packages/proofs/src/model";
@@ -57,6 +58,15 @@ const readers: Record<string, () => SuiteMetric | null> = {
       proofs.source,
       "packages/proofs/fixtures/capture-3.json",
       "Empty direct-rail data does not establish missing paid-channel evidence.",
+    ),
+  did: () =>
+    metric(
+      rows(object(JSON.parse(didSearch.raw) as unknown).items).length,
+      "GitHub artifacts in the recorded DID trail",
+      didSearch.measuredAt,
+      didSearch.source,
+      "packages/did/fixtures/github.json",
+      "Bounded search results. The DID page verifies each retained signature in the browser.",
     ),
   sessions: () =>
     metric(

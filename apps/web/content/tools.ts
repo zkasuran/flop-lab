@@ -190,7 +190,7 @@ export const tools: readonly Tool[] = [
     section: "identity",
     name: "DID trail",
     tagline: "What has this did:key signed and does it verify?",
-    status: "planned",
+    status: "alpha",
     href: "/did",
     repoPath: "packages/did",
   },
