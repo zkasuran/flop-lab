@@ -19,6 +19,27 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "status",
+    pkg: "@flop-lab/status",
+    bin: "flop-status",
+    section: "observe",
+    summary: "Probe public service responses and inspect measured availability",
+  },
+  {
+    name: "export",
+    pkg: "@flop-lab/export",
+    bin: "flop-export",
+    section: "build",
+    summary: "Export dated devnet rows with hashes and resumable parts",
+  },
+  {
+    name: "community",
+    pkg: "@flop-lab/community",
+    bin: "flop-community",
+    section: "observe",
+    summary: "Inspect dated public requests, response times and access-form fields",
+  },
+  {
     name: "watch",
     tagline: "How do I get told when something on the network changes?",
     pkg: "@flop-lab/watch",
