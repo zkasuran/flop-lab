@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { parseIndex, type Point } from "@flop-lab/recorder";
+import { parseIndex, type Point } from "../../recorder/src/schema";
 import { count } from "./model";
 
 /** Read recorder counts without summing overlapping rolling windows or replacing missing points with zero.
