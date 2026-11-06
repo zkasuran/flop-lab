@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "api",
+    pkg: "@flop-lab/openapi",
+    bin: "flop-openapi",
+    section: "build",
+    summary: "Read dated suite results and generate their OpenAPI contract",
+  },
+  {
     name: "watch",
     pkg: "@flop-lab/watch",
     bin: "flop-watch",

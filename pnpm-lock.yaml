@@ -116,6 +116,9 @@ importers:
       '@flop-lab/models':
         specifier: workspace:*
         version: link:../models
+      '@flop-lab/openapi':
+        specifier: workspace:*
+        version: link:../openapi
       '@flop-lab/proofs':
         specifier: workspace:*
         version: link:../proofs
@@ -288,6 +291,15 @@ importers:
       '@flop-lab/recorder':
         specifier: workspace:*
         version: link:../recorder
+
+  packages/openapi:
+    dependencies:
+      ajv:
+        specifier: ^8.17.1
+        version: 8.20.0
+      ajv-formats:
+        specifier: ^3.0.1
+        version: 3.0.1(ajv@8.20.0)
 
   packages/proofs:
     dependencies:

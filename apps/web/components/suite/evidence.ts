@@ -40,6 +40,7 @@ import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/r
 import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 import watch from "../../../../packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json";
+import { readResult as apiResult } from "../../../../packages/openapi/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -62,6 +63,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  openapi: () => {
+    const result = apiResult("verifier");
+    return metric(
+      result.summary?.metrics.channels,
+      "settlement rows in the API tape sample",
+      result.measuredAt,
+      result.sources[0]?.url,
+      "packages/openapi/src/results.json",
+      "Bundled arithmetic summary. No inference or current network health is verified.",
+    );
+  },
   watch: () =>
     metric(
       watch.requests,
