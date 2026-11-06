@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: Apache-2.0
-import { createHash } from "node:crypto";
 
 export class PaymentError extends Error {
   constructor(
@@ -59,44 +58,18 @@ export function parseProof(header: string): Proof {
   if (header.length > 2048) throw new PaymentError("malformed_proof");
   try {
     const p = object(JSON.parse(header));
+    // The proof is a flat string object. Count decoded keys before JSON.parse can erase duplicates.
+    const keys = [...header.matchAll(/("(?:[^"\\]|\\.)*")\s*:/g)].map((match) => JSON.parse(match[1]!) as unknown);
+    if (
+      keys.length !== 3 ||
+      new Set(keys).size !== 3 ||
+      keys.some((key) => !["hash_lock", "htlc_id", "tx_hash"].includes(String(key)))
+    )
+      throw new PaymentError("malformed_proof");
     return { hash_lock: hex(p.hash_lock), htlc_id: text(p.htlc_id), tx_hash: `0x${hex(p.tx_hash)}` };
   } catch {
     throw new PaymentError("malformed_proof");
   }
-}
-
-/** Hash the method, URL, body and application headers. @example await bindRequest(request) */
-export async function bindRequest(request: Request): Promise<string> {
-  // Bound body reads prevent buffering an unbounded input stream.
-  const reader = request.clone().body?.getReader();
-  const hash = createHash("sha256");
-  let size = 0;
-  if (reader) {
-    try {
-      for (;;) {
-        const chunk = await reader.read();
-        if (chunk.done) break;
-        size += chunk.value.length;
-        if (size > 65536) throw new PaymentError("request_too_large", 413);
-        hash.update(chunk.value);
-      }
-    } finally {
-      void reader.cancel();
-    }
-  }
-  const excluded = new Set([
-    "x-payment-proof",
-    "x-flop-request-id",
-    "host",
-    "connection",
-    "content-length",
-    "user-agent",
-    "accept-encoding",
-  ]);
-  const headers = [...request.headers].filter(([key]) => !excluded.has(key));
-  return createHash("sha256")
-    .update(JSON.stringify([request.method, request.url, headers, hash.digest("hex")]))
-    .digest("hex");
 }
 
 /** Emit SDK-compatible headers plus explicit local-reference extensions. @example quoteHeaders(quote) */
@@ -120,6 +93,7 @@ export function quoteHeaders(q: Quote): Headers {
 /** Parse strict SDK headers and required reference extensions. @example parseQuote(response) */
 export function parseQuote(response: Response): Readonly<Quote> {
   const h = response.headers;
+  if (h.get("x-payment-required") !== "true") throw new PaymentError("invalid_required");
   const priceFlop = text(h.get("x-payment-price"));
   if (flopUnits(priceFlop) <= 0n) throw new PaymentError("invalid_amount");
   const expiry = h.get("x-flop-expires-at") ?? "";

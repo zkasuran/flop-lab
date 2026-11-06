@@ -1,0 +1,131 @@
+{
+  "direct": {
+    "exchange": {
+      "schemaVersion": 1,
+      "profile": "sdk-0.4.0",
+      "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/x402.js with scripted HTTP and mock HTLC methods (function)",
+      "measuredAt": "2026-11-06T04:10:22.912Z",
+      "rounds": [
+        {
+          "measuredAt": "2026-11-06T04:10:22.912Z",
+          "request": {
+            "url": "https://fixture.invalid/paid",
+            "method": "GET",
+            "headers": [],
+            "body": ""
+          },
+          "response": {
+            "status": 402,
+            "headers": [
+              [
+                "x-payment-destination",
+                "mock-payee"
+              ],
+              [
+                "x-payment-hash-lock",
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              ],
+              [
+                "x-payment-price",
+                "0.01"
+              ],
+              [
+                "x-payment-timeout-blocks",
+                "60"
+              ]
+            ],
+            "body": "mock challenge"
+          }
+        },
+        {
+          "measuredAt": "2026-11-06T04:10:22.913Z",
+          "request": {
+            "url": "https://fixture.invalid/paid",
+            "method": "GET",
+            "headers": [
+              [
+                "x-payment-proof",
+                "{\"hash_lock\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"htlc_id\":\"mock-htlc\",\"tx_hash\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}"
+              ]
+            ],
+            "body": ""
+          },
+          "response": {
+            "status": 200,
+            "headers": [
+              [
+                "content-type",
+                "text/plain; charset=UTF-8"
+              ]
+            ],
+            "body": "mock result"
+          }
+        }
+      ]
+    },
+    "mockPayments": 1,
+    "status": 200
+  },
+  "wrapped": {
+    "exchange": {
+      "schemaVersion": 1,
+      "profile": "sdk-0.4.0",
+      "source": "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/x402.js with scripted HTTP and mock HTLC methods (class)",
+      "measuredAt": "2026-11-06T04:10:22.914Z",
+      "rounds": [
+        {
+          "measuredAt": "2026-11-06T04:10:22.914Z",
+          "request": {
+            "url": "https://fixture.invalid/paid",
+            "method": "GET",
+            "headers": [],
+            "body": ""
+          },
+          "response": {
+            "status": 402,
+            "headers": [
+              [
+                "x-payment-destination",
+                "mock-payee"
+              ],
+              [
+                "x-payment-hash-lock",
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              ],
+              [
+                "x-payment-price",
+                "0.01"
+              ],
+              [
+                "x-payment-timeout-blocks",
+                "60"
+              ]
+            ],
+            "body": "mock challenge"
+          }
+        },
+        {
+          "measuredAt": "2026-11-06T04:10:22.914Z",
+          "request": {
+            "url": "https://fixture.invalid/paid",
+            "method": "GET",
+            "headers": [],
+            "body": ""
+          },
+          "response": {
+            "status": 429,
+            "headers": [
+              [
+                "content-type",
+                "text/plain; charset=UTF-8"
+              ]
+            ],
+            "body": "synthetic repeated unpaid refusal"
+          }
+        }
+      ]
+    },
+    "mockPayments": 0,
+    "status": 429
+  }
+}
