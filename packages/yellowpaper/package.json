@@ -1,0 +1,20 @@
+{
+  "name": "@flop-lab/yellowpaper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Read the pinned FLOP yellowpaper beside dated catalog evidence",
+  "exports": { ".": "./src/index.ts" },
+  "bin": { "flop-yellowpaper": "./dist/cli.js" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/spec": "workspace:*",
+    "github-slugger": "2.0.0",
+    "marked": "17.0.1"
+  }
+}
