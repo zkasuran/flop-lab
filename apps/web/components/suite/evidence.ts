@@ -21,6 +21,7 @@ import consoleTools from "../../../../packages/console/fixtures/tools.json";
 import staking from "../../../../packages/staking/fixtures/miners.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
+import didSearch from "../../../../packages/did/fixtures/github.json";
 import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
@@ -47,6 +48,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  did: () =>
+    metric(
+      rows(object(JSON.parse(didSearch.raw) as unknown).items).length,
+      "GitHub artifacts in the recorded DID trail",
+      didSearch.measuredAt,
+      didSearch.source,
+      "packages/did/fixtures/github.json",
+      "Bounded search results. The DID page verifies each retained signature in the browser.",
+    ),
   sessions: () =>
     metric(
       rows(object(object(JSON.parse(sessions.raw) as unknown).computeChannels).data).length,

@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Inspect proof submissions and explain settlement coverage limits",
   },
   {
+    name: "did",
+    pkg: "@flop-lab/did",
+    bin: "flop-did",
+    section: "identity",
+    summary: "Follow signed artifacts and verify their exact bytes",
+  },
+  {
     name: "economics",
     pkg: "@flop-lab/economics",
     bin: "flop-economics",
