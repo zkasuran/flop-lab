@@ -78,9 +78,18 @@ describe("transcript checker", () => {
   it("permits an identical cached retry but diagnoses changed response bytes", () => {
     const e = fresh();
     e.rounds.push(structuredClone(e.rounds[1]!));
+    e.rounds[2]!.response.headers = e.rounds[2]!.response.headers.reverse().map(([key, value]) => [
+      key.toUpperCase(),
+      value,
+    ]);
     expect(checkExchange(e).outcome).toBe("no-deviations");
     e.rounds[2]!.response.body = "executed again";
     expect(codes(e)).toContain("cached_response_changed");
+  });
+  it("bounds capture size in UTF-8 bytes rather than JavaScript character count", () => {
+    const e = fresh();
+    e.rounds[0]!.response.body = "é".repeat(65536);
+    expect(() => parseExchange(e)).toThrow("Exchange exceeds 128 KiB");
   });
   it("rejects expired retry at the exact recorded boundary", () => {
     const e = fresh();
