@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
-import { DEFAULT_URL, McpClient, escrowConserved, getComputeChannel, getTrustRoot } from "../../mcp/src/index";
+import { DEFAULT_URL, McpClient, escrowConserved } from "../../mcp/src/index";
+import {
+  EvidenceFetcher,
+  verifyEvidence,
+  parseEvidence,
+  integrityErrors,
+  type Evidence,
+} from "../../verifier/src/index";
 import { CHALLENGE_DOC, SDK_CHAIN_SOURCE } from "./core";
+import { analyzeWindows, type WindowCapture } from "./windows";
+import { sealDossier } from "./export";
 import { channel, object, text } from "./validation";
 import type { Check, Dossier, Observation, WatchReport } from "./types";
 
@@ -10,9 +19,60 @@ export async function draftDossier(
   channelId: string,
   client: McpClient,
   source = DEFAULT_URL,
+  options: { bundle?: Evidence; windows?: WindowCapture } = {},
 ): Promise<Dossier> {
   const row = report.rows.find((r) => r.settlement.channelId === channelId);
-  if (!row) throw new Error("Channel is not in the retrieved tape. Use an exact channel ID from watch.");
+  const blockWindow = options.windows
+    ? (analyzeWindows(options.windows).rows.find((r) => r.channelId === channelId) ?? null)
+    : null;
+  if (!row && !blockWindow)
+    throw new Error("Channel is not in the retrieved tape or window capture. Use an exact observed channel ID.");
+  const bundle = parseEvidence(
+    options.bundle ?? (await new EvidenceFetcher({ client }).channel(channelId, { maxRows: 100 })),
+  );
+  if (bundle.channelId !== channelId || (await integrityErrors(bundle)).length)
+    throw new Error("Verifier bundle binding or integrity failed");
+  const verifier = { bundle, report: await verifyEvidence(bundle) };
+  const responseFor = (id: string) => {
+    const o = bundle.observations.find((o) => o.id === id);
+    if (!o?.raw) throw new Error(o?.error ?? `Missing ${id}`);
+    return { value: JSON.parse(o.raw) as unknown, measuredAt: o.measuredAt };
+  };
+  if (!row) {
+    return sealDossier({
+      version: 2,
+      mode: "DRY RUN ONLY",
+      channelId,
+      createdAt: bundle.capturedAt,
+      purpose: "Forced claim for human review. No payout is recorded in this tape. No fraud verdict or submission.",
+      window: {
+        status: "unknown",
+        estimatedExpiry: null,
+        remainingMs: null,
+        reason: "Use the attached block-window assessment.",
+      },
+      blockWindow,
+      windowCapture: options.windows ?? null,
+      verifier,
+      assumptions: report.assumptions,
+      priority: null,
+      bond: {
+        documentedFlop: "100",
+        source: CHALLENGE_DOC,
+        runtimeVerified: false,
+        warning: "No bond is posted. Runtime qualification is unverified.",
+      },
+      eligibility: "The paying agent or an active validator must establish standing. This tool does not establish it.",
+      submission: {
+        available: false,
+        extrinsic: null,
+        documentedCalls: [],
+        missing: ["Authenticated challenge evidence", "Runtime eligibility and boundary semantics"],
+      },
+      checks: [],
+      evidence: { settlement: null, channel: null, trustRoot: null },
+    });
+  }
   const checks: Check[] = [
     {
       name: "Escrow conservation",
@@ -23,7 +83,7 @@ export async function draftDossier(
   let observedChannel: Observation<Record<string, unknown>> | null = null;
   let trustRoot: Observation<Record<string, unknown>> | null = null;
   try {
-    const response = await getComputeChannel(client, channelId);
+    const response = responseFor("channel");
     const value = channel(response.value);
     observedChannel = { value, measuredAt: response.measuredAt, source: `${source}#flop_get_compute_channel` };
     const fields = ["channelId", "agent", "miner", "escrow", "minerPaid", "burned", "aggregateGn"] as const;
@@ -59,7 +119,7 @@ export async function draftDossier(
     });
   }
   try {
-    const response = await getTrustRoot(client);
+    const response = responseFor("trust-root");
     const value = object(response.value, "trust root");
     text(value.snapshotHash, "trust root.snapshotHash");
     trustRoot = { value, measuredAt: response.measuredAt, source: `${source}#flop_trust_root` };
@@ -96,10 +156,14 @@ export async function draftDossier(
         "The docs describe paying agents and active validators. This tool does not establish caller eligibility, a live dispute bond or a runtime filing deadline.",
     },
   );
-  return {
+  return sealDossier({
+    version: 2,
+    verifier,
+    blockWindow,
+    windowCapture: options.windows ?? null,
     mode: "DRY RUN ONLY",
     channelId,
-    createdAt: report.evaluatedAt,
+    createdAt: bundle.capturedAt,
     purpose: "Worth a human look. This dossier is not a fraud verdict or submission-ready evidence.",
     window: row.window,
     assumptions: report.assumptions,
@@ -144,5 +208,5 @@ export async function draftDossier(
       channel: observedChannel,
       trustRoot,
     },
-  };
+  });
 }
