@@ -44,7 +44,7 @@ console.log(
 );
 ```
 
-Checks call `verifyEvidence`, `auditSnapshot`, `runHarness` and the spec differ's parser and comparison functions. Predicates are imported from their packages. The harness replays exact recorded requests with the original claims. Replaying the same capture is not independent failure confirmation.
+Checks call `verifyEvidence`, `auditSnapshot`, the harness's `checkClaim` API and the spec differ's parser and comparison functions. Predicates are imported from their packages. The harness replays exact recorded requests with the original claims through its existing bounded transport and cached context. Replaying the same capture is not independent failure confirmation.
 
 ## Evidence and bounds
 
