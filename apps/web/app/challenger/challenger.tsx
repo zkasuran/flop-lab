@@ -446,8 +446,9 @@ export function Challenger({
 function ObservedBar({ fraction, label }: { fraction: number; label: string }) {
   const reduced = useReducedMotion() !== false;
   return (
-    <div className={styles.bar} role="img" aria-label={label}>
+    <div className={styles.bar} role="img" aria-label={label} data-fraction={fraction}>
       <motion.span
+        style={{ scaleX: fraction }}
         initial={{ scaleX: reduced ? fraction : 0 }}
         whileInView={{ scaleX: fraction }}
         viewport={{ once: true }}
