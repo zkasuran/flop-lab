@@ -186,12 +186,12 @@ export const tools: readonly Tool[] = [
     repoPath: "packages/mcp-server",
   },
   {
-    slug: "identity",
+    slug: "did",
     section: "identity",
     name: "DID trail",
     tagline: "What has this did:key signed and does it verify?",
     status: "planned",
-    href: "/identity",
+    href: "/did",
     repoPath: "packages/did",
   },
   {
