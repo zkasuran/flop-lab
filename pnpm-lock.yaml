@@ -92,6 +92,9 @@ importers:
       '@flop-lab/explorer':
         specifier: workspace:*
         version: link:../explorer
+      '@flop-lab/export':
+        specifier: workspace:*
+        version: link:../export
       '@flop-lab/finality':
         specifier: workspace:*
         version: link:../finality
@@ -208,6 +211,25 @@ importers:
       '@flop-lab/mcp':
         specifier: workspace:*
         version: link:../mcp
+
+  packages/export:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+      '@flop-lab/models':
+        specifier: workspace:*
+        version: link:../models
+      '@flop-lab/recorder':
+        specifier: workspace:*
+        version: link:../recorder
+      hyparquet-writer:
+        specifier: 0.18.0
+        version: 0.18.0
+    devDependencies:
+      hyparquet:
+        specifier: 1.32.0
+        version: 1.32.0
 
   packages/finality:
     dependencies:
@@ -2163,6 +2185,12 @@ packages:
 
   hookified@2.2.0:
     resolution: {integrity: sha512-p/LgFzRN5FeoD3DLS6bkUapeye6E4SI6yJs6KetENd18S+FBthqYq2amJUWpt5z0EQwwHemidjY5OqJGEKm5uA==}
+
+  hyparquet-writer@0.18.0:
+    resolution: {integrity: sha512-1vDuEneasjp2yuk/OnLqli5aArzHQw8NYVbJD7ytpHZ3outmJaHHRcNbA7BiiFxonWGhwgPPWnVSsREv6LxE4A==}
+
+  hyparquet@1.32.0:
+    resolution: {integrity: sha512-SpkvdfgQjcdCJA+MTzo0WSreLLy/aLRYs3xetk1SsuFvq8vF+J/97OaRnZhf+p5Nx3J27i9FhSC0bJ5eQZG/7Q==}
 
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
@@ -4536,6 +4564,12 @@ snapshots:
   hookified@1.15.1: {}
 
   hookified@2.2.0: {}
+
+  hyparquet-writer@0.18.0:
+    dependencies:
+      hyparquet: 1.32.0
+
+  hyparquet@1.32.0: {}
 
   ignore@5.3.2: {}
 

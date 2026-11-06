@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "export",
+    pkg: "@flop-lab/export",
+    bin: "flop-export",
+    section: "build",
+    summary: "Export dated devnet rows with hashes and resumable parts",
+  },
+  {
     name: "upgrades",
     pkg: "@flop-lab/upgrades",
     bin: "flop-upgrades",
