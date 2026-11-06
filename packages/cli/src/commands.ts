@@ -32,6 +32,13 @@ export const commands: readonly Command[] = [
     summary: "Export dated devnet rows with hashes and resumable parts",
   },
   {
+    name: "community",
+    pkg: "@flop-lab/community",
+    bin: "flop-community",
+    section: "observe",
+    summary: "Inspect dated public requests, response times and access-form fields",
+  },
+  {
     name: "watch",
     pkg: "@flop-lab/watch",
     bin: "flop-watch",

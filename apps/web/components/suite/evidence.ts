@@ -42,6 +42,7 @@ import { recordedManifest as knowledgeManifest } from "../../../../packages/know
 import { recordings as statusRecordings } from "../../../../packages/status/src/recorded";
 import exportBlocks from "../../../../packages/export/fixtures/blocks.json";
 import { parseIndexerData } from "@flop-lab/mcp";
+import { recordedSnapshot as communitySnapshot } from "../../../../packages/community/src/recorded";
 import watch from "../../../../packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json";
 
 const mcp = "https://mcp.flop.network/mcp";
@@ -86,6 +87,18 @@ const readers: Record<string, () => SuiteMetric | null> = {
       capture.source,
       "packages/export/fixtures/blocks.json",
       "Bounded recorded rows. Export completion does not establish chain completeness.",
+    );
+  },
+  community: () => {
+    const sample = communitySnapshot().repos.find((repo) => repo.repo === "network");
+    return metric(
+      sample?.items.length,
+      "recent network issues or PRs sampled",
+      sample?.measuredAt,
+      sample?.source,
+      "packages/community/fixtures/snapshot.json",
+      "Bounded public sample. Older backlog and private replies are not measured.",
+      "GitHub issue metadata",
     );
   },
   watch: () =>
