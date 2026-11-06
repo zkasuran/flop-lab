@@ -1,0 +1,11 @@
+{
+  "source": "https://mcp.flop.network/mcp",
+  "tool": "flop_check_htlc",
+  "args": {
+    "hash_lock": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "raw": "HTLC not found or RPC unavailable.",
+  "measuredAt": "2026-11-06T02:19:41.178Z",
+  "durationMs": 226,
+  "attempts": 1
+}
