@@ -132,11 +132,7 @@ export function Workbench({ initial, chain }: { initial: Inspection; chain: Chai
             transition={{ duration }}
           />
           <div className={styles.actions}>
-            <MotionButton
-              className="primary-button"
-              disabled={busy}
-              onClick={() => void inspect(text, "pasted transcript")}
-            >
+            <MotionButton className="button" disabled={busy} onClick={() => void inspect(text, "pasted transcript")}>
               Inspect pasted JSON
             </MotionButton>
             <CopyButton text={text} label="Copy transcript" />
