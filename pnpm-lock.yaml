@@ -74,6 +74,9 @@ importers:
       '@flop-lab/challenger':
         specifier: workspace:*
         version: link:../challenger
+      '@flop-lab/community':
+        specifier: workspace:*
+        version: link:../community
       '@flop-lab/console':
         specifier: workspace:*
         version: link:../console
@@ -170,6 +173,8 @@ importers:
       '@flop-lab/yellowpaper':
         specifier: workspace:*
         version: link:../yellowpaper
+
+  packages/community: {}
 
   packages/console:
     dependencies:
