@@ -20,7 +20,7 @@ export default function DocsPage() {
   );
   return (
     <>
-      <header className="page-heading">
+      <header className={`page-heading ${styles.hubHeading}`}>
         <ReadingReveal>
           <p className="eyebrow">Build / Suite documentation</p>
         </ReadingReveal>
@@ -33,8 +33,7 @@ export default function DocsPage() {
         </ReadingReveal>
         <ReadingReveal order={2}>
           <p className="intro">
-            Watch the devnet, test its claims or build an agent. Each guide below comes from the package README in this
-            build. Commands and limits travel with the code.
+            Package guides for the FLOP devnet. Find a command, read its evidence and keep its limits.
           </p>
         </ReadingReveal>
         <div className={styles.actions}>
@@ -45,7 +44,11 @@ export default function DocsPage() {
           <MotionLink href="https://docs.flop.network">Protocol documentation ↗</MotionLink>
         </div>
         <p className={styles.meta}>
-          Index generated {generatedAt}. Source: package READMEs in this repository checkout.
+          Built{" "}
+          <time dateTime={generatedAt} title={generatedAt}>
+            {generatedAt.slice(0, 10)}
+          </time>{" "}
+          from package READMEs in this checkout.
         </p>
       </header>
       <DocsSearch

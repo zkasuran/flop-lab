@@ -65,7 +65,7 @@ export default async function PackagePage({ params }: { params: Promise<{ packag
             <ol>
               {doc.headings.map((heading) => (
                 <li key={heading.id}>
-                  <MotionLink href={`#${heading.id}`}>{heading.title}</MotionLink>
+                  <a href={`#${heading.id}`}>{heading.title}</a>
                 </li>
               ))}
             </ol>

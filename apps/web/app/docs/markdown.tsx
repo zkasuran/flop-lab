@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
 import { Fragment, type ReactNode } from "react";
-import { MotionLink } from "../../components/motion";
 import { readmeHref, type Block } from "./model";
 import styles from "./docs.module.css";
 
@@ -16,9 +15,9 @@ function inline(text: string, source: string): ReactNode[] {
       const label = match[3] ?? match[7]!;
       result.push(
         target ? (
-          <MotionLink key={match.index} href={target}>
+          <a key={match.index} href={target}>
             {label}
-          </MotionLink>
+          </a>
         ) : (
           label
         ),

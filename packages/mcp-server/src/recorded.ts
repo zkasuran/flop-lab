@@ -9,6 +9,7 @@ import { parseEvidence } from "@flop-lab/verifier";
 import { parseSnapshot as parseIndexer } from "@flop-lab/indexer-audit";
 import { analyze, parseTools, type Trace } from "@flop-lab/mcpaudit";
 import { provenance } from "./schema";
+import { parseRun } from "@flop-lab/status";
 
 // Fixed package paths only. These resolve identically from src/ and dist/.
 const root = new URL("../../", import.meta.url);
@@ -27,6 +28,13 @@ export function recordedScore() {
 /** Read the bounded indexer recording. @example recordedIndexer().limit */
 export function recordedIndexer() {
   return parseIndexer(read("indexer-audit/fixtures/devnet.json"));
+}
+
+/** Read the newly landed status package's retained probe runs. @example recordedStatus()[0]?.observer */
+export function recordedStatus() {
+  return ["2026-11-06T05-23-46.400Z", "2026-11-06T05-29-43.883Z"].map((id) =>
+    parseRun(read(`status/test/fixtures/${id}/run.json`)),
+  );
 }
 
 /** Read the dated local probe recording without executing probes. @example recordedDoctor().status */

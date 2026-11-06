@@ -14,13 +14,15 @@ From a checkout with Node 22 and pnpm:
 
 ```sh
 pnpm install --frozen-lockfile
-pnpm --filter @flop-lab/cli... build
+pnpm --filter @flop-lab/cli... --workspace-concurrency=1 run build
 node packages/cli/dist/cli.js --help
 ```
 
 The last command runs `flop`, the suite dispatcher. Use `node packages/cli/dist/cli.js list --json` for its registry. Use `node packages/cli/dist/cli.js verify --help` for a tool's options. These discovery commands need no wallet, key or account.
 
 The [docs hub](https://flop.zkasuran.dev/docs) searches package titles, questions and README headings. Its package pages are generated from the READMEs at build time. Each links the source, tool page and registered command. Read a package's quick start before running it.
+
+`node packages/cli/dist/cli.js which miner reliability` finds matching tools. `node packages/cli/dist/cli.js help score` shows the selected tool's options. `completions bash`, `completions zsh` and `completions fish` print shell completion scripts. Put `--json` last when running a tool. The wrapper preserves child exit codes. See the [CLI guide](packages/cli/README.md) for shell setup, the output contract and measured git-URL packaging limits.
 
 ## The suite
 
@@ -66,7 +68,7 @@ How do I integrate with FLOP correctly?
 - [Data export](packages/export): write dated datasets with hashes and resumable parts.
 - [FLOP for Kestra](plugins/kestra-flop): read the devnet and check settlements in a workflow.
 - Python client: planned. Track its entry in the [tool registry](apps/web/content/tools.ts).
-- Suite API: planned. Track its entry in the [tool registry](apps/web/content/tools.ts).
+- [Suite API](packages/openapi): serve validated dated results with a generated OpenAPI contract.
 
 The [shared MCP client](packages/mcp) handles the hosted server's event stream, spacing and retries. The [suite CLI](packages/cli) dispatches to package binaries.
 

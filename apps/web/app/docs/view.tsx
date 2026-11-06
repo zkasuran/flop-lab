@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 import { useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { MotionButton, MotionLink, ObservedNumber, ReadingReveal } from "../../components/motion";
+import { MotionButton, ObservedNumber, ReadingReveal } from "../../components/motion";
 import { sections } from "../../content/tools";
 import { searchDocs, type SearchDoc } from "./model";
 import styles from "./docs.module.css";
@@ -22,7 +23,7 @@ export function DocsSearch({ docs }: { docs: SearchDoc[] }) {
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Try escrow, budget or Python"
+          placeholder="Try settlement, budget or models"
           whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
           transition={{ duration: reduced ? 0 : 0.15 }}
         />
@@ -69,22 +70,21 @@ export function DocsSearch({ docs }: { docs: SearchDoc[] }) {
               <p className="muted">{group.question}</p>
             </ReadingReveal>
             <div className={styles.results}>
-              {entries.map((doc, index) => (
+              {entries.map((doc) => (
                 <motion.article
                   className={styles.card}
                   key={doc.slug}
                   layout={!reduced}
                   initial={false}
-                  whileInView={{ y: 0 }}
                   transition={{ duration: reduced ? 0 : 0.24 }}
                 >
-                  <ReadingReveal order={index % 2}>
-                    <small>{doc.packageName}</small>
-                    <h3>
-                      <MotionLink href={`/docs/${doc.slug}`}>{doc.title} →</MotionLink>
-                    </h3>
-                    <p>{doc.question.split(/(?<=\?)\s/)[0]}</p>
-                  </ReadingReveal>
+                  <small>{doc.packageName}</small>
+                  <h3>
+                    <Link className={styles.cardLink} prefetch={false} href={`/docs/${doc.slug}`}>
+                      {doc.title} →
+                    </Link>
+                  </h3>
+                  <p>{doc.question.split(/(?<=\?)\s/)[0]}</p>
                   <code>{doc.command ?? "Importable library"}</code>
                 </motion.article>
               ))}
