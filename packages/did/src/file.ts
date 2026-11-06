@@ -8,7 +8,7 @@ import { parseBuild, parseManifest, verifyBuild } from "./manifest";
 /** Verify a build against every tracked checkout file. Example: await verifyFile('SIGNATURE.json', '.'). */
 export async function verifyFile(signaturePath: string, directory: string, expectedDid?: string) {
   const root = await realpath(directory);
-  if ((await lstat(signaturePath)).size > 200_000) throw new Error("Signature file exceeds 200 KB");
+  if ((await lstat(signaturePath)).size > 400_000) throw new Error("Signature file exceeds 400 KB");
   const input: unknown = JSON.parse(await readFile(signaturePath, "utf8"));
   const build = parseBuild(input),
     verdict = await verifyBuild(input);

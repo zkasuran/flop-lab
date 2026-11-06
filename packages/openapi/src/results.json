@@ -1,0 +1,2314 @@
+{
+  "verifier": {
+    "schemaVersion": "1.0.0",
+    "tool": "verifier",
+    "mode": "recorded",
+    "measuredAt": "2026-11-05T08:59:55.135Z",
+    "sources": [
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T08:59:55.135Z"
+      }
+    ],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/verifier/fixtures/settlements-0.json"],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "channels": 25,
+        "checks": 50
+      },
+      "outcomes": {
+        "PASS": 50,
+        "FAIL": 0,
+        "UNVERIFIABLE": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "limitations": [
+      "Only the first recorded settlement page is summarized. This is a bounded tape sample.",
+      "Escrow and displayed-price arithmetic do not verify inference, agreed pricing or movement of funds."
+    ]
+  },
+  "harness": {
+    "schemaVersion": "1.0.0",
+    "tool": "harness",
+    "mode": "recorded",
+    "measuredAt": "2026-11-05T22:53:29.644Z",
+    "sources": [
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:19.366Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:19.853Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-05T22:52:20.224Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:26.705Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:39.981Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:40.481Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:40.981Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:41.481Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:41.982Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:42.484Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:42.984Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:43.484Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:43.984Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:44.485Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:44.985Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:45.486Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:45.986Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:46.487Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:46.987Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:47.488Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:47.987Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:48.487Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:48.987Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:49.488Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:49.989Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:50.489Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:50.989Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:51.489Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:51.990Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:52.490Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:52.991Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:53.492Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:53.992Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:54.493Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:54.994Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:52:55.494Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:07.338Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:07.839Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:08.338Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:08.839Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:18.948Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:19.447Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:19.948Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:20.448Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:21.138Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:21.638Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:22.137Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:22.637Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:23.138Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:23.638Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:24.138Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:24.640Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:25.139Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:25.640Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:26.141Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:26.641Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:27.141Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:27.641Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:28.142Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:28.643Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:29.144Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T22:53:29.644Z"
+      }
+    ],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/harness/fixtures/coverage/report.json"],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "claims": 239,
+        "requests": 62,
+        "flaky": 0
+      },
+      "outcomes": {
+        "PASS": 177,
+        "FAIL": 3,
+        "UNVERIFIABLE": 54,
+        "SKIPPED": 5
+      }
+    },
+    "limitations": [
+      "Last bundled coverage run, not the latest run on a user's machine. The manifest links its raw evidence parts.",
+      "Skipped and unverifiable claims are not passes. These observations do not establish current health."
+    ]
+  },
+  "spec": {
+    "schemaVersion": "1.0.0",
+    "tool": "spec",
+    "mode": "recorded",
+    "measuredAt": "2026-11-05T20:44:57.274Z",
+    "sources": [
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2738",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp#flop_knowledge_get",
+        "measuredAt": "2026-11-05T20:44:54.666Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2739",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2740",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2741",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2742",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2743",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2744",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2750",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2751",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2752",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2753",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2754",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2755",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2756",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2757",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2758",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2759",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2760",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2766",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2767",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2773",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2774",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2775",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2776",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2777",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2778",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2779",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2780",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2781",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2782",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2783",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2784",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2785",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2786",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2787",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2788",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2794",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2795",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2801",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2802",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2803",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2804",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2805",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2806",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2807",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2813",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2814",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2815",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2816",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2817",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2818",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2824",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2825",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2831",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2837",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2838",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2844",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2845",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2846",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2847",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2848",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2849",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2855",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2856",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2862",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2863",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2864",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2865",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2866",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2867",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2868",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2869",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2870",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2871",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2877",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2878",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2879",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2880",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2881",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2882",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2883",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2884",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2885",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2886",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2887",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2888",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2894",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2895",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2901",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2902",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2903",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2904",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2905",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2906",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2907",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2908",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2909",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2910",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2911",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2912",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2913",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2914",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2915",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2916",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2917",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2918",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2924",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2925",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2926",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2927",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2928",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2934",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2940",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2946",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2947",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2953",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2954",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2955",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2956",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2957",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2958",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2964",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2965",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2966",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2967",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2973",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2974",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2975",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2976",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2977",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2983",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2984",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2985",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2986",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2987",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2988",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2989",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2990",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2991",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2992",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2993",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2994",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2995",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2996",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2997",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2998",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L2999",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3000",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3001",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3002",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3003",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3004",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3005",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3006",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3007",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3008",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3009",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3010",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3011",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3012",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3102",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3103",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3104",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3105",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3106",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3107",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3108",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3109",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3110",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3111",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3112",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3113",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3114",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3115",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3116",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3117",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3118",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3119",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3120",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3121",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3122",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3123",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3821",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3822",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3823",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3824",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3825",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3826",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3827",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3828",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3829",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3830",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3831",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3832",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3833",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3834",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3835",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3836",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3842",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3843",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3844",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3850",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3851",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3852",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3853",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3854",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3855",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3856",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3857",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3858",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3859",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3860",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3861",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3862",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3863",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3875",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3876",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3877",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3878",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3879",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3880",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3881",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3882",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3883",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3884",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3885",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3886",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3887",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3888",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3903",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3904",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3905",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3906",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3907",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3908",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3909",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3910",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3911",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3917",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3918",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3919",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3920",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3921",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3922",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3923",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3924",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3925",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3926",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3932",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3933",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3934",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3935",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3936",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3937",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3938",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3939",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3940",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3941",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3942",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3943",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3944",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3945",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3946",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3947",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3953",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3954",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3955",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3956",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3957",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3958",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3959",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3960",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3961",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3962",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3963",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3964",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3965",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3966",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3967",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3968",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3969",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3970",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3971",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3972",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3978",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3979",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3980",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3981",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3982",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3983",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3984",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3985",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3986",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3987",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3988",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3989",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3990",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3991",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3992",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3993",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3994",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3995",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3996",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3997",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/yellowpaper.md#L3998",
+        "measuredAt": "2026-11-05T20:44:53.287Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/evidence/money-path-v1.json",
+        "measuredAt": "2026-11-05T20:44:53.619Z"
+      },
+      {
+        "url": "https://github.com/flop-labs/yellowpaper/blob/2a2cc8218048a2933071bb2f45d75335560e39d8/evidence/wire-format-v1.json",
+        "measuredAt": "2026-11-05T20:44:53.956Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp#flop_indexer_query",
+        "measuredAt": "2026-11-05T20:44:57.274Z"
+      }
+    ],
+    "recordings": [
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/spec/fixtures/knowledge.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/spec/fixtures/paper-0.json"
+    ],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "comparisons": 393,
+        "transactions": 100
+      },
+      "outcomes": {
+        "MATCH": 130,
+        "DRIFT": 0,
+        "SPEC_ONLY": 103,
+        "RUNTIME_ONLY": 21,
+        "UNOBSERVABLE": 139
+      }
+    },
+    "limitations": [
+      "Catalog agreement does not verify deployed runtime storage or consensus.",
+      "provenance unavailable: repo sources are not mounted next to the catalog"
+    ]
+  },
+  "contracts": {
+    "schemaVersion": "1.0.0",
+    "tool": "contracts",
+    "mode": "recorded",
+    "measuredAt": "2026-11-05T21:46:00.672Z",
+    "sources": [
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:55.170Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:55.668Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:23.297Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:23.806Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:53.673Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:54.172Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:54.671Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:28.450Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:28.948Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:29.296Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:40.974Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:41.466Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:41.804Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:47.074Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:47.570Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:47.760Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:02.301Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:16.080Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:16.189Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:47.124Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:47.622Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:47.810Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:50.586Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:51.561Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:51.742Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:58.176Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:58.677Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:59.172Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:17.161Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:17.743Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:17.849Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:52.323Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:52.825Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:53.168Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:26.952Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:27.298Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:27.795Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:37.806Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:38.304Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:38.803Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:30.802Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:31.302Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:31.799Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:45.466Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:45.964Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:46.313Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:31.954Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:44.646Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:44.752Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:45.567Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:46.068Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:46.257Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:39.317Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:39.809Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:40.305Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:48.467Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:48.823Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:49.311Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:37.136Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:37.306Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:43.811Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:44.306Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:44.808Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:26.120Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:26.306Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:35.306Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:35.804Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:36.304Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:56.174Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:56.672Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:57.170Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:57.671Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:59.770Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:46:00.216Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:46:00.672Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:24.324Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:24.811Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:25.310Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:48.257Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:48.805Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:45:49.282Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:32.302Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:32.801Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:33.302Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:22.014Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:22.688Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:22.806Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:33.813Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:34.303Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:34.801Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:30.030Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:30.303Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:42.305Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:42.806Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T21:44:43.307Z"
+      }
+    ],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/mcpaudit/last-run.json"],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "tools": 34,
+        "requests": 96
+      },
+      "outcomes": {
+        "PASS": 1,
+        "VIOLATION": 2,
+        "UNVERIFIABLE": 30,
+        "SKIPPED": 1
+      }
+    },
+    "limitations": [
+      "Counts summarize tool outcomes in the bundled contract audit. Simulated service output is not proof.",
+      "Schema agreement does not establish inference correctness or current service availability."
+    ]
+  },
+  "models": {
+    "schemaVersion": "1.0.0",
+    "tool": "models",
+    "mode": "recorded",
+    "measuredAt": "2026-11-05T23:59:28.176Z",
+    "sources": [
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-05T23:58:30.934Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:58:44.637Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:58:45.005Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:58:45.081Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:58:57.955Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:58:58.379Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:59:11.615Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:59:12.053Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:59:27.221Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:59:27.791Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-05T23:59:28.176Z"
+      }
+    ],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/models/test/fixtures/devnet.json"],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "models": 3,
+        "checks": 15,
+        "errors": 0
+      },
+      "outcomes": {
+        "PASS": 13,
+        "FAIL": 0,
+        "UNKNOWN": 2
+      }
+    },
+    "limitations": [
+      "Checks include catalogue-wide and per-model checks. Quote freshness is evaluated at the recorded gateway read time.",
+      "Registry membership does not verify model weights ran. Gateway-backed discovery is not independent corroboration."
+    ]
+  },
+  "status": {
+    "schemaVersion": "1.0.0",
+    "tool": "status",
+    "mode": "recorded",
+    "measuredAt": "2026-11-06T05:29:44.738Z",
+    "sources": [
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T05:23:46.897Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T05:23:46.895Z"
+      },
+      {
+        "url": "https://docs.flop.network/llms.txt",
+        "measuredAt": "2026-11-06T05:23:47.106Z"
+      },
+      {
+        "url": "https://ask.flop.finance/mcp",
+        "measuredAt": "2026-11-06T05:23:47.835Z"
+      },
+      {
+        "url": "https://explorer.devnet.flop.network/",
+        "measuredAt": "2026-11-06T05:23:46.965Z"
+      },
+      {
+        "url": "https://faucet.flop.network/",
+        "measuredAt": "2026-11-06T05:23:47.538Z"
+      },
+      {
+        "url": "https://technocore.chat/healthz",
+        "measuredAt": "2026-11-06T05:23:46.941Z"
+      },
+      {
+        "url": "https://registry.npmjs.org/@flop-labs/sdk/latest",
+        "measuredAt": "2026-11-06T05:23:46.868Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T05:29:44.243Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T05:29:44.265Z"
+      },
+      {
+        "url": "https://docs.flop.network/llms.txt",
+        "measuredAt": "2026-11-06T05:29:44.635Z"
+      },
+      {
+        "url": "https://ask.flop.finance/mcp",
+        "measuredAt": "2026-11-06T05:29:44.738Z"
+      },
+      {
+        "url": "https://explorer.devnet.flop.network/",
+        "measuredAt": "2026-11-06T05:29:44.473Z"
+      },
+      {
+        "url": "https://faucet.flop.network/",
+        "measuredAt": "2026-11-06T05:29:44.457Z"
+      },
+      {
+        "url": "https://technocore.chat/healthz",
+        "measuredAt": "2026-11-06T05:29:44.442Z"
+      },
+      {
+        "url": "https://registry.npmjs.org/@flop-labs/sdk/latest",
+        "measuredAt": "2026-11-06T05:29:44.361Z"
+      }
+    ],
+    "recordings": [
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/status/test/fixtures/2026-11-06T05-23-46.400Z/run.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/status/test/fixtures/2026-11-06T05-29-43.883Z/run.json"
+    ],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "samples": 16,
+        "passed": 16,
+        "failed": 0
+      },
+      "outcomes": {}
+    },
+    "limitations": [
+      "Counts are measured probe samples across services. They do not establish continuous uptime or outage duration.",
+      "HTTP and content probes do not verify inference, faucet funding, indexer freshness or chain health."
+    ]
+  },
+  "watch": {
+    "schemaVersion": "1.0.0",
+    "tool": "watch",
+    "mode": "recorded",
+    "measuredAt": "2026-11-06T04:49:01.877Z",
+    "sources": [
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:45:56.029Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:45:56.203Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:45:56.443Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T04:45:56.802Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:49:00.918Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:49:01.379Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:49:01.621Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T04:49:01.877Z"
+      }
+    ],
+    "recordings": [
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/watch/test/fixtures/2026-11-06T04-45-55.439Z.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json"
+    ],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "polls": 2,
+        "alerts": 0,
+        "requests": 8
+      },
+      "outcomes": {}
+    },
+    "limitations": [
+      "Default rules replayed over bundled polls. Zero alerts do not establish continuous uptime.",
+      "Bounded pages and missing local harness observations cannot reconstruct events between polls."
+    ]
+  },
+  "export": {
+    "schemaVersion": "1.0.0",
+    "tool": "export",
+    "mode": "recorded",
+    "measuredAt": "2026-11-06T04:47:20.561Z",
+    "sources": [
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.138Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.279Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.400Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.537Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.680Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T04:47:20.300Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T04:47:20.446Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:20.561Z"
+      },
+      {
+        "url": "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/recorder/test/fixtures/seed/snapshots/2026/11/05/21-23-37.342Z-6d4ce0af9956856d65c2025259b7f6b4cd63e8b2897b5c6a6f3c141b225c7d81.json",
+        "measuredAt": "2026-11-05T21:23:37.342Z"
+      },
+      {
+        "url": "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/recorder/test/fixtures/seed/snapshots/2026/11/05/21-24-20.273Z-bbf22ec5d76af626e448d855803f2e3eb1d3bd41444ce393a2927592b25c7f57.json",
+        "measuredAt": "2026-11-05T21:24:20.273Z"
+      }
+    ],
+    "recordings": [
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/settlements.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/channels.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/blocks.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/transactions.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/accounts.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/models.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/price-sources.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/proofs.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/snapshots.json"
+    ],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "settlements": 5,
+        "channels": 5,
+        "blocks": 5,
+        "transactions": 5,
+        "accounts": 1,
+        "models": 1,
+        "price-sources": 21,
+        "proofs": 0,
+        "snapshots": 18
+      },
+      "outcomes": {}
+    },
+    "limitations": [
+      "Counts are validated rows in bundled export samples. They do not describe a user's local export or a complete chain snapshot.",
+      "Accounts cover supplied addresses. Snapshots count observation rows from bundled recorder captures. Empty proofs remain a measured zero."
+    ]
+  },
+  "community": {
+    "schemaVersion": "1.0.0",
+    "tool": "community",
+    "mode": "recorded",
+    "measuredAt": "2026-11-06T04:50:03.027Z",
+    "sources": [
+      {
+        "url": "https://api.github.com/repos/flop-labs/network/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:47:05.711Z"
+      },
+      {
+        "url": "https://api.github.com/repos/flop-labs/yellowpaper/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:47:11.281Z"
+      },
+      {
+        "url": "https://api.github.com/repos/flop-labs/tclk/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:47:27.041Z"
+      },
+      {
+        "url": "https://api.github.com/repos/flop-labs/technocore-chat/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:50:03.027Z"
+      }
+    ],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/community/fixtures/snapshot.json"],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "items": 100,
+        "issues": 53,
+        "pullRequests": 47
+      },
+      "outcomes": {
+        "open": 90,
+        "closed": 10
+      }
+    },
+    "limitations": [
+      "Bounded repository issue-page samples include both issues and pull requests. Counts do not represent the whole backlog.",
+      "The source is a privacy-preserving projection. Closed items do not establish request fulfillment. No response-time claim is made here."
+    ]
+  }
+}
