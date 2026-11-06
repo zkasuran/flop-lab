@@ -1,0 +1,23 @@
+{
+  "name": "@flop-lab/action",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Bounded FLOP evidence checks for GitHub Actions and local CI",
+  "exports": { ".": "./src/index.ts" },
+  "bin": { "flop-action": "./dist/cli.js" },
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "local-runner": "tsx test/local-runner.ts",
+    "benchmark": "tsx test/benchmark.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/verifier": "workspace:*",
+    "@flop-lab/spec": "workspace:*",
+    "@flop-lab/mcpaudit": "workspace:*"
+  }
+}

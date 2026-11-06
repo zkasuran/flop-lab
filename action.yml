@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: Apache-2.0
+name: flop-lab check
+description: Run selected FLOP evidence checks with a shared request cap and a dated job summary.
+inputs:
+  checks:
+    description: Unique comma-separated checks from tape,spec,contracts.
+    default: tape
+  mode:
+    description: recorded replays committed observations. live reads public MCP.
+    default: recorded
+  max-requests:
+    description: Total suite HTTP attempts including retries. Integer from 0 through 30.
+    default: '10'
+  fail-on-incomplete:
+    description: Fail the step when evidence is incomplete. The report always preserves incomplete status.
+    default: 'true'
+outputs:
+  status:
+    description: pass, fail or incomplete.
+    value: ${{ steps.check.outputs.status }}
+  requests:
+    description: Measured suite HTTP attempts. Excludes bootstrap downloads.
+    value: ${{ steps.check.outputs.requests }}
+  report:
+    description: Absolute path to the JSON report in the runner temporary directory.
+    value: ${{ steps.check.outputs.report }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      with:
+        node-version: '22'
+    - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa
+      with:
+        version: 11.25.0
+        run_install: false
+    - name: Install locked check dependencies
+      shell: bash
+      env:
+        ACTION_ROOT: ${{ github.action_path }}
+      run: pnpm --dir "$ACTION_ROOT" install --frozen-lockfile --ignore-scripts --filter @flop-lab/action...
+    - name: Run selected checks
+      id: check
+      shell: bash
+      env:
+        ACTION_ROOT: ${{ github.action_path }}
+        INPUT_CHECKS: ${{ inputs.checks }}
+        INPUT_MODE: ${{ inputs.mode }}
+        INPUT_MAX_REQUESTS: ${{ inputs.max-requests }}
+        INPUT_FAIL_ON_INCOMPLETE: ${{ inputs.fail-on-incomplete }}
+      run: pnpm --dir "$ACTION_ROOT" exec tsx "$ACTION_ROOT/packages/action/src/cli.ts" --github

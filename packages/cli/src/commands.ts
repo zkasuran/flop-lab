@@ -19,6 +19,14 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "action",
+    pkg: "@flop-lab/action",
+    bin: "flop-action",
+    section: "build",
+    summary: "Run bounded CI evidence checks with dated reports and job summaries",
+    tagline: "Can I bound FLOP evidence checks in CI?",
+  },
+  {
     name: "api",
     tagline: "How do I read the suite's results as an API?",
     pkg: "@flop-lab/openapi",

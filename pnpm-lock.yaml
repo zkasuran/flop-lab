@@ -67,10 +67,28 @@ importers:
         specifier: ^19.2.0
         version: 19.3.0(@types/react@19.3.0)
 
+  packages/action:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+      '@flop-lab/mcpaudit':
+        specifier: workspace:*
+        version: link:../mcpaudit
+      '@flop-lab/spec':
+        specifier: workspace:*
+        version: link:../spec
+      '@flop-lab/verifier':
+        specifier: workspace:*
+        version: link:../verifier
+
   packages/challenger: {}
 
   packages/cli:
     dependencies:
+      '@flop-lab/action':
+        specifier: workspace:*
+        version: link:../action
       '@flop-lab/challenger':
         specifier: workspace:*
         version: link:../challenger

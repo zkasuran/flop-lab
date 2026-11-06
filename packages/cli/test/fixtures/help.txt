@@ -29,6 +29,7 @@ verify
   verify      Cross-check settlements, receipts and attestation evidence offline
 
 build
+  action      Run bounded CI evidence checks with dated reports and job summaries
   api         Read dated suite results and generate their OpenAPI contract
   call        Call read-only MCP tools and compare dated devnet cost estimates
   export      Export dated devnet rows with hashes and resumable parts
