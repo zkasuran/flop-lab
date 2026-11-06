@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 import { useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform, type MotionStyle } from "motion/react";
 import { Disclosure, MotionButton, MotionLink, ObservedNumber, ReadingReveal } from "@/components/motion";
 import { ToolHeader } from "@/components/tool-header";
 import { CopyButton } from "@/components/controls";
@@ -53,7 +53,7 @@ function Curve({ head }: { head: number | null }) {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion() !== false;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 95%", "end 40%"] });
-  const remaining = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const remaining = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [1, 0]);
   const marked = head === null ? null : BigInt(head);
   const visible = marked !== null && marked <= 6n * H;
   return (
@@ -87,7 +87,7 @@ function Curve({ head }: { head: number | null }) {
             strokeWidth="4"
             pathLength={1}
             strokeDasharray="1"
-            style={{ strokeDashoffset: reduced ? 0 : remaining }}
+            style={{ "--curve-remaining": remaining, strokeDashoffset: "var(--curve-remaining)" } as MotionStyle}
           />
           {visible && (
             <g>
