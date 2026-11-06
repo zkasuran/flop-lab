@@ -568,9 +568,9 @@ function WindowTimeline({
                   data-channel={row.channelId}
                   className={styles.inspect}
                   onClick={() => inspect(row.channelId)}
-                  aria-label={`Inspect forced claim ${row.channelId}`}
+                  aria-label={`Inspect claim ${row.channelId}`}
                 >
-                  Inspect claim ↗
+                  Inspect claim <span aria-hidden="true">↗</span>
                 </MotionButton>
               </motion.li>
             ))}
