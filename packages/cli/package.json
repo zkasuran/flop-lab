@@ -16,6 +16,7 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@flop-lab/economics": "workspace:*",
     "@flop-lab/console": "workspace:*",
     "@flop-lab/create-flop-agent": "workspace:*",
     "@flop-lab/indexer-audit": "workspace:*",

@@ -83,6 +83,9 @@ importers:
       '@flop-lab/doctor':
         specifier: workspace:*
         version: link:../doctor
+      '@flop-lab/economics':
+        specifier: workspace:*
+        version: link:../economics
       '@flop-lab/explorer':
         specifier: workspace:*
         version: link:../explorer
@@ -151,6 +154,12 @@ importers:
         version: link:../verifier
 
   packages/doctor: {}
+
+  packages/economics:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/explorer:
     dependencies:
