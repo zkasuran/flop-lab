@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { analyze } from "../../../../packages/challenger/src/core";
 import type { Dossier, Tape, WatchReport } from "../../../../packages/challenger/src/types";
+import { analyzeWindows, type WindowCapture } from "../../../../packages/challenger/src/windows";
 
 export const SITE_TTL_MS = 60_000;
 export const PAGE_SIZE = 8;
@@ -10,16 +11,25 @@ export type SiteSnapshot = {
   state: "live" | "last-known";
   attemptedAt: string;
   error: string | null;
+  windows?: WindowCapture;
+  windowState?: "live" | "last-known";
 };
 type DossierReply = { dossier: Dossier | null; error: string | null };
 type Collector = {
   tape: () => Promise<Tape>;
-  dossier: (report: WatchReport, id: string) => Promise<Dossier>;
+  dossier: (report: WatchReport, id: string, windows?: WindowCapture) => Promise<Dossier>;
+  windows?: () => Promise<WindowCapture>;
 };
 
 /** Cache successes and failures without relabelling old evidence. Example: const service = createSiteService(collector, fallback); await service.read(). */
-export function createSiteService(collector: Collector, fallback: Tape, now: () => number = Date.now) {
+export function createSiteService(
+  collector: Collector,
+  fallback: Tape,
+  now: () => number = Date.now,
+  fallbackWindows?: WindowCapture,
+) {
   let lastGood = fallback;
+  let lastWindows = fallbackWindows;
   let active: Promise<SiteSnapshot> | null = null;
   let snapshot: SiteSnapshot | null = null;
   let expires = 0;
@@ -38,7 +48,18 @@ export function createSiteService(collector: Collector, fallback: Tape, now: () 
         state = "last-known";
         error = "The public service did not return a usable tape. Showing the last successful observation.";
       }
-      return { report: analyze(lastGood, now()), state, attemptedAt, error };
+      let windowState: "live" | "last-known" = "last-known";
+      if (collector.windows) {
+        try {
+          const capture = await collector.windows();
+          if (analyzeWindows(capture).total === null) throw new Error("No window data");
+          lastWindows = capture;
+          windowState = "live";
+        } catch {
+          /* Retain the original capture time on failure. */
+        }
+      }
+      return { report: analyze(lastGood, now()), state, attemptedAt, error, windows: lastWindows, windowState };
     })();
     try {
       snapshot = await active;
@@ -52,16 +73,20 @@ export function createSiteService(collector: Collector, fallback: Tape, now: () 
     read,
     /** Only channels in this snapshot can trigger evidence requests. Example: await service.dossier(snapshot, channelId). */
     async dossier(current: SiteSnapshot, id: string): Promise<DossierReply> {
-      if (!/^0x[0-9a-f]{64}$/i.test(id) || !current.report.rows.some((row) => row.settlement.channelId === id))
+      if (
+        !/^0x[0-9a-f]{64}$/i.test(id) ||
+        (!current.report.rows.some((row) => row.settlement.channelId === id) &&
+          !(current.windows && analyzeWindows(current.windows).rows.some((row) => row.channelId === id)))
+      )
         return { dossier: null, error: "Choose an exact channel from the observed tape." };
-      const key = `${current.report.tape.measuredAt}:${id}`;
+      const key = `${current.report.tape.measuredAt}:${current.windows?.capturedAt ?? ""}:${id}`;
       const hit = dossiers.get(key);
       if (hit && now() < hit.expires) return hit.reply;
       if (pending) {
         if (pending.key === key) return pending.value;
         return { dossier: null, error: "Another dossier is loading. Try this channel again shortly." };
       }
-      const value = collector.dossier(current.report, id).then(
+      const value = collector.dossier(current.report, id, current.windows).then(
         (dossier): DossierReply => ({ dossier, error: null }),
         (): DossierReply => ({
           dossier: null,
@@ -95,6 +120,8 @@ export function pageData(snapshot: SiteSnapshot) {
     requests: report.tape.requests,
     assumptions: report.assumptions,
     blockCadence: report.blockCadence,
+    windows: snapshot.windows ? analyzeWindows(snapshot.windows) : null,
+    windowState: snapshot.windowState ?? "last-known",
     warnings: report.tape.warnings,
     rows: report.rows.map(({ settlement: row, window, priority, measuredAt }) => ({
       id: row.channelId,

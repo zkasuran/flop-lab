@@ -14,6 +14,7 @@ import {
   type Tape,
 } from "../src/index";
 import { recordedClient } from "../src/recorded";
+import { recordedBundle } from "../src/recorded-evidence";
 import { settlement } from "../src/validation";
 
 let tape: Tape;
@@ -77,7 +78,8 @@ describe("recorded reality", () => {
 
   it("drafts exact arithmetic plus explicit public-audit gaps without an extrinsic", async () => {
     const { client } = recordedClient();
-    const dossier = await draftDossier(analyze(tape, now), original.channelId, client);
+    const bundle = recordedBundle(original.channelId)!;
+    const dossier = await draftDossier(analyze(tape, now), original.channelId, client, undefined, { bundle });
     expect(dossier.mode).toBe("DRY RUN ONLY");
     expect(dossier.submission).toMatchObject({ available: false, extrinsic: null });
     expect(dossier.submission.documentedCalls[0]?.signature).toBe(
@@ -87,22 +89,24 @@ describe("recorded reality", () => {
     expect(dossier.checks.find((c) => c.name === "Channel and tape agreement")?.status).toBe("pass");
     expect(dossier.checks.find((c) => c.name === "Finality")?.status).toBe("unverifiable");
     expect(dossier.evidence.channel?.value.evidenceStatus).toBe("WITNESS_ONLY");
-    expect(dossier.evidence.channel?.measuredAt).toBe("2026-11-05T09:00:01.669Z");
-    expect(dossier.evidence.trustRoot?.measuredAt).toBe("2026-11-05T09:00:02.673Z");
-    expect(client.stats.requests).toBe(2);
+    expect(dossier.evidence.channel?.measuredAt).toBe(bundle.observations.find((o) => o.id === "channel")!.measuredAt);
+    expect(dossier.evidence.trustRoot?.measuredAt).toBe(
+      bundle.observations.find((o) => o.id === "trust-root")!.measuredAt,
+    );
+    expect(client.stats.requests).toBe(0);
   });
 });
 
 describe("window arithmetic", () => {
-  it("expires exactly at the estimated boundary", () => {
+  it("never replaces a missing block deadline with seven wall-clock days", () => {
     const s = row({
       settledAt: now - WINDOW_MS,
       cooperative: false,
       settlementEvent: "computeChannel.SettlementPosted",
     });
-    expect(estimateWindow(s, now - 1)).toMatchObject({ status: "estimated-open", remainingMs: 1 });
-    expect(estimateWindow(s, now)).toMatchObject({ status: "estimated-expired", remainingMs: 0 });
-    expect(estimateWindow(s, now + 1).remainingMs).toBe(0);
+    expect(estimateWindow(s, now - 1)).toMatchObject({ status: "unknown", remainingMs: null });
+    expect(estimateWindow(s, now)).toMatchObject({ status: "unknown", remainingMs: null });
+    expect(estimateWindow(s, now + 1).remainingMs).toBeNull();
   });
 
   it("leaves future settlement times unknown and rejects invalid evaluation times", () => {
@@ -114,7 +118,7 @@ describe("window arithmetic", () => {
     expect(() => estimateWindow(original, NaN)).toThrow();
   });
 
-  it("sorts open rows by urgency before unknown and expired rows", () => {
+  it("keeps tape-only posting events unknown without challengeEnd", () => {
     const report = analyze(
       cohort([
         row({
@@ -139,7 +143,7 @@ describe("window arithmetic", () => {
       ]),
       now,
     );
-    expect(report.rows.map((r) => r.settlement.channelId)).toEqual(["first", "later", "unknown", "expired"]);
+    expect(report.rows.every((r) => r.window.status === "unknown")).toBe(true);
   });
 
   it("does not start a dispute window at a cooperative or finalized payout", () => {

@@ -1,0 +1,10 @@
+{
+  "source": "https://registry.npmjs.org/@flop-labs/sdk/-/sdk-0.4.0.tgz",
+  "measuredAt": "2026-11-06T04:06:11.834Z",
+  "path": "package/dist/agent-wallet.js",
+  "symbol": "CALIBRATED_LIMITS",
+  "status": "SDK reference constants. Not queried runtime limits. Proposed constants excluded.",
+  "perTxFlop": "5",
+  "dailyFlop": "50",
+  "raw": "/** R7-P0-08 Calibrated session key limits. */\nexport const CALIBRATED_LIMITS = {\n    /** Session key daily cap: 50 FLOP (in planck, 18 decimals). */\n    dailyCap: 50n * 10n ** 18n,\n    /** Session key per-tx limit: 5 FLOP (in planck, 18 decimals). */\n    perTxLimit: 5n * 10n ** 18n,\n    /** Circuit breaker period: 60 blocks. */\n    circuitBreakerPeriod: 60,\n    /** Circuit breaker max txs per period. */\n    circuitBreakerMaxTxs: 100,\n    /** Circuit breaker max spend per period: 250 FLOP. */\n    circuitBreakerMaxSpend: 250n * 10n ** 18n,\n    /** Max session rotations per hour. */\n    maxRotationsPerHour: 3,\n};"
+}

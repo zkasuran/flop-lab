@@ -4,6 +4,8 @@ import { createSiteService, pageData, selectRows, SITE_TTL_MS } from "../../../a
 import { challenger, fallbackTape } from "../../../apps/web/app/challenger/server";
 import { withClient } from "../../../apps/web/app/challenger/collect";
 import { recordedClient } from "../src/recorded";
+import { recordedEvidence, recordedBundle, recordedWindows } from "../src/recorded-evidence";
+import { analyzeWindows } from "../src/windows";
 import { collectTape } from "../src/watcher";
 import { draftDossier } from "../src/dossier";
 import { analyze } from "../src/core";
@@ -14,7 +16,9 @@ const captured = Date.parse(fallbackTape.measuredAt);
 const id = fallbackTape.settlements[0]!.channelId;
 const collector = (tape: () => Promise<Tape>) => ({
   tape,
-  dossier: vi.fn((report: WatchReport, channel: string) => draftDossier(report, channel, recordedClient().client)),
+  dossier: vi.fn(async (report: WatchReport, channel: string) =>
+    draftDossier(report, channel, recordedClient().client, undefined, { bundle: await recordedEvidence(channel) }),
+  ),
 });
 
 describe("site evidence fidelity", () => {
@@ -27,8 +31,12 @@ describe("site evidence fidelity", () => {
     };
     const first = await challenger.dossier(current, id);
     expect(first.dossier?.checks.find((check) => check.name === "Channel and tape agreement")?.status).toBe("pass");
-    expect(first.dossier?.evidence.channel?.measuredAt).toBe("2026-11-05T09:00:01.669Z");
-    expect(first.dossier?.evidence.trustRoot?.measuredAt).toBe("2026-11-05T09:00:02.673Z");
+    expect(first.dossier?.evidence.channel?.measuredAt).toBe(
+      recordedBundle(id)!.observations.find((o) => o.id === "channel")!.measuredAt,
+    );
+    expect(first.dossier?.evidence.trustRoot?.measuredAt).toBe(
+      recordedBundle(id)!.observations.find((o) => o.id === "trust-root")!.measuredAt,
+    );
     const other = await challenger.dossier(current, fallbackTape.settlements[1]!.channelId);
     expect(other.dossier?.evidence.channel).toBeNull();
     expect(other.dossier?.checks.find((check) => check.name === "Channel evidence")?.status).toBe("unverifiable");
@@ -86,7 +94,7 @@ describe("site evidence fidelity", () => {
     });
     const report = analyze({ ...fallbackTape, settlements: [posted, ...fallbackTape.settlements] }, captured);
     const view = pageData({ report, state: "live", attemptedAt: fallbackTape.measuredAt, error: null });
-    expect(selectRows(view.rows, "estimated-open", "priority").map((row) => row.id)).toEqual([posted.channelId]);
+    expect(selectRows(view.rows, "unknown", "priority").map((row) => row.id)).toEqual([posted.channelId]);
     expect(selectRows(view.rows, "all", "urgency")[0]!.id).toBe(posted.channelId);
     const ranked = selectRows(view.rows, "all", "priority");
     expect(ranked.map((row) => row.score)).toEqual(ranked.map((row) => row.score).sort((a, b) => b - a));
@@ -97,6 +105,32 @@ describe("site evidence fidelity", () => {
 });
 
 describe("site cache and bounded evidence reads", () => {
+  it("accepts an observed unpaid claim and retains separately dated windows after a failure", async () => {
+    let now = Date.parse(recordedWindows.capturedAt);
+    const windows = vi.fn().mockResolvedValueOnce(recordedWindows).mockRejectedValueOnce(new Error("offline"));
+    const service = createSiteService(
+      {
+        tape: async () => fallbackTape,
+        windows,
+        dossier: async (report, id, capture) =>
+          draftDossier(report, id, recordedClient().client, undefined, {
+            bundle: await recordedEvidence(id),
+            windows: capture,
+          }),
+      },
+      fallbackTape,
+      () => now,
+      recordedWindows,
+    );
+    const snapshot = await service.read();
+    const claim = analyzeWindows(recordedWindows).rows[0]!.channelId;
+    expect(snapshot.windowState).toBe("live");
+    expect((await service.dossier(snapshot, claim)).dossier?.evidence.settlement).toBeNull();
+    now += SITE_TTL_MS;
+    const failed = await service.read();
+    expect(failed.windowState).toBe("last-known");
+    expect(pageData(failed).windows?.capturedAt).toBe(recordedWindows.capturedAt);
+  });
   it("coalesces concurrent reads and caches failures without redating old evidence", async () => {
     let now = captured + 60 * 60 * 1000;
     const read = vi.fn(async (): Promise<Tape> => {
@@ -152,7 +186,9 @@ describe("site cache and bounded evidence reads", () => {
     const [first, same] = await Promise.all([service.dossier(current, id), service.dossier(current, id)]);
     expect(c.dossier).toHaveBeenCalledTimes(1);
     expect(same).toBe(first);
-    expect(first.dossier?.evidence.channel?.measuredAt).toBe("2026-11-05T09:00:01.669Z");
+    expect(first.dossier?.evidence.channel?.measuredAt).toBe(
+      recordedBundle(id)!.observations.find((o) => o.id === "channel")!.measuredAt,
+    );
     expect(first.dossier?.submission.extrinsic).toBeNull();
     await service.dossier(current, id);
     expect(c.dossier).toHaveBeenCalledTimes(1);

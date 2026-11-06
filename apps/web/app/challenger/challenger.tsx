@@ -9,10 +9,12 @@ import { CopyButton } from "@/components/controls";
 import { Disclosure, MotionButton, MotionLink, ObservedNumber, ReadingReveal } from "@/components/motion";
 import { formatFlop, SDK_CHAIN_SOURCE, WINDOW_MS } from "../../../../packages/challenger/src/core";
 import type { Dossier } from "../../../../packages/challenger/src/types";
+import { dossierMarkdown, replayDossier } from "../../../../packages/challenger/src/export";
+import { WINDOW_PARAMETER, type WindowReport } from "../../../../packages/challenger/src/windows";
 import { PAGE_SIZE, selectRows, type Filter, type PageData, type PageRow } from "./data";
 import styles from "./challenger.module.css";
 
-const command = "node packages/challenger/dist/cli.js watch --recorded --limit 8";
+const command = "node packages/challenger/dist/cli.js windows --recorded";
 const reportUrl = "https://github.com/zkasuran/flop-lab/blob/main/packages/challenger/FEASIBILITY.md";
 const sdk = "https://unpkg.com/@flop-labs/sdk@0.4.0/dist/compute-channel/";
 const states: Record<PageRow["window"]["status"], string> = {
@@ -51,7 +53,7 @@ export function Challenger({
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
   const counts = {
-    open: data.rows.filter((row) => row.window.status === "estimated-open").length,
+    open: data.windows?.rows.filter((row) => row.status === "open" || row.status === "closing").length ?? null,
     cooperative: data.rows.filter((row) => row.window.status === "no-standard-window").length,
     unknown: data.rows.filter((row) => row.window.status === "unknown").length,
   };
@@ -99,8 +101,8 @@ export function Challenger({
           </ReadingReveal>
           <ReadingReveal order={2}>
             <div className={styles.heroActions}>
-              <MotionLink className="button primary" href="#settlements">
-                Explore the tape <span aria-hidden="true">↓</span>
+              <MotionLink className="button primary" href="#windows">
+                See closing windows <span aria-hidden="true">↓</span>
               </MotionLink>
               <MotionLink className="button" href="#feasibility">
                 Can I re-check it?
@@ -114,21 +116,21 @@ export function Challenger({
             <div className={styles.clockTop}>
               <span className="eyebrow">Window watch</span>
               <span className={styles.dotLabel}>
-                {data.state === "live" ? "Live observation" : "Last-known observation"}
+                {data.windowState === "live" ? "Live window capture" : "Last-known window capture"}
               </span>
             </div>
             <div className={styles.clockNumber}>
-              <ObservedNumber value={counts.open} />
+              {counts.open === null ? <strong>?</strong> : <ObservedNumber value={counts.open} />}
               <span>
-                estimated open
+                observed open
                 <br />
-                in this tape
+                forced claims
               </span>
             </div>
             <p className={styles.clockNote}>
               {counts.open
-                ? "Explicit posting events only. Expiry uses the draft seven-day assumption."
-                : "No estimated open windows observed. A payout is not a new challenge start."}
+                ? "Indexed end blocks compared with the captured finalized head. Time estimates use measured cadence."
+                : "No open forced claims established in the window capture. A payout is not a new challenge start."}
             </p>
             <div className={styles.lane}>
               <span>Cooperative payouts</span>
@@ -147,7 +149,7 @@ export function Challenger({
               label="Unverified start share of observed rows"
             />
             <p className={styles.small}>
-              Counts use the captured tape. Runtime deadlines and finality are not verified.
+              Counts use separately dated captures. Runtime eligibility and finality are not verified.
             </p>
           </aside>
         </ReadingReveal>
@@ -189,6 +191,8 @@ export function Challenger({
         </p>
       ))}
 
+      <WindowTimeline report={data.windows} state={data.windowState} inspect={inspect} />
+
       <section id="settlements" className={styles.tape} aria-labelledby="tape-title">
         <ReadingReveal>
           <div className={styles.sectionHead}>
@@ -197,8 +201,8 @@ export function Challenger({
               <h2 id="tape-title">A clock needs a start.</h2>
             </div>
             <p>
-              Cooperative settlements pay immediately. Only an explicit force-settlement posting can start the estimated
-              window.
+              Cooperative settlements pay immediately. Their payout timestamps do not start a challenge window. Forced
+              claims appear in the block timeline above.
             </p>
           </div>
         </ReadingReveal>
@@ -208,7 +212,6 @@ export function Challenger({
             {(
               [
                 ["all", "All observations"],
-                ["estimated-open", "Estimated open"],
                 ["no-standard-window", "Cooperative"],
                 ["unknown", "Start unverified"],
               ] as const
@@ -443,14 +446,173 @@ export function Challenger({
 function ObservedBar({ fraction, label }: { fraction: number; label: string }) {
   const reduced = useReducedMotion() !== false;
   return (
-    <div className={styles.bar} role="img" aria-label={label}>
+    <div className={styles.bar} role="img" aria-label={label} data-fraction={fraction}>
       <motion.span
+        style={{ scaleX: fraction }}
         initial={{ scaleX: reduced ? fraction : 0 }}
         whileInView={{ scaleX: fraction }}
         viewport={{ once: true }}
         transition={{ duration: reduced ? 0 : 0.45, ease: "easeOut" }}
       />
     </div>
+  );
+}
+
+function WindowTimeline({
+  report,
+  state,
+  inspect,
+}: {
+  report: WindowReport | null;
+  state: "live" | "last-known";
+  inspect: (id: string) => void;
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion() !== false;
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 80%", "end 65%"] });
+  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const [filter, setFilter] = useState<"all" | "open" | "closing" | "closed" | "unknown">("all");
+  const rows = report?.rows.filter((row) => filter === "all" || row.status === filter) ?? [];
+  return (
+    <section ref={ref} className={styles.tape} aria-labelledby="windows-title" id="windows">
+      <ReadingReveal>
+        <div className={styles.sectionHead}>
+          <div>
+            <p className="eyebrow">Forced claims / closing order</p>
+            <h2 id="windows-title">Which window closes next?</h2>
+          </div>
+          <p>
+            These claims have no recorded payout yet. End blocks come from the indexer. A closed window does not
+            establish payment or a fraud verdict.
+          </p>
+        </div>
+        <p className={styles.small}>
+          {state === "last-known" ? "Last-known window capture" : "Live window capture"}:{" "}
+          {report ? utc(report.capturedAt) : "unavailable"}. Reported finalized head:{" "}
+          {report?.head?.number ?? "unknown"}. {report?.rows.length ?? 0} / {report?.total ?? "unknown"} forced claims.{" "}
+          {report?.complete ? "All reported claims retrieved." : "Partial or unavailable coverage."}
+        </p>
+        <p className={styles.small}>
+          Block time:{" "}
+          {report?.cadence
+            ? `${report.cadence.milliseconds} ms measured across ${report.cadence.intervals} intervals (${report.cadence.firstBlock} to ${report.cadence.lastBlock})`
+            : "unavailable"}
+          . These are dated observations, not a running countdown.
+        </p>
+      </ReadingReveal>
+      <div className={styles.filters} aria-label="Filter challenge windows">
+        {(["all", "open", "closing", "closed", "unknown"] as const).map((value) => (
+          <MotionButton
+            key={value}
+            aria-pressed={filter === value}
+            className={styles.filter}
+            onClick={() => setFilter(value)}
+          >
+            {filter === value && (
+              <motion.span
+                className={styles.filterActive}
+                layoutId="window-filter"
+                transition={{ duration: reduced ? 0 : 0.2 }}
+              />
+            )}
+            <span>{value === "all" ? "All windows" : value}</span>
+          </MotionButton>
+        ))}
+      </div>
+      <p className={styles.small} aria-live="polite">
+        {rows.length} matching windows. Closing means the final 7200 blocks under this tool's attention policy.
+      </p>
+      <div className={styles.windowBody}>
+        <div className={styles.readingTrack} aria-hidden="true">
+          <motion.div data-window-progress style={{ scaleY: reduced ? 1 : scaleY }} />
+        </div>
+        <motion.ol className={styles.windowRows} layout={!reduced} transition={{ duration: reduced ? 0 : 0.25 }}>
+          <AnimatePresence initial={false} mode="popLayout">
+            {rows.map((row) => (
+              <motion.li
+                data-window={row.channelId}
+                key={row.channelId}
+                className={styles.windowRow}
+                layout={!reduced}
+                initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduced ? 0 : 0.24 }}
+              >
+                <div>
+                  <span className={row.status === "open" || row.status === "closing" ? styles.openLane : styles.status}>
+                    {row.status}
+                  </span>
+                  <h3>Block {row.endBlock ?? "unknown"}</h3>
+                  <code>{short(row.channelId)}</code>
+                  <p>{formatFlop(row.escrow)} FLOP escrow, not payout</p>
+                </div>
+                <div>
+                  <strong>{row.remainingBlocks ?? "Unknown"} blocks remaining</strong>
+                  <p>
+                    {row.estimatedRemainingMs === null
+                      ? "Time estimate unavailable"
+                      : `Estimated ${(row.estimatedRemainingMs / 3_600_000).toFixed(2)} hours remaining`}
+                  </p>
+                  <p>
+                    {row.estimatedExpiry ? `Estimated end ${utc(row.estimatedExpiry)}` : "No future end time inferred"}
+                  </p>
+                  {row.remainingBlocks !== null && (
+                    <ObservedBar
+                      fraction={Math.min(1, row.remainingBlocks / WINDOW_PARAMETER.blocks)}
+                      label={`Remaining ${row.remainingBlocks} blocks divided by the documented ${WINDOW_PARAMETER.blocks}-block window`}
+                    />
+                  )}
+                  <span className={styles.small}>Captured {utc(row.measuredAt)}</span>
+                </div>
+                <MotionButton
+                  data-channel={row.channelId}
+                  className={styles.inspect}
+                  onClick={() => inspect(row.channelId)}
+                  aria-label={`Inspect claim ${row.channelId}`}
+                >
+                  Inspect claim <span aria-hidden="true">↗</span>
+                </MotionButton>
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ol>
+      </div>
+      {!rows.length && <p className={styles.empty}>No matching window observations. No deadline is invented.</p>}
+      <p className={styles.small}>
+        The line tracks reading progress. Bars show remaining blocks divided by the documented window. At equality this
+        tool conservatively marks closed; runtime endpoint inclusion remains unverified.
+      </p>
+      <Disclosure title="Exact parameter, head and window evidence">
+        <p>
+          <strong>
+            {WINDOW_PARAMETER.name}: {WINDOW_PARAMETER.blocks} blocks.
+          </strong>{" "}
+          Recorded {utc(WINDOW_PARAMETER.measuredAt)}. The deployed runtime value is not independently verified.
+        </p>
+        <pre>{WINDOW_PARAMETER.quote}</pre>
+        <MotionLink href={WINDOW_PARAMETER.source}>Pinned parameter source ↗</MotionLink>
+        <p>
+          Formula: max(0, challengeEnd - reported finalizedBlock). Time estimate: remaining blocks * measured
+          milliseconds per block, anchored at the head observation time. The indexed end is authoritative for this
+          calculation; statusBlockNumber is not treated as a posting event.
+        </p>
+        <p>
+          Deadlines use the reported finalized head, never best head. Safe mode suppresses time extrapolation. Finality
+          stalls and runtime standing still need independent review.
+        </p>
+        <p>
+          Source:{" "}
+          <MotionLink href="https://mcp.flop.network/mcp">
+            Hosted MCP / flop_indexer_query and flop_get_block
+          </MotionLink>
+          . Window capture used {report?.requests ?? "unknown"} HTTP attempts when recorded.
+        </p>
+        {report?.warnings.map((w) => (
+          <p key={w}>{w}</p>
+        ))}
+      </Disclosure>
+    </section>
   );
 }
 
@@ -587,12 +749,19 @@ function Feasibility() {
 function DossierView({ dossier }: { dossier: Dossier }) {
   const reduced = useReducedMotion() !== false;
   const [downloadError, setDownloadError] = useState<string | null>(null);
-  const download = () => {
+  const [replay, setReplay] = useState<string | null>(null);
+  const download = (kind: "json" | "md" | "bundle") => {
     try {
-      const url = URL.createObjectURL(new Blob([JSON.stringify(dossier, null, 2)], { type: "application/json" }));
+      const content =
+        kind === "md"
+          ? dossierMarkdown(dossier)
+          : JSON.stringify(kind === "bundle" ? dossier.verifier.bundle : dossier, null, 2);
+      const url = URL.createObjectURL(
+        new Blob([content], { type: kind === "md" ? "text/markdown" : "application/json" }),
+      );
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = `challenger-${dossier.channelId}.json`;
+      anchor.download = `challenger-${dossier.channelId}${kind === "bundle" ? "-bundle.json" : `.${kind}`}`;
       anchor.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch {
@@ -610,19 +779,50 @@ function DossierView({ dossier }: { dossier: Dossier }) {
       <p>{dossier.purpose}</p>
       <div className={styles.dossierActions}>
         <CopyButton text={dossier.channelId} label="Copy channel ID" />
-        <MotionButton className="quiet-button" onClick={download}>
+        <MotionButton className="quiet-button" onClick={() => download("json")}>
           Download dossier JSON
+        </MotionButton>
+        <MotionButton className="quiet-button" onClick={() => download("md")}>
+          Download Markdown
+        </MotionButton>
+        <MotionButton className="quiet-button" onClick={() => download("bundle")}>
+          Download verifier bundle
+        </MotionButton>
+        <MotionButton
+          className="quiet-button"
+          onClick={async () => {
+            try {
+              const result = await replayDossier(dossier);
+              setReplay(
+                `Content hash matches. ${result.verifier.checks.length} verifier checks replayed locally. No network requests. Incomplete proof remains unverifiable.`,
+              );
+            } catch (error) {
+              setReplay(error instanceof Error ? error.message : "Replay failed");
+            }
+          }}
+        >
+          Verify offline
         </MotionButton>
         <MotionLink className="quiet-button" href="/verify">
           Verifier workbench ↗
         </MotionLink>
       </div>
       {downloadError && <p role="status">{downloadError}</p>}
+      {replay && <p role="status">{replay}</p>}
+      <p className={styles.small}>Canonical dossier SHA-256, not an author signature:</p>
+      <code className={styles.fullId}>{dossier.sha256}</code>
       <div className={styles.dossierSummary}>
         <div>
           <span className={styles.label}>Window</span>
-          <strong>{states[dossier.window.status]}</strong>
-          <p>{dossier.window.reason}</p>
+          <strong>{dossier.blockWindow?.status ?? states[dossier.window.status]}</strong>
+          <p>{dossier.blockWindow?.reason ?? dossier.window.reason}</p>
+          {dossier.blockWindow && (
+            <p>
+              End block {dossier.blockWindow.endBlock ?? "unknown"}. Captured finalized head{" "}
+              {dossier.blockWindow.headBlock ?? "unknown"}. Remaining {dossier.blockWindow.remainingBlocks ?? "unknown"}{" "}
+              blocks.
+            </p>
+          )}
         </div>
         <div>
           <span className={styles.label}>Documented discretionary bond</span>
@@ -636,6 +836,18 @@ function DossierView({ dossier }: { dossier: Dossier }) {
         Passing checks establish only their named claim. Unverifiable is not a failed proof.
       </p>
       <ul className={styles.checks}>
+        {dossier.verifier.report.checks.map((check) => (
+          <li key={check.id}>
+            <div>
+              <strong>{check.claim}</strong>
+              <span className={check.status === "FAIL" ? styles.failed : styles.status}>
+                {check.simulated ? "SIMULATED / " : ""}
+                {check.status}
+              </span>
+            </div>
+            <p>{check.detail}</p>
+          </li>
+        ))}
         {dossier.checks.map((check) => (
           <li key={check.name}>
             <div>
@@ -646,25 +858,27 @@ function DossierView({ dossier }: { dossier: Dossier }) {
           </li>
         ))}
       </ul>
-      <Disclosure title={`Why this score? ${dossier.priority.score.toFixed(2)} / 100`}>
-        <div className={styles.signals}>
-          {dossier.priority.signals.map((signal) => (
-            <div key={signal.name}>
-              <div className={styles.lane}>
-                <strong>{signal.name}</strong>
-                <span>{signal.points === null ? "Unavailable" : `${signal.points} / ${signal.maximum}`}</span>
+      {dossier.priority && (
+        <Disclosure title={`Why this score? ${dossier.priority.score.toFixed(2)} / 100`}>
+          <div className={styles.signals}>
+            {dossier.priority.signals.map((signal) => (
+              <div key={signal.name}>
+                <div className={styles.lane}>
+                  <strong>{signal.name}</strong>
+                  <span>{signal.points === null ? "Unavailable" : `${signal.points} / ${signal.maximum}`}</span>
+                </div>
+                <ObservedBar fraction={(signal.points ?? 0) / signal.maximum} label={signal.name} />
+                <p>{signal.reason}</p>
               </div>
-              <ObservedBar fraction={(signal.points ?? 0) / signal.maximum} label={signal.name} />
-              <p>{signal.reason}</p>
-            </div>
-          ))}
-          <p>
-            {dossier.priority.confidence.label} {dossier.priority.confidence.availableSignals}/
-            {dossier.priority.confidence.totalSignals} fields available.{" "}
-            {dossier.priority.confidence.tapeComplete ? "Complete reported tape." : "Partial tape."}
-          </p>
-        </div>
-      </Disclosure>
+            ))}
+            <p>
+              {dossier.priority.confidence.label} {dossier.priority.confidence.availableSignals}/
+              {dossier.priority.confidence.totalSignals} fields available.{" "}
+              {dossier.priority.confidence.tapeComplete ? "Complete reported tape." : "Partial tape."}
+            </p>
+          </div>
+        </Disclosure>
+      )}
       <h3>Submission stays unavailable</h3>
       <p>{dossier.eligibility}</p>
       <p>

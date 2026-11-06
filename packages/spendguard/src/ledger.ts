@@ -7,9 +7,10 @@ import { setTimeout as sleep } from "node:timers/promises";
 import { parseFlop, parseRequest, type Reservation, type SpendRequest } from "./policy";
 
 export type AuditEvent =
+  | { kind: "sharedPolicy"; at: number; fingerprint: string }
   | { kind: "dryRun"; at: number; fingerprint: string }
   | { kind: "deny"; at: number; request: SpendRequest; fired: string[] }
-  | { kind: "reserve"; at: number; request: SpendRequest; fingerprint: string }
+  | { kind: "reserve"; at: number; request: SpendRequest; fingerprint: string; agent?: string }
   | { kind: "outcome"; at: number; id: string; status: "returned" | "failed"; channelId: string | null }
   | { kind: "settled"; at: number; id: string; channelId: string; blockHash: string; source: string }
   | { kind: "refund"; at: number; id: string; amountRaw: string; channelId: string; blockHash: string; source: string };
@@ -52,11 +53,17 @@ function fold(events: AuditEvent[]): Reservation[] {
   const refunded = new Set<string>();
   const channels = new Set<string>();
   let last = 0;
+  let shared = false;
   for (const event of events) {
     if (!event || !Number.isSafeInteger(event.at) || event.at < last)
       throw new LedgerIntegrityError("Invalid audit clock");
     last = event.at;
     switch (event.kind) {
+      case "sharedPolicy":
+        if (shared || reservations.size || !HASH.test(event.fingerprint))
+          throw new LedgerIntegrityError("Invalid shared policy binding");
+        shared = true;
+        break;
       case "dryRun":
         if (!HASH.test(event.fingerprint)) throw new LedgerIntegrityError("Invalid dry-run fingerprint");
         break;
@@ -67,6 +74,11 @@ function fold(events: AuditEvent[]): Reservation[] {
         break;
       case "reserve": {
         const r = parseRequest(event.request);
+        if (
+          event.agent !== undefined &&
+          (typeof event.agent !== "string" || !event.agent.trim() || event.agent.length > 256)
+        )
+          throw new LedgerIntegrityError("Invalid agent label");
         if (reservations.has(r.id) || !HASH.test(event.fingerprint) || r.at !== event.at)
           throw new LedgerIntegrityError("Duplicate or invalid reservation");
         reservations.set(r.id, { request: r, charged: parseFlop(r.amount).toString(), pending: true });

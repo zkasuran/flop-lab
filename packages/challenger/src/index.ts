@@ -11,6 +11,8 @@ export {
 } from "./core";
 export { collectTape, Watcher, CACHE_TTL_MS } from "./watcher";
 export { draftDossier } from "./dossier";
+export * from "./windows";
+export * from "./export";
 export type {
   Observation,
   BlockSample,
