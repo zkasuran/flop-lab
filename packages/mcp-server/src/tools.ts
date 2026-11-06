@@ -303,7 +303,7 @@ export function createTools(options: { recorded?: boolean } = {}): ToolDefinitio
                   type: "text",
                   text: JSON.stringify({
                     data: recording.rows.slice(0, args.limit),
-                    pagination: { total: recording.rows.length, offset: 0, limit: args.limit, hasMore: true },
+                    pagination: { total: recording.total, offset: 0, limit: args.limit, hasMore: true },
                   }),
                 },
               ],

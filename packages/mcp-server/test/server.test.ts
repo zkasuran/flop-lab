@@ -97,6 +97,9 @@ describe("admission and result validation", () => {
     expect(r.data).toMatchObject({ status: "no-eligible-miner", miner: null });
   });
   it("preserves evidence dates on cache hits and expires the cache", async () => {
+    const routeSuite = createSuite({ recorded: true });
+    await routeSuite.call("lab_score_route", examples.lab_score_route);
+    expect((await routeSuite.call("lab_score_route", examples.lab_score_route)).cacheHit).toBe(false);
     let now = Date.now();
     const suite = createSuite({ recorded: true, now: () => now });
     const first = await suite.call("lab_verify_tape", { limit: 1 });
