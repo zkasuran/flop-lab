@@ -280,7 +280,7 @@ export const tools: readonly Tool[] = [
     section: "verify",
     name: "Security invariants",
     tagline: "Which security invariants and failure cases can be checked from outside?",
-    status: "planned",
+    status: "alpha",
     href: "/invariants",
     repoPath: "packages/invariants",
   },

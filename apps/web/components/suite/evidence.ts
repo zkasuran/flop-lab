@@ -31,6 +31,8 @@ import { parseProofs } from "../../../../packages/proofs/src/model";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
+import invariantSource from "../../../../packages/harness/fixtures/sources/paper-2301.json";
+import { parseSections } from "../../../../packages/invariants/src/parser";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -53,6 +55,16 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  invariants: () =>
+    metric(
+      parseSections([invariantSource]).filter((row) => row.kind === "failure").length,
+      "actor failure rows in the pinned matrix",
+      invariantSource.measuredAt,
+      invariantSource.url,
+      "packages/harness/fixtures/sources/paper-2301.json",
+      "Quoted source coverage. A scoped check does not verify a whole security rule.",
+      "Pinned yellowpaper",
+    ),
   finality: () =>
     metric(
       analyzeRecording(parseRecording(finality)).lag,
