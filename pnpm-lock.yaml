@@ -92,6 +92,9 @@ importers:
       '@flop-lab/explorer':
         specifier: workspace:*
         version: link:../explorer
+      '@flop-lab/finality':
+        specifier: workspace:*
+        version: link:../finality
       '@flop-lab/harness':
         specifier: workspace:*
         version: link:../harness
@@ -183,6 +186,12 @@ importers:
         version: link:../mcp
 
   packages/explorer:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+
+  packages/finality:
     dependencies:
       '@flop-lab/mcp':
         specifier: workspace:*

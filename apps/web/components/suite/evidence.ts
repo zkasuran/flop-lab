@@ -23,6 +23,9 @@ import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import didSearch from "../../../../packages/did/fixtures/github.json";
 import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.json";
+import finality from "../../../../packages/finality/test/fixtures/observation.json";
+import { analyzeRecording } from "../../../../packages/finality/src/analysis";
+import { parseRecording } from "../../../../packages/finality/src/schema";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
@@ -48,6 +51,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  finality: () =>
+    metric(
+      analyzeRecording(parseRecording(finality)).lag,
+      "blocks of reported finality lag",
+      finality.measuredAt,
+      finality.source,
+      "packages/finality/test/fixtures/observation.json",
+      "Dated API heads. No consensus signatures or finalized-prefix storage proof.",
+    ),
   did: () =>
     metric(
       rows(object(JSON.parse(didSearch.raw) as unknown).items).length,

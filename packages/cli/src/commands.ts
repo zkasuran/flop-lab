@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "finality",
+    pkg: "@flop-lab/finality",
+    bin: "flop-finality",
+    section: "observe",
+    summary: "Measure linked block times and compare reported finality lag with pinned rules",
+  },
+  {
     name: "proofs",
     pkg: "@flop-lab/proofs",
     bin: "flop-proofs",
