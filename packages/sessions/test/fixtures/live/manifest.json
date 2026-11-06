@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "startedAt": "2026-11-06T00:15:52.418Z",
+  "finishedAt": "2026-11-06T00:15:58.500Z",
+  "requests": 21,
+  "durationMs": 6082,
+  "pages": [
+    "page-0.json",
+    "page-1.json",
+    "page-2.json",
+    "page-3.json",
+    "page-4.json",
+    "page-5.json",
+    "page-6.json",
+    "page-7.json",
+    "page-8.json",
+    "page-9.json",
+    "page-10.json",
+    "page-11.json",
+    "page-12.json",
+    "page-13.json",
+    "page-14.json",
+    "page-15.json",
+    "page-16.json",
+    "page-17.json",
+    "page-18.json",
+    "page-19.json",
+    "page-20.json"
+  ]
+}
