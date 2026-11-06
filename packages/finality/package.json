@@ -1,0 +1,22 @@
+{
+  "name": "@flop-lab/finality",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Dated block production and explicit finality evidence",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-finality": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "capture": "tsx scripts/capture.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*"
+  }
+}
