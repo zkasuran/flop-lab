@@ -31,6 +31,8 @@ import { parseProofs } from "../../../../packages/proofs/src/model";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
+import swaps from "../../../../packages/swaps/fixtures/swaps.json";
+import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -53,6 +55,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  swaps: () =>
+    metric(
+      parseSwapPage(JSON.parse(swaps.raw) as unknown).total,
+      "open FLOP_BTC orders in the recorded response",
+      swaps.measuredAt,
+      swaps.source,
+      "packages/swaps/fixtures/swaps.json",
+      "Orders and indexed HTLCs are distinct. No chain-pair completion is verified.",
+    ),
   finality: () =>
     metric(
       analyzeRecording(parseRecording(finality)).lag,

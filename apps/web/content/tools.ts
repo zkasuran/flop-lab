@@ -352,7 +352,7 @@ export const tools: readonly Tool[] = [
     section: "agents",
     name: "Swap planner",
     tagline: "Is this atomic swap safe to start?",
-    status: "planned",
+    status: "alpha",
     href: "/swaps",
     repoPath: "packages/swaps",
   },
