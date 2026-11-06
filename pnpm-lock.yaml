@@ -101,6 +101,9 @@ importers:
       '@flop-lab/indexer-audit':
         specifier: workspace:*
         version: link:../indexer-audit
+      '@flop-lab/invariants':
+        specifier: workspace:*
+        version: link:../invariants
       '@flop-lab/mcpaudit':
         specifier: workspace:*
         version: link:../mcpaudit
@@ -223,6 +226,21 @@ importers:
       '@flop-lab/mcp':
         specifier: workspace:*
         version: link:../mcp
+
+  packages/invariants:
+    dependencies:
+      '@flop-lab/harness':
+        specifier: workspace:*
+        version: link:../harness
+      '@flop-lab/indexer-audit':
+        specifier: workspace:*
+        version: link:../indexer-audit
+      '@flop-lab/spec':
+        specifier: workspace:*
+        version: link:../spec
+      '@flop-lab/verifier':
+        specifier: workspace:*
+        version: link:../verifier
 
   packages/mcp: {}
 

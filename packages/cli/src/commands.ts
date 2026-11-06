@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Calculate reference-work units and inspect dated calibration lease evidence",
   },
   {
+    name: "invariants",
+    pkg: "@flop-lab/invariants",
+    bin: "flop-invariants",
+    section: "verify",
+    summary: "Map quoted security rules to scoped checks and public evidence gaps",
+  },
+  {
     name: "swap",
     pkg: "@flop-lab/swaps",
     bin: "flop-swaps",
