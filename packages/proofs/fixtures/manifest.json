@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "startedAt": "2026-11-06T01:30:02.496Z",
+  "finishedAt": "2026-11-06T01:30:07.142Z",
+  "durationMs": 4646,
+  "requests": 8,
+  "limit": 1000,
+  "files": [
+    "capture-0.json",
+    "capture-1.json",
+    "capture-2.json",
+    "capture-3.json",
+    "capture-4.json",
+    "capture-5.json",
+    "capture-6.json",
+    "capture-7.json"
+  ]
+}

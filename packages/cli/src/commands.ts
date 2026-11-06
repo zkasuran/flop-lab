@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "proofs",
+    pkg: "@flop-lab/proofs",
+    bin: "flop-proofs",
+    section: "verify",
+    summary: "Inspect proof submissions and explain settlement coverage limits",
+  },
+  {
     name: "economics",
     pkg: "@flop-lab/economics",
     bin: "flop-economics",
