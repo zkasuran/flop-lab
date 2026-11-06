@@ -1,15 +1,15 @@
 # Spendguard
 
-Would my budget policy stop this request? Spendguard checks an agent's declared FLOP exposure before a spending callback runs. It reserves the budget in an append-only ledger and shows the rule behind each decision. Unresolved operations keep their reservation.
+Will my policy hold when agents share one budget? Spendguard pins a policy to a locked local ledger, lints its rules and replays recorded exposure with exact totals. The existing callback guard checks declared FLOP exposure before spending. Unresolved operations keep their reservation.
 
 ## Quick start
 
-From the repository root with Node 22 and pnpm. This evaluates a scripted request without spending:
+From the repository root with Node 22 and pnpm. This replays recorded exposure under chosen limits without spending:
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter @flop-lab/spendguard build
-node packages/spendguard/dist/cli.js evaluate packages/spendguard/examples/policy.json packages/spendguard/examples/request.json --dry-run
+node packages/spendguard/dist/cli.js replay packages/spendguard/examples/tape-policy.json packages/spendguard/fixtures/settlements.json
 ```
 
 ## Run
@@ -34,6 +34,49 @@ node packages/spendguard/dist/cli.js evaluate packages/spendguard/examples/polic
 ```
 
 `init` refuses existing files. Retain the printed head in a separate trusted location. Verify against it with `verify ./spend.jsonl EXPECTED_HEAD`. CLI simulation does not authorize a later library spend. The CLI accepts JSON or strict policy YAML. The importable API also provides typed SDK session and wallet guards.
+
+## Shared local budgets
+
+```ts
+import { FileLedger, SharedBudget } from "@flop-lab/spendguard";
+
+const team = new SharedBudget(new FileLedger("./team.jsonl"), policy);
+await team.initialize(); // once, by the budget owner
+await team.preview("writer", request);
+const decision = await team.reserve("writer", request);
+```
+
+Each process opens the same ledger with the same policy. Admission checks the pinned policy, reads the current reservations and appends under one filesystem lock. A policy mismatch fails closed. The legacy callback guard refuses a shared ledger. Request and task IDs are namespaced by agent. Hour, day, total, model and miner caps remain shared. Agent labels are supplied by trusted callers, not authenticated identities.
+
+`preview` records a content-bound preflight without reserving. `reserve` ignores a caller's `dryRun` assertion and requires that preflight when the policy requests it. Preflight expires after 120 seconds. Reusing an admitted ID is refused. Reservations are local holds only: they do not sign, spend or release funds. Shared holds have no release API in this version.
+
+```sh
+node packages/spendguard/dist/cli.js shared-init packages/spendguard/examples/policy.json ./team.jsonl
+node packages/spendguard/dist/cli.js reserve packages/spendguard/examples/policy.json ./team.jsonl writer packages/spendguard/examples/request.json --preview
+node packages/spendguard/dist/cli.js reserve packages/spendguard/examples/policy.json ./team.jsonl writer packages/spendguard/examples/request.json
+```
+
+Use regular files on one local filesystem. Stale locks fail closed. This is not a distributed lock. Keep the ledger directory, policy and low-level audit API under trusted control. An owner who can rewrite both the ledger and anchor can bypass local checks.
+
+## Policy linter and replay
+
+```sh
+node packages/spendguard/dist/cli.js lint packages/spendguard/examples/tape-policy.json
+node packages/spendguard/dist/cli.js replay packages/spendguard/examples/tape-policy.json packages/spendguard/fixtures/settlements.json
+node packages/spendguard/dist/cli.js replay packages/spendguard/examples/policy.json packages/spendguard/fixtures/sdk-estimate.json --estimate demo qwen/qwen2.5-0.5b-instruct demo-miner
+```
+
+`lintPolicy` and `lintPolicyText` flag missing ceilings, allow/deny contradictions, zero stop rules, shadowed ceilings, unreachable identity caps and ceilings above the recorded SDK reference. Every finding includes a fix. Lint does not change a policy. Exit codes for `lint`: `0` for no findings, `2` for findings in a valid policy and `1` for invalid input. Zero ceilings and empty allowlists can be intentional stop policies.
+
+The reference is `CALIBRATED_LIMITS` in `@flop-labs/sdk@0.4.0`: per transaction 5 FLOP and daily 50 FLOP. The raw excerpt, source and inspection time are in `fixtures/documented-caps.json`. These are SDK defaults, not queried runtime ceilings. Proposed limits and circuit-breaker constants are not mapped to these policy fields.
+
+`settlementTape`, `estimateTape` and `replayTape` are browser-safe APIs. The `/lint` and `/replay` exports expose them without Node dependencies. The existing `flop spendguard` command forwards these CLI commands.
+
+The settlement fixture is a partial page captured at `2026-11-06T04:06:11.831Z` from `flop_list_settlements`. It contains 100 rows while the API reported 356. Replay sorts the supplied page by settlement time and channel ID. Settlement time stands in for unknown admission time. Model hashes remain exact identities. Each recorded agent gets one synthetic task and preflight is assumed. Full escrow remains pending; returned escrow is not treated as a verified refund. Missing model identities and zero escrow rows are skipped with separate totals.
+
+MCP `pricePerGflop` is fractional raw units per GFLOP. The adapter rounds up to a whole raw unit before converting to FLOP. It checks the escrow split and rejects malformed or duplicate rows. SDK estimates use full channel escrow and explicitly chosen identity bindings. Their architecture, token, calibration and price inputs are synthetic. The SDK estimate is not actual execution cost. Replay signs nothing and never mutates a file ledger.
+
+The sample tape policy uses chosen limits. It admits 7 recorded rows totalling `9.990000000000000164` FLOP and refuses 93 totalling `330.784000000000013554` FLOP. These are counterfactual exposure totals, not observed policy outcomes. Run the replay command to reproduce them.
 
 ## Policy
 
@@ -126,6 +169,7 @@ Webhook JSON includes `type`, `measuredAt`, `source` and `details`. Types are `d
 
 ```sh
 pnpm --filter @flop-lab/spendguard run mutation
+pnpm --filter @flop-lab/spendguard run mutation:shared
 pnpm --filter @flop-lab/spendguard run measure
 ```
 
@@ -144,3 +188,5 @@ The mutation command disables each policy rule separately, requires a failing te
 - Partial refunds, fraud refunds and wallet finality reconciliation are unsupported. Their reservations stay charged. Successful sessions stay charged until explicit reconciliation.
 - Deployed wallet-pallet limits, session-key restrictions, circuit-breaker behavior, miner proofs and hardware attestation were not verified. No wallet was created or funded.
 - No real devnet inference round trip was completed. The read-only MCP and a model catalog do not provide the reachable opted-in miner endpoint required by the SDK.
+- Shared reservations do not authenticate agents, enforce distributed isolation or support refunds. Trusted low-level ledger access can bypass the shared API.
+- Lint does not prove a policy is complete or enforce deployed SDK defaults. Replay does not recover original admission times, task IDs, preflight state or missing history. Its full pending escrow model is conservative.

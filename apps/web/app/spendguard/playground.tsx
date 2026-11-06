@@ -7,12 +7,14 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import { MotionButton as Control, MotionLink } from "@/components/motion";
 import { initialPolicy, parsePolicyText, replay, scenario, fillRatio, type CatalogSeed } from "./library";
 import styles from "./spendguard.module.css";
+import { Workbench } from "./workbench";
+import type { ReplayTape } from "../../../../packages/spendguard/src/replay";
 
 const command =
   "node packages/spendguard/dist/cli.js evaluate packages/spendguard/examples/policy.yaml packages/spendguard/examples/request.json --dry-run";
 
 /** Interactive replay of the production evaluator. Example: <Playground seed={recordedIdentity} />. */
-export function Playground({ seed }: { seed: CatalogSeed | null }) {
+export function Playground({ seed, tapes = [] }: { seed: CatalogSeed | null; tapes?: ReplayTape[] }) {
   const reduced = useReducedMotion() !== false;
   const pipeline = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: pipeline, offset: ["start end", "end center"] });
@@ -71,13 +73,17 @@ export function Playground({ seed }: { seed: CatalogSeed | null }) {
           ↑ All tools
         </MotionLink>
         <ToolHeader slug="spendguard" />
-        <p className={styles.intro}>Edit a policy. Send a scripted request. See exactly why it passes or stops.</p>
+        <p className={styles.intro}>
+          Share one budget across agents. Lint the policy and replay recorded exposure before using it.
+        </p>
         <div className={styles.labels}>
           <span>Real policy engine</span>
           <span>In-memory simulation</span>
           <span>No signing</span>
         </div>
       </motion.header>
+
+      <Workbench tapes={tapes} />
 
       <motion.section className={styles.observation} layout={!reduced} aria-label="Data provenance" {...reveal(1)}>
         <div>

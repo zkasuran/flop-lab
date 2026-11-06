@@ -119,9 +119,14 @@ export function parsePolicy(value: unknown): Policy {
  * @example parsePolicyText(documentText)
  */
 export function parsePolicyText(input: string): Policy {
+  return parsePolicy(parsePolicyDocument(input));
+}
+
+/** Decode policy text before schema validation, for lint diagnostics. @example parsePolicyDocument(text) */
+export function parsePolicyDocument(input: string): unknown {
   if (typeof input !== "string" || input.length > 65_536)
     throw new Error("Policy text must fit within 65536 characters");
-  if (input.trimStart().startsWith("{")) return parsePolicy(JSON.parse(input) as unknown);
+  if (input.trimStart().startsWith("{")) return JSON.parse(input) as unknown;
   const lines = input.split(/\r?\n/);
   if (lines.length > 512) throw new Error("Policy text must fit within 512 lines");
   const result: Record<string, unknown> = Object.create(null);
@@ -184,7 +189,7 @@ export function parsePolicyText(input: string): Policy {
       });
     }
   }
-  return parsePolicy(result);
+  return result;
 }
 
 /** Validate a spend request at an input boundary. @example parseRequest(JSON.parse(input)) */
