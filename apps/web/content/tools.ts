@@ -325,7 +325,7 @@ export const tools: readonly Tool[] = [
     section: "build",
     name: "Suite API",
     tagline: "How do I read the suite's results as an API?",
-    status: "planned",
+    status: "alpha",
     href: "/openapi",
     repoPath: "packages/openapi",
   },

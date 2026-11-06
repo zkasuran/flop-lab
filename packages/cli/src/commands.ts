@@ -19,6 +19,14 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "api",
+    tagline: "How do I read the suite's results as an API?",
+    pkg: "@flop-lab/openapi",
+    bin: "flop-openapi",
+    section: "build",
+    summary: "Read dated suite results and generate their OpenAPI contract",
+  },
+  {
     name: "mcp",
     tagline: "How does my agent call every flop-lab tool?",
     pkg: "@flop-lab/mcp-server",
