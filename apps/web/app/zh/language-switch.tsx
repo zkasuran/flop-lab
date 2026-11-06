@@ -16,7 +16,9 @@ export function LanguageSwitch() {
       href={pair ? (chinese ? pair.en : pair.zh) : "/zh"}
       hrefLang={chinese ? "en" : "zh-Hans"}
       lang={chinese ? "en" : "zh-Hans"}
-      aria-label={chinese ? "Read this page in English" : pair ? "阅读此页的简体中文版" : "打开简体中文首页"}
+      aria-label={
+        chinese ? "EN: Read this page in English" : pair ? "简中：阅读此页的简体中文版" : "简中：打开简体中文首页"
+      }
       prefetch={false}
     >
       {chinese ? "EN" : "简中"}
