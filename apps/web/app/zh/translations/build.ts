@@ -31,6 +31,7 @@ const zh = {
   openapi: "如何通过 API 读取工具集的结果？",
 } satisfies Chinese<typeof en>;
 const metrics = {
+  export: { label: "导出记录中的区块行数", note: "有界记录。导出完成不能证明已覆盖整条链。" },
   x402: { label: "支付预览中的结算数", note: "公开结算不能证明向商户支付了款项。" },
   kestra: { label: "工作流记录中读取的结算数", note: "保存的摘录保留了原始有界查询的行数。" },
   sdk: { label: "SDK 运行记录中失败的检查数", note: "固定版本产物配合脚本化传输，不代表实时网络故障。" },

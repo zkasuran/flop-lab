@@ -11,7 +11,7 @@ const en = {
   finality: "Is the chain producing and finalizing blocks on time?",
   upgrades: "What changed in the runtime and in the spec?",
   status: "Are FLOP's public services answering?",
-  community: "What are operators and builders asking for?",
+  community: "What are builders asking for and how long do public replies take?",
 };
 const zh = {
   title: "观测",
@@ -24,9 +24,14 @@ const zh = {
   finality: "链是否按时出块并确认最终性？",
   upgrades: "运行时和规范发生了哪些变化？",
   status: "FLOP 的公共服务是否响应？",
-  community: "运营者和开发者提出了哪些需求？",
+  community: "开发者提出了哪些需求？公开回复需要多长时间？",
 } satisfies Chinese<typeof en>;
 const metrics = {
+  status: {
+    label: "网关探测记录的耗时（毫秒）",
+    note: "一次注明时间且包含响应体的请求，不代表当前健康状况或持续在线率。",
+  },
+  community: { label: "抽样的近期 network 议题或拉取请求数", note: "有界公开样本。未观测更早的积压项目或私下回复。" },
   history: { label: "历史记录中的最新区块", note: "最近一次打包记录。分开采集的数据不构成原子快照。" },
   explorer: { label: "示例区块记录中的外部交易数", note: "索引器观测，不是最终确认包含性的证明。" },
   models: { label: "网关目录记录中列出的模型数", note: "服务方公布的列表，未验证推理或矿工可用性。" },
