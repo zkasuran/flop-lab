@@ -8,16 +8,16 @@ Run from the repository root with Node 22 and pnpm:
 
 ```sh
 pnpm install --frozen-lockfile && pnpm --filter @flop-lab/economics build && pnpm --filter @flop-lab/cli build
-pnpm --filter @flop-lab/economics exec flop-economics compare --json
-pnpm --filter @flop-lab/cli exec flop economics reward 63072000 --json
+pnpm --filter @flop-lab/economics exec node dist/cli.js compare --json
+pnpm --filter @flop-lab/cli exec node dist/cli.js economics reward 63072000 --json
 ```
 
 ## Calculators
 
 ```sh
-pnpm --filter @flop-lab/economics exec flop-economics supply 378431999
-pnpm --filter @flop-lab/economics exec flop-economics payment 100 --fee 0.01 --tip 0
-pnpm --filter @flop-lab/economics exec flop-economics compare --live --save observation.json
+pnpm --filter @flop-lab/economics exec node dist/cli.js supply 378431999
+pnpm --filter @flop-lab/economics exec node dist/cli.js payment 100 --fee 0.01 --tip 0
+pnpm --filter @flop-lab/economics exec node dist/cli.js compare --live --save observation.json
 ```
 
 JSON amounts are decimal strings in base units, with 18 decimal places per FLOP. No exponent notation or silent rounding is accepted. Block N is inclusive. Supply means gross scheduled issuance, including genesis and both subsidy recipients. It is not measured circulating supply. The payment input is a user scenario, not a measured price.
