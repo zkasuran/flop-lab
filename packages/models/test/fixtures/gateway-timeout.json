@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "startedAt": "2026-11-05T23:57:14.136Z",
+  "completedAt": "2026-11-05T23:58:04.960Z",
+  "requests": 14,
+  "durationMs": 50824,
+  "observations": [
+    {
+      "key": "gateway",
+      "source": "https://api.flop.network/v1/models",
+      "measuredAt": "2026-11-05T23:57:22.142Z",
+      "raw": null,
+      "error": "The operation was aborted due to timeout"
+    },
+    {
+      "key": "discover",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:57:23.999Z",
+      "raw": "{\n  \"models\": [\n    {\n      \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n      \"modelName\": \"Qwen/Qwen3-8B\",\n      \"qualityScore\": 50,\n      \"matchScore\": 45,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 0,\n      \"served\": false,\n      \"servingMiners\": [],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": []\n    },\n    {\n      \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n      \"modelName\": \"Qwen/Qwen3.8-27B\",\n      \"qualityScore\": 50,\n      \"matchScore\": 45,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 0,\n      \"served\": false,\n      \"servingMiners\": [],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": []\n    },\n    {\n      \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n      \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n      \"qualityScore\": 50,\n      \"matchScore\": 65,\n      \"pricePerGflop\": 0.003,\n      \"onlineMinerCount\": 22,\n      \"served\": true,\n      \"servingMiners\": [\n        \"5CLkcYRxUBiLsrJg2Dapupx7qWWhPR3p5FmnwGtXDF1KQt3v\",\n        \"5CceYG4rpnXFvKUaPAwAbGtFtzW5hSC4efMUHXK95WrgQAF8\",\n        \"5DCkDPn7n3qAuKjn9e2TRAF3ZcxByt7jkhwzGTZ7V3G8zHDd\",\n        \"5DLrV8MgKFPFM8Y23pAyoBV7QY6e6XBTzX5pf7ALnxozd43z\",\n        \"5DkyfWjukrF6RJ8ZSii1eAQ8A7AAxZsHwdoJ1CHmAWY6NzqU\",\n        \"5DtBZLkEpjaBJb3w7JF5csBu6s1WTozzFvatefeWywdrJKab\",\n        \"5E7fmybfFjCw2jL6Huu2ZvEZZyutiQtptw32soHUREMyfQ4h\",\n        \"5E9uT15GJ8GQ3ztKfRvcP6UWAnKPjtSHKNdgM33b5mtLDyty\",\n        \"5ED68Tgj9G6xtPnWKxzBkr7cij6nPR3kVXUYQ2RT27igsrH2\",\n        \"5EHoo871PqP65tfSBuSVv87r4AxX6hMsEnaCSZwYbGu1dcJT\",\n        \"5EJL1VV8xRdLj24TD7zJFUzGiSWnMte1S5LL7ZeaKtuwG6QC\",\n        \"5EPbzxwX2DKkFwqsaVhK1KEc997odUCvBV4La2kVHwToKRNU\",\n        \"5EXP2EZmU3UFem9oYyfPkYQ6e1giGZwm97PhYNNSZrjKD9mb\",\n        \"5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN\",\n        \"5FWqSj2pjtFoHkjpLcKHzNURaZTzGvuP4soqo7CnWaBazX8p\",\n        \"5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1\",\n        \"5GBqWiFDhG3DSHRAWixidaXkVnsefNofAsdUht1uaFB8DgAU\",\n        \"5GmjrKG5bDmyYS6q5SWiQfFzvjTL3UU8HuTYrdu76soHDMrV\",\n        \"5GprqmpoSNP3XkY4Cy14i8B3uPm8Ghja5QwbvwsMu6xKXn5i\",\n        \"5H3Nzd5NMmSBaYSHuD1bgVj2SqkPEgVYhWk8wN7ubqmuXpru\",\n        \"5Hb9YKuWTejdAXrtzP1a91me3AzmNFmWQ1q5k6PdGn1chTNf\",\n        \"5HjfuzhkBCtJCPsWs1EQJLiqdzp62ijoKg53EFzvRN4eCZRh\"\n      ],\n      \"avgLatencyMs\": 0,\n      \"taskSuccessRate\": 1,\n      \"capabilities\": [\n        \"text_generation\"\n      ],\n      \"teePlatforms\": [\n        \"nvidia_cc\"\n      ]\n    }\n  ],\n  \"totalMatches\": 3,\n  \"dataSource\": \"on-chain\",\n  \"availabilitySource\": \"gateway\",\n  \"filters\": {},\n  \"note\": \"onlineMinerCount and servingMiners come from the gateway catalog (GET /v1/models, x-flop.price_sources). served is false when the model is registered but that catalog is not serving it.\"\n}",
+      "error": null
+    },
+    {
+      "key": "trust",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:57:24.386Z",
+      "raw": "{\n  \"version\": 2,\n  \"snapshotHash\": \"0xefffc5b29ba514f43cf05de5cd8a57206cf79044e629a023a00795f042dff8b7\",\n  \"dstackVkeys\": [],\n  \"models\": [\n    {\n      \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n      \"verificationStatus\": 1,\n      \"supportedTeePlatforms\": [\n        0\n      ],\n      \"epochPricePerGflop\": \"3000000000000000\",\n      \"enforceMeasuredRoot\": true\n    },\n    {\n      \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n      \"verificationStatus\": 1,\n      \"supportedTeePlatforms\": [],\n      \"epochPricePerGflop\": \"3000000000000000\",\n      \"enforceMeasuredRoot\": true\n    },\n    {\n      \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n      \"verificationStatus\": 1,\n      \"supportedTeePlatforms\": [],\n      \"epochPricePerGflop\": \"3000000000000000\",\n      \"enforceMeasuredRoot\": true\n    }\n  ],\n  \"skuCeilings\": [],\n  \"attestedSkus\": [],\n  \"evidenceParams\": {\n    \"softTierSpotCheckRatePpm\": 25000\n  },\n  \"pouiCommittee\": [\n    \"0x80e81cf042ec7c2291a8660db3b3c6be656596193a79264c38a3a554a89fd27b\",\n    \"0x38a07c3e7e58dcd4689f99050c6a28434d327168c166910809636b65595e076d\",\n    \"0x70b6dbd5e53eba79f7ede42332c5bce7f93f862d291ffba95e69a87304def30c\",\n    \"0xa03f6c8e1e35c187c4183b69fc98fbfd3beeab3ac212a3e47c387082bcc0ae07\",\n    \"0xa0c40b5121b28b836ee79761553681af8b4cbc9afbb6906f2e5a89ca7b90020c\",\n    \"0xa6c45476cb4f5e3af75c0ca18a3ea7f3d09a4a1bb4c02c9fb484f2d52704cd63\",\n    \"0xc8227ae5fc8cb2e5b429cb180df2c56ba7773a834abb1669ef41cbab3c45de23\",\n    \"0xc84e82febb99234aad033eb1d8bd817728b3f1e29c3aa91ac1c701f32573230e\",\n    \"0xe0825ae98d71567e9a5f5756a4702022f7a30283839420c90dcabf9b5d75d01f\",\n    \"0x786d3bea8cd9c4fda4c50bf3f5f03fe47b09e695d5c53e95a5ad6c2326ba3871\"\n  ],\n  \"source\": \"runtime_api\"\n}",
+      "error": null
+    },
+    {
+      "key": "providers",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:57:24.454Z",
+      "raw": "{\n  \"providers\": [],\n  \"count\": 0\n}",
+      "error": null
+    },
+    {
+      "key": "info:0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:57:37.802Z",
+      "raw": "{\n  \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n  \"modelName\": \"Qwen/Qwen3-8B\",\n  \"version\": \"1\",\n  \"publisher\": \"5FHftvPRypFryTEKAte91VvGcgxyTPX3zD3VEtpFH8uc5Hwp\",\n  \"architecture\": \"Transformer\",\n  \"paramsBillion\": 8,\n  \"gflopsPerToken\": 17,\n  \"minVramGb\": 16,\n  \"capabilities\": [\n    \"text_generation\"\n  ],\n  \"teePlatforms\": [],\n  \"benchmarkScores\": [],\n  \"qualityScore\": 50,\n  \"avgPricePerGflop\": 0.003,\n  \"avgLatencyMs\": 0,\n  \"onlineMinerCount\": 0,\n  \"served\": false,\n  \"servingMiners\": [],\n  \"availabilitySource\": \"gateway\",\n  \"totalTasksCompleted\": 0\n}",
+      "error": null
+    },
+    {
+      "key": "pricing:0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:57:38.233Z",
+      "raw": "{\n  \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n  \"modelName\": \"Qwen/Qwen3-8B\",\n  \"pricePerGflop\": 0.003,\n  \"gflopsPerToken\": 17,\n  \"estimatedCostForTokens\": \"Provide tokens_estimate\",\n  \"priceRange\": {\n    \"min\": 0.0024000000000000002,\n    \"max\": 0.0036\n  }\n}",
+      "error": null
+    },
+    {
+      "key": "info:0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:57:50.456Z",
+      "raw": "{\n  \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n  \"modelName\": \"Qwen/Qwen3.8-27B\",\n  \"version\": \"1\",\n  \"publisher\": \"5FHftvPRypFryTEKAte91VvGcgxyTPX3zD3VEtpFH8uc5Hwp\",\n  \"architecture\": \"Transformer\",\n  \"paramsBillion\": 28,\n  \"gflopsPerToken\": 52,\n  \"minVramGb\": 52,\n  \"capabilities\": [\n    \"text_generation\"\n  ],\n  \"teePlatforms\": [],\n  \"benchmarkScores\": [],\n  \"qualityScore\": 50,\n  \"avgPricePerGflop\": 0.003,\n  \"avgLatencyMs\": 0,\n  \"onlineMinerCount\": 0,\n  \"served\": false,\n  \"servingMiners\": [],\n  \"availabilitySource\": \"gateway\",\n  \"totalTasksCompleted\": 0\n}",
+      "error": null
+    },
+    {
+      "key": "pricing:0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:57:50.901Z",
+      "raw": "{\n  \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n  \"modelName\": \"Qwen/Qwen3.8-27B\",\n  \"pricePerGflop\": 0.003,\n  \"gflopsPerToken\": 52,\n  \"estimatedCostForTokens\": \"Provide tokens_estimate\",\n  \"priceRange\": {\n    \"min\": 0.0024000000000000002,\n    \"max\": 0.0036\n  }\n}",
+      "error": null
+    },
+    {
+      "key": "info:0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:58:04.164Z",
+      "raw": "{\n  \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n  \"version\": \"1\",\n  \"publisher\": \"5FHftvPRypFryTEKAte91VvGcgxyTPX3zD3VEtpFH8uc5Hwp\",\n  \"architecture\": \"Transformer\",\n  \"paramsBillion\": 1,\n  \"gflopsPerToken\": 2,\n  \"minVramGb\": 1,\n  \"capabilities\": [\n    \"text_generation\"\n  ],\n  \"teePlatforms\": [\n    \"nvidia_cc\"\n  ],\n  \"benchmarkScores\": [],\n  \"qualityScore\": 50,\n  \"avgPricePerGflop\": 0.003,\n  \"avgLatencyMs\": 0,\n  \"onlineMinerCount\": 22,\n  \"served\": true,\n  \"servingMiners\": [\n    \"5CLkcYRxUBiLsrJg2Dapupx7qWWhPR3p5FmnwGtXDF1KQt3v\",\n    \"5CceYG4rpnXFvKUaPAwAbGtFtzW5hSC4efMUHXK95WrgQAF8\",\n    \"5DCkDPn7n3qAuKjn9e2TRAF3ZcxByt7jkhwzGTZ7V3G8zHDd\",\n    \"5DLrV8MgKFPFM8Y23pAyoBV7QY6e6XBTzX5pf7ALnxozd43z\",\n    \"5DkyfWjukrF6RJ8ZSii1eAQ8A7AAxZsHwdoJ1CHmAWY6NzqU\",\n    \"5DtBZLkEpjaBJb3w7JF5csBu6s1WTozzFvatefeWywdrJKab\",\n    \"5E7fmybfFjCw2jL6Huu2ZvEZZyutiQtptw32soHUREMyfQ4h\",\n    \"5E9uT15GJ8GQ3ztKfRvcP6UWAnKPjtSHKNdgM33b5mtLDyty\",\n    \"5ED68Tgj9G6xtPnWKxzBkr7cij6nPR3kVXUYQ2RT27igsrH2\",\n    \"5EHoo871PqP65tfSBuSVv87r4AxX6hMsEnaCSZwYbGu1dcJT\",\n    \"5EJL1VV8xRdLj24TD7zJFUzGiSWnMte1S5LL7ZeaKtuwG6QC\",\n    \"5EPbzxwX2DKkFwqsaVhK1KEc997odUCvBV4La2kVHwToKRNU\",\n    \"5EXP2EZmU3UFem9oYyfPkYQ6e1giGZwm97PhYNNSZrjKD9mb\",\n    \"5EXXELdX4dhZWNUqJ8aMWV7Mt6Z4Ldqb48UgfmCuAUcPa8RN\",\n    \"5FWqSj2pjtFoHkjpLcKHzNURaZTzGvuP4soqo7CnWaBazX8p\",\n    \"5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1\",\n    \"5GBqWiFDhG3DSHRAWixidaXkVnsefNofAsdUht1uaFB8DgAU\",\n    \"5GmjrKG5bDmyYS6q5SWiQfFzvjTL3UU8HuTYrdu76soHDMrV\",\n    \"5GprqmpoSNP3XkY4Cy14i8B3uPm8Ghja5QwbvwsMu6xKXn5i\",\n    \"5H3Nzd5NMmSBaYSHuD1bgVj2SqkPEgVYhWk8wN7ubqmuXpru\",\n    \"5Hb9YKuWTejdAXrtzP1a91me3AzmNFmWQ1q5k6PdGn1chTNf\",\n    \"5HjfuzhkBCtJCPsWs1EQJLiqdzp62ijoKg53EFzvRN4eCZRh\"\n  ],\n  \"availabilitySource\": \"gateway\",\n  \"totalTasksCompleted\": 0\n}",
+      "error": null
+    },
+    {
+      "key": "pricing:0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:58:04.581Z",
+      "raw": "{\n  \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n  \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n  \"pricePerGflop\": 0.003,\n  \"gflopsPerToken\": 2,\n  \"estimatedCostForTokens\": \"Provide tokens_estimate\",\n  \"priceRange\": {\n    \"min\": 0.0024000000000000002,\n    \"max\": 0.0036\n  }\n}",
+      "error": null
+    },
+    {
+      "key": "compare",
+      "source": "https://mcp.flop.network/mcp",
+      "measuredAt": "2026-11-05T23:58:04.960Z",
+      "raw": "{\n  \"comparison\": [\n    {\n      \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n      \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n      \"paramsBillion\": 1,\n      \"pricePerGflop\": 0.003,\n      \"estimatedCost\": \"6.000000\",\n      \"qualityScore\": 50,\n      \"latencyMs\": 0\n    },\n    {\n      \"modelHash\": \"0xfab8ec57f3bc1b5d4ca644fe12fab2ca1c35c24697d577c610b382cfea14d52d\",\n      \"modelName\": \"Qwen/Qwen3-8B\",\n      \"paramsBillion\": 8,\n      \"pricePerGflop\": 0.003,\n      \"estimatedCost\": \"51.000000\",\n      \"qualityScore\": 50,\n      \"latencyMs\": 0\n    },\n    {\n      \"modelHash\": \"0x9fe1ce953cd69531eb321e7da9cf40501d5feb54a2f12afc6918e455408d0426\",\n      \"modelName\": \"Qwen/Qwen3.8-27B\",\n      \"paramsBillion\": 28,\n      \"pricePerGflop\": 0.003,\n      \"estimatedCost\": \"156.000000\",\n      \"qualityScore\": 50,\n      \"latencyMs\": 0\n    }\n  ],\n  \"tokensEstimate\": 1000,\n  \"cheapest\": {\n    \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n    \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n    \"paramsBillion\": 1,\n    \"pricePerGflop\": 0.003,\n    \"estimatedCost\": \"6.000000\",\n    \"qualityScore\": 50,\n    \"latencyMs\": 0\n  },\n  \"bestValue\": {\n    \"modelHash\": \"0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306\",\n    \"modelName\": \"Qwen/Qwen2.5-0.5B-Instruct\",\n    \"paramsBillion\": 1,\n    \"pricePerGflop\": 0.003,\n    \"estimatedCost\": \"6.000000\",\n    \"qualityScore\": 50,\n    \"latencyMs\": 0\n  }\n}",
+      "error": null
+    }
+  ]
+}
