@@ -16,6 +16,7 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@flop-lab/economics": "workspace:*",
     "@flop-lab/sessions": "workspace:*",
     "@flop-lab/console": "workspace:*",
     "@flop-lab/models": "workspace:*",
