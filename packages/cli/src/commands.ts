@@ -18,6 +18,13 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
+    name: "stake",
+    pkg: "@flop-lab/staking",
+    bin: "flop-staking",
+    section: "operate",
+    summary: "Model quoted stake requirements and inspect indexed stake evidence",
+  },
+  {
     name: "call",
     pkg: "@flop-lab/console",
     bin: "flop-console",

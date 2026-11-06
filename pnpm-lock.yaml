@@ -110,6 +110,9 @@ importers:
       '@flop-lab/spendguard':
         specifier: workspace:*
         version: link:../spendguard
+      '@flop-lab/staking':
+        specifier: workspace:*
+        version: link:../staking
       '@flop-lab/tclk-inspect':
         specifier: workspace:*
         version: link:../tclk-inspect
@@ -226,6 +229,12 @@ importers:
         version: link:../mcp
 
   packages/spendguard: {}
+
+  packages/staking:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/tclk-inspect:
     dependencies:
