@@ -19,7 +19,7 @@ const labels: Record<Result, string> = {
 const explanations: Record<Result, string> = {
   MATCH: "Exact agreement with the catalog or an observed name. Not runtime certification.",
   DRIFT: "Both sides known, with different values in comparable units.",
-  SPEC_ONLY: "A spec identifier absent from the catalog, or a vector with no replay.",
+  SPEC_ONLY: "A spec identifier absent from the catalog or a vector with no replay.",
   RUNTIME_ONLY: "An observed identifier with no parsed spec entry.",
   UNOBSERVABLE: "Public evidence cannot settle this clause. Inspect what is needed.",
 };
