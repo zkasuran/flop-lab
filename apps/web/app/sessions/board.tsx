@@ -339,6 +339,8 @@ export function SessionBoard({
             State
             <motion.select
               aria-label="State"
+              whileHover={{ borderColor: "var(--accent)" }}
+              whileTap={{ scale: reduced ? 1 : 0.99 }}
               value={filter}
               onChange={(e) => choose(e.target.value as State | "all")}
               whileFocus={{ boxShadow: "0 0 0 2px var(--accent)" }}
@@ -356,6 +358,8 @@ export function SessionBoard({
             Channel ID
             <motion.input
               aria-label="Channel ID"
+              whileHover={{ borderColor: "var(--accent)" }}
+              whileTap={{ scale: reduced ? 1 : 0.99 }}
               type="search"
               value={query}
               placeholder="0x..."
