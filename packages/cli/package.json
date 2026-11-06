@@ -16,6 +16,7 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@flop-lab/mcp-server": "workspace:*",
     "@flop-lab/watch": "workspace:*",
     "@flop-lab/upgrades": "workspace:*",
     "@flop-lab/knowledge": "workspace:*",
