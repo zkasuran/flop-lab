@@ -10,6 +10,7 @@ import { planSwap, parameters, specification, type SwapPlanInput } from "../../.
 import { generateHashLock, normalizeHashLock } from "../../../../packages/swaps/src/hash";
 import type { recordedObservations } from "../../../../packages/swaps/src/observed";
 import styles from "./view.module.css";
+import { timelineGeometry } from "./model";
 
 type Report = ReturnType<typeof recordedObservations>;
 const initial: SwapPlanInput = {
@@ -21,17 +22,10 @@ const initial: SwapPlanInput = {
   refundHead: "finalized",
   counterRefundBeforeLateClaim: true,
 };
-const ratio = (value: string, total: bigint) => Number((BigInt(value) * 1_000_000n) / total) / 1_000_000;
 
 function Timeline({ plan }: { plan: ReturnType<typeof planSwap> }) {
   const reduced = useReducedMotion() !== false;
-  const other = BigInt(plan.otherDurationMs),
-    flop = BigInt(plan.flopDurationMs);
-  const required = plan.requiredFlopBlocks === null ? null : BigInt(plan.requiredFlopBlocks) * 1000n;
-  const max = [other, flop, required ?? 0n].reduce((a, b) => (a > b ? a : b));
-  const domain = max + max / 5n + 1n;
-  const endOther = ratio(other.toString(), domain),
-    endRequired = required === null ? null : ratio(required.toString(), domain);
+  const { foreignBoundary: endOther, safeBoundary: endRequired, legs } = timelineGeometry(plan);
   return (
     <div className={styles.timeline}>
       <div className={styles.row}>
@@ -39,10 +33,7 @@ function Timeline({ plan }: { plan: ReturnType<typeof planSwap> }) {
         <span className={styles.tag}>Synthetic scenario</span>
       </div>
       <p className="muted">Both durations start now. A timeout enables refund. It does not erase a hash-lock claim.</p>
-      {[
-        { label: "Other chain", blocks: plan.input.otherBlocks, ms: plan.otherDurationMs },
-        { label: "FLOP", blocks: plan.input.flopBlocks, ms: plan.flopDurationMs },
-      ].map((leg) => (
+      {legs.map((leg) => (
         <div className={styles.leg} key={leg.label}>
           <div className={styles.row}>
             <strong>{leg.label}</strong>
@@ -55,7 +46,7 @@ function Timeline({ plan }: { plan: ReturnType<typeof planSwap> }) {
               data-swap-bar={leg.label}
               className={leg.label === "FLOP" ? styles.flopBar : styles.otherBar}
               initial={false}
-              animate={{ scaleX: ratio(leg.ms, domain) }}
+              animate={{ scaleX: leg.scale }}
               transition={{ duration: reduced ? 0 : 0.4, ease: "easeOut" }}
             />
           </div>
@@ -86,7 +77,7 @@ function Timeline({ plan }: { plan: ReturnType<typeof planSwap> }) {
         </span>
       </div>
       <p className={styles.caption}>
-        {required === null
+        {endRequired === null
           ? "Safety boundary unknown without current finality lag."
           : `Minimum FLOP duration: ${plan.requiredFlopBlocks} one-second blocks. The green region does not override a frozen admission gate or prove completion.`}
       </p>
