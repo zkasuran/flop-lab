@@ -18,6 +18,7 @@ import modelCatalogue from "../../../../packages/models/test/fixtures/devnet.jso
 import { parseGateway } from "../../../../packages/models/src/schema";
 import kestra from "../../app/kestra/observed.json";
 import consoleTools from "../../../../packages/console/fixtures/tools.json";
+import staking from "../../../../packages/staking/fixtures/miners.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import { repository, tools } from "../../content/tools";
@@ -44,6 +45,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  staking: () =>
+    metric(
+      rows(object(JSON.parse(staking.raw) as unknown).data).length,
+      "miners in the recorded stake page",
+      staking.measuredAt,
+      staking.source,
+      "packages/staking/fixtures/miners.json",
+      "Indexed balances and capacity. Not a runtime eligibility or calibration lease proof.",
+    ),
   models: () => {
     const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");
     return metric(
