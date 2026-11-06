@@ -10,6 +10,13 @@ export const labels: Record<Signal, string> = {
 };
 export type ReplayEvent = { suite: Suite; checks: number } | { done: true; evaluatedAt: string } | { error: string };
 
+/** Use suite typography for display while keeping raw source text in downloads.
+ * @example displayText("source\u2014text") // "source-text"
+ */
+export function displayText(text: string): string {
+  return text.replace(/[\u2013\u2014]/g, "-");
+}
+
 /** Validate the small same-origin replay protocol. @example parseReplayEvent({suite:"spec",checks:1}) */
 export function parseReplayEvent(value: unknown): ReplayEvent {
   if (!value || typeof value !== "object") throw new Error("Invalid replay event");

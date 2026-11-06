@@ -76,6 +76,8 @@ Tests cover source completeness, exact quotes, source drift, malformed inputs, o
 
 The recheck control reruns the existing suite libraries on the server against the same immutable recordings. Its progress advances when each library completes. It does not refresh the devnet. Download the raw inputs for CLI replay or the displayed report for review. The raw-input download has a five-minute HTTP cache. Replay responses use `no-store`.
 
+Display punctuation uses plain hyphens. JSON downloads retain the original quoted source text.
+
 To run the production page from this repository:
 
 ```sh

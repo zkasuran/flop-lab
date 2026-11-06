@@ -6,7 +6,7 @@ import { CopyButton } from "@/components/controls";
 import { MotionButton, MotionLink, ObservedNumber, ReadingReveal } from "@/components/motion";
 import { ToolHeader } from "@/components/tool-header";
 import type { Entry, Report, Signal, Suite } from "../../../../packages/invariants/src/types";
-import { labels, parseReplayEvent, suites, visibleEntries } from "./view";
+import { displayText, labels, parseReplayEvent, suites, visibleEntries } from "./view";
 import styles from "./matrix.module.css";
 
 const explains: Record<Signal, string> = {
@@ -58,13 +58,13 @@ function Detail({ entry, close }: { entry: Entry | null; close: () => void }) {
           >
             <div className={styles.detailTop}>
               <span className="eyebrow">
-                {entry.id} / {entry.section}
+                {entry.id} / {displayText(entry.section)}
               </span>
               <MotionButton onClick={close} className={styles.button}>
                 Close
               </MotionButton>
             </div>
-            <h2 id="detail-title">{entry.title}</h2>
+            <h2 id="detail-title">{displayText(entry.title)}</h2>
             <p className={styles.signal} data-signal={entry.signal}>
               {labels[entry.signal]}
               {entry.flags.length ? ` / ${entry.flags.join(" / ")}` : ""}
@@ -79,7 +79,10 @@ function Detail({ entry, close }: { entry: Entry | null; close: () => void }) {
             </section>
             <section>
               <h3>Quoted rule</h3>
-              <blockquote>{entry.quote.text}</blockquote>
+              <blockquote>{displayText(entry.quote.text)}</blockquote>
+              <p className={styles.date}>
+                Display typography uses plain hyphens. Downloads retain the original source text.
+              </p>
               <MotionLink href={`${entry.quote.source}#L${entry.quote.line}-L${entry.quote.endLine}`}>
                 Yellowpaper lines {entry.quote.line} to {entry.quote.endLine} ↗
               </MotionLink>
@@ -91,7 +94,7 @@ function Detail({ entry, close }: { entry: Entry | null; close: () => void }) {
                   {entry.cells.map((cell) => (
                     <div key={cell.column}>
                       <dt>{cell.column}</dt>
-                      <dd>{cell.quote}</dd>
+                      <dd>{displayText(cell.quote)}</dd>
                     </div>
                   ))}
                 </dl>
@@ -106,13 +109,13 @@ function Detail({ entry, close }: { entry: Entry | null; close: () => void }) {
                       <code>{check.id}</code>
                       <strong>{check.status}</strong>
                     </div>
-                    <p>{check.reason}</p>
+                    <p>{displayText(check.reason)}</p>
                     <MotionLink href={suiteLinks[check.suite]}>Open {check.suite} ↗</MotionLink>
                     {check.evidence.map((evidence, index) => (
                       <div className={styles.evidence} key={index}>
                         <MotionLink href={evidence.source}>{evidence.source}</MotionLink>
                         <time dateTime={evidence.measuredAt}>{evidence.measuredAt}</time>
-                        <pre>{evidence.detail}</pre>
+                        <pre>{displayText(evidence.detail)}</pre>
                       </div>
                     ))}
                   </article>
@@ -380,7 +383,7 @@ export function Matrix({ initial }: { initial: Report }) {
         <div className={styles.matrix}>
           {groups.map((group) => (
             <section key={group} className={styles.actor} aria-label={group}>
-              <h3>{group}</h3>
+              <h3>{displayText(group)}</h3>
               <div className={styles.grid}>
                 <AnimatePresence initial={false} mode="popLayout">
                   {entries
@@ -408,7 +411,7 @@ export function Matrix({ initial }: { initial: Report }) {
                               {entry.id}
                               <span aria-hidden="true">↗</span>
                             </span>
-                            <strong>{entry.title}</strong>
+                            <strong>{displayText(entry.title)}</strong>
                             <span className={styles.cellState}>{pending ? "Checking" : labels[entry.signal]}</span>
                             {entry.flags.length > 0 && <span className={styles.flags}>{entry.flags.join(" / ")}</span>}
                           </button>

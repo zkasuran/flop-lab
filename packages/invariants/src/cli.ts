@@ -27,7 +27,8 @@ try {
               .map(
                 (r) => `${r.id} | ${r.title}\n${r.checks.join(", ") || "Not observable from outside"}\n${r.boundary}`,
               )
-              .join("\n\n"),
+              .join("\n\n")
+              .replace(/[\u2013\u2014]/g, "-"),
       );
     } else {
       let input: Inputs = recordedInputs();
@@ -46,7 +47,9 @@ try {
               "",
               ...report.warnings,
               `Counts: ${JSON.stringify(report.counts)}`,
-            ].join("\n"),
+            ]
+              .join("\n")
+              .replace(/[\u2013\u2014]/g, "-"),
       );
       process.exitCode = report.counts.MISMATCH ? 1 : 0;
     }
