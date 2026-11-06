@@ -1,0 +1,1190 @@
+{
+  "source": "local built flop-lab MCP server: tools/list",
+  "measuredAt": "2026-11-06T06:54:37.255Z",
+  "tools": [
+    {
+      "name": "lab_verify_channel",
+      "description": "Cross-check a compute channel. Recorded mode accepts the bundled channel only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "channelId": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" }
+        },
+        "required": ["channelId"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "channelId": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" },
+              "checks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "status": { "type": "string", "enum": ["PASS", "FAIL", "UNVERIFIABLE", "NOT_APPLICABLE"] },
+                    "detail": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["id", "status", "detail"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["channelId", "checks"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_verify_tape",
+      "description": "Check exact escrow arithmetic in a bounded settlement page.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "limit": { "default": 25, "type": "integer", "minimum": 1, "maximum": 25 }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "complete": { "type": "boolean" },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "channelId": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                          "status": { "type": "string", "enum": ["PASS", "FAIL", "UNVERIFIABLE", "NOT_APPLICABLE"] },
+                          "detail": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                        },
+                        "required": ["id", "status", "detail"],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": ["channelId", "checks"],
+                  "additionalProperties": false
+                }
+              },
+              "errors": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 } }
+            },
+            "required": ["complete", "rows", "errors"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_score_rank",
+      "description": "Rank observed miner evidence. Recorded mode evaluates at capture time.",
+      "inputSchema": {
+        "type": "object",
+        "properties": { "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] } },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "miners": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "miner": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "score": { "type": ["number", "null"] },
+                    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+                    "settlements": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                    "warnings": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 } }
+                  },
+                  "required": ["miner", "score", "confidence", "settlements", "warnings"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["miners"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_score_route",
+      "description": "Select an eligible miner without sending inference. A live price ceiling fails closed if the quote is unknown.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "model": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "maxPricePerGflop": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+          "minConfidence": { "default": 0.2, "type": "number", "minimum": 0, "maximum": 1 },
+          "exclude": {
+            "default": [],
+            "maxItems": 100,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["model"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "status": { "type": "string", "enum": ["picked", "no-eligible-miner"] },
+              "miner": { "anyOf": [{ "type": "string", "minLength": 1, "maxLength": 4000 }, { "type": "null" }] },
+              "reasons": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 } },
+              "candidates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "miner": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "reasons": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 } }
+                  },
+                  "required": ["miner", "reasons"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["status", "miner", "reasons", "candidates"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_spendguard_evaluate",
+      "description": "Evaluate supplied policy, reservation history and request locally. No ledger writes or spending.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "policy": {
+            "type": "object",
+            "properties": {
+              "version": { "type": "number", "const": 1 },
+              "budgets": {
+                "type": "object",
+                "properties": {
+                  "task": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                  "hour": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                  "day": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                  "total": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" }
+                },
+                "required": ["task", "hour", "day", "total"],
+                "additionalProperties": false
+              },
+              "maxPricePerGflop": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+              "maxEscrowPerSession": {
+                "type": "string",
+                "maxLength": 256,
+                "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$"
+              },
+              "allowModels": {
+                "maxItems": 100,
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+              },
+              "allowMiners": {
+                "maxItems": 100,
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+              },
+              "denyMiners": {
+                "maxItems": 100,
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+              },
+              "modelCaps": {
+                "type": "object",
+                "propertyNames": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "additionalProperties": {
+                  "type": "string",
+                  "maxLength": 256,
+                  "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$"
+                }
+              },
+              "minerCaps": {
+                "type": "object",
+                "propertyNames": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "additionalProperties": {
+                  "type": "string",
+                  "maxLength": 256,
+                  "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$"
+                }
+              },
+              "requireDryRun": { "type": "boolean" },
+              "cooldown": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+            },
+            "required": [
+              "version",
+              "budgets",
+              "maxPricePerGflop",
+              "maxEscrowPerSession",
+              "allowModels",
+              "allowMiners",
+              "denyMiners",
+              "modelCaps",
+              "minerCaps",
+              "requireDryRun",
+              "cooldown"
+            ],
+            "additionalProperties": false
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+              "task": { "type": "string", "minLength": 1, "maxLength": 4000 },
+              "model": { "type": "string", "minLength": 1, "maxLength": 4000 },
+              "miner": { "type": "string", "minLength": 1, "maxLength": 4000 },
+              "amount": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+              "pricePerGflop": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+              "at": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+              "dryRun": { "type": "boolean" }
+            },
+            "required": ["id", "task", "model", "miner", "amount", "pricePerGflop", "at", "dryRun"],
+            "additionalProperties": false
+          },
+          "reservations": {
+            "maxItems": 1000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "request": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "task": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "model": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "miner": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "amount": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                    "pricePerGflop": {
+                      "type": "string",
+                      "maxLength": 256,
+                      "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$"
+                    },
+                    "at": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                    "dryRun": { "type": "boolean" }
+                  },
+                  "required": ["id", "task", "model", "miner", "amount", "pricePerGflop", "at", "dryRun"],
+                  "additionalProperties": false
+                },
+                "charged": { "type": "string", "maxLength": 256, "pattern": "^\\d+$" },
+                "pending": { "type": "boolean" }
+              },
+              "required": ["request", "charged", "pending"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["policy", "request", "reservations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "decision": { "type": "string", "enum": ["allow", "deny"] },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rule": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "passed": { "type": "boolean" },
+                    "detail": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["rule", "passed", "detail"],
+                  "additionalProperties": false
+                }
+              },
+              "fired": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 } },
+              "budgets": {
+                "type": "object",
+                "properties": {
+                  "task": {
+                    "type": "object",
+                    "properties": {
+                      "used": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "limit": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "remaining": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" }
+                    },
+                    "required": ["used", "limit", "remaining"],
+                    "additionalProperties": false
+                  },
+                  "hour": {
+                    "type": "object",
+                    "properties": {
+                      "used": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "limit": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "remaining": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" }
+                    },
+                    "required": ["used", "limit", "remaining"],
+                    "additionalProperties": false
+                  },
+                  "day": {
+                    "type": "object",
+                    "properties": {
+                      "used": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "limit": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "remaining": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" }
+                    },
+                    "required": ["used", "limit", "remaining"],
+                    "additionalProperties": false
+                  },
+                  "total": {
+                    "type": "object",
+                    "properties": {
+                      "used": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "limit": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" },
+                      "remaining": { "type": "string", "maxLength": 256, "pattern": "^(0|[1-9]\\d*)(?:\\.\\d{1,18})?$" }
+                    },
+                    "required": ["used", "limit", "remaining"],
+                    "additionalProperties": false
+                  }
+                },
+                "required": ["task", "hour", "day", "total"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["decision", "rules", "fired", "budgets"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_harness_run",
+      "description": "Run the bounded read-only gateway contract claim. Hard spending ceiling is zero.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "maxRequests": { "default": 4, "type": "integer", "minimum": 1, "maximum": 12 }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+              "maxRequests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+              "spentFlop": { "type": "string", "const": "0" },
+              "results": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "status": { "type": "string", "enum": ["PASS", "FAIL", "UNVERIFIABLE", "SKIPPED"] },
+                    "reason": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["id", "status", "reason"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["requests", "maxRequests", "spentFlop", "results"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_challenger_watch",
+      "description": "Take one bounded challenge-review snapshot. Does not start a daemon or submit challenges.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "limit": { "default": 25, "type": "integer", "minimum": 1, "maximum": 25 }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "complete": { "type": "boolean" },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "channelId": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" },
+                    "window": {
+                      "type": "string",
+                      "enum": ["estimated-open", "estimated-expired", "unknown", "no-standard-window"]
+                    },
+                    "estimatedExpiry": {
+                      "anyOf": [{ "type": "string", "minLength": 1, "maxLength": 4000 }, { "type": "null" }]
+                    },
+                    "priority": { "type": "number", "minimum": 0, "maximum": 100 },
+                    "reason": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["channelId", "window", "estimatedExpiry", "priority", "reason"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["complete", "rows"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_spec_diff",
+      "description": "Compare the pinned paper with observed protocol catalog and transactions.",
+      "inputSchema": {
+        "type": "object",
+        "properties": { "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] } },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "sha": { "type": "string", "minLength": 1, "maxLength": 4000 },
+              "differences": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "result": {
+                      "type": "string",
+                      "enum": ["MATCH", "DRIFT", "SPEC_ONLY", "RUNTIME_ONLY", "UNOBSERVABLE"]
+                    },
+                    "reason": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["id", "result", "reason"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["sha", "differences"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_mcp_audit",
+      "description": "Audit the hosted knowledge tool against its own advertised schemas with a bounded request budget.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "maxRequests": { "default": 8, "type": "integer", "minimum": 3, "maximum": 12 }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "results": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "status": { "type": "string", "enum": ["PASS", "VIOLATION", "UNVERIFIABLE", "SKIPPED"] },
+                    "reason": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["name", "status", "reason"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["results"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_explorer_lookup",
+      "description": "Look up a block, hash or address with exact identifier matching. Recorded mode only returns its captured input.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "query": { "type": "string", "minLength": 1, "maxLength": 128 }
+        },
+        "required": ["query"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "status": { "type": "string", "enum": ["found", "partial", "unavailable", "not_found"] },
+              "entities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "notes": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 } },
+                    "derived": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                          "value": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                          "formula": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                        },
+                        "required": ["label", "value", "formula"],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": ["kind", "id", "notes", "derived"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["status", "entities"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_indexer_audit",
+      "description": "Audit bounded block links, counters and settlement splits. Recorded mode uses the capture's fixed sample.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "default": "live", "type": "string", "enum": ["live", "recorded"] },
+          "limit": { "default": 3, "type": "integer", "minimum": 1, "maximum": 10 }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "findings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "status": { "type": "string", "enum": ["PASS", "FAIL", "UNVERIFIABLE"] },
+                    "reason": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "formula": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["id", "status", "reason", "formula"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["findings"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_did_trail",
+      "description": "Verify the bundled public DID trail and signed artifacts. This operation is recorded-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "pattern": "^(did:key:z[1-9A-HJ-NP-Za-km-z]{47}|[0-9a-f]{16})$" }
+        },
+        "required": ["query"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "fingerprint": { "type": "string", "minLength": 1, "maxLength": 4000 },
+              "did": { "anyOf": [{ "type": "string", "minLength": 1, "maxLength": 4000 }, { "type": "null" }] },
+              "artifacts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "status": { "type": "string", "enum": ["verified", "invalid", "unverifiable"] },
+                    "reason": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["id", "status", "reason"],
+                  "additionalProperties": false
+                }
+              },
+              "gaps": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 4000 } }
+            },
+            "required": ["fingerprint", "did", "artifacts", "gaps"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_doctor",
+      "description": "Read local operator readiness. Offline only, no port binding and no caller-selected paths.",
+      "inputSchema": {
+        "type": "object",
+        "properties": { "role": { "default": "miner", "type": "string", "enum": ["miner", "validator"] } },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "role": { "type": "string", "enum": ["miner", "validator"] },
+              "status": { "type": "string", "enum": ["READY", "NOT_READY", "UNKNOWN"] },
+              "requirements": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "status": { "type": "string", "enum": ["READY", "NOT_READY", "UNKNOWN"] },
+                    "detail": { "type": "string", "minLength": 1, "maxLength": 4000 }
+                  },
+                  "required": ["id", "status", "detail"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["role", "status", "requirements"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    }
+  ]
+}

@@ -40,6 +40,7 @@ import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/r
 import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 import watch from "../../../../packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json";
+import suiteMcp from "../../app/mcp/tool-list.json";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -62,6 +63,16 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  mcp: () =>
+    metric(
+      suiteMcp.tools.length,
+      "operations listed by the local MCP server",
+      suiteMcp.measuredAt,
+      saved("apps/web/app/mcp/tool-list.json"),
+      "apps/web/app/mcp/tool-list.json",
+      "Generated from tools/list on the built server. Not hosted service availability.",
+      "Local server recording",
+    ),
   watch: () =>
     metric(
       watch.requests,
