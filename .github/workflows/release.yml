@@ -41,7 +41,7 @@ jobs:
       - name: Run the workspace gate
         run: pnpm install --frozen-lockfile && pnpm check && pnpm build
       - name: Pack unsigned dry-run candidates
-        run: pnpm --filter @flop-lab/release pack --out "$RUNNER_TEMP/flop-release"
+        run: pnpm --filter @flop-lab/release run pack --out "$RUNNER_TEMP/flop-release"
       - name: Verify artifact bytes
         working-directory: ${{ runner.temp }}/flop-release
         run: sha256sum -c SHA256SUMS

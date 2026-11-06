@@ -27,7 +27,7 @@ This is the repository's changeset-equivalent workflow. It has no registry looku
 ```sh
 pnpm check
 pnpm build
-pnpm --filter @flop-lab/release pack --out /tmp/flop-release-artifacts
+pnpm --filter @flop-lab/release run pack --out /tmp/flop-release-artifacts
 ```
 
 Packing refuses a dirty checkout or an existing output directory. It stages tracked package files and built `dist/` files, adds the licence and generated changelog, converts workspace references to candidate versions and uses `pnpm pack`. It checks every declared export and binary path in each archive. Pack lifecycle scripts are disabled because the gate already built the checkout. Private-package guards remain enabled. The staging directories remain available for review.
