@@ -39,8 +39,6 @@ function Bar({ value, total, label }: { value: number; total: number; label: str
       <motion.div
         data-bar={label}
         initial={false}
-        style={{ scaleX: ratio }}
-        whileInView={{ scaleX: ratio }}
         animate={{ scaleX: ratio }}
         transition={{ duration: reduced ? 0 : 0.35 }}
       />
