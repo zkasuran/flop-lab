@@ -41,6 +41,7 @@ import { recordedReport as upgradesReport } from "../../../../packages/upgrades/
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 import exportBlocks from "../../../../packages/export/fixtures/blocks.json";
 import { parseIndexerData } from "@flop-lab/mcp";
+import watch from "../../../../packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -74,6 +75,15 @@ const readers: Record<string, () => SuiteMetric | null> = {
       "Bounded recorded rows. Export completion does not establish chain completeness.",
     );
   },
+  watch: () =>
+    metric(
+      watch.requests,
+      "source requests in saved poll",
+      watch.finishedAt,
+      mcp,
+      "packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json",
+      "Bounded recorded poll. Not continuous monitoring or current service health.",
+    ),
   yellowpaper: () => {
     const paper = yellowpaperSpec();
     return metric(

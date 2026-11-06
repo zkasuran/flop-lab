@@ -26,6 +26,37 @@ function scripted(responses: (Response | Error | "hang")[]) {
 const fast = { sleep: async () => {}, minIntervalMs: 0, baseDelayMs: 1 };
 
 describe("McpClient", () => {
+  it("initializes through the same transport without extra tool calls", async () => {
+    const requests: unknown[] = [];
+    const result = { protocolVersion: "2024-11-05", serverInfo: { name: "test", version: "1" }, capabilities: {} };
+    const fetchFn: typeof fetch = async (_url, init) => {
+      requests.push(JSON.parse(String(init?.body)));
+      return new Response(`data: ${JSON.stringify({ jsonrpc: "2.0", id: 1, result })}\n\n`);
+    };
+    const client = new McpClient({ fetch: fetchFn, retries: 0, ...fast });
+    const answer = await client.initialize();
+    expect(answer.value).toEqual(result);
+    expect(JSON.parse(answer.raw)).toEqual(result);
+    expect(answer.attempts).toBe(1);
+    expect(requests).toEqual([
+      {
+        jsonrpc: "2.0",
+        id: 1,
+        method: "initialize",
+        params: { protocolVersion: "2024-11-05", capabilities: {}, clientInfo: { name: "flop-lab", version: "0.1.0" } },
+      },
+    ]);
+    expect(client.stats.requests).toBe(1);
+  });
+
+  it("preserves initialize RPC errors", async () => {
+    const s = scripted([new Response('{"jsonrpc":"2.0","id":1,"error":{"code":-32601,"message":"unsupported"}}')]);
+    await expect(new McpClient({ fetch: s.fetchFn, retries: 0, ...fast }).initialize()).rejects.toMatchObject({
+      kind: "rpc",
+      details: { code: -32601 },
+    });
+    expect(s.calls()).toBe(1);
+  });
   it("parses a JSON tool answer and reports metadata", async () => {
     const s = scripted([new Response(ok(1, '{"x":1}'))]);
     const r = await new McpClient({ fetch: s.fetchFn, ...fast }).callTool<{ x: number }>("t");

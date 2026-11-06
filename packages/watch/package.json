@@ -1,0 +1,27 @@
+{
+  "name": "@flop-lab/watch",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Bounded local alerts over dated FLOP devnet observations",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-watch": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/harness": "workspace:*",
+    "@flop-lab/models": "workspace:*",
+    "@flop-lab/recorder": "workspace:*",
+    "@flop-lab/sessions": "workspace:*",
+    "yaml": "^2.8.1"
+  }
+}

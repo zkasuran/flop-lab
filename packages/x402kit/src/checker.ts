@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-import { flopUnits, hex, object, parseProof, text } from "./protocol.js";
-import { bindingHeaders, RULES, type RuleId } from "./rules.js";
+import { flopUnits, hex, object, parseProof, text } from "./protocol";
+import { bindingHeaders, RULES, type RuleId } from "./rules";
 
 export interface Round {
   measuredAt: string;
@@ -53,7 +53,7 @@ function pairs(value: unknown): [string, string][] {
 /** Validate a bounded raw transcript while preserving duplicate headers for diagnosis. @example parseExchange(JSON.parse(input)) */
 export function parseExchange(value: unknown): Exchange {
   const root = object(value);
-  if (JSON.stringify(value).length > 131072) throw new Error("Exchange exceeds 128 KiB");
+  if (new TextEncoder().encode(JSON.stringify(value)).length > 131072) throw new Error("Exchange exceeds 128 KiB");
   if (root.schemaVersion !== 1 || !["reference", "sdk-0.4.0"].includes(String(root.profile)))
     throw new Error("Unsupported exchange schema or profile");
   if (!Array.isArray(root.rounds) || root.rounds.length > 16) throw new Error("Expected at most 16 rounds");
@@ -206,9 +206,10 @@ export function checkExchange(value: unknown): CheckReport {
           add(n, "client", "quote_expired", "Proof retry reached or passed quote expiry", "expiry");
         const result = JSON.stringify({
           ...round.response,
-          headers: round.response.headers.filter(
-            ([key]) => !["date", "connection", "keep-alive"].includes(key.toLowerCase()),
-          ),
+          headers: round.response.headers
+            .map(([key, value]): [string, string] => [key.toLowerCase(), value])
+            .filter(([key]) => !["date", "connection", "keep-alive"].includes(key))
+            .sort(([a], [b]) => a.localeCompare(b)),
         });
         if (challenge.completed && challenge.completed !== result)
           add(
