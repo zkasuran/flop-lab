@@ -333,8 +333,7 @@ export function Verifier({ initialBundle, initialReport }: { initialBundle: Evid
         <motion.aside className={styles.principle} {...readStep(3)}>
           <p className="eyebrow">The boundary matters</p>
           <p>
-            A passing check
-            <br />
+            A passing check <br />
             is a narrow claim.
           </p>
           <span>Matching arithmetic does not prove honest inference. Missing proof stays visible.</span>

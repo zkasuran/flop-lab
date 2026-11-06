@@ -1,24 +1,44 @@
 /* SPDX-License-Identifier: Apache-2.0 */
+/* Design tokens. Tool pages read these names directly, so keep them stable. */
 :root {
   color-scheme: dark;
-  --background: #101312;
-  --surface: #171c19;
-  --surface-raised: #1e2621;
-  --foreground: #edf2e9;
-  --muted: #abb7ad;
-  --border: #3c493f;
-  --accent: #bded89;
-  --accent-ink: #162409;
-  --danger: #ffb4ab;
-  --warning: #edcf8b;
-  --font-text: var(--font-geist), Arial, sans-serif;
-  --font-data: var(--font-geist-mono), monospace;
+  --background: #0a0d0b;
+  --surface: #101512;
+  --surface-raised: #171e19;
+  --foreground: #eef3ea;
+  --muted: #a3afa6;
+  --subtle: #808d84;
+  --border: #263029;
+  --border-strong: #435047;
+  --accent: #c2f07f;
+  --accent-ink: #10200a;
+  --danger: #ff9f93;
+  --warning: #f2d083;
+
+  /* Result colours. PASS, FAIL, UNVERIFIABLE and SKIPPED keep one colour each across the site. */
+  --pass: var(--accent);
+  --fail: var(--danger);
+  --unverifiable: var(--warning);
+  --skipped: var(--subtle);
+
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --grid-line: color-mix(in oklab, var(--foreground) 5.5%, transparent);
+  --frame: color-mix(in oklab, var(--foreground) 38%, transparent);
+  --header-bg: color-mix(in oklab, var(--background) 92%, transparent);
+  --shadow-lg: 0 40px 120px -40px rgb(0 0 0 / 0.75), 0 0 0 1px rgb(255 255 255 / 0.02);
+  --inner-light: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  --grain-opacity: 0.05;
+
+  --font-text: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-data: var(--font-geist-mono), ui-monospace, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lg: 1.25rem;
-  --text-xl: clamp(1.6rem, 3vw, 2.5rem);
-  --text-hero: clamp(2.75rem, 6vw, 5.25rem);
+  --text-xl: clamp(1.75rem, 3.2vw, 2.75rem);
+  --text-2xl: clamp(2.25rem, 4.4vw, 3.5rem);
+  --text-hero: clamp(2.9rem, 5.7vw, 5.25rem);
+
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -27,22 +47,43 @@
   --space-8: 2rem;
   --space-12: 3rem;
   --space-16: 4rem;
-  --radius-sm: 0.25rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  --radius-sm: 0.375rem;
   --radius-md: 0.75rem;
+  --radius-lg: 1.125rem;
+  --container: 1240px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --header-height: 4rem;
+
+  /* Motion. Every timed transition finishes within --motion-max. There is no ambient loop. */
   --motion-fast: 160ms;
+  --motion-base: 240ms;
   --motion-reveal: 400ms;
+  --motion-max: 600ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --background: #f4f5f0;
-  --surface: #e9ece4;
+  --background: #f6f7f2;
+  --surface: #eceee6;
   --surface-raised: #ffffff;
-  --foreground: #172019;
-  --muted: #4c5b50;
-  --border: #a3afa4;
-  --accent: #365d0e;
+  --foreground: #111711;
+  --muted: #4b5a4f;
+  --subtle: #5f6d63;
+  --border: #d6dcd2;
+  --border-strong: #a2ad9f;
+  --accent: #2f5d0c;
   --accent-ink: #ffffff;
-  --danger: #a22524;
-  --warning: #745014;
+  --danger: #a6261f;
+  --warning: #7a5410;
+  --accent-soft: color-mix(in oklab, var(--accent) 9%, transparent);
+  --grid-line: color-mix(in oklab, var(--foreground) 6%, transparent);
+  --frame: color-mix(in oklab, var(--foreground) 45%, transparent);
+  --header-bg: color-mix(in oklab, var(--background) 93%, transparent);
+  --shadow-lg: 0 40px 100px -50px rgb(20 40 20 / 0.35), 0 0 0 1px rgb(0 0 0 / 0.02);
+  --inner-light: inset 0 1px 0 rgb(255 255 255 / 0.7);
+  --grain-opacity: 0.035;
 }

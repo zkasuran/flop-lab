@@ -18,11 +18,11 @@ export type Command = {
 
 export const commands: readonly Command[] = [
   {
-    name: "stake",
-    pkg: "@flop-lab/staking",
-    bin: "flop-staking",
-    section: "operate",
-    summary: "Model quoted stake requirements and inspect indexed stake evidence",
+    name: "economics",
+    pkg: "@flop-lab/economics",
+    bin: "flop-economics",
+    section: "verify",
+    summary: "Model exact emission and compare dated settlement fees with the paper",
   },
   {
     name: "sessions",
@@ -149,6 +149,13 @@ export const commands: readonly Command[] = [
     bin: "flop-sdkconf",
     section: "build",
     summary: "Check published SDK behaviour with offline request traces",
+  },
+  {
+    name: "stake",
+    pkg: "@flop-lab/staking",
+    bin: "flop-staking",
+    section: "operate",
+    summary: "Model quoted stake requirements and inspect indexed stake evidence",
   },
 ];
 
