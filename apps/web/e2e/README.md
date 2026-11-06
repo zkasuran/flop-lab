@@ -21,7 +21,7 @@ Use `pnpm --filter web e2e` without the slot helper on an isolated CI runner. Th
 - A named primary interaction that must change the rendered result.
 - Actual Tab navigation through visible enabled controls. Native radio groups use their browser Tab stop.
 - Axe serious and critical violations. Violations remain failures.
-- Reduced-motion numeric content before and after the animation window.
+- Reduced-motion values without an active animation at hydration. Later data loads can still update a value.
 - A first-viewport visual baseline for each route. Pixel ratio tolerance is configured explicitly in `playwright.config.ts`.
 - A detector self-check inserts a button that Tab cannot reach and requires its detection.
 
@@ -36,6 +36,8 @@ The browser blocks unhandled external traffic and reports it as a failure. The p
 Build with `e2e:build` before running these checks. It removes generated `.next` output before building under the guard. A normal live build can contain cached live data and is not a reproducible baseline.
 
 ## Review failures
+
+See [the measured product findings](FINDINGS.md). These assertions remain active until the owning pages are fixed.
 
 The HTML report is in `apps/web/e2e/report`. JSON results, axe evidence, viewport screenshots and failure traces are in `apps/web/e2e/artifacts`. Open a trace with `pnpm --filter web exec playwright show-trace <trace.zip>`. Traces retain actions, requests, source and screenshots. Per-action DOM snapshots are disabled because the full paper would be duplicated for every Tab press. Failure reports still contain an accessible page snapshot.
 

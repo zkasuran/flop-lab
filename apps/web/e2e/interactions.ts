@@ -11,7 +11,7 @@ export const interactions: Record<string, Interaction> = {
   "/harness": { input: 'input[placeholder="ID, expected value or reason"]' },
   "/verify": { button: /^Fail$/ },
   "/spendguard": { button: /^Next recorded row$/ },
-  "/x402": { button: /^2\. Paywall to client/ },
+  "/x402": { button: /^3\. Client to paywall/ },
   "/kestra": { button: /Collect settlements/, role: "tab" },
   "/challenger": { button: /^Inspect claim / },
   "/history": { button: /^Accounts$/ },
@@ -21,7 +21,7 @@ export const interactions: Record<string, Interaction> = {
   "/indexer": { button: /^FAIL\s*miners:/ },
   "/sdk": { button: /^Inspect Chain SDK Faucet refusal$/ },
   "/console": { button: /^Cost estimator$/, role: "tab" },
-  "/start": { button: /src\/guards.ts/ },
+  "/start": { button: /src\/main.ts/ },
   "/doctor": { button: /^Validator$/ },
   "/tclk": { select: ["#tclk-path", "happy"] },
   "/did": { button: /^Flip one signed byte$/ },
@@ -30,7 +30,7 @@ export const interactions: Record<string, Interaction> = {
   "/finality": { button: /#3005602\. Inspect block$/ },
   "/upgrades": { button: /^SDK$/ },
   "/economics": { button: /^Subsidy ends$/ },
-  "/metering": { button: /^Exact expiry$/ },
+  "/metering": { button: /^At acceptance$/ },
   "/proofs": { button: /^Leaderboards$/ },
   "/invariants": { button: /^M2\b/ },
   "/yellowpaper": { input: "#paper-search" },
@@ -38,6 +38,11 @@ export const interactions: Record<string, Interaction> = {
   "/staking": { button: /^200 GFLOP\/s$/ },
   "/watch": { button: /^Next observation/ },
   "/swaps": { button: /^Margin too short$/ },
+  "/status": { button: /^Failures only$/ },
+  "/community": { button: /^Pull requests$/ },
+  "/export": { button: /^NDJSON$/ },
+  "/mcp": { input: "#tool-search" },
+  "/openapi": { button: /GET.*spec/ },
 };
 
 /** Exercise a named primary action and require a changed rendered result. @example await interact(page, '/spec'). */

@@ -49,24 +49,24 @@ for (const path of routes) {
         Object.keys(button).some((key) => key.startsWith("__reactProps")),
       ),
     );
-    const instant = await page
-      .locator("main")
-      .first()
-      .evaluate((main) =>
-        [...main.querySelectorAll("strong, dd, output, .observed-number, .swap-value, [data-value]")].map(
-          (el) => el.textContent,
-        ),
-      );
-    await page.waitForTimeout(650);
-    const settled = await page
-      .locator("main")
-      .first()
-      .evaluate((main) =>
-        [...main.querySelectorAll("strong, dd, output, .observed-number, .swap-value, [data-value]")].map(
-          (el) => el.textContent,
-        ),
-      );
-    expect.soft(instant, "Reduced motion must expose final numeric values without tweening").toEqual(settled);
+    const movingValues = await page.evaluate(() => {
+      const selector = ".observed-number, .swap-value, [data-value], main output";
+      return document
+        .getAnimations()
+        .filter((animation) => {
+          const effect = animation.effect;
+          if (!(effect instanceof KeyframeEffect) || !(effect.target instanceof Element)) return false;
+          const duration = effect.getTiming().duration;
+          return (
+            animation.playState === "running" &&
+            typeof duration === "number" &&
+            duration > 0 &&
+            (effect.target.matches(selector) || effect.target.querySelector(selector))
+          );
+        })
+        .map((animation) => (animation.effect as KeyframeEffect).target?.textContent?.slice(0, 100));
+    });
+    expect.soft(movingValues, "Reduced motion must show values without an active animation").toEqual([]);
     const axe = await new AxeBuilder({ page }).analyze();
     const serious = axe.violations.filter((violation) => ["serious", "critical"].includes(violation.impact ?? ""));
     await info.attach("axe", { body: JSON.stringify(serious, null, 2), contentType: "application/json" });
@@ -81,13 +81,20 @@ for (const path of routes) {
       animations: "disabled",
       mask: [page.locator("footer .mono")],
     });
+    const missing = await unreachable(page);
+    expect.soft(missing, "Every enabled visible control must be keyboard reachable").toEqual([]);
+    // Keyboard focus can select a row. Reset before the independent primary-action assertion.
+    await page.reload();
+    await page.waitForFunction(() =>
+      [...document.querySelectorAll("button")].some((button) =>
+        Object.keys(button).some((key) => key.startsWith("__reactProps")),
+      ),
+    );
     try {
       await interact(page, path);
     } catch (error) {
       expect.soft(error, "The primary interaction must succeed").toBeUndefined();
     }
-    const missing = await unreachable(page);
-    expect.soft(missing, "Every enabled visible control must be keyboard reachable").toEqual([]);
     expect.soft(errors, "No console errors, page errors or unmocked external requests").toEqual([]);
     await info.attach("observation", {
       body: JSON.stringify({
