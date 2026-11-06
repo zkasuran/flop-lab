@@ -16,6 +16,7 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@flop-lab/metering": "workspace:*",
     "@flop-lab/invariants": "workspace:*",
     "@flop-lab/swaps": "workspace:*",
     "@flop-lab/finality": "workspace:*",
