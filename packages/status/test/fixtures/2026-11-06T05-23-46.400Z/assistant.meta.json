@@ -1,0 +1,7 @@
+{
+  "service": "assistant",
+  "source": "https://ask.flop.finance/mcp",
+  "measuredAt": "2026-11-06T05:23:47.834Z",
+  "httpStatus": 200,
+  "contentType": "application/json; charset=utf-8"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@flop-lab/export",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Dated devnet datasets for spreadsheets and notebooks",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-export": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/models": "workspace:*",
+    "@flop-lab/recorder": "workspace:*",
+    "hyparquet-writer": "0.18.0"
+  },
+  "devDependencies": {
+    "hyparquet": "1.32.0"
+  }
+}

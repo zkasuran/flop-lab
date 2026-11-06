@@ -1,0 +1,239 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6);
+}
+.notice,
+.row,
+.incident {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-6);
+}
+.notice p {
+  margin: var(--space-3) 0;
+}
+.command {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+.command code {
+  overflow-wrap: anywhere;
+  font-size: var(--text-sm);
+}
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  padding: var(--space-10) 0;
+}
+.summary strong {
+  font-family: var(--font-data);
+  font-size: var(--text-2xl);
+}
+.summary small {
+  font-size: var(--text-sm);
+  font-weight: 400;
+}
+.summary p {
+  max-width: 30ch;
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.heading h2,
+.section h2 {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.035em;
+}
+.window,
+.stamp {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  overflow-wrap: anywhere;
+}
+.controls {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin: var(--space-6) 0;
+}
+.controls button[aria-pressed="true"] {
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+.rows {
+  display: grid;
+  gap: var(--space-3);
+  position: relative;
+  min-height: 110px;
+}
+.row {
+  min-width: 0;
+}
+.row h3 {
+  font-size: var(--text-lg);
+  margin: 0 0 var(--space-3);
+}
+.rowGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+.rowGrid p {
+  font-size: var(--text-sm);
+  margin: var(--space-2) 0;
+}
+.value {
+  font-family: var(--font-data);
+  font-size: var(--text-xl);
+}
+.value small {
+  font-size: var(--text-sm);
+  font-weight: 400;
+}
+.pass {
+  color: var(--accent);
+  font-size: var(--text-sm);
+}
+.fail {
+  color: var(--warning);
+  font-size: var(--text-sm);
+}
+.spark {
+  color: var(--accent);
+}
+.spark svg {
+  display: block;
+  width: 100%;
+  height: 60px;
+  overflow: visible;
+}
+.spark span {
+  font-size: var(--text-xs);
+}
+.axis {
+  stroke: var(--border);
+  fill: none;
+}
+.passDot {
+  fill: var(--accent);
+}
+.failDot {
+  fill: var(--warning);
+}
+.barTrack {
+  height: 4px;
+  background: var(--border);
+  margin-top: var(--space-4);
+}
+.barTrack > div {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left;
+}
+.stamp {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+}
+.tableWrap {
+  overflow-x: auto;
+}
+.tableWrap table {
+  width: 100%;
+  font-size: var(--text-xs);
+  text-align: left;
+  border-collapse: collapse;
+}
+.tableWrap th,
+.tableWrap td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.tableWrap caption {
+  text-align: left;
+  padding: var(--space-3);
+}
+.empty {
+  padding: var(--space-6);
+  border: 1px dashed var(--border);
+}
+.section {
+  margin-top: var(--space-16);
+}
+.incident {
+  margin-top: var(--space-4);
+  overflow-wrap: anywhere;
+}
+.incidentTrack {
+  display: block;
+  width: 100%;
+  height: 30px;
+  color: var(--warning);
+}
+.guide {
+  position: relative;
+  padding-left: var(--space-8);
+}
+.progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.progress > div {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: top;
+}
+.step {
+  margin: var(--space-8) 0;
+  max-width: 70ch;
+}
+.step h3 {
+  margin-top: var(--space-2);
+}
+@media (max-width: 700px) {
+  .page {
+    padding: var(--space-8) var(--space-4);
+  }
+  .summary {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .summary > div {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-3);
+  }
+  .summary p {
+    max-width: none;
+  }
+  .rowGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rowGrid > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .row,
+  .notice {
+    padding: var(--space-4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress > div {
+    transform: scaleY(1) !important;
+  }
+}
