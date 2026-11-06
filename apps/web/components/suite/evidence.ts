@@ -26,6 +26,8 @@ import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.js
 import finality from "../../../../packages/finality/test/fixtures/observation.json";
 import { analyzeRecording } from "../../../../packages/finality/src/analysis";
 import { parseRecording } from "../../../../packages/finality/src/schema";
+import proofs from "../../../../packages/proofs/fixtures/capture-3.json";
+import { parseProofs } from "../../../../packages/proofs/src/model";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
@@ -59,6 +61,15 @@ const readers: Record<string, () => SuiteMetric | null> = {
       finality.source,
       "packages/finality/test/fixtures/observation.json",
       "Dated API heads. No consensus signatures or finalized-prefix storage proof.",
+    ),
+  proofs: () =>
+    metric(
+      parseProofs(JSON.parse(proofs.raw) as unknown).length,
+      "proof rows in the recorded indexer query",
+      proofs.measuredAt,
+      proofs.source,
+      "packages/proofs/fixtures/capture-3.json",
+      "Empty direct-rail data does not establish missing paid-channel evidence.",
     ),
   did: () =>
     metric(

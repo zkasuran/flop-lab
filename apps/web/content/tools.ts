@@ -271,7 +271,7 @@ export const tools: readonly Tool[] = [
     section: "verify",
     name: "Proof explorer",
     tagline: "What proofs are miners submitting and what do they cover?",
-    status: "planned",
+    status: "alpha",
     href: "/proofs",
     repoPath: "packages/proofs",
   },
