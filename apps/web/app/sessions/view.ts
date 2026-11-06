@@ -64,7 +64,7 @@ export type HistoryRow = {
   total: number | null;
   source: string;
 };
-export const pageSize = 24;
+export const pageSize = 12;
 /** Filter the recorded population without changing its counts. @example visibleChannels(cards, "open", "0x") */
 export function visibleChannels(cards: SessionCard[], state: State | "all", query: string) {
   const search = query.trim().toLowerCase();
