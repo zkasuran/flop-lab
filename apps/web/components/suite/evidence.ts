@@ -31,6 +31,7 @@ import { parseProofs } from "../../../../packages/proofs/src/model";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 import { recordedObservation as economicsObservation } from "../../../../packages/economics/src/recorded";
+import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -53,6 +54,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  metering: () => {
+    const report = meteringReport();
+    return metric(
+      report.errors.length ? undefined : report.miners.filter((miner) => miner.gnMax !== null).length,
+      "calibration objects in the recorded miner page",
+      report.sources[0]?.measuredAt,
+      report.sources[0]?.source,
+      "packages/metering/fixtures/miners.json",
+      "Indexed cap fields. Acceptance and expiry blocks are missing; lease validity is unobservable.",
+    );
+  },
   finality: () =>
     metric(
       analyzeRecording(parseRecording(finality)).lag,
