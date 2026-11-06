@@ -25,6 +25,13 @@ export const commands: readonly Command[] = [
     summary: "Map quoted security rules to scoped checks and public evidence gaps",
   },
   {
+    name: "swap",
+    pkg: "@flop-lab/swaps",
+    bin: "flop-swaps",
+    section: "agents",
+    summary: "Plan HTLC timing, generate local hash locks and inspect dated swaps",
+  },
+  {
     name: "finality",
     pkg: "@flop-lab/finality",
     bin: "flop-finality",

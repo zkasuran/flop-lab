@@ -1,0 +1,10 @@
+{
+  "kind": "synthetic",
+  "description": "Invented planner scenarios. These are not observed swaps or measured network times.",
+  "cases": [
+    { "name": "admission equality", "flopBlocks": "7200", "otherBlocks": "6", "expected": "PASS" },
+    { "name": "one block short", "flopBlocks": "7199", "otherBlocks": "6", "expected": "FAIL" },
+    { "name": "reversed timeout order", "flopBlocks": "3000", "otherBlocks": "6", "expected": "FAIL" },
+    { "name": "percentage dominates", "flopBlocks": "72000", "otherBlocks": "100", "expected": "PASS" }
+  ]
+}
