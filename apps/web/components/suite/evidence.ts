@@ -14,6 +14,8 @@ import explorer from "../../../../packages/explorer/test/fixtures/block.json";
 import contracts from "../../../../packages/mcpaudit/last-run.json";
 import tclk from "../../../../packages/tclk-inspect/fixtures/htlcs.json";
 import indexer from "../../../../packages/indexer-audit/fixtures/devnet.json";
+import modelCatalogue from "../../../../packages/models/test/fixtures/devnet.json";
+import { parseGateway } from "../../../../packages/models/src/schema";
 import kestra from "../../app/kestra/observed.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
@@ -39,6 +41,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  models: () => {
+    const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");
+    return metric(
+      parseGateway(JSON.parse(observation?.raw ?? "null") as unknown).length,
+      "models listed in the recorded gateway catalogue",
+      observation?.measuredAt,
+      observation?.source,
+      "packages/models/test/fixtures/devnet.json",
+      "Advertised listings. No inference or miner availability is verified.",
+    );
+  },
   indexer: () =>
     metric(
       indexer.requests,
