@@ -39,7 +39,7 @@ export function readClaimRun(): ClaimRun | null {
     measuredAt: report.measuredAt,
     requests: report.budget.requests,
     spentFlop: report.budget.spentFlop,
-    recording: `${repository}/blob/main/packages/harness/last-run.json`,
+    recording: `${repository}/tree/main/packages/harness/fixtures/coverage`,
   };
 }
 
