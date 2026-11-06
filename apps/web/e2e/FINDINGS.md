@@ -1,6 +1,8 @@
 # Browser findings
 
-The browser suite intentionally fails on product defects. It does not waive them as expected failures. This inventory was measured against the production site built from `97600ee` on 2026-11-06 with the committed offline test clock and recorded data.
+The browser suite intentionally fails on product defects. It does not waive them as expected failures. This inventory was measured against a fresh clone of `3d7a385` on 2026-11-06 with the committed offline test clock and recorded data.
+
+The run exercised 39 sitemap routes at both widths. All 78 route checks passed their visual comparison, primary interaction, keyboard and console assertions. The run had 48 passing tests and 40 failing tests. The failures below account for every failure. Machine-readable evidence and traces are emitted by the suite.
 
 ## Shared mobile Search control
 
