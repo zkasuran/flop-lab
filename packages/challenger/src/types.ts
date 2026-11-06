@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import type { Settlement } from "../../mcp/src/index";
+import type { Evidence, Report } from "../../verifier/src/index";
+import type { BlockWindow, WindowCapture } from "./windows";
 
 export interface Observation<T> {
   value: T;
@@ -73,13 +75,18 @@ export interface Check {
 }
 
 export interface Dossier {
+  version: 2;
+  sha256: string;
+  verifier: { bundle: Evidence; report: Report };
+  blockWindow: BlockWindow | null;
+  windowCapture: WindowCapture | null;
   mode: "DRY RUN ONLY";
   channelId: string;
   createdAt: string;
   purpose: string;
   window: WindowEstimate;
   assumptions: string[];
-  priority: Priority;
+  priority: Priority | null;
   bond: { documentedFlop: "100"; source: string; runtimeVerified: false; warning: string };
   eligibility: string;
   submission: {
@@ -90,7 +97,7 @@ export interface Dossier {
   };
   checks: Check[];
   evidence: {
-    settlement: Observation<Record<string, unknown>>;
+    settlement: Observation<Record<string, unknown>> | null;
     channel: Observation<Record<string, unknown>> | null;
     trustRoot: Observation<Record<string, unknown>> | null;
   };

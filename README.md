@@ -31,6 +31,18 @@ pnpm --filter @flop-lab/harness start run --only gateway-contract --max-requests
 
 ## The tools
 
+### One command for the suite
+
+From this checkout with Node 22 and pnpm:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm --filter @flop-lab/cli... --workspace-concurrency=1 run build
+node packages/cli/dist/cli.js which miner reliability
+```
+
+`node packages/cli/dist/cli.js help score` shows the selected tool's options. `list --json` lists the registry. `completions bash`, `completions zsh` and `completions fish` print shell completion scripts. Put `--json` last when running a tool. The wrapper preserves child exit codes. See the [CLI guide](packages/cli/README.md) for shell setup, the output contract and measured git-URL packaging limits.
+
 Each answers one question, has its own README with the limits and has a page on the site.
 
 | Question                                     | Tool                                                                                                                                                          |

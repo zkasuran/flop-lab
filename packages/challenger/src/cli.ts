@@ -5,17 +5,24 @@ import { analyze, formatFlop } from "./core";
 import { collectTape } from "./watcher";
 import { draftDossier } from "./dossier";
 import { recordedClient } from "./recorded";
+import { readFile } from "node:fs/promises";
+import { analyzeWindows, collectWindows } from "./windows";
+import { recordedWindows, recordedEvidence } from "./recorded-evidence";
+import { dossierMarkdown, replayDossier, MAX_DOSSIER_BYTES } from "./export";
 
 const help = `flop-challenger: read-only settlement review
 
   flop-challenger watch [--recorded] [--json] [--limit 20] [--sort priority]
   flop-challenger dossier <channel-id> [--recorded] [--json]
+  flop-challenger windows [--recorded] [--json]
+  flop-challenger replay <dossier.json>
 
 watch reads one bounded snapshot. It does not poll in the background.
 --recorded replays dated public responses without network requests.
 --limit controls displayed rows, not the ranking cohort. Default: 20.
 --sort priority ranks human attention; default order is estimated urgency.
-Explicit SettlementPosted rows get draft estimates. Cooperative payouts have no standard window.
+windows compares indexed challengeEnd with the reported finalized head.
+Dossier text output is Markdown with the full hashed JSON attachment.
 Dossiers are dry run only. No key, bond or transaction is used.
 `;
 
@@ -25,7 +32,17 @@ async function main(args: string[]): Promise<void> {
     return;
   }
   const command = args.shift();
-  if (command !== "watch" && command !== "dossier") throw new Error("Expected watch or dossier. Use --help.");
+  if (command === "replay") {
+    if (args.length !== 1 || args[0]!.startsWith("--")) throw new Error("replay requires one dossier JSON file");
+    const file = await readFile(args[0]!);
+    if (file.byteLength > MAX_DOSSIER_BYTES) throw new Error("Dossier exceeds 2 MB");
+    const result = await replayDossier(JSON.parse(file.toString("utf8")) as unknown);
+    console.log(JSON.stringify({ ...result, networkRequests: 0 }, null, 2));
+    process.exitCode = result.verifier.exitCode;
+    return;
+  }
+  if (command !== "watch" && command !== "dossier" && command !== "windows")
+    throw new Error("Expected watch, windows, dossier or replay. Use --help.");
   const id = command === "dossier" ? args.shift() : undefined;
   if (command === "dossier" && (!id || id.startsWith("--"))) throw new Error("dossier requires an exact channel ID");
   let recorded = false;
@@ -49,24 +66,34 @@ async function main(args: string[]): Promise<void> {
   }
   const replay = recorded ? recordedClient() : null;
   const client = replay?.client ?? new McpClient({ retries: 1 });
+  if (command === "windows") {
+    const windows = analyzeWindows(recorded ? recordedWindows : await collectWindows(client));
+    if (json) console.log(JSON.stringify(windows, null, 2));
+    else {
+      console.log(
+        `Forced claims | ${recorded ? "recorded" : "live"} | ${windows.capturedAt}\nReported finalized head: ${windows.head?.number ?? "unknown"}\nCadence: ${windows.cadence?.milliseconds ?? "unknown"} ms per block\nCoverage: ${windows.rows.length}/${windows.total ?? "unknown"}; ${windows.complete ? "all reported forced claims" : "partial"}`,
+      );
+      for (const row of windows.rows)
+        console.log(
+          `${row.channelId}\n  ${row.status} | end ${row.endBlock ?? "unknown"} | remaining ${row.remainingBlocks ?? "unknown"} blocks | estimated ${row.estimatedRemainingMs ?? "unavailable"} ms\n  ${row.reason}`,
+        );
+      for (const warning of windows.warnings) console.log(`Note: ${warning}`);
+      console.log(`Requests: ${recorded ? "0 network requests (recorded replay)" : windows.requests}`);
+    }
+    return;
+  }
   const tape = await collectTape(client, replay?.options);
   const report = analyze(tape, Date.now());
   if (command === "dossier" && id) {
-    const dossier = await draftDossier(report, id, client);
+    const dossier = await draftDossier(report, id, client, undefined, {
+      ...(recorded ? { bundle: await recordedEvidence(id) } : {}),
+      windows: recorded ? recordedWindows : await collectWindows(client),
+    });
     if (json) {
       console.log(JSON.stringify(dossier, null, 2));
       return;
     }
-    console.log(
-      `${dossier.mode}\n${dossier.channelId}\n${dossier.purpose}\nEstimated expiry: ${dossier.window.estimatedExpiry ?? "unknown"}\nDocumented bond: ${dossier.bond.documentedFlop} FLOP. Runtime value unverified.\n${dossier.bond.warning}\n${dossier.eligibility}\nExtrinsic: unavailable. ${dossier.submission.missing.join("; ")}`,
-    );
-    for (const assumption of dossier.assumptions) console.log(`Assumption: ${assumption}`);
-    for (const check of dossier.checks) console.log(`[${check.status}] ${check.name}: ${check.detail}`);
-    for (const call of dossier.submission.documentedCalls)
-      console.log(`SDK reference only: ${call.signature}. ${call.lane} Missing: ${call.missingInputs.join("; ")}`);
-    console.log(
-      `Settlement source: ${dossier.evidence.settlement.source}\nMeasured: ${dossier.evidence.settlement.measuredAt}\nUse --json for the complete evidence bundle.`,
-    );
+    console.log(dossierMarkdown(dossier));
     return;
   }
   const rows = priority

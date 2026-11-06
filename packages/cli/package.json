@@ -16,6 +16,12 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@flop-lab/openapi": "workspace:*",
+    "@flop-lab/mcp-server": "workspace:*",
+    "@flop-lab/status": "workspace:*",
+    "@flop-lab/export": "workspace:*",
+    "@flop-lab/community": "workspace:*",
+    "@flop-lab/watch": "workspace:*",
     "@flop-lab/upgrades": "workspace:*",
     "@flop-lab/knowledge": "workspace:*",
     "@flop-lab/yellowpaper": "workspace:*",

@@ -1,6 +1,6 @@
 # Spend guard policy playground
 
-An interactive browser view of `packages/spendguard/src/policy.ts`. It runs the real `parsePolicyText` and `evaluate` functions. It imports no Node ledger or SDK code.
+Will a shared policy hold against recorded exposure? This page runs Spendguard's policy linter and replays a dated settlement page or SDK cost estimate. It also retains the scripted YAML playground. It imports no Node ledger or SDK runtime code.
 
 ## Run
 
@@ -8,21 +8,25 @@ From the repository root with Node 22 and pnpm:
 
 ```sh
 pnpm install
-pnpm --filter web exec next dev --port 3340
+pnpm --filter web exec next dev --port 3580
 ```
 
-Open http://localhost:3340/spendguard. Edit the YAML, evaluate requests and select a decision to read every rule. Invalid policies pause evaluation and clear derived results. Restoring the policy resets the replay. Policy edits recalculate the processed prefix from an empty ledger.
+Open http://localhost:3580/spendguard. Edit the replay policy to see lint findings and fixes. Process one row or the full recording, filter decisions and open a rule trace. Choose the SDK estimate and load its chosen identity bindings to replay it separately. Invalid policies pause evaluation and clear derived results. Policy edits recalculate the processed prefix from an empty ledger.
 
 ```sh
 pnpm --filter @flop-lab/spendguard check
 pnpm --filter web check
 pnpm --filter web build
-pnpm --filter web exec next start --port 3340
+pnpm --filter web exec next start --port 3580
 ```
 
 Stop the development server before starting production. The page includes a copyable CLI command for the package's bundled example. Copy YAML to use your edited policy locally.
 
 ## Data and arithmetic
+
+The server validates `packages/spendguard/fixtures/settlements.json` and `sdk-estimate.json` before passing browser-safe tapes to the page. The settlement page is partial. The UI shows source, capture time and replay assumptions. Settlement time is a proxy for admission time. Model hashes are exact identities. One synthetic task is assigned per recorded agent and preflight is assumed. Full escrow stays pending. SDK identities and estimator inputs are chosen scenarios.
+
+The linter uses the recorded SDK `CALIBRATED_LIMITS` excerpt in `fixtures/documented-caps.json`. It does not query runtime limits. Every finding has a fix. A clean lint result does not establish chain enforcement. Sample policy limits are chosen inputs, not recommendations.
 
 The server validates `apps/web/tests/fixtures/models.json` before extracting the first model and miner identity. The page shows the recording's source, capture time, nominal-source label and expiry. A malformed or empty recording gives a no-data state. It never creates a fallback identity.
 
@@ -40,6 +44,6 @@ The replay and catalogue boundary tests live in `packages/spendguard/test/site.t
 
 ## What this does not verify
 
-This page does not sign transactions, grant preflight authorization, enforce chain limits or check miner availability. Recorded identities do not prove quote authenticity. All requests are scripted.
+This page does not sign transactions, grant preflight authorization, enforce chain limits or check miner availability. Recorded identities do not prove quote authenticity. Replay does not reconstruct original admission, task assignment or preflight state. It does not prove finalized refunds or use missing settlement history.
 
 The browser ledger does not exercise the package's file locking, hash chain, webhook delivery or finalized refund reconciliation. It does not persist edits or balances. A program with access to a signer can bypass an application guard. See the package README for its full trust boundary.

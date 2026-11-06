@@ -1,0 +1,42 @@
+{
+  "name": "@flop-lab/mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Read-only flop-lab tools over schema-checked stdio MCP",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-lab-mcp": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@flop-lab/status": "workspace:*",
+    "@flop-lab/export": "workspace:*",
+    "@flop-lab/community": "workspace:*",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7",
+    "@flop-lab/mcp": "workspace:*",
+    "@flop-lab/verifier": "workspace:*",
+    "@flop-lab/harness": "workspace:*",
+    "@flop-lab/scoreboard": "workspace:*",
+    "@flop-lab/spendguard": "workspace:*",
+    "@flop-lab/challenger": "workspace:*",
+    "@flop-lab/spec": "workspace:*",
+    "@flop-lab/mcpaudit": "workspace:*",
+    "@flop-lab/explorer": "workspace:*",
+    "@flop-lab/indexer-audit": "workspace:*",
+    "@flop-lab/did": "workspace:*",
+    "@flop-lab/doctor": "workspace:*"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

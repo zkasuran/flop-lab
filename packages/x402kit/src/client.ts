@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { randomUUID } from "node:crypto";
-import { bindRequest, flopUnits, parseProof, parseQuote, PaymentError } from "./protocol.js";
+import { flopUnits, parseProof, parseQuote, PaymentError } from "./protocol.js";
+import { bindRequest } from "./binding.js";
 import type { Proof, Quote } from "./protocol.js";
 
 export interface PayAndFetchOptions {
@@ -19,6 +20,9 @@ export async function payAndFetch(input: Request, options: PayAndFetchOptions): 
   const fetcher = options.fetch ?? globalThis.fetch,
     now = options.now ?? Date.now;
   const headers = new Headers(input.headers);
+  // Node fetch supplies these defaults on the wire. Bind the same values before dispatch.
+  if (!headers.has("accept")) headers.set("accept", "*/*");
+  if (!headers.has("accept-language")) headers.set("accept-language", "*");
   if (headers.has("x-payment-proof")) throw new PaymentError("existing_payment_proof");
   if (!headers.has("x-flop-request-id")) headers.set("x-flop-request-id", randomUUID());
   const request = new Request(input, { headers, redirect: "error" });
@@ -39,6 +43,7 @@ export async function payAndFetch(input: Request, options: PayAndFetchOptions): 
   if (options.authorize && (await options.authorize(quote)) !== true) throw new PaymentError("policy_denied");
   check();
   const proof = parseProof(JSON.stringify(await options.pay(quote)));
+  check();
   if (proof.hash_lock !== quote.hashLock) throw new PaymentError("payment_mismatch");
   headers.set("X-Payment-Proof", JSON.stringify(proof));
   // If this request fails, reconcile the existing proof. Do not call pay again.

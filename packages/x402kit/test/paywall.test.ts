@@ -200,6 +200,18 @@ it("does not run concurrent duplicates twice", async () => {
   expect((await s.wall(request("/paid", "GET", s.proof), s.handler)).status).toBe(200);
 });
 
+it("rejects reuse of an HTLC under a different transaction hash", async () => {
+  const s = await setup();
+  await s.wall(request("/paid", "GET", s.proof), s.handler);
+  const q2 = parseQuote(await s.wall(request("/paid", "GET", undefined, "different-request-2"), s.handler));
+  const p2 = { ...s.proof, hash_lock: q2.hashLock, tx_hash: `0x${"e".repeat(64)}` };
+  s.set(observed(q2, p2));
+  const response = await s.wall(request("/paid", "GET", p2, "different-request-2"), s.handler);
+  expect(response.status).toBe(409);
+  expect(await response.json()).toEqual({ error: "payment_replayed" });
+  expect(s.handler).toHaveBeenCalledTimes(1);
+});
+
 it("protects Hono routes", async () => {
   const app = new Hono();
   app.use("/paid", honoPaywall({ priceFlop: "0.01", payTo: "UNVERIFIED", ttl: 60000 }));
