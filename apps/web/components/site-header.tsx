@@ -10,6 +10,8 @@ import { CommandPalette, ThemeToggle } from "./controls";
 import type { SearchEntry } from "./suite/catalogue";
 import { ArrowUpRight, CloseIcon, GitHubIcon, Mark, MenuIcon } from "./icons";
 import { EASE_OUT, MotionButton } from "./motion";
+import { LanguageSwitch } from "@/app/zh/language-switch";
+import { common } from "@/app/zh/translations/common";
 
 type NavItem = { id: string; label: string; href: string };
 const items: NavItem[] = [
@@ -46,11 +48,27 @@ function useHomeSection(enabled: boolean) {
 /** Sticky site header with scroll-aware chrome, section-aware navigation and a compact mobile menu. */
 export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
   const path = usePathname();
+  const chinese = path === "/zh" || path.startsWith("/zh/");
+  const copy = common[chinese ? "zh" : "en"];
+  const navigation = items.map((item) => ({
+    ...item,
+    label:
+      (
+        {
+          findings: copy.findings,
+          tools: chinese ? "工具" : "Tools",
+          about: copy.about,
+          provenance: copy.provenance,
+        } as Record<string, string>
+      )[item.id] ?? item.label,
+    href: chinese && item.href.startsWith("/#") ? `/zh${item.href.slice(1)}` : item.href,
+  }));
+  navigation.push({ id: "docs", label: copy.docs, href: chinese ? "/zh/docs" : "/docs" });
   const reduced = useReducedMotion() !== false;
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [menu, setMenu] = useState(false);
-  const homeSection = useHomeSection(path === "/");
+  const homeSection = useHomeSection(path === "/" || path === "/zh");
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 8));
   useEffect(() => {
     setScrolled(window.scrollY > 8);
@@ -67,28 +85,35 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [menu]);
   const activeId =
-    path === "/"
+    path === "/" || path === "/zh"
       ? homeSection
       : path.startsWith("/about")
         ? "about"
-        : path.startsWith("/provenance")
-          ? "provenance"
-          : toolPaths.has(path)
-            ? "tools"
-            : null;
+        : path === "/docs" || path === "/zh/docs"
+          ? "docs"
+          : path.startsWith("/provenance")
+            ? "provenance"
+            : toolPaths.has(path)
+              ? "tools"
+              : null;
   return (
-    <header className="site-header" data-scrolled={scrolled} data-menu={menu ? "open" : "closed"}>
+    <header
+      className="site-header"
+      data-scrolled={scrolled}
+      data-menu={menu ? "open" : "closed"}
+      lang={chinese ? "zh-Hans" : "en"}
+    >
       <div className="container header-inner">
-        <Link className="wordmark" href="/" aria-label="flop-lab home">
+        <Link className="wordmark" href={chinese ? "/zh" : "/"} aria-label={`flop-lab ${copy.home}`}>
           <Mark />
           <span aria-hidden="true">
             flop<span className="wordmark-suffix">-lab</span>
           </span>
         </Link>
-        <nav className="site-nav" aria-label="Main navigation">
+        <nav className="site-nav" aria-label={copy.mainNavigation} lang={chinese ? "zh-Hans" : "en"}>
           <LayoutGroup id="nav">
             <ul className="nav-links">
-              {items.map((item) => (
+              {navigation.map((item) => (
                 <li key={item.id}>
                   <Link
                     className="nav-link"
@@ -110,6 +135,7 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
             </ul>
           </LayoutGroup>
           <div className="nav-actions">
+            <LanguageSwitch />
             <CommandPalette entries={entries} />
             <a
               className="icon-button nav-repo"
@@ -124,7 +150,7 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
               className="icon-button menu-button"
               aria-expanded={menu}
               aria-controls="mobile-menu"
-              aria-label={menu ? "Close menu" : "Open menu"}
+              aria-label={menu ? copy.closeMenu : copy.openMenu}
               onClick={() => setMenu(!menu)}
             >
               {menu ? <CloseIcon /> : <MenuIcon />}
@@ -143,7 +169,7 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
             transition={{ duration: reduced ? 0 : 0.28, ease: EASE_OUT }}
           >
             <ul>
-              {items.map((item) => (
+              {navigation.map((item) => (
                 <li key={item.id}>
                   <Link href={item.href} data-active={activeId === item.id} onClick={() => setMenu(false)}>
                     {item.label}

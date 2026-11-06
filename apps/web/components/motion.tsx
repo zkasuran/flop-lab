@@ -118,7 +118,13 @@ export function ReadingReveal({
 }
 
 /** Animate a measured number as a whole, never invent intermediate counts. Example: <ObservedNumber value={snapshot.stats.value?.block} />. */
-export function ObservedNumber({ value }: { value: number | undefined }) {
+export function ObservedNumber({
+  value,
+  missingLabel = "No data",
+}: {
+  value: number | undefined;
+  missingLabel?: string;
+}) {
   const reduced = useReducedMotion() !== false;
   return (
     <motion.span
@@ -129,7 +135,7 @@ export function ObservedNumber({ value }: { value: number | undefined }) {
       viewport={{ once: true }}
       transition={{ duration: reduced ? 0 : 0.36, ease: EASE_OUT }}
     >
-      {value?.toLocaleString("en-US") ?? "No data"}
+      {value?.toLocaleString("en-US") ?? missingLabel}
     </motion.span>
   );
 }
@@ -223,14 +229,24 @@ export function ReadingSteps({ steps }: { steps: Step[] }) {
 }
 
 /** Scroll progress describes reading, never verification completion. Example: <ReadingPath title="Follow the evidence" steps={[{ title: "Read", text: "Public data." }]} />. */
-export function ReadingPath({ title, steps }: { title: string; steps: Step[] }) {
+export function ReadingPath({
+  title,
+  steps,
+  label = "Reading guide",
+  note = "The line tracks your place in this explanation.",
+}: {
+  title: string;
+  steps: Step[];
+  label?: string;
+  note?: string;
+}) {
   const id = useId();
   return (
     <section className="section reading-path" aria-labelledby={id}>
       <div>
-        <p className="eyebrow">Reading guide</p>
+        <p className="eyebrow">{label}</p>
         <h2 id={id}>{title}</h2>
-        <p className="muted reading-note">The line tracks your place in this explanation.</p>
+        <p className="muted reading-note">{note}</p>
       </div>
       <ReadingSteps steps={steps} />
     </section>
