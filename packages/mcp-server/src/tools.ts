@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "zod";
+import { createHash } from "node:crypto";
+import { analyzeHistory } from "@flop-lab/status";
+import { recordedReader, encode, datasets } from "@flop-lab/export";
+import { recordedSnapshot as recordedCommunity, repositories, rows as communityRows } from "@flop-lab/community";
 import { McpClient } from "@flop-lab/mcp";
 import { EvidenceFetcher, verifyEvidence, checkArithmetic } from "@flop-lab/verifier";
 import { Collector, rankSnapshot, pickMiner } from "@flop-lab/scoreboard";
@@ -34,6 +38,7 @@ import {
   recordedContract,
   recordedDidReader,
   recordedDoctor,
+  recordedStatus,
   recordedIndexer,
   recordedScore,
   recordedSettlements,
@@ -82,6 +87,122 @@ export function createTools(options: { recorded?: boolean } = {}): ToolDefinitio
   const auditor = createAuditor({ fetch: boundedFetch });
   const runtimeReader = createRuntimeReader(client);
   return [
+    define(
+      "lab_status_history",
+      "Analyze retained public service probes. Gaps are not continuous uptime evidence. Recorded-only.",
+      z.strictObject({ from: z.iso.datetime().optional(), to: z.iso.datetime().optional() }),
+      z.strictObject({
+        services: z.array(
+          z.strictObject({
+            id: text,
+            samples: count,
+            passed: count,
+            availability: z.number().min(0).max(1).nullable(),
+            lastSample: z.iso.datetime().nullable(),
+          }),
+        ),
+      }),
+      async (args) => {
+        const runs = recordedStatus();
+        const history = analyzeHistory(runs, {
+          from: args.from ?? runs[0]!.startedAt,
+          to: args.to ?? runs.at(-1)!.finishedAt,
+        });
+        return {
+          ...meta("recorded", origin(runs.flatMap((run) => run.probes)), [
+            "Availability is passed samples divided by observed samples. It does not measure continuous uptime.",
+          ]),
+          data: {
+            services: history.map(({ id, samples, passed, availability, lastSample }) => ({
+              id,
+              samples,
+              passed,
+              availability,
+              lastSample,
+            })),
+          },
+        };
+      },
+    ),
+    define(
+      "lab_export_preview",
+      "Encode a bounded recorded dataset page as CSV or NDJSON. Returns bytes as text without creating files.",
+      z.strictObject({
+        dataset: z.enum(datasets).default("settlements"),
+        format: z.enum(["csv", "ndjson"]).default("ndjson"),
+        limit: z.number().int().min(1).max(10).default(3),
+      }),
+      z.strictObject({
+        dataset: z.enum(datasets),
+        format: z.enum(["csv", "ndjson"]),
+        rows: count,
+        capturedWindowExhausted: z.boolean(),
+        sha256: z.string().regex(/^[0-9a-f]{64}$/),
+        content: z.string().max(200000),
+      }),
+      async (args) => {
+        const page = await (await recordedReader(args.dataset)).read(0, args.limit);
+        const bytes = await encode(args.dataset, args.format, page.rows);
+        return {
+          ...meta("recorded", origin(page.captures), [
+            "This is a preview of retained rows, not a complete chain export. Amounts retain the exporter schema's units.",
+          ]),
+          data: {
+            dataset: args.dataset,
+            format: args.format,
+            rows: page.rows.length,
+            capturedWindowExhausted: page.exhausted,
+            sha256: createHash("sha256").update(bytes).digest("hex"),
+            content: new TextDecoder().decode(bytes),
+          },
+        };
+      },
+    ),
+    define(
+      "lab_community_requests",
+      "Classify a bounded sample of recorded public issues and response times. Does not submit posts.",
+      z.strictObject({
+        repo: z.enum(repositories).default("network"),
+        limit: z.number().int().min(1).max(25).default(10),
+      }),
+      z.strictObject({
+        repo: z.enum(repositories),
+        hasMore: z.boolean(),
+        items: z.array(
+          z.strictObject({
+            number: count,
+            state: z.enum(["open", "closed"]),
+            area: text,
+            type: text,
+            responseHours: z.number().nonnegative().nullable(),
+            responseState: z.enum(["observed", "none observed", "unknown"]),
+          }),
+        ),
+      }),
+      async (args) => {
+        const snapshot = recordedCommunity();
+        const sample = snapshot.repos.find((repo) => repo.repo === args.repo);
+        if (!sample) throw new Error("Repository is outside the retained capture");
+        const rows = communityRows(snapshot).filter((row) => row.repo === args.repo);
+        return {
+          ...meta("recorded", origin([sample]), [
+            "Only retained public issue metadata is classified. No private replies or older backlog are inferred.",
+          ]),
+          data: {
+            repo: args.repo,
+            hasMore: sample.hasMore || rows.length > args.limit,
+            items: rows.slice(0, args.limit).map(({ number, state, area, type, responseHours, responseState }) => ({
+              number,
+              state,
+              area,
+              type,
+              responseHours,
+              responseState,
+            })),
+          },
+        };
+      },
+    ),
     define(
       "lab_verify_channel",
       "Cross-check a compute channel. Recorded mode accepts the bundled channel only.",

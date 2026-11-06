@@ -125,6 +125,9 @@ importers:
       '@flop-lab/models':
         specifier: workspace:*
         version: link:../models
+      '@flop-lab/openapi':
+        specifier: workspace:*
+        version: link:../openapi
       '@flop-lab/proofs':
         specifier: workspace:*
         version: link:../proofs
@@ -306,6 +309,9 @@ importers:
       '@flop-lab/challenger':
         specifier: workspace:*
         version: link:../challenger
+      '@flop-lab/community':
+        specifier: workspace:*
+        version: link:../community
       '@flop-lab/did':
         specifier: workspace:*
         version: link:../did
@@ -315,6 +321,9 @@ importers:
       '@flop-lab/explorer':
         specifier: workspace:*
         version: link:../explorer
+      '@flop-lab/export':
+        specifier: workspace:*
+        version: link:../export
       '@flop-lab/harness':
         specifier: workspace:*
         version: link:../harness
@@ -336,6 +345,9 @@ importers:
       '@flop-lab/spendguard':
         specifier: workspace:*
         version: link:../spendguard
+      '@flop-lab/status':
+        specifier: workspace:*
+        version: link:../status
       '@flop-lab/verifier':
         specifier: workspace:*
         version: link:../verifier
@@ -379,6 +391,15 @@ importers:
       '@flop-lab/recorder':
         specifier: workspace:*
         version: link:../recorder
+
+  packages/openapi:
+    dependencies:
+      ajv:
+        specifier: ^8.17.1
+        version: 8.20.0
+      ajv-formats:
+        specifier: ^3.0.1
+        version: 3.0.1(ajv@8.20.0)
 
   packages/proofs:
     dependencies:
