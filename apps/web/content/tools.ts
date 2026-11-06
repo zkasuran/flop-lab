@@ -343,7 +343,7 @@ export const tools: readonly Tool[] = [
     section: "operate",
     name: "Watcher",
     tagline: "How do I get told when something on the network changes?",
-    status: "planned",
+    status: "alpha",
     href: "/watch",
     repoPath: "packages/watch",
   },

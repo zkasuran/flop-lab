@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { parseStats, parseSettlement, parseIndexerData } from "@flop-lab/mcp";
-import { parseGateway } from "@flop-lab/models";
-import { parseReport } from "@flop-lab/harness";
+import { parseGateway } from "../../models/src/schema";
+import { parseReport } from "../../harness/src/report";
 import { array, integer, object, text, time } from "./config";
 
 export type Key = "stats" | "models" | "settlements" | "channels" | `harness:${string}`;

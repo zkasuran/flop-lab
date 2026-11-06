@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 import { parseStats } from "@flop-lab/mcp";
-import { expiry, parseGateway } from "@flop-lab/models";
-import { parseReport } from "@flop-lab/harness";
-import { analyze } from "@flop-lab/recorder";
-import { classifyChannel } from "@flop-lab/sessions";
+import { expiry } from "../../models/src/catalogue";
+import { parseGateway } from "../../models/src/schema";
+import { parseReport } from "../../harness/src/report";
+import { analyze } from "../../recorder/src/analysis";
+import { classifyChannel } from "../../sessions/src/classify";
 import { integer, type Config, type Rule } from "./config";
 import { channels, parseSample, settlementPage, type Sample } from "./observations";
 
