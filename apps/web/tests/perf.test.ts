@@ -116,7 +116,7 @@ describe("sitemap coverage and emitted bytes", () => {
     const script = (path: string) => `<script src="${path}" async></script>`;
     expect(
       await buildJs(
-        script("/_next/static/shared.js") + script("/_next/static/page.js") + script("/_next/static/shared.js"),
+        script("/_next/static/shared.js") + script("/_next/static/page.js") + script("/_next/static/shared.js?v=2"),
         directory,
       ),
     ).toMatchObject({ bytes: 10 });

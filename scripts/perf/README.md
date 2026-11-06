@@ -32,7 +32,7 @@ Reports go to a dated `.next/perf/` directory. `--output /absolute/path` chooses
 - `<route-index>-<run>.json.gz`: the full raw Lighthouse report, including diagnostics and request records.
 - `server.log`: production server output.
 
-Next 16 no longer prints route byte sizes in its build table. The runner reads each production HTML response's initial script references and sums the unique files in `.next/static/`. Shared chunks count once per route. These are uncompressed file bytes, not estimated transfer bytes. The Lighthouse request log separately supplies browser request counts and JavaScript transfer bytes, including prefetches. Inline hydration data and later interaction-only chunks are outside the build JS total.
+Next 16 no longer prints route byte sizes in its build table. The runner reads each production HTML response's initial script references and sums the unique files in `.next/static/`. Shared chunks count once per route. This includes emitted legacy `nomodule` scripts. These are uncompressed file bytes, not estimated transfer bytes. The Lighthouse request log separately supplies browser request counts and JavaScript transfer bytes, including prefetches. Inline hydration data and later interaction-only chunks are outside the build JS total.
 
 `index.ts` exposes runtime validation, median budgeting, sitemap route selection and emitted-byte measurement. The web package's `check` command type-checks, lints and tests these helpers. The recorded fixture is an unchanged subset of a local Lighthouse report. Its metadata identifies the original compressed report by hash. Boundary tests cover missing observations and strict thresholds.
 

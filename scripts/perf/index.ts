@@ -111,7 +111,9 @@ export function summarize(runs: readonly Measurement[]) {
 /** Sum unique initial JS files emitted by Next for the page, including shared chunks. @example buildJs(html, ".next") */
 export async function buildJs(html: string, nextDirectory: string) {
   const directory = resolve(nextDirectory);
-  const sources = [...new Set([...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map((match) => match[1]!))];
+  const sources = [
+    ...new Set([...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map((match) => match[1]!.split("?")[0]!)),
+  ];
   const files = await Promise.all(
     sources.map(async (source) => {
       const path = source.split("?")[0]!;

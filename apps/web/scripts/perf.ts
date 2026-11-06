@@ -104,7 +104,7 @@ async function main() {
     budgets: BUDGET,
     coverage: values.route ? "selected routes" : "complete sitemap",
     sitemapRoutes: [] as string[],
-    serverReadyMs: 0,
+    serverReadyMs: null as number | null,
     lighthouseVersion: "",
     userAgent: "",
     settings: {} as unknown,
