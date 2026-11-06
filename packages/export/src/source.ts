@@ -2,8 +2,10 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { McpClient, DEFAULT_URL, readIndexer, parseIndexerData } from "@flop-lab/mcp";
-import { parseGateway } from "@flop-lab/models";
-import { parseSnapshot, readIndex } from "@flop-lab/recorder";
+// Import the shared validators directly so recorded previews do not load recorder runners.
+import { parseGateway } from "../../models/src/schema";
+import { parseSnapshot } from "../../recorder/src/schema";
+import { readIndex } from "../../recorder/src/store";
 import { columnsFor, validateRow, type Dataset, type Plan, type Row } from "./schema";
 
 export const GATEWAY = "https://api.flop.network/v1/models";

@@ -51,7 +51,7 @@ export function ExportView({ samples }: { samples: Sample[] }) {
     setExpanded(null);
   }
   return (
-    <main className={`container ${styles.page}`}>
+    <div className={styles.page}>
       <ToolHeader slug="export" />
       <ReadingReveal order={2}>
         <p className={styles.intro}>
@@ -353,6 +353,6 @@ export function ExportView({ samples }: { samples: Sample[] }) {
           can skip rows between sequential reads. A completed range is not a whole-chain snapshot. Devnet can reset.
         </p>
       </section>
-    </main>
+    </div>
   );
 }
