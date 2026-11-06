@@ -288,10 +288,10 @@ export function ChineseHome({
         <pre className={styles.code} lang="en">
           <code>{command}</code>
         </pre>
-      <MotionButton
-        className="quiet-button"
-        aria-label={c.copy}
-        onClick={async () => {
+        <MotionButton
+          className="quiet-button"
+          aria-label={c.copy}
+          onClick={async () => {
             try {
               await navigator.clipboard.writeText(command);
               setCopied("copied");
