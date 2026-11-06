@@ -226,7 +226,7 @@ export const tools: readonly Tool[] = [
     section: "observe",
     name: "Upgrade tracker",
     tagline: "What changed in the runtime and in the spec?",
-    status: "planned",
+    status: "alpha",
     href: "/upgrades",
     repoPath: "packages/upgrades",
   },
