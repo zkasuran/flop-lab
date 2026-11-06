@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "profile": "reference",
+  "source": "http://127.0.0.1:3592/paid",
+  "measuredAt": "2026-11-06T04:10:22.882Z",
+  "rounds": [
+    {
+      "measuredAt": "2026-11-06T04:10:22.888Z",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3592/paid",
+        "headers": [
+          [
+            "accept",
+            "*/*"
+          ],
+          [
+            "accept-language",
+            "*"
+          ],
+          [
+            "x-flop-request-id",
+            "4d24a845-a37e-43e4-934a-e50c4c94cd41"
+          ]
+        ],
+        "body": ""
+      },
+      "response": {
+        "status": 402,
+        "headers": [
+          [
+            "cache-control",
+            "no-store"
+          ],
+          [
+            "connection",
+            "keep-alive"
+          ],
+          [
+            "content-length",
+            "427"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "date",
+            "Fri, 06 Nov 2026 04:10:22 GMT"
+          ],
+          [
+            "keep-alive",
+            "timeout=5"
+          ],
+          [
+            "x-flop-executable",
+            "true"
+          ],
+          [
+            "x-flop-expires-at",
+            "1793938282897"
+          ],
+          [
+            "x-flop-mock",
+            "true"
+          ],
+          [
+            "x-flop-request-hash",
+            "547848139d82ea2c5bbaa567dd03bb4b44a91c04375cc76ef5e18ffa7b7887bc"
+          ],
+          [
+            "x-flop-request-id",
+            "4d24a845-a37e-43e4-934a-e50c4c94cd41"
+          ],
+          [
+            "x-payment-asset",
+            "FLOP"
+          ],
+          [
+            "x-payment-destination",
+            "MOCK-NO-FUNDS"
+          ],
+          [
+            "x-payment-hash-lock",
+            "c2464095a02ecabc33119ad4c84cd4b3eb1a958d8b3e46211b5a76edd0a79e8b"
+          ],
+          [
+            "x-payment-network",
+            "flop-devnet"
+          ],
+          [
+            "x-payment-price",
+            "0.01"
+          ],
+          [
+            "x-payment-required",
+            "true"
+          ],
+          [
+            "x-payment-timeout-blocks",
+            "60"
+          ]
+        ],
+        "body": "{\"error\":\"payment_required\",\"verification\":\"adapter_required\",\"quote\":{\"requestId\":\"4d24a845-a37e-43e4-934a-e50c4c94cd41\",\"requestHash\":\"547848139d82ea2c5bbaa567dd03bb4b44a91c04375cc76ef5e18ffa7b7887bc\",\"hashLock\":\"c2464095a02ecabc33119ad4c84cd4b3eb1a958d8b3e46211b5a76edd0a79e8b\",\"priceFlop\":\"0.01\",\"payTo\":\"MOCK-NO-FUNDS\",\"network\":\"flop-devnet\",\"asset\":\"FLOP\",\"expiresAt\":1793938282897,\"timeoutBlocks\":60,\"executable\":true}}"
+      }
+    },
+    {
+      "measuredAt": "2026-11-06T04:10:22.905Z",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3592/paid",
+        "headers": [
+          [
+            "accept",
+            "*/*"
+          ],
+          [
+            "accept-language",
+            "*"
+          ],
+          [
+            "x-flop-request-id",
+            "4d24a845-a37e-43e4-934a-e50c4c94cd41"
+          ],
+          [
+            "x-payment-proof",
+            "{\"hash_lock\":\"c2464095a02ecabc33119ad4c84cd4b3eb1a958d8b3e46211b5a76edd0a79e8b\",\"htlc_id\":\"mock-4d24a845-a37e-43e4-934a-e50c4c94cd41\",\"tx_hash\":\"0x63541e68ac9cfedcbf0e82d5cb838a3392351b645691a53dbdc02a8038902762\"}"
+          ]
+        ],
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "cache-control",
+            "no-store"
+          ],
+          [
+            "connection",
+            "keep-alive"
+          ],
+          [
+            "content-length",
+            "80"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "date",
+            "Fri, 06 Nov 2026 04:10:22 GMT"
+          ],
+          [
+            "keep-alive",
+            "timeout=5"
+          ],
+          [
+            "x-flop-mock",
+            "true"
+          ]
+        ],
+        "body": "{\"mock\":true,\"executions\":1,\"result\":\"Mock protected response. No funds moved.\"}"
+      }
+    }
+  ]
+}
