@@ -75,7 +75,7 @@ export async function verifySignature(
     if (ed25519.Point.fromBytes(publicKey).isSmallOrder() || ed25519.Point.fromBytes(raw.slice(0, 32)).isSmallOrder())
       throw new Error("Small-order Ed25519 point refused");
     const bytes = new TextEncoder().encode(payload);
-    if (!bytes.length || bytes.length > 200_000) throw new Error("Signed payload is empty or too large");
+    if (!bytes.length || bytes.length > 400_000) throw new Error("Signed payload is empty or too large");
     if (tamper) bytes[0] = bytes[0]! ^ 1;
     if (!globalThis.crypto?.subtle) return { status: "unverifiable", reason: "WebCrypto Ed25519 is unavailable" };
     const key = await crypto.subtle.importKey("raw", publicKey, "Ed25519", false, ["verify"]);

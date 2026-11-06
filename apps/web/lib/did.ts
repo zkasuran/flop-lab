@@ -48,7 +48,7 @@ export async function verifyDidSignature(
     if (btoa(raw).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "") !== signature)
       throw new Error("Signature encoding is not canonical");
     const bytes = new TextEncoder().encode(manifest);
-    if (bytes.length === 0 || bytes.length > 200_000) throw new Error("Manifest is empty or too large");
+    if (bytes.length === 0 || bytes.length > 400_000) throw new Error("Manifest is empty or too large");
     if (tamper) bytes[0] = (bytes[0] ?? 0) ^ 1;
     if (!globalThis.crypto?.subtle)
       throw new Error("WebCrypto unavailable. Use HTTPS and a browser with Ed25519 support.");
@@ -70,7 +70,7 @@ export async function verifyDidSignature(
 
 /** Validate canonical manifest rows without changing signed bytes. Example: parseManifest(manifest). */
 export function parseManifest(text: string): Manifest {
-  if (text.length > 200_000 || text.endsWith("\n") || text.includes("\r"))
+  if (text.length > 400_000 || text.endsWith("\n") || text.includes("\r"))
     throw new Error("Manifest must use LF with no final LF");
   const [header = "", ...rows] = text.split("\n");
   const match = /^flop-lab ([a-f0-9]{40})(?: ([a-zA-Z0-9][a-zA-Z0-9/_.-]*))?$/.exec(header);

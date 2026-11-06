@@ -106,7 +106,7 @@ function BuildProof() {
         }
         if (!response.ok) throw new Error(`SIGNATURE.json HTTP ${response.status}`);
         const raw = await response.text();
-        if (raw.length > 200000) throw new Error("Signed build exceeds the size limit");
+        if (raw.length > 400000) throw new Error("Signed build exceeds the size limit");
         const parsed = parseSignedBuild(JSON.parse(raw));
         setSigned(parsed);
         setStatus("loaded");

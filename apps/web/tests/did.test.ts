@@ -110,3 +110,26 @@ describe("manifest and identity policy", () => {
     expect(() => parsePullRequests([{ number: 1, html_url: "javascript:alert(1)" }])).toThrow();
   });
 });
+
+describe("signed build size bound", () => {
+  const rows = (count: number) =>
+    Array.from({ length: count }, (_, i) => `${"c".repeat(64)}  f/${String(i).padStart(6, "0")}.txt`).join("\n");
+  const sized = (count: number) => `flop-lab ${commit}\n${rows(count)}`;
+  it("parses, signs and verifies a manifest above the former 200000 character bound", async () => {
+    const big = sized(3000);
+    expect(big.length).toBeGreaterThan(200_000);
+    expect(big.length).toBeLessThanOrEqual(400_000);
+    expect(parseManifest(big).files).toHaveLength(3000);
+    expect((await verifyDidSignature(key.did, big, key.sign(big))).valid).toBe(true);
+    expect((await verifyDidSignature(key.did, big, key.sign(big), true)).valid).toBe(false);
+    expect(() => parseSignedBuild({ ...envelope, manifest: big, signature: key.sign(big) })).not.toThrow();
+  });
+  it("still refuses a manifest above 400000 characters", async () => {
+    const huge = sized(6000);
+    expect(huge.length).toBeGreaterThan(400_000);
+    expect(() => parseManifest(huge)).toThrow("LF");
+    const verdict = await verifyDidSignature(key.did, huge, key.sign(huge));
+    expect(verdict.valid).toBe(false);
+    expect(verdict.reason).toContain("too large");
+  });
+});
