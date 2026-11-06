@@ -39,6 +39,7 @@ import { recordedReport as meteringReport } from "../../../../packages/metering/
 import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/recorded";
 import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
+import { recordedSnapshot as communitySnapshot } from "../../../../packages/community/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -61,6 +62,18 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  community: () => {
+    const sample = communitySnapshot().repos.find((repo) => repo.repo === "network");
+    return metric(
+      sample?.items.length,
+      "recent network issues or PRs sampled",
+      sample?.measuredAt,
+      sample?.source,
+      "packages/community/fixtures/snapshot.json",
+      "Bounded public sample. Older backlog and private replies are not measured.",
+      "GitHub issue metadata",
+    );
+  },
   yellowpaper: () => {
     const paper = yellowpaperSpec();
     return metric(
