@@ -20,6 +20,7 @@ import kestra from "../../app/kestra/observed.json";
 import consoleTools from "../../../../packages/console/fixtures/tools.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
+import didSearch from "../../../../packages/did/fixtures/github.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 
@@ -44,6 +45,15 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  did: () =>
+    metric(
+      rows(object(JSON.parse(didSearch.raw) as unknown).items).length,
+      "GitHub artifacts in the recorded DID trail",
+      didSearch.measuredAt,
+      didSearch.source,
+      "packages/did/fixtures/github.json",
+      "Bounded search results. The DID page verifies each retained signature in the browser.",
+    ),
   models: () => {
     const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");
     return metric(

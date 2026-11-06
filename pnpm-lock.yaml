@@ -80,6 +80,9 @@ importers:
       '@flop-lab/create-flop-agent':
         specifier: workspace:*
         version: link:../create-flop-agent
+      '@flop-lab/did':
+        specifier: workspace:*
+        version: link:../did
       '@flop-lab/doctor':
         specifier: workspace:*
         version: link:../doctor
@@ -158,6 +161,12 @@ importers:
       '@flop-lab/verifier':
         specifier: workspace:*
         version: link:../verifier
+
+  packages/did:
+    dependencies:
+      '@noble/curves':
+        specifier: 2.4.0
+        version: 2.4.0
 
   packages/doctor: {}
 
