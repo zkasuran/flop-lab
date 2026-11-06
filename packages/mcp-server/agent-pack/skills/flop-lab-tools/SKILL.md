@@ -25,12 +25,17 @@ Connect to the local stdio server from the pack's MCP config. Run `tools/list` f
 | Do indexed counters, links and escrow splits agree? | `lab_indexer_audit` |
 | Which retained DID artifacts have valid signatures? | `lab_did_trail` |
 | What can local offline operator probes establish? | `lab_doctor` |
+| What availability do retained service probes establish? | `lab_status_history` |
+| How do a few retained rows encode as CSV or NDJSON? | `lab_export_preview` |
+| What public requests and response times were observed? | `lab_community_requests` |
 
 ## Interpret the answer
 
 Use `structuredContent`. Retain `evidence[].source`, `evidence[].measuredAt`, `mode`, `executedAt` and `limitations` when quoting a result. `executedAt` is computation time. It does not refresh evidence. A cache hit preserves the original execution and observation times.
 
 Set `mode: recorded` for a captured-data example. Recordings cover fixed identifiers and sample sizes. A missing capture is an error. The DID tool is recorded-only. Doctor reads the local host unless the server starts with `--recorded`.
+
+Status history, export preview and community requests use retained captures only. The export preview returns encoded text and its hash. It does not create files. Status gaps do not establish continuous uptime. Community metadata does not reveal private replies.
 
 An empty set is no observed data. `UNVERIFIABLE` is not a pass. A conserved split does not prove inference. A priority score is a review ordering, not a fraud verdict. A valid signature authenticates bytes, not the claim. Historical quotes never become live route admissions.
 

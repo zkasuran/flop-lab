@@ -33,6 +33,8 @@ The [agent skill](agent-pack/skills/flop-lab-tools/SKILL.md) maps questions to s
 
 The harness operation checks the gateway contract only. Its spend ceiling is zero. The contract audit targets `flop_knowledge_get`. The DID operation uses the retained public capture. Doctor runs offline and skips port binding. Recorded doctor mode replays the bundled local miner-role capture.
 
+The final main re-check added status history, export preview and community request classification. These operations use retained captures only. Export preview returns bounded CSV or NDJSON text plus its hash without creating files. Status history returns null availability when its requested time window has no samples.
+
 Recorded entity lookups require the captured identifier. The indexer capture uses its fixed sample size. `src/examples.ts` contains accepted example inputs. Wrong identifiers fail instead of returning unrelated evidence.
 
 ## Importable API
@@ -49,7 +51,7 @@ console.log(listTools().tools.map(tool => tool.name));
 
 The server and page derive declarations from one registry. Inputs reject unknown fields. Outputs are checked before caching or transport. The structured payload selects useful fields from each package report. It does not claim to return every native report field. Text content is exactly the same JSON as structured content.
 
-`requests` counts physical HTTP attempts for that invocation, including retries. Replay and completed cache hits report zero. The registry exposes 13 operations.
+`requests` counts physical HTTP attempts for that invocation, including retries. Replay and completed cache hits report zero. The registry exposes 16 operations, measured by `tools/list` on 2026-11-06T07:33:51.095Z.
 
 `mode` distinguishes live, recorded and local execution. `executedAt` is computation time. `evidence[].measuredAt` is observation time. A cache hit does not change either time. Historical ranking evaluates the captured sample at capture time. Routing evaluates eligibility at execution time and refuses expired quotes.
 

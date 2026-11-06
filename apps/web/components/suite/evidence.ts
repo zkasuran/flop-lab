@@ -44,6 +44,7 @@ import exportBlocks from "../../../../packages/export/fixtures/blocks.json";
 import { parseIndexerData } from "@flop-lab/mcp";
 import { recordedSnapshot as communitySnapshot } from "../../../../packages/community/src/recorded";
 import watch from "../../../../packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json";
+import suiteMcp from "../../app/mcp/tool-list.json";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -66,6 +67,16 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  mcp: () =>
+    metric(
+      suiteMcp.tools.length,
+      "operations listed by the local MCP server",
+      suiteMcp.measuredAt,
+      saved("apps/web/app/mcp/tool-list.json"),
+      "apps/web/app/mcp/tool-list.json",
+      "Generated from tools/list on the built server. Not hosted service availability.",
+      "Local server recording",
+    ),
   status: () => {
     const probe = statusRecordings.at(-1)?.probes.find((p) => p.service === "gateway");
     return metric(
