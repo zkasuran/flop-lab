@@ -7,7 +7,7 @@ import { X402Workbench } from "./workbench";
 export const metadata: Metadata = {
   title: "Pay-per-call kit",
   description:
-    "Replay real FLOP SDK headers, inspect a bounded payment flow and see where chain evidence is still missing.",
+    "Check both sides of a FLOP 402 exchange against quoted SDK rules. Inspect mock handshakes, replay and malformed headers.",
 };
 
 export default function X402Page() {
