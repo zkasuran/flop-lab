@@ -52,6 +52,15 @@ JS columns sum uncompressed initial script files in the Next build output, inclu
 | /watch       |                 99 |                93 |                     0 |                     0 |          889589 |         890214 |              37 |             18 |
 | /swaps       |                 99 |                93 |                     0 |                     0 |          798241 |         798866 |              36 |             17 |
 
+## Publication merge supplement
+
+Main added `/mcp` and `/openapi` after the complete sweep. Each received three mobile runs on checkout `1a4abde9d43fae5aff0c59b8ca46f27bcca17fe6` from 2026-11-06T16:29:23.737Z to 2026-11-06T16:30:07.442Z. [publication-routes.json](./publication-routes.json) retains every sample and the complete 39-route sitemap. The earlier 37-route results retain their original build and times. These two routes have no baseline observation.
+
+| Route    | Performance | CLS | Build JS bytes | Requests |
+| -------- | ----------: | --: | -------------: | -------: |
+| /mcp     |          96 |   0 |         833655 |       18 |
+| /openapi |          97 |   0 |         778705 |       17 |
+
 ## Changes measured
 
 Shared links no longer prefetch every visible destination. The closed search palette does not mount its ranked motion links. Initial reading reveals preserve server-rendered headings. Home entrance text stays visible from the first paint. The expanded recorded claim matrix uses labelled pages of at most 64 cells and measures layout when its order or page changes. Every recorded claim remains accessible.
