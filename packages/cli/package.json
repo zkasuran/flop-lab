@@ -18,6 +18,7 @@
   "dependencies": {
     "@flop-lab/finality": "workspace:*",
     "@flop-lab/proofs": "workspace:*",
+    "@flop-lab/did": "workspace:*",
     "@flop-lab/economics": "workspace:*",
     "@flop-lab/sessions": "workspace:*",
     "@flop-lab/console": "workspace:*",

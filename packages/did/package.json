@@ -1,0 +1,22 @@
+{
+  "name": "@flop-lab/did",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Read and verify a bounded trail of did:key signed artifacts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-did": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup",
+    "record": "tsx scripts/record.ts"
+  },
+  "dependencies": {
+    "@noble/curves": "2.4.0"
+  }
+}
