@@ -1,0 +1,21 @@
+{
+  "name": "@flop-lab/staking",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Quoted devnet stake requirements and slashing scenarios",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "flop-staking": "./dist/cli.js"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@flop-lab/mcp": "workspace:*"
+  }
+}

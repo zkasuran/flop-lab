@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { parseSnapshot } from "@flop-lab/recorder";
+import { parseSnapshot } from "../../recorder/src/schema";
 import { classifyCapture, type Report } from "./classify";
 import { source } from "./schema";
 /** Derive sample state counts from a digest-checked recorder snapshot.

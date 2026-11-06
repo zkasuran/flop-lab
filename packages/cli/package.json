@@ -34,6 +34,7 @@
     "@flop-lab/sdkconf": "workspace:*",
     "@flop-lab/spec": "workspace:*",
     "@flop-lab/spendguard": "workspace:*",
+    "@flop-lab/staking": "workspace:*",
     "@flop-lab/verifier": "workspace:*",
     "@flop-lab/x402kit": "workspace:*"
   }

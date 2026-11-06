@@ -21,6 +21,7 @@ import consoleTools from "../../../../packages/console/fixtures/tools.json";
 import { pickResponse } from "@flop-lab/mcp";
 import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import didSearch from "../../../../packages/did/fixtures/github.json";
+import sessions from "../../../../packages/sessions/test/fixtures/live/page-0.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 
@@ -53,6 +54,15 @@ const readers: Record<string, () => SuiteMetric | null> = {
       didSearch.source,
       "packages/did/fixtures/github.json",
       "Bounded search results. The DID page verifies each retained signature in the browser.",
+    ),
+  sessions: () =>
+    metric(
+      rows(object(object(JSON.parse(sessions.raw) as unknown).computeChannels).data).length,
+      "channel rows in the first recorded page",
+      sessions.measuredAt,
+      sessions.source,
+      "packages/sessions/test/fixtures/live/page-0.json",
+      "One recorded page. The lifecycle view joins the full bounded crawl with settlement evidence.",
     ),
   models: () => {
     const observation = modelCatalogue.observations.find((entry) => entry.key === "gateway");

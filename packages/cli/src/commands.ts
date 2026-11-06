@@ -157,6 +157,13 @@ export const commands: readonly Command[] = [
     section: "build",
     summary: "Check published SDK behaviour with offline request traces",
   },
+  {
+    name: "stake",
+    pkg: "@flop-lab/staking",
+    bin: "flop-staking",
+    section: "operate",
+    summary: "Model quoted stake requirements and inspect indexed stake evidence",
+  },
 ];
 
 /** Find a command by name. Example: findCommand(commands, "verify")?.bin === "flop-verify". */
