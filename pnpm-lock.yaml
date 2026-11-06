@@ -101,9 +101,15 @@ importers:
       '@flop-lab/indexer-audit':
         specifier: workspace:*
         version: link:../indexer-audit
+      '@flop-lab/invariants':
+        specifier: workspace:*
+        version: link:../invariants
       '@flop-lab/mcpaudit':
         specifier: workspace:*
         version: link:../mcpaudit
+      '@flop-lab/metering':
+        specifier: workspace:*
+        version: link:../metering
       '@flop-lab/models':
         specifier: workspace:*
         version: link:../models
@@ -221,6 +227,21 @@ importers:
         specifier: workspace:*
         version: link:../mcp
 
+  packages/invariants:
+    dependencies:
+      '@flop-lab/harness':
+        specifier: workspace:*
+        version: link:../harness
+      '@flop-lab/indexer-audit':
+        specifier: workspace:*
+        version: link:../indexer-audit
+      '@flop-lab/spec':
+        specifier: workspace:*
+        version: link:../spec
+      '@flop-lab/verifier':
+        specifier: workspace:*
+        version: link:../verifier
+
   packages/mcp: {}
 
   packages/mcpaudit:
@@ -234,6 +255,12 @@ importers:
       ajv-formats:
         specifier: ^3.0.1
         version: 3.0.1(ajv@8.20.0)
+
+  packages/metering:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
 
   packages/models:
     dependencies:
