@@ -300,6 +300,9 @@ importers:
       '@flop-lab/challenger':
         specifier: workspace:*
         version: link:../challenger
+      '@flop-lab/community':
+        specifier: workspace:*
+        version: link:../community
       '@flop-lab/did':
         specifier: workspace:*
         version: link:../did
@@ -309,6 +312,9 @@ importers:
       '@flop-lab/explorer':
         specifier: workspace:*
         version: link:../explorer
+      '@flop-lab/export':
+        specifier: workspace:*
+        version: link:../export
       '@flop-lab/harness':
         specifier: workspace:*
         version: link:../harness
@@ -330,6 +336,9 @@ importers:
       '@flop-lab/spendguard':
         specifier: workspace:*
         version: link:../spendguard
+      '@flop-lab/status':
+        specifier: workspace:*
+        version: link:../status
       '@flop-lab/verifier':
         specifier: workspace:*
         version: link:../verifier

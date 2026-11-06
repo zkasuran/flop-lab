@@ -1,7 +1,278 @@
 {
   "source": "local built flop-lab MCP server: tools/list",
-  "measuredAt": "2026-11-06T06:54:37.255Z",
+  "measuredAt": "2026-11-06T07:33:51.095Z",
   "tools": [
+    {
+      "name": "lab_status_history",
+      "description": "Analyze retained public service probes. Gaps are not continuous uptime evidence. Recorded-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "services": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "samples": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                    "passed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                    "availability": { "anyOf": [{ "type": "number", "minimum": 0, "maximum": 1 }, { "type": "null" }] },
+                    "lastSample": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                        },
+                        { "type": "null" }
+                      ]
+                    }
+                  },
+                  "required": ["id", "samples", "passed", "availability", "lastSample"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["services"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_export_preview",
+      "description": "Encode a bounded recorded dataset page as CSV or NDJSON. Returns bytes as text without creating files.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dataset": {
+            "default": "settlements",
+            "type": "string",
+            "enum": [
+              "settlements",
+              "channels",
+              "blocks",
+              "transactions",
+              "accounts",
+              "models",
+              "price-sources",
+              "proofs",
+              "snapshots"
+            ]
+          },
+          "format": { "default": "ndjson", "type": "string", "enum": ["csv", "ndjson"] },
+          "limit": { "default": 3, "type": "integer", "minimum": 1, "maximum": 10 }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "dataset": {
+                "type": "string",
+                "enum": [
+                  "settlements",
+                  "channels",
+                  "blocks",
+                  "transactions",
+                  "accounts",
+                  "models",
+                  "price-sources",
+                  "proofs",
+                  "snapshots"
+                ]
+              },
+              "format": { "type": "string", "enum": ["csv", "ndjson"] },
+              "rows": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+              "capturedWindowExhausted": { "type": "boolean" },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "content": { "type": "string", "maxLength": 200000 }
+            },
+            "required": ["dataset", "format", "rows", "capturedWindowExhausted", "sha256", "content"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "lab_community_requests",
+      "description": "Classify a bounded sample of recorded public issues and response times. Does not submit posts.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "default": "network",
+            "type": "string",
+            "enum": ["network", "yellowpaper", "tclk", "technocore-chat"]
+          },
+          "limit": { "default": 10, "type": "integer", "minimum": 1, "maximum": 25 }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": { "type": "string", "minLength": 1, "maxLength": 4000 },
+          "mode": { "type": "string", "enum": ["live", "recorded", "local"] },
+          "executedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "evidence": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                "measuredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": ["source", "measuredAt"],
+              "additionalProperties": false
+            }
+          },
+          "cacheHit": { "type": "boolean" },
+          "requests": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "data": {
+            "type": "object",
+            "properties": {
+              "repo": { "type": "string", "enum": ["network", "yellowpaper", "tclk", "technocore-chat"] },
+              "hasMore": { "type": "boolean" },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "number": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                    "state": { "type": "string", "enum": ["open", "closed"] },
+                    "area": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "type": { "type": "string", "minLength": 1, "maxLength": 4000 },
+                    "responseHours": { "anyOf": [{ "type": "number", "minimum": 0 }, { "type": "null" }] },
+                    "responseState": { "type": "string", "enum": ["observed", "none observed", "unknown"] }
+                  },
+                  "required": ["number", "state", "area", "type", "responseHours", "responseState"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["repo", "hasMore", "items"],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "minItems": 1,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 4000 }
+          }
+        },
+        "required": ["tool", "mode", "executedAt", "evidence", "cacheHit", "requests", "data", "limitations"],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": true }
+    },
     {
       "name": "lab_verify_channel",
       "description": "Cross-check a compute channel. Recorded mode accepts the bundled channel only.",
