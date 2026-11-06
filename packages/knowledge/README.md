@@ -54,7 +54,7 @@ Each library client caches successes, errors and schema failures for 300 seconds
 
 ## Page and recordings
 
-`/knowledge` browses the complete recorded manifest. Select a concept to see its directed neighborhood and source drawer. Search and type filters operate locally. The requirement panel links concepts by exact cited source path. The pack panel quotes the observed errors and the negative card probe. The page makes no direct external browser requests.
+`/knowledge` browses the complete recorded manifest. Select a concept to see its directed neighborhood and source drawer. Search and type filters operate locally. The requirement panel links concepts by exact cited source path. The pack panel quotes the observed errors and the negative card probe. The page makes no direct external browser requests. Human text uses plain hyphens. Raw JSON views escape Unicode dashes without changing parsed content. Downloads and CLI JSON retain the original tool text.
 
 `pnpm --filter @flop-lab/knowledge record` captures bounded public calls. Each fixture stores source, arguments and time. The manifest is losslessly compressed to keep it below the per-file size limit. Quoted punctuation is JSON-escaped where needed without altering decoded text. Refreshing a recording is explicit. The site never relabels a bundled observation as live.
 

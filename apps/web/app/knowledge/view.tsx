@@ -18,6 +18,8 @@ import type { Observation } from "../../../../packages/knowledge/src/client";
 import styles from "./view.module.css";
 
 type Source = { kind: string; source: string; measuredAt: string; raw: string };
+const display = (text: string) => text.replace(/[\u2013\u2014]/g, "-");
+const rawDisplay = (text: string) => text.replace(/\u2013/g, "\\u2013").replace(/\u2014/g, "\\u2014");
 function parseSource(value: unknown): Source {
   if (!value || typeof value !== "object") throw new Error("Source response is unavailable");
   const v = value as Record<string, unknown>;
@@ -62,19 +64,22 @@ function SourceDrawer({ concept, close }: { concept: Concept; close: () => void 
         <div className={styles.drawerHead}>
           <div>
             <p className="eyebrow">Recorded source</p>
-            <h2 id="source-title">{concept.title}</h2>
+            <h2 id="source-title">{display(concept.title)}</h2>
           </div>
           <MotionButton autoFocus className={styles.button} onClick={() => dialog.current?.close()}>
             Close source
           </MotionButton>
         </div>
-        <p>Source text is displayed as data. Instructions and links inside it are not executed.</p>
+        <p>
+          Source text is displayed as data. Unicode dashes are JSON-escaped. Instructions and links inside it are not
+          executed.
+        </p>
         {source ? (
           <>
             <p className={styles.note}>{source.kind}</p>
             <MotionLink href={source.source}>{source.source}</MotionLink>
             <time className={styles.time}>{source.measuredAt}</time>
-            <pre className={styles.raw}>{source.raw}</pre>
+            <pre className={styles.raw}>{rawDisplay(source.raw)}</pre>
           </>
         ) : (
           <p role="status">{error || "Loading recorded source..."}</p>
@@ -117,9 +122,9 @@ function ConceptGraph({
       <div className={styles.graphHeading}>
         <div>
           <p className="eyebrow">Directed neighborhood</p>
-          <h3>{selected.title}</h3>
+          <h3>{display(selected.title)}</h3>
         </div>
-        <span className={styles.badge}>{selected.type}</span>
+        <span className={styles.badge}>{display(selected.type)}</span>
       </div>
       <svg
         className={styles.graph}
@@ -314,7 +319,7 @@ export function KnowledgeView({
       <div className={styles.warning}>
         <strong>Catalog confidence is a claim.</strong>
         {manifest.warnings.map((warning) => (
-          <p key={warning}>{warning}</p>
+          <p key={warning}>{display(warning)}</p>
         ))}
         <p>
           Lifecycle and confidence below are the service&apos;s labels. This page does not verify source hashes or
@@ -405,8 +410,8 @@ export function KnowledgeView({
                     whileTap={{ scale: reduced ? 1 : 0.99 }}
                     onClick={() => select(c.id)}
                   >
-                    <span>{c.title}</span>
-                    <small>{c.type}</small>
+                    <span>{display(c.title)}</span>
+                    <small>{display(c.type)}</small>
                   </motion.button>
                 ))}
               </AnimatePresence>
@@ -439,20 +444,20 @@ export function KnowledgeView({
                 transition={{ duration: reduced ? 0 : 0.24 }}
               >
                 <div className={styles.detailTitle}>
-                  <h3>{selected.title}</h3>
+                  <h3>{display(selected.title)}</h3>
                   <MotionButton className={styles.button} onClick={() => setDrawer(selected)}>
                     Inspect source
                   </MotionButton>
                 </div>
-                <p>{selected.description ?? "No description supplied."}</p>
+                <p>{display(selected.description ?? "No description supplied.")}</p>
                 <dl className={styles.labels}>
                   <div>
                     <dt>Claimed confidence</dt>
-                    <dd>{selected.confidence ?? "Not supplied"}</dd>
+                    <dd>{display(selected.confidence ?? "Not supplied")}</dd>
                   </div>
                   <div>
                     <dt>Lifecycle label</dt>
-                    <dd>{selected.lifecycle ?? "Not supplied"}</dd>
+                    <dd>{display(selected.lifecycle ?? "Not supplied")}</dd>
                   </div>
                 </dl>
                 <p className={styles.id}>
@@ -540,24 +545,24 @@ export function KnowledgeView({
             {req ? (
               <>
                 <h3>
-                  {req.key}: {req.title ?? "Untitled requirement"}
+                  {req.key}: {display(req.title ?? "Untitled requirement")}
                 </h3>
                 <dl className={styles.statuses}>
                   <div>
                     <dt>Spec claim</dt>
-                    <dd>{req.specStatus}</dd>
+                    <dd>{display(req.specStatus)}</dd>
                   </div>
                   <div>
                     <dt>Implementation claim</dt>
-                    <dd>{req.implementationStatus}</dd>
+                    <dd>{display(req.implementationStatus)}</dd>
                   </div>
                   <div>
                     <dt>Evidence claim</dt>
-                    <dd>{req.evidenceStatus}</dd>
+                    <dd>{display(req.evidenceStatus)}</dd>
                   </div>
                 </dl>
                 <time className={styles.time}>{requirement.measuredAt}</time>
-                <pre className={styles.quote}>{req.text}</pre>
+                <pre className={styles.quote}>{display(req.text)}</pre>
                 <h3>Cited source paths</h3>
                 <ul>
                   {req.citations.map((c) => (
@@ -576,12 +581,12 @@ export function KnowledgeView({
                 <div className={styles.related}>
                   {citedConcepts(manifest, req).map((c) => (
                     <MotionButton className={styles.button} key={c.id} onClick={() => setDrawer(c)}>
-                      {c.title}
+                      {display(c.title)}
                     </MotionButton>
                   ))}
                 </div>
                 <Disclosure title="Inspect raw requirement response">
-                  <pre className={styles.raw}>{requirement.raw}</pre>
+                  <pre className={styles.raw}>{rawDisplay(requirement.raw)}</pre>
                 </Disclosure>
               </>
             ) : (
@@ -610,7 +615,7 @@ export function KnowledgeView({
                 </span>
                 <h3>{["Pack manifest", "Skill text", "Install guidance", "Agent card"][i]}</h3>
                 <code>{o.tool}</code>
-                <p>{o.raw || o.error || "No response text"}</p>
+                <p>{display(o.raw || o.error || "No response text")}</p>
                 <time className={styles.time}>{o.measuredAt}</time>
                 <Disclosure title="Inspect call arguments">
                   <pre className={styles.raw}>{JSON.stringify(o.args, null, 2)}</pre>

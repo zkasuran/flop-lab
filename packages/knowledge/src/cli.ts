@@ -25,7 +25,8 @@ Examples: flop-knowledge catalog; flop-knowledge explain R9.5 --json
 function terminal(value: string): string {
   return [...value]
     .filter((c) => c === "\n" || c === "\t" || (c.charCodeAt(0) >= 32 && c.charCodeAt(0) !== 127))
-    .join("");
+    .join("")
+    .replace(/[\u2013\u2014]/g, "-");
 }
 
 async function main() {
