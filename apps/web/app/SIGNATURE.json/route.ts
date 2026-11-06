@@ -8,7 +8,7 @@ export async function GET() {
   for (const file of [resolve(process.cwd(), "../../SIGNATURE.json"), resolve(process.cwd(), "SIGNATURE.json")]) {
     try {
       // The exact manifest file is traced explicitly in next.config.ts.
-      if ((await stat(/* turbopackIgnore: true */ file)).size > 200000)
+      if ((await stat(/* turbopackIgnore: true */ file)).size > 400000)
         return new Response("Build proof is too large", { status: 413 });
       return new Response(await readFile(/* turbopackIgnore: true */ file, "utf8"), {
         headers: { "Content-Type": "application/json", "Cache-Control": "public, max-age=300" },
