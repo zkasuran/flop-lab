@@ -3,18 +3,48 @@
 import { serve } from "@hono/node-server";
 import { createDemo } from "./demo.js";
 import { parseQuote } from "./protocol.js";
+import { checkExchange } from "./checker.js";
+import { createMockService, probeLocal, runMockClient } from "./reference.js";
 
 const [command, value] = process.argv.slice(2);
 try {
   if (!command || command === "--help") {
     console.log(
-      "flop-x402 serve [3350..3359]\nflop-x402 inspect <response-headers.json>\nRead-only reference. Payment execution is UNVERIFIED.",
+      "flop-x402 serve [port]\nflop-x402 inspect <response-headers.json>\nflop-x402 serve-mock [port]\nflop-x402 client <http://127.0.0.1:port/paid>\nflop-x402 check <exchange.json | loopback-url>\ncheck accepts a transcript or {exchange, ...} client output. Exit 2: deviations. Exit 3: incomplete.\nRead-only reference. Mock tokens are not payments. Payment execution is UNVERIFIED.",
     );
-  } else if (command === "serve") {
-    const port = Number(value ?? 3350);
-    if (!Number.isInteger(port) || port < 3350 || port > 3359) throw new Error("Use a port from 3350 to 3359");
-    serve({ fetch: createDemo().fetch, port, hostname: "127.0.0.1" });
-    console.log(`Read-only demo: http://127.0.0.1:${port}/preview\nPayment execution: UNVERIFIED`);
+  } else if (command === "serve" || command === "serve-mock") {
+    const port = Number(value ?? 3590);
+    if (!Number.isInteger(port) || port < 1024 || port > 65535)
+      throw new Error("Use an unprivileged port from 1024 to 65535");
+    serve({
+      fetch: command === "serve-mock" ? createMockService().fetch : createDemo().fetch,
+      port,
+      hostname: "127.0.0.1",
+    });
+    console.log(
+      `Local reference: http://127.0.0.1:${port}/${command === "serve-mock" ? "paid" : "preview"}\nPayment execution: UNVERIFIED`,
+    );
+  } else if (command === "client" && value) {
+    const result = await runMockClient(value);
+    console.log(JSON.stringify(result, null, 2));
+    process.exitCode = result.error
+      ? 1
+      : result.report.outcome === "deviations"
+        ? 2
+        : result.report.outcome === "incomplete"
+          ? 3
+          : 0;
+  } else if (command === "check" && value) {
+    let result;
+    if (/^https?:/.test(value)) result = (await probeLocal(value)).report;
+    else {
+      const { readFile, stat } = await import("node:fs/promises");
+      if ((await stat(value)).size > 131072) throw new Error("Exchange exceeds 128 KiB");
+      const raw: unknown = JSON.parse(await readFile(value, "utf8"));
+      result = checkExchange(raw && typeof raw === "object" && "exchange" in raw ? raw.exchange : raw);
+    }
+    console.log(JSON.stringify(result, null, 2));
+    process.exitCode = result.outcome === "deviations" ? 2 : result.outcome === "incomplete" ? 3 : 0;
   } else if (command === "inspect" && value) {
     const { readFile } = await import("node:fs/promises");
     const raw: unknown = JSON.parse(await readFile(value, "utf8"));
