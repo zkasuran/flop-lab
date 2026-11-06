@@ -70,7 +70,7 @@ node packages/spendguard/dist/cli.js replay packages/spendguard/examples/policy.
 
 The reference is `CALIBRATED_LIMITS` in `@flop-labs/sdk@0.4.0`: per transaction 5 FLOP and daily 50 FLOP. The raw excerpt, source and inspection time are in `fixtures/documented-caps.json`. These are SDK defaults, not queried runtime ceilings. Proposed limits and circuit-breaker constants are not mapped to these policy fields.
 
-`settlementTape`, `estimateTape` and `replayTape` are browser-safe APIs. The `/lint` and `/replay` exports expose them without Node dependencies. The existing `flop spendguard` command forwards these CLI commands.
+`settlementTape`, `estimateTape` and `replayTape` are browser-safe APIs. The `/lint` and `/replay` exports expose them without Node dependencies. The existing `flop guard` command forwards these CLI commands.
 
 The settlement fixture is a partial page captured at `2026-11-06T04:06:11.831Z` from `flop_list_settlements`. It contains 100 rows while the API reported 356. Replay sorts the supplied page by settlement time and channel ID. Settlement time stands in for unknown admission time. Model hashes remain exact identities. Each recorded agent gets one synthetic task and preflight is assumed. Full escrow remains pending; returned escrow is not treated as a verified refund. Missing model identities and zero escrow rows are skipped with separate totals.
 
