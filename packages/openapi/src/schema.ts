@@ -37,6 +37,28 @@ export const definitions = {
   },
   status: { title: "Service status samples", page: "/status", metrics: ["samples", "passed", "failed"], outcomes: [] },
   watch: { title: "Watch default-rule replay", page: "/watch", metrics: ["polls", "alerts", "requests"], outcomes: [] },
+  export: {
+    title: "Export dataset samples",
+    page: "/export",
+    metrics: [
+      "settlements",
+      "channels",
+      "blocks",
+      "transactions",
+      "accounts",
+      "models",
+      "price-sources",
+      "proofs",
+      "snapshots",
+    ],
+    outcomes: [],
+  },
+  community: {
+    title: "Community request sample",
+    page: "/community",
+    metrics: ["items", "issues", "pullRequests"],
+    outcomes: ["open", "closed"],
+  },
 } as const;
 export type Endpoint = keyof typeof definitions;
 export type Source = { url: string; measuredAt: string };
@@ -143,10 +165,14 @@ export function parseResult(tool: Endpoint, value: unknown): Result {
       models: "checks",
       status: null,
       watch: null,
+      export: null,
+      community: "items",
     }[tool];
     if (countKey && metrics[countKey] !== total) throw new Error("Outcome totals do not match the measured count");
     if (tool === "status" && metrics.samples !== metrics.passed! + metrics.failed!)
       throw new Error("Status sample totals disagree");
+    if (tool === "community" && metrics.items !== metrics.issues! + metrics.pullRequests!)
+      throw new Error("Community sample totals disagree");
   }
   return structuredClone(result);
 }

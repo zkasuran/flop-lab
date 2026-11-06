@@ -11,9 +11,19 @@ import { recordedReport } from "../../spec/src/recorded";
 import modelRecording from "../../models/test/fixtures/devnet.json";
 import { catalogue } from "../../models/src/catalogue";
 import { recordedReplay, initialConfig } from "../../../apps/web/app/watch/data";
+import { recordings as statusRuns } from "../../status/src/recorded";
+import { uniqueRuns } from "../../status/src/history";
+import { recordedReader } from "../../export/src/recorded";
+import { datasets } from "../../export/src/schema";
+import { recordedSnapshot } from "../../community/src/recorded";
 
 // Pin links to the main revision whose recordings were reviewed. Updating code does not move evidence URLs.
-const revision = "b421a4a";
+const revision = "e1d4788";
+let requests = 0;
+globalThis.fetch = async () => {
+  requests++;
+  throw new Error("The recording projection must not request live data");
+};
 const link = (path: string) => `https://github.com/zkasuran/flop-lab/blob/${revision}/${path}`;
 function summary(
   tool: Endpoint,
@@ -48,6 +58,16 @@ const spec = recordedReport();
 const models = catalogue(modelRecording);
 const modelChecks = [...models.checks, ...models.models.flatMap((model) => model.checks)];
 const watch = recordedReplay(initialConfig);
+const probes = uniqueRuns(statusRuns).flatMap((run) => run.probes);
+const exports = await Promise.all(
+  datasets.map(async (dataset) => {
+    const page = await (await recordedReader(dataset)).read(0, 100);
+    if (!page.exhausted) throw new Error("Export recording exceeds summary sample bound");
+    return { dataset, page };
+  }),
+);
+const community = recordedSnapshot();
+const items = community.repos.flatMap((repo) => repo.items);
 const results = {
   verifier: summary(
     "verifier",
@@ -113,19 +133,24 @@ const results = {
       "Registry membership does not verify model weights ran. Gateway-backed discovery is not independent corroboration.",
     ],
   ),
-  status: parseResult("status", {
-    schemaVersion,
-    tool: "status",
-    mode: "unavailable",
-    measuredAt: null,
-    sources: [],
-    recordings: [],
-    revalidateSeconds,
-    summary: null,
-    limitations: [
-      "The status package has not landed on the reviewed main revision. No availability count is reported.",
+  status: summary(
+    "status",
+    {
+      samples: probes.length,
+      passed: probes.filter((probe) => probe.outcome === "pass").length,
+      failed: probes.filter((probe) => probe.outcome !== "pass").length,
+    },
+    [],
+    probes.map((probe) => ({ url: probe.source, measuredAt: probe.measuredAt })),
+    [
+      "packages/status/test/fixtures/2026-11-06T05-23-46.400Z/run.json",
+      "packages/status/test/fixtures/2026-11-06T05-29-43.883Z/run.json",
     ],
-  }),
+    [
+      "Counts are measured probe samples across services. They do not establish continuous uptime or outage duration.",
+      "HTTP and content probes do not verify inference, faucet funding, indexer freshness or chain health.",
+    ],
+  ),
   watch: summary(
     "watch",
     {
@@ -144,6 +169,37 @@ const results = {
       "Bounded pages and missing local harness observations cannot reconstruct events between polls.",
     ],
   ),
+  export: summary(
+    "export",
+    Object.fromEntries(exports.map(({ dataset, page }) => [dataset, page.rows.length])),
+    [],
+    exports.flatMap(({ page }) =>
+      page.captures.map((capture) => ({
+        url: capture.source.startsWith("https://") ? capture.source : link(capture.source),
+        measuredAt: capture.measuredAt,
+      })),
+    ),
+    datasets.map((dataset) => `packages/export/fixtures/${dataset}.json`),
+    [
+      "Counts are validated rows in bundled export samples. They do not describe a user's local export or a complete chain snapshot.",
+      "Accounts cover supplied addresses. Snapshots count observation rows from bundled recorder captures. Empty proofs remain a measured zero.",
+    ],
+  ),
+  community: summary(
+    "community",
+    {
+      items: items.length,
+      issues: items.filter((item) => !item.pull_request).length,
+      pullRequests: items.filter((item) => item.pull_request).length,
+    },
+    items.map((item) => item.state),
+    community.repos.map((repo) => ({ url: repo.source, measuredAt: repo.measuredAt })),
+    ["packages/community/fixtures/snapshot.json"],
+    [
+      "Bounded repository issue-page samples include both issues and pull requests. Counts do not represent the whole backlog.",
+      "The source is a privacy-preserving projection. Closed items do not establish request fulfillment. No response-time claim is made here.",
+    ],
+  ),
 };
 const destination = new URL("../src/results.json", import.meta.url);
 if (process.argv.includes("--check")) assert.deepEqual(JSON.parse(await readFile(destination, "utf8")), results);
@@ -153,7 +209,7 @@ console.log(
     {
       generatedAt: new Date().toISOString(),
       revision,
-      requests: 0,
+      requests,
       summaries: Object.fromEntries(Object.entries(results).map(([key, value]) => [key, value.summary])),
     },
     null,

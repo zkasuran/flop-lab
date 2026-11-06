@@ -10,7 +10,7 @@
         "measuredAt": "2026-11-05T08:59:55.135Z"
       }
     ],
-    "recordings": ["https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/verifier/fixtures/settlements-0.json"],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/verifier/fixtures/settlements-0.json"],
     "revalidateSeconds": 300,
     "summary": {
       "metrics": {
@@ -284,7 +284,7 @@
         "measuredAt": "2026-11-05T22:53:29.644Z"
       }
     ],
-    "recordings": ["https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/harness/fixtures/coverage/report.json"],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/harness/fixtures/coverage/report.json"],
     "revalidateSeconds": 300,
     "summary": {
       "metrics": {
@@ -1548,8 +1548,8 @@
       }
     ],
     "recordings": [
-      "https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/spec/fixtures/knowledge.json",
-      "https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/spec/fixtures/paper-0.json"
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/spec/fixtures/knowledge.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/spec/fixtures/paper-0.json"
     ],
     "revalidateSeconds": 300,
     "summary": {
@@ -1957,7 +1957,7 @@
         "measuredAt": "2026-11-05T21:44:43.307Z"
       }
     ],
-    "recordings": ["https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/mcpaudit/last-run.json"],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/mcpaudit/last-run.json"],
     "revalidateSeconds": 300,
     "summary": {
       "metrics": {
@@ -2027,7 +2027,7 @@
         "measuredAt": "2026-11-05T23:59:28.176Z"
       }
     ],
-    "recordings": ["https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/models/test/fixtures/devnet.json"],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/models/test/fixtures/devnet.json"],
     "revalidateSeconds": 300,
     "summary": {
       "metrics": {
@@ -2049,14 +2049,90 @@
   "status": {
     "schemaVersion": "1.0.0",
     "tool": "status",
-    "mode": "unavailable",
-    "measuredAt": null,
-    "sources": [],
-    "recordings": [],
+    "mode": "recorded",
+    "measuredAt": "2026-11-06T05:29:44.738Z",
+    "sources": [
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T05:23:46.897Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T05:23:46.895Z"
+      },
+      {
+        "url": "https://docs.flop.network/llms.txt",
+        "measuredAt": "2026-11-06T05:23:47.106Z"
+      },
+      {
+        "url": "https://ask.flop.finance/mcp",
+        "measuredAt": "2026-11-06T05:23:47.835Z"
+      },
+      {
+        "url": "https://explorer.devnet.flop.network/",
+        "measuredAt": "2026-11-06T05:23:46.965Z"
+      },
+      {
+        "url": "https://faucet.flop.network/",
+        "measuredAt": "2026-11-06T05:23:47.538Z"
+      },
+      {
+        "url": "https://technocore.chat/healthz",
+        "measuredAt": "2026-11-06T05:23:46.941Z"
+      },
+      {
+        "url": "https://registry.npmjs.org/@flop-labs/sdk/latest",
+        "measuredAt": "2026-11-06T05:23:46.868Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T05:29:44.243Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T05:29:44.265Z"
+      },
+      {
+        "url": "https://docs.flop.network/llms.txt",
+        "measuredAt": "2026-11-06T05:29:44.635Z"
+      },
+      {
+        "url": "https://ask.flop.finance/mcp",
+        "measuredAt": "2026-11-06T05:29:44.738Z"
+      },
+      {
+        "url": "https://explorer.devnet.flop.network/",
+        "measuredAt": "2026-11-06T05:29:44.473Z"
+      },
+      {
+        "url": "https://faucet.flop.network/",
+        "measuredAt": "2026-11-06T05:29:44.457Z"
+      },
+      {
+        "url": "https://technocore.chat/healthz",
+        "measuredAt": "2026-11-06T05:29:44.442Z"
+      },
+      {
+        "url": "https://registry.npmjs.org/@flop-labs/sdk/latest",
+        "measuredAt": "2026-11-06T05:29:44.361Z"
+      }
+    ],
+    "recordings": [
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/status/test/fixtures/2026-11-06T05-23-46.400Z/run.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/status/test/fixtures/2026-11-06T05-29-43.883Z/run.json"
+    ],
     "revalidateSeconds": 300,
-    "summary": null,
+    "summary": {
+      "metrics": {
+        "samples": 16,
+        "passed": 16,
+        "failed": 0
+      },
+      "outcomes": {}
+    },
     "limitations": [
-      "The status package has not landed on the reviewed main revision. No availability count is reported."
+      "Counts are measured probe samples across services. They do not establish continuous uptime or outage duration.",
+      "HTTP and content probes do not verify inference, faucet funding, indexer freshness or chain health."
     ]
   },
   "watch": {
@@ -2099,8 +2175,8 @@
       }
     ],
     "recordings": [
-      "https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/watch/test/fixtures/2026-11-06T04-45-55.439Z.json",
-      "https://github.com/zkasuran/flop-lab/blob/b421a4a/packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json"
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/watch/test/fixtures/2026-11-06T04-45-55.439Z.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json"
     ],
     "revalidateSeconds": 300,
     "summary": {
@@ -2114,6 +2190,125 @@
     "limitations": [
       "Default rules replayed over bundled polls. Zero alerts do not establish continuous uptime.",
       "Bounded pages and missing local harness observations cannot reconstruct events between polls."
+    ]
+  },
+  "export": {
+    "schemaVersion": "1.0.0",
+    "tool": "export",
+    "mode": "recorded",
+    "measuredAt": "2026-11-06T04:47:20.561Z",
+    "sources": [
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.138Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.279Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.400Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.537Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:19.680Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T04:47:20.300Z"
+      },
+      {
+        "url": "https://api.flop.network/v1/models",
+        "measuredAt": "2026-11-06T04:47:20.446Z"
+      },
+      {
+        "url": "https://mcp.flop.network/mcp",
+        "measuredAt": "2026-11-06T04:47:20.561Z"
+      },
+      {
+        "url": "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/recorder/test/fixtures/seed/snapshots/2026/11/05/21-23-37.342Z-6d4ce0af9956856d65c2025259b7f6b4cd63e8b2897b5c6a6f3c141b225c7d81.json",
+        "measuredAt": "2026-11-05T21:23:37.342Z"
+      },
+      {
+        "url": "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/recorder/test/fixtures/seed/snapshots/2026/11/05/21-24-20.273Z-bbf22ec5d76af626e448d855803f2e3eb1d3bd41444ce393a2927592b25c7f57.json",
+        "measuredAt": "2026-11-05T21:24:20.273Z"
+      }
+    ],
+    "recordings": [
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/settlements.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/channels.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/blocks.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/transactions.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/accounts.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/models.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/price-sources.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/proofs.json",
+      "https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/export/fixtures/snapshots.json"
+    ],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "settlements": 5,
+        "channels": 5,
+        "blocks": 5,
+        "transactions": 5,
+        "accounts": 1,
+        "models": 1,
+        "price-sources": 21,
+        "proofs": 0,
+        "snapshots": 18
+      },
+      "outcomes": {}
+    },
+    "limitations": [
+      "Counts are validated rows in bundled export samples. They do not describe a user's local export or a complete chain snapshot.",
+      "Accounts cover supplied addresses. Snapshots count observation rows from bundled recorder captures. Empty proofs remain a measured zero."
+    ]
+  },
+  "community": {
+    "schemaVersion": "1.0.0",
+    "tool": "community",
+    "mode": "recorded",
+    "measuredAt": "2026-11-06T04:50:03.027Z",
+    "sources": [
+      {
+        "url": "https://api.github.com/repos/flop-labs/network/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:47:05.711Z"
+      },
+      {
+        "url": "https://api.github.com/repos/flop-labs/yellowpaper/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:47:11.281Z"
+      },
+      {
+        "url": "https://api.github.com/repos/flop-labs/tclk/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:47:27.041Z"
+      },
+      {
+        "url": "https://api.github.com/repos/flop-labs/technocore-chat/issues?state=all&sort=created&direction=desc&per_page=25",
+        "measuredAt": "2026-11-06T04:50:03.027Z"
+      }
+    ],
+    "recordings": ["https://github.com/zkasuran/flop-lab/blob/e1d4788/packages/community/fixtures/snapshot.json"],
+    "revalidateSeconds": 300,
+    "summary": {
+      "metrics": {
+        "items": 100,
+        "issues": 53,
+        "pullRequests": 47
+      },
+      "outcomes": {
+        "open": 90,
+        "closed": 10
+      }
+    },
+    "limitations": [
+      "Bounded repository issue-page samples include both issues and pull requests. Counts do not represent the whole backlog.",
+      "The source is a privacy-preserving projection. Closed items do not establish request fulfillment. No response-time claim is made here."
     ]
   }
 }

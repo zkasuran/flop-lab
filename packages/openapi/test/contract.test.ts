@@ -89,6 +89,15 @@ describe("published response contracts", () => {
     expect(response.status).toBe(503);
     validate("Error", await response.json());
   });
+  it("preserves measured empty exports and rejects contradictory service or community counts", () => {
+    expect(readResult("export").summary!.metrics.proofs).toBe(0);
+    const status = readResult("status");
+    status.summary!.metrics.failed!++;
+    expect(() => parseResult("status", status)).toThrow("Status sample totals");
+    const community = readResult("community");
+    community.summary!.metrics.issues!++;
+    expect(() => parseResult("community", community)).toThrow("Community sample totals");
+  });
   it("shares the IP quota across endpoints and documents and resets exactly at the boundary", async () => {
     let time = 0;
     const api = createApi({ now: () => time, address });

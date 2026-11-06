@@ -35,6 +35,8 @@ GET and HEAD routes:
 | `/api/v1/models`       | Catalogue-wide and per-model check outcomes                 |
 | `/api/v1/status`       | Service availability evidence or explicit unavailable state |
 | `/api/v1/watch`        | Default-rule replay over recorded polls                     |
+| `/api/v1/export`       | Validated row counts for bundled export dataset samples     |
+| `/api/v1/community`    | Open and closed issue/PR counts in the repository sample    |
 | `/api/v1/openapi.json` | Generated OpenAPI 3.1 document                              |
 
 Result bodies use `schemaVersion: "1.0.0"`. `measuredAt` is the latest source observation, not response time. `sources` retains every distinct source/time pair. `recordings` points to pinned raw evidence or its manifest. `summary.metrics` names measured counts. `summary.outcomes` preserves the upstream status vocabulary. A missing recording uses `mode: "unavailable"`, null summary and no measurement date. It never substitutes zero for missing evidence.
