@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@flop-lab/export": "workspace:*",
+    "@flop-lab/watch": "workspace:*",
     "@flop-lab/upgrades": "workspace:*",
     "@flop-lab/knowledge": "workspace:*",
     "@flop-lab/yellowpaper": "workspace:*",
