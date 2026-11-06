@@ -33,7 +33,7 @@ node packages/did/dist/cli.js verify-file SIGNATURE.json <dir> --did <expected-d
 
 Exit codes: `0` means the command completed without an invalid signature. A partial trail with unsigned notes can still return `0`. `1` means invalid input, a failed check or a command error. `2` means no artifacts were found or verification is unavailable. Read each artifact's `verification.status` and the coverage gaps in JSON output.
 
-`verify-file` binds the manifest to checkout HEAD and the exact tracked file list. It checks SHA-256 of file bytes and symlink target bytes. It rejects path traversal, duplicate paths, unsupported Git entries and symlink parents. Untracked files and executable mode bits are outside the signed hash format. Without `--did`, the signer is reported but not pinned to an expected contributor.
+`verify-file` binds the manifest to checkout HEAD and the exact tracked file list. It checks SHA-256 of file bytes and symlink target bytes. It rejects path traversal, duplicate paths, unsupported Git entries and symlink parents. Untracked files and executable mode bits are outside the signed hash format. Without `--did`, the signer is reported but not pinned to an expected contributor. A signed manifest is capped at 400,000 characters, which holds about 3,700 tracked files at the current average path length. Raise the cap in `src/manifest.ts`, `src/crypto.ts` and `src/file.ts` together with the web copies before the file count reaches it.
 
 ## Library
 
