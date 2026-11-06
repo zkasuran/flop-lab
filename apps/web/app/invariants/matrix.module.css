@@ -213,6 +213,12 @@
 .pagination button:disabled {
   cursor: default;
 }
+.pagination > span {
+  white-space: nowrap;
+}
+.pagination .button {
+  padding-inline: var(--space-3);
+}
 .actor {
   display: grid;
   grid-template-columns: 150px minmax(0, 1fr);
