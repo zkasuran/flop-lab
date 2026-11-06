@@ -15,6 +15,7 @@ import contracts from "../../../../packages/mcpaudit/last-run.json";
 import tclk from "../../../../packages/tclk-inspect/fixtures/htlcs.json";
 import indexer from "../../../../packages/indexer-audit/fixtures/devnet.json";
 import kestra from "../../app/kestra/observed.json";
+import starter from "../../../../packages/create-flop-agent/fixtures/devnet.json";
 import { repository, tools } from "../../content/tools";
 import { parseMetric, type SuiteMetric } from "./metric";
 
@@ -39,6 +40,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  start: () => {
+    const observation = starter.observations.find((row) => row.tool === "flop_discover_models");
+    return metric(
+      rows(object(JSON.parse(observation?.raw ?? "null") as unknown).models).length,
+      "registered models in starter replay",
+      observation?.measuredAt,
+      observation?.source,
+      "packages/create-flop-agent/fixtures/devnet.json",
+      "Recorded discovery. No current offer or spending quote.",
+    );
+  },
   indexer: () =>
     metric(
       indexer.requests,

@@ -16,6 +16,7 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@flop-lab/create-flop-agent": "workspace:*",
     "@flop-lab/indexer-audit": "workspace:*",
     "@flop-lab/tclk-inspect": "workspace:*",
     "@flop-lab/mcpaudit": "workspace:*",
