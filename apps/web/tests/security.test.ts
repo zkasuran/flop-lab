@@ -12,6 +12,8 @@ import { allowedSource, createPublicFetch, readBytes, safeJson, withPublicOperat
 import { proxy } from "../proxy";
 import { createTrailReader } from "../lib/security/trail-reader";
 import { POST } from "../app/console/api/route";
+import { POST as replayWatch } from "../app/watch/replay/route";
+import { example, rulesYaml } from "../../../packages/watch/src/config";
 import { createSearchService } from "../app/explorer/service";
 import { inspectQuery } from "../../../packages/console/src/query";
 import { validateInput } from "../../../packages/console/src/core";
@@ -133,6 +135,22 @@ describe("route entry and cache boundaries", () => {
 });
 
 describe("bounded bodies and egress", () => {
+  it("replays watch rules locally and refuses reflected YAML errors or cross-site posts", async () => {
+    const transport = vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("No network allowed"));
+    const request = (body: string, origin?: string) =>
+      new Request("https://flop-lab.example/watch/replay", {
+        method: "POST",
+        body,
+        headers: { "Content-Type": "text/plain", ...(origin ? { origin } : {}) },
+      });
+    const config = { ...example, outputs: [{ kind: "webhook" as const, url: "http://127.0.0.1/private" }] };
+    expect((await replayWatch(request(rulesYaml(config)))).status).toBe(200);
+    expect(transport).not.toHaveBeenCalled();
+    expect((await replayWatch(request("bad", "https://attacker.example"))).status).toBe(403);
+    const malformed = await replayWatch(request("version: 1\nversion: internal-path"));
+    expect(malformed.status).toBe(400);
+    expect(await malformed.json()).toEqual({ error: "Invalid request" });
+  });
   it("coalesces trail reads, retains capture time and bounds distinct misses across all hosts", async () => {
     let now = Date.parse("2026-11-06T00:00:00Z");
     const transport = vi.fn<typeof fetch>().mockImplementation(async () => new Response("recorded text"));

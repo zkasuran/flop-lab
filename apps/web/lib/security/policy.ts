@@ -14,6 +14,7 @@ export const LIMITS = {
 /** All data routes reviewed by the threat model. @example routePolicy('/verify/data') */
 export function routePolicy(path: string): { methods: string[]; query: string[] } | undefined {
   if (path === "/console/api") return { methods: ["POST"], query: [] };
+  if (path === "/watch/replay") return { methods: ["POST"], query: [] };
   if (path === "/invariants/replay") return { methods: ["GET", "HEAD", "POST"], query: [] };
   const queries: Record<string, string[]> = {
     "/explorer/query": ["q", "recorded"],
@@ -53,7 +54,7 @@ export function failure(status: number): Response {
     408: "Request body timed out",
     413: "Request exceeds byte limit",
     414: "Request URL exceeds byte limit",
-    415: "Use application/json",
+    415: "Unsupported media type",
     429: "Request budget reached. Retry after one minute.",
     502: "Public observation unavailable",
     503: "Service unavailable",
