@@ -36,6 +36,7 @@ import { parseSections } from "../../../../packages/invariants/src/parser";
 import swaps from "../../../../packages/swaps/fixtures/swaps.json";
 import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
+import { recordedReport as upgradesReport } from "../../../../packages/upgrades/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -58,6 +59,19 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  upgrades: () => {
+    const report = upgradesReport();
+    const event = report.events.find((entry) => entry.changes.some((change) => change.name.startsWith("Parameter:")));
+    return metric(
+      event?.changes.filter((change) => change.name.startsWith("Parameter:")).length,
+      "changed Appendix A values in the recorded comparison",
+      event?.measuredAt,
+      event?.source,
+      "packages/upgrades/src/data.ts",
+      "Pinned spec text changes. No deployed runtime upgrade is established.",
+      "Pinned yellowpaper",
+    );
+  },
   invariants: () =>
     metric(
       parseSections([invariantSource]).filter((row) => row.kind === "failure").length,

@@ -143,6 +143,9 @@ importers:
       '@flop-lab/tclk-inspect':
         specifier: workspace:*
         version: link:../tclk-inspect
+      '@flop-lab/upgrades':
+        specifier: workspace:*
+        version: link:../upgrades
       '@flop-lab/verifier':
         specifier: workspace:*
         version: link:../verifier
@@ -355,6 +358,15 @@ importers:
       ajv:
         specifier: 8.17.1
         version: 8.17.1
+
+  packages/upgrades:
+    dependencies:
+      '@flop-lab/recorder':
+        specifier: workspace:*
+        version: link:../recorder
+      '@flop-lab/spec':
+        specifier: workspace:*
+        version: link:../spec
 
   packages/verifier: {}
 
