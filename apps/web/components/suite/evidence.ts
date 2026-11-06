@@ -36,6 +36,7 @@ import { parseSections } from "../../../../packages/invariants/src/parser";
 import swaps from "../../../../packages/swaps/fixtures/swaps.json";
 import { parseSwapPage } from "../../../../packages/swaps/src/observed";
 import { recordedReport as meteringReport } from "../../../../packages/metering/src/recorded";
+import { recordedSpec as yellowpaperSpec } from "../../../../packages/spec/src/recorded";
 import { recordedManifest as knowledgeManifest } from "../../../../packages/knowledge/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
@@ -59,6 +60,18 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  yellowpaper: () => {
+    const paper = yellowpaperSpec();
+    return metric(
+      paper.items.filter((item) => item.appendix === "A").length,
+      "parameters in the pinned yellowpaper",
+      paper.measuredAt,
+      `https://github.com/flop-labs/yellowpaper/blob/${paper.sha}/yellowpaper.md`,
+      "packages/spec/fixtures/paper-0.json",
+      "Pinned specification rows. Catalog agreement does not verify deployed runtime storage.",
+      "Pinned paper",
+    );
+  },
   knowledge: () => {
     const observation = knowledgeManifest();
     return metric(
