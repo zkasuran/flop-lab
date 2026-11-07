@@ -73,8 +73,8 @@ export default async function Home() {
               <MotionLink className="button" href="#tools">
                 {c.explore} <ArrowDown />
               </MotionLink>
-              <MotionLink className="text-link" href="https://docs.flop.network">
-                {c.protocol} <ArrowUpRight />
+              <MotionLink className="text-link" href="/docs">
+                Find a command <ArrowUpRight />
               </MotionLink>
             </div>
             <LiveStatus stats={snapshot.stats} renderedAt={snapshot.renderedAt} />
@@ -92,6 +92,9 @@ export default async function Home() {
       </section>
 
       <Findings snapshot={snapshot} run={run} tape={tape} />
+      <MotionLink className="text-link" href="/docs/findings">
+        Read the dated upstream reports <ArrowRight />
+      </MotionLink>
 
       <PromiseLedger ledger={ledger} />
 
@@ -129,15 +132,24 @@ export default async function Home() {
       </section>
 
       <section className="section" id="tools" aria-labelledby="tools-heading">
-        <SectionHeading index="04" eyebrow={c.workbench} id="tools-heading" title={c.toolsTitle}>
-          {c.toolsText}
+        <SectionHeading index="04" eyebrow="The workbench" id="tools-heading" title="One suite. One question per tool.">
+          Observe, verify, build, operate, agents and identity. Each section starts with a question. Alpha pages use
+          live or recorded real data with source times. Planned entries link to the repository. Search the{" "}
+          <MotionLink href="/docs">package guides</MotionLink> for a command and its limits.
         </SectionHeading>
         <ToolGrid />
       </section>
 
       <section className="section" id="start" aria-labelledby="start-heading">
-        <SectionHeading index="05" eyebrow={c.start} id="start-heading" title={c.startTitle}>
-          {c.startText}
+        <SectionHeading
+          index="05"
+          eyebrow="Start with a read"
+          id="start-heading"
+          title="Start with the public model list."
+        >
+          No wallet, key or account for this read. Paste the gateway command or use{" "}
+          <MotionLink href="/docs/cli">flop from a checkout</MotionLink> to find a suite tool. Each package guide keeps
+          its quick start beside its evidence limits.
         </SectionHeading>
         <ReadingReveal>
           <Terminal />

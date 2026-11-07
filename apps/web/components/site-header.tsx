@@ -104,7 +104,7 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
       lang={chinese ? "zh-Hans" : "en"}
     >
       <div className="container header-inner">
-        <Link className="wordmark" href={chinese ? "/zh" : "/"} aria-label={`flop-lab ${copy.home}`}>
+        <Link className="wordmark" href={chinese ? "/zh" : "/"} prefetch={false} aria-label={`flop-lab ${copy.home}`}>
           <Mark />
           <span aria-hidden="true">
             flop<span className="wordmark-suffix">-lab</span>
@@ -116,6 +116,7 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
               {navigation.map((item) => (
                 <li key={item.id}>
                   <Link
+                    prefetch={false}
                     className="nav-link"
                     href={item.href}
                     data-active={activeId === item.id}
@@ -171,7 +172,12 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
             <ul>
               {navigation.map((item) => (
                 <li key={item.id}>
-                  <Link href={item.href} data-active={activeId === item.id} onClick={() => setMenu(false)}>
+                  <Link
+                    href={item.href}
+                    prefetch={false}
+                    data-active={activeId === item.id}
+                    onClick={() => setMenu(false)}
+                  >
                     {item.label}
                   </Link>
                 </li>

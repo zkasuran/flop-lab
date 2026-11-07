@@ -41,6 +41,7 @@ export function MotionLink(props: React.ComponentProps<typeof LinkWithMotion>) {
   const reduced = useReducedMotion() !== false;
   return (
     <LinkWithMotion
+      prefetch={false}
       whileHover={{ y: reduced ? 0 : -1 }}
       whileTap={{ scale: reduced ? 1 : 0.98 }}
       transition={{ duration: reduced ? 0 : 0.18, ease: EASE_OUT }}
@@ -98,7 +99,8 @@ export function ReadingReveal({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const visible = useInView(ref, { once: true, margin: "0px 0px -24px 0px" });
+  // Keep initially visible server content still during hydration. Off-screen sections reveal on entry.
+  const visible = useSeen(ref);
   const reduced = useReducedMotion() !== false;
   return (
     <motion.div
