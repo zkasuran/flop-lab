@@ -244,12 +244,12 @@ export function Workbench({ report }: { report: Report | null }) {
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
   if (!report || !report.results.length)
     return (
-      <main className={`container ${styles.page}`}>
+      <div className={`container ${styles.page}`}>
         <MotionLink href="/">← All tools</MotionLink>
         <h1>SDK conformance</h1>
         <p>No valid recorded report is available.</p>
         <Copy text={command} />
-      </main>
+      </div>
     );
   const counts = summarize(report.results);
   const filtered = report.results.filter(
@@ -264,7 +264,7 @@ export function Workbench({ report }: { report: Report | null }) {
     0,
   );
   return (
-    <main className={`container ${styles.page}`}>
+    <div className={`container ${styles.page}`}>
       <MotionLink href="/" className={styles.back}>
         ← All tools
       </MotionLink>
@@ -290,7 +290,7 @@ export function Workbench({ report }: { report: Report | null }) {
           </ReadingReveal>
         </div>
         <ReadingReveal order={3}>
-          <aside className={styles.summary}>
+          <section className={styles.summary} aria-label="Recorded SDK run">
             <p className="eyebrow">Recorded offline run</p>
             <div className={styles.counts}>
               {statuses.map((s) => (
@@ -321,7 +321,7 @@ export function Workbench({ report }: { report: Report | null }) {
               {report.runtime} · {report.durationMs} ms runner time
             </p>
             <MotionLink href={`${source}/fixtures/report.json`}>Read the full recording ↗</MotionLink>
-          </aside>
+          </section>
         </ReadingReveal>
       </section>
 
@@ -442,6 +442,6 @@ export function Workbench({ report }: { report: Report | null }) {
           <MotionLink href="/harness">Check network claims ↗</MotionLink>
         </p>
       </section>
-    </main>
+    </div>
   );
 }
