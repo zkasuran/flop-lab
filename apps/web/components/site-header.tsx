@@ -79,7 +79,7 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
   return (
     <header className="site-header" data-scrolled={scrolled} data-menu={menu ? "open" : "closed"}>
       <div className="container header-inner">
-        <Link className="wordmark" href="/" aria-label="flop-lab home">
+        <Link className="wordmark" href="/" prefetch={false} aria-label="flop-lab home">
           <Mark />
           <span aria-hidden="true">
             flop<span className="wordmark-suffix">-lab</span>
@@ -91,6 +91,7 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
               {items.map((item) => (
                 <li key={item.id}>
                   <Link
+                    prefetch={false}
                     className="nav-link"
                     href={item.href}
                     data-active={activeId === item.id}
@@ -145,7 +146,12 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
             <ul>
               {items.map((item) => (
                 <li key={item.id}>
-                  <Link href={item.href} data-active={activeId === item.id} onClick={() => setMenu(false)}>
+                  <Link
+                    href={item.href}
+                    prefetch={false}
+                    data-active={activeId === item.id}
+                    onClick={() => setMenu(false)}
+                  >
                     {item.label}
                   </Link>
                 </li>

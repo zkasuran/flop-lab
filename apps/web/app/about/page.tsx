@@ -7,7 +7,7 @@ import { SignedStory } from "./signed-story";
 export const metadata: Metadata = {
   title: "How flop-lab was made",
   description:
-    "Agents write the code. A gate checks it. A person merges. Follow a real signed pull request and check its signature in your browser.",
+    "Agents write the suite. Gates check publication and automatic merges. Follow a recorded signed pull request and inspect the deployed manifest.",
 };
 
 export default function About() {
@@ -27,8 +27,8 @@ export default function About() {
         </ReadingReveal>
         <ReadingReveal order={2}>
           <p className="intro">
-            FLOP asks users to trust proofs of inference. We built tools to ask what those proofs establish. The same
-            question applies to our own work: what can a reader check?
+            FLOP asks users to trust proofs of inference. The suite watches public data, checks claims and helps
+            builders use the protocol. The same question applies to our own work: what can a reader check?
           </p>
         </ReadingReveal>
       </header>
@@ -40,7 +40,19 @@ export default function About() {
         </p>
         <p>
           A separate publisher refuses changes without green builds, tests, plain claims and stated limits. It publishes
-          the branch and signs a list of the changed file hashes. A person reviews and merges.
+          the branch and signs a list of the changed file hashes.
+        </p>
+        <p>
+          Eligible pull requests merge automatically when CI is green and the branch merges cleanly into main. The merge
+          result must pass install, check, build and the Markdown voice check. Changes under .github/ wait for human
+          review. A failed gate or merge conflict returns to the agent for a fix.
+        </p>
+        <p>
+          The example below records an earlier contribution. Its counts and times come from that saved GitHub artifact.
+          It does not stand in for the current suite's full history. The{" "}
+          <MotionLink href="/docs">package guides</MotionLink> come directly from each README at build time. The{" "}
+          <MotionLink href="/docs/findings">findings list</MotionLink> records public upstream issue states with their
+          observation times.
         </p>
         <p>
           <MotionLink href="https://github.com/zkasuran/flop-lab/blob/main/AGENTS.md">

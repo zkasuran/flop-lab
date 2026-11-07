@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { writeFixture } from "@flop-lab/fixtures";
 import { probeServices, type RawResponse } from "../src/probe";
 const folder = fileURLToPath(new URL("../test/fixtures/", import.meta.url));
 await mkdir(folder, { recursive: true });
@@ -15,11 +16,7 @@ const name = run.startedAt.replaceAll(":", "-");
 const directory = `${folder}${name}`;
 await mkdir(directory, { recursive: true });
 for (const { body, ...meta } of raw) {
-  // JSON string encoding preserves source bytes while escaping prohibited typography in repository text.
-  const encoded = JSON.stringify(body).replace(/[\u2013\u2014]/g, (c) => `\\u${c.charCodeAt(0).toString(16)}`);
-  if (Buffer.byteLength(encoded) > 200_000) throw new Error("Encoded fixture exceeds repository limit");
-  await writeFile(`${directory}/${meta.service}.body.json`, encoded + "\n");
-  await writeFile(`${directory}/${meta.service}.meta.json`, JSON.stringify(meta) + "\n");
+  writeFixture(`status-${name}-${meta.service}`, meta, body);
 }
 await writeFile(`${directory}/run.json`, JSON.stringify(run, null, 2) + "\n");
 const runs = await Promise.all(
