@@ -1,0 +1,4 @@
+{
+  "summary": "Generate independent version previews and unsigned draft package artifacts.",
+  "packages": { "@flop-lab/release": "minor" }
+}

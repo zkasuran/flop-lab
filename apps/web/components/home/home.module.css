@@ -139,13 +139,14 @@
 }
 @keyframes fade-up {
   from {
-    opacity: 0;
+    /* Keep the introductory text readable on the first paint. */
+    opacity: 0.85;
     transform: translateY(10px);
   }
 }
 @keyframes card-in {
   from {
-    opacity: 0;
+    opacity: 0.85;
     transform: translateY(18px) scale(0.985);
   }
 }

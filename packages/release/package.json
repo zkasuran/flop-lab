@@ -1,0 +1,16 @@
+{
+  "name": "@flop-lab/release",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Repository-only version previews and unsigned draft tarball artifacts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run",
+    "plan": "tsx src/cli.ts plan",
+    "pack": "tsx src/cli.ts pack"
+  }
+}
