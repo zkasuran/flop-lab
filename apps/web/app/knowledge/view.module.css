@@ -114,6 +114,7 @@
   border: 1px solid var(--border-strong);
   background: var(--surface);
   font-size: var(--text-sm);
+  border-radius: var(--radius-md);
 }
 .button:disabled {
   cursor: default;
@@ -361,6 +362,7 @@
   max-height: 32rem;
   overflow: auto;
   border: 1px solid var(--border);
+  border-radius: var(--radius-md);
 }
 .requirement h3 {
   margin: 1.5rem 0 0.7rem;
@@ -382,6 +384,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   height: 100%;
+  border-radius: var(--radius-md);
 }
 .packCard h3 {
   margin: 1rem 0 0.6rem;

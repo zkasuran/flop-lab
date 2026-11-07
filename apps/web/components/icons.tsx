@@ -125,6 +125,71 @@ export function ChevronRight(props: IconProps) {
   );
 }
 
+export function ChevronDown(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="m4 6 4 4 4-4" />
+    </Icon>
+  );
+}
+
+/** Section glyphs. One line drawing per suite section. Example: <SectionIcon section="verify" />. */
+export function SectionIcon({ section, ...props }: IconProps & { section: string }) {
+  switch (section) {
+    case "observe":
+      return (
+        <Icon {...props}>
+          <circle cx="8" cy="8" r="5.25" />
+          <circle cx="8" cy="8" r="1.75" />
+          <path d="M8 1v2M8 13v2M1 8h2M13 8h2" />
+        </Icon>
+      );
+    case "verify":
+      return (
+        <Icon {...props}>
+          <rect x="2.25" y="2.25" width="11.5" height="11.5" rx="3" />
+          <path d="m5.25 8.25 1.9 1.9 3.6-4.15" />
+        </Icon>
+      );
+    case "build":
+      return (
+        <Icon {...props}>
+          <path d="M5.5 4.25 1.75 8l3.75 3.75M10.5 4.25 14.25 8l-3.75 3.75M9 3 7 13" />
+        </Icon>
+      );
+    case "operate":
+      return (
+        <Icon {...props}>
+          <rect x="2.25" y="2.75" width="11.5" height="4.25" rx="1.25" />
+          <rect x="2.25" y="9" width="11.5" height="4.25" rx="1.25" />
+          <path d="M4.75 4.9h.01M4.75 11.1h.01M7.5 4.9h4M7.5 11.1h4" />
+        </Icon>
+      );
+    case "agents":
+      return (
+        <Icon {...props}>
+          <circle cx="3.75" cy="4" r="1.75" />
+          <circle cx="12.25" cy="4" r="1.75" />
+          <circle cx="8" cy="12" r="1.75" />
+          <path d="M5.5 4h5M4.6 5.6l2.5 4.8M11.4 5.6l-2.5 4.8" />
+        </Icon>
+      );
+    case "identity":
+      return (
+        <Icon {...props}>
+          <circle cx="5.25" cy="8" r="3" />
+          <path d="M8.25 8h6M12.25 8v2.5M10.25 8v1.75" />
+        </Icon>
+      );
+    default:
+      return (
+        <Icon {...props}>
+          <circle cx="8" cy="8" r="5.5" />
+        </Icon>
+      );
+  }
+}
+
 export function GitHubIcon({ size = 16, ...props }: IconProps) {
   return (
     <svg

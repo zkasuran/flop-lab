@@ -14,6 +14,7 @@
   display: grid;
   gap: 0.9rem;
   background: var(--surface);
+  border-radius: var(--radius-md);
 }
 .notice .badge {
   justify-self: start;
@@ -169,6 +170,7 @@
   max-height: 28rem;
   overflow: auto;
   border: 1px solid var(--border);
+  border-radius: var(--radius-md);
 }
 .source {
   font-size: 0.75rem;

@@ -36,9 +36,9 @@ Every allow reserves the full declared amount in an in-memory ledger. Every deni
 
 ## Motion and accessibility
 
-Motion reveals sections in reading order on entry from the tool grid. The shared shell's `RouteSurface` animates route arrivals. The return `MotionLink` keeps that shell mounted. A scroll-linked rail tracks progress through policy, budgets and trace. Budget bars transform to the calculated ratio. Failed budget rules turn the corresponding bar and boundary red. Changed amounts enter with their exact final text. Filtering repositions decision rows with layout animation. Source details and trace selection use `AnimatePresence`.
+Motion reveals sections in reading order on entry from the tool index. The shared shell's `RouteSurface` animates route changes. The return `MotionLink` keeps that shell mounted. A scroll-linked rail tracks progress through policy, budgets and trace. Budget bars transform to the calculated ratio. Failed budget rules turn the corresponding bar and boundary red. Changed amounts enter with their exact final text. Filtering repositions decision rows with layout animation. Source details and trace selection use `AnimatePresence`.
 
-Controls respond immediately with hover, press and focus states. Reduced motion removes travel and uses instant updates. The progress rail stays fully visible. There are no ambient loops. Controls use native buttons, labelled inputs, pressed states and live validation messages. Budget meters include exact FLOP text for assistive technology.
+Controls respond immediately with hover, press and focus states. Reduced motion removes travel and uses instant updates. The progress rail stays fully visible. The page content has no ambient loops. Controls use native buttons, labelled inputs, pressed states and live validation messages. Budget meters include exact FLOP text for assistive technology.
 
 The replay and catalogue boundary tests live in `packages/spendguard/test/site.test.ts`. The existing each-rule mutation suite protects the same evaluator used by this page.
 

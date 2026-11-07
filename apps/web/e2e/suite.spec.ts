@@ -1,16 +1,21 @@
 // SPDX-License-Identifier: Apache-2.0
 import AxeBuilder from "@axe-core/playwright";
 import { tools } from "../content/tools";
+import { sitePages } from "../components/suite/catalogue";
+import { languagePair, translatedPaths } from "../app/zh/routes";
 import { test, expect } from "./fixtures";
 import { interactions, interact } from "./interactions";
 import { unreachable } from "./keyboard";
 import { execFileSync } from "node:child_process";
 
+// The same sources as app/sitemap.ts, so a new page cannot skip its browser contract.
 const routes = [
-  "/",
-  "/about",
-  "/provenance",
-  ...tools.filter((tool) => tool.status !== "planned").map((tool) => tool.href),
+  ...new Set([
+    ...translatedPaths,
+    ...translatedPaths.map((path) => languagePair(path)!.zh),
+    ...sitePages.map((page) => page.href),
+    ...tools.filter((tool) => tool.status !== "planned").map((tool) => tool.href),
+  ]),
 ];
 
 test("server guard blocks fetch and direct sockets", () => {
@@ -77,7 +82,7 @@ for (const path of routes) {
       )
       .toEqual([]);
     // Keep the first viewport stable. The build commit is unrelated to visual layout.
-    await expect.soft(page).toHaveScreenshot(`${path === "/" ? "home" : path.slice(1)}.png`, {
+    await expect.soft(page).toHaveScreenshot(`${path === "/" ? "home" : path.slice(1).replaceAll("/", "-")}.png`, {
       animations: "disabled",
       mask: [page.locator("footer .mono")],
     });

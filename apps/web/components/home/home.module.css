@@ -1,95 +1,18 @@
 /* SPDX-License-Identifier: Apache-2.0 */
-/* Home page. Entrance animations run once at first paint and finish within 600 ms. Nothing loops. */
+/* Evidence instruments shared by the landing page, /findings and /network. Entrances run once. */
 
-/* Hero */
-.hero {
-  position: relative;
-  display: grid;
-  gap: clamp(2.5rem, 5vw, 3.75rem);
-  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(4rem, 7vw, 6rem);
-}
-.heroTop {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: end;
-}
-.heroAside {
-  display: grid;
-  justify-items: start;
-  padding-bottom: 0.6rem;
-}
-.backdrop {
-  position: absolute;
-  z-index: -1;
-  top: calc(-1 * var(--header-height));
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  pointer-events: none;
-  background:
-    radial-gradient(42rem 30rem at 74% 42%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%),
-    radial-gradient(28rem 22rem at 8% 12%, color-mix(in oklab, var(--warning) 5%, transparent), transparent 70%),
-    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 72px 72px,
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 72px 72px;
-  mask-image: radial-gradient(80% 80% at 55% 40%, #000 35%, transparent 88%);
-}
-.heroEyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-.heroMark {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 2px;
-  background: var(--accent);
-  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 80%, transparent);
-}
-.heroTitle {
-  margin-top: var(--space-6);
-  font-size: clamp(2.6rem, 5.8vw, 5.5rem);
-  line-height: 0.98;
-  letter-spacing: -0.056em;
-}
-.heroTitle em {
-  font-style: normal;
-  color: var(--accent);
-}
-.line {
-  display: block;
-  overflow: hidden;
-  padding-block: 0.04em 0.12em;
-  margin-block: -0.04em -0.12em;
-}
-.line > span {
-  display: inline-block;
-}
-.heroIntro {
-  max-width: 40ch;
-  color: var(--muted);
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-  line-height: 1.55;
-  letter-spacing: -0.01em;
-}
-.heroActions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-6);
-  margin-top: var(--space-6);
-}
+/* Block reading pill */
 .live {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 0.75rem;
-  margin-top: var(--space-8);
   padding: 0.5rem 0.9rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: 999px;
-  background: color-mix(in oklab, var(--surface) 75%, transparent);
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   font-size: var(--text-sm);
 }
 .live :global(.status-dot) {
@@ -108,18 +31,7 @@
   height: 0.9rem;
   background: var(--border-strong);
 }
-.heroVisual {
-  position: relative;
-}
 @media (prefers-reduced-motion: no-preference) {
-  .line > span {
-    animation: rise 0.56s var(--ease-out) backwards;
-  }
-  .line + .line > span {
-    animation-delay: 0.04s;
-  }
-  .heroIntro,
-  .heroActions,
   .live {
     animation: fade-up 0.48s var(--ease-out) 0.1s backwards;
   }
@@ -130,11 +42,6 @@
   .cellFace {
     animation: cell-in 0.3s var(--ease-out) backwards;
     animation-delay: calc(min(var(--i, 0), 64) * 3ms + 40ms);
-  }
-}
-@keyframes rise {
-  from {
-    transform: translateY(104%);
   }
 }
 @keyframes fade-up {
@@ -161,8 +68,9 @@
 .matrixCard {
   position: relative;
   padding: clamp(1.1rem, 2.2vw, 1.6rem);
-  border: 1px solid var(--border);
-  background-color: color-mix(in oklab, var(--surface) 90%, transparent);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--glass-strong);
   box-shadow: var(--shadow-lg), var(--inner-light);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -491,8 +399,9 @@
   gap: var(--space-4);
   width: 100%;
   padding: clamp(1.25rem, 2.6vw, 2rem);
-  border: 1px solid var(--border);
-  background-color: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--glass-strong);
   box-shadow: var(--inner-light);
 }
 .finding h3 {
@@ -829,170 +738,13 @@
   gap: var(--space-8);
 }
 
-/* Tool index */
-.index {
-  border-top: 1px solid var(--border);
-}
-.indexSection {
-  display: grid;
-  grid-template-columns: minmax(0, 0.75fr) minmax(0, 2fr);
-  gap: var(--space-8);
-  padding-block: var(--space-8);
-  border-bottom: 1px solid var(--border);
-}
-.indexHead {
-  position: sticky;
-  top: calc(var(--header-height) + 1.5rem);
-  align-self: start;
-  display: grid;
-  gap: 0.4rem;
-}
-.indexNumber {
-  font: 500 var(--text-xs) / 1.5 var(--font-data);
-  letter-spacing: 0.1em;
-  color: var(--accent);
-}
-.indexHead h3 {
-  font-size: 1.6rem;
-  letter-spacing: -0.04em;
-}
-.indexTitle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: inherit;
-  text-decoration: none;
-}
-.indexTitle svg {
-  color: var(--subtle);
-  transition:
-    transform var(--motion-fast) var(--ease-out),
-    color var(--motion-fast) var(--ease-out);
-}
-.indexTitle:hover svg,
-.indexTitle:focus-visible svg {
-  color: var(--accent);
-  transform: translateX(3px);
-}
-.indexHead p {
-  max-width: 30ch;
-  font-size: var(--text-sm);
-}
-.indexCount {
-  margin-top: var(--space-2);
-  font: 500 0.6875rem / 1.5 var(--font-data);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--subtle);
-}
-.indexList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-}
-.indexList li + li {
-  border-top: 1px dashed var(--border);
-}
-.toolRow {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) 4.75rem 13.5rem;
-  align-items: center;
-  gap: var(--space-4);
-  min-height: 3.9rem;
-  padding: 0.75rem 1rem;
-  border-radius: 0.7rem;
-  color: var(--foreground);
-  text-decoration: none;
-}
-.rowHighlight {
-  position: absolute;
-  inset: 0;
-  border-radius: 0.7rem;
-  background: color-mix(in oklab, var(--foreground) 5%, transparent);
-  box-shadow: inset 0 0 0 1px var(--border);
-}
-.toolName,
-.toolQuestion,
-.toolStatus,
-.toolGo {
-  position: relative;
-  z-index: 1;
-}
-.toolName {
-  font-weight: 560;
-  letter-spacing: -0.02em;
-}
-.toolRow[data-status="planned"] .toolName {
-  color: var(--muted);
-}
-.toolQuestion {
-  color: var(--muted);
-  font-size: var(--text-sm);
-}
-.toolStatus {
-  justify-self: start;
-  padding: 0.08rem 0.5rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  color: var(--muted);
-  font: 500 0.6875rem / 1.55 var(--font-data);
-}
-.toolStatus[data-status="alpha"] {
-  color: var(--warning);
-  border-color: color-mix(in oklab, var(--warning) 45%, transparent);
-  background: color-mix(in oklab, var(--warning) 8%, transparent);
-}
-.toolStatus[data-status="live"] {
-  color: var(--accent);
-  border-color: color-mix(in oklab, var(--accent) 45%, transparent);
-  background: var(--accent-soft);
-}
-.toolStatus[data-status="planned"] {
-  border-style: dashed;
-  color: var(--subtle);
-}
-.toolGo {
-  justify-self: end;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  max-width: 100%;
-  color: var(--muted);
-  font-size: var(--text-sm);
-  transition: color var(--motion-fast) var(--ease-out);
-}
-.toolGo code {
-  min-width: 0;
-  overflow: hidden;
-  font-size: 0.72rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.toolRow svg {
-  transition: transform var(--motion-fast) var(--ease-out);
-}
-.toolRow:hover .toolGo,
-.toolRow:focus-visible .toolGo {
-  color: var(--foreground);
-}
-.toolRow[data-status="alpha"] .toolGo,
-.toolRow[data-status="live"] .toolGo {
-  color: var(--foreground);
-}
-.toolRow:hover :global(.icon-nudge-x) {
-  transform: translateX(3px);
-}
-.toolRow:hover :global(.icon-nudge-xy) {
-  transform: translate(2px, -2px);
-}
-
 /* Terminal */
 .terminal {
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
   background-color: color-mix(in oklab, var(--background) 55%, var(--surface));
   box-shadow: var(--shadow-lg), var(--inner-light);
+  overflow: hidden;
 }
 .terminalBar {
   display: flex;
@@ -1075,55 +827,14 @@
   flex: 1 1 18rem;
 }
 
-/* Process and signature */
-.processGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: start;
-}
-.processSteps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  border-bottom: 1px solid var(--border);
-}
-.processSteps li {
-  border-top: 1px solid var(--border);
-}
-.processItem {
-  display: grid;
-  grid-template-columns: 3.25rem minmax(0, 1fr);
-  padding-block: var(--space-6);
-}
-.processItem h3 {
-  font-size: 1.15rem;
-  letter-spacing: -0.025em;
-}
-.processItem p {
-  grid-column: 2;
-  margin-top: var(--space-2);
-  font-size: var(--text-sm);
-  max-width: 56ch;
-}
-.processIndex {
-  grid-row: span 2;
-  font: 500 var(--text-xs) / 2 var(--font-data);
-  color: var(--accent);
-}
-.processLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-6);
-  margin-top: var(--space-8);
-}
+/* Signature */
 .signature {
   display: grid;
   gap: var(--space-4);
   padding: clamp(1.25rem, 3vw, 2rem);
-  border: 1px solid var(--border);
-  background-color: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--glass-strong);
   box-shadow: var(--shadow-lg), var(--inner-light);
 }
 .signatureHead {
@@ -1166,16 +877,6 @@
 }
 
 @media (max-width: 1080px) {
-  .heroTop {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-  .heroAside {
-    padding-bottom: 0;
-  }
-  .heroIntro {
-    max-width: 52ch;
-  }
   .matrixHead {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -1205,45 +906,12 @@
     grid-column: 2;
   }
 }
-@media (max-width: 1180px) {
-  .indexSection {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-  .indexHead {
-    position: static;
-  }
-}
 @media (max-width: 860px) {
-  .observeGrid,
-  .processGrid {
+  .observeGrid {
     grid-template-columns: 1fr;
   }
   .observeNotes {
     position: static;
-  }
-}
-@media (max-width: 760px) {
-  .toolRow {
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-      "name status"
-      "question question";
-    row-gap: 0.2rem;
-    padding-inline: 0.5rem;
-  }
-  .toolName {
-    grid-area: name;
-  }
-  .toolStatus {
-    grid-area: status;
-    justify-self: end;
-  }
-  .toolQuestion {
-    grid-area: question;
-  }
-  .toolGo {
-    display: none;
   }
 }
 @media (max-width: 760px) {

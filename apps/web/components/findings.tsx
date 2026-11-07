@@ -46,7 +46,7 @@ export function Findings({ snapshot, run, tape }: { snapshot: Snapshot; run: Cla
         index="01"
         eyebrow="What we found so far"
         id="findings-heading"
-        title="The arithmetic passes. The questions stay open."
+        title="Three findings, each dated."
       >
         Dated observations from a disposable devnet. These samples describe what the tools saw at the times below.
       </SectionHeading>

@@ -124,6 +124,7 @@
   background: var(--surface);
   font: var(--text-xs)/1.5 var(--font-data);
   overflow: hidden;
+  border-radius: var(--radius-md);
 }
 .pipeline > div > span:last-of-type {
   color: var(--muted);

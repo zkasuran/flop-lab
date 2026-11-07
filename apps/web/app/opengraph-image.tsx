@@ -3,15 +3,16 @@ import { ImageResponse } from "next/og";
 import { readClaimRun } from "@/lib/evidence";
 import { OG_SIZE, OgCard, OgMatrix } from "@/lib/og";
 
-export const alt = "flop-lab. Check FLOP's promises from outside. Dated findings. Public evidence.";
+export const alt =
+  "flop-lab. Built on FLOP. See the network, check it yourself. Dated findings from the FLOP devnet with public evidence.";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 export default function Image() {
   const run = readClaimRun();
   return new ImageResponse(
     <OgCard
-      eyebrow="Independent tools / FLOP devnet"
-      title="Check FLOP's promises from outside."
+      eyebrow="Built on FLOP / Independent devnet observatory"
+      title="See the network. Check it yourself."
       footer={
         run
           ? `${run.claims.length} recorded claims: ${run.counts.PASS} pass, ${run.counts.FAIL} fail, ${run.counts.UNVERIFIABLE} unverifiable, ${run.counts.SKIPPED} skipped.`

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { Disclosure, MotionButton, MotionLink, ObservedNumber, ReadingReveal, ReadingSteps } from "@/components/motion";
-import { ToolGrid } from "@/components/tool-grid";
+import { ToolIndex } from "@/components/landing/tool-universe";
 import { SectionHeading } from "@/components/home/section-heading";
 import type { Observation, Snapshot } from "@/lib/devnet";
 import type { ClaimRun, PromiseLedger, SettlementTape } from "@/lib/evidence";
@@ -279,7 +279,7 @@ export function ChineseHome({
         <SectionHeading index="04" eyebrow={c.workbench} id="tools-heading" title={c.toolsTitle}>
           {c.toolsText}
         </SectionHeading>
-        <ToolGrid locale="zh" />
+        <ToolIndex locale="zh" />
       </section>
       <section className="section" id="start" aria-labelledby="start-heading">
         <SectionHeading index="05" eyebrow={c.start} id="start-heading" title={c.startTitle}>

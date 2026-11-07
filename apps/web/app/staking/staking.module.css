@@ -17,6 +17,7 @@
   border-left: 3px solid var(--warning);
   background: var(--surface);
   overflow-wrap: anywhere;
+  border-radius: var(--radius-md);
 }
 .builder {
   display: grid;
@@ -160,6 +161,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   min-height: 22rem;
+  border-radius: var(--radius-md);
 }
 .scenario h3 {
   margin-bottom: var(--space-3);
@@ -196,6 +198,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   min-width: 0;
+  border-radius: var(--radius-md);
 }
 .address {
   font-family: var(--font-data);

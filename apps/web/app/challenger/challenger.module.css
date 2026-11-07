@@ -575,6 +575,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   padding: var(--space-4);
+  border-radius: var(--radius-md);
 }
 .dossierSummary strong {
   display: block;

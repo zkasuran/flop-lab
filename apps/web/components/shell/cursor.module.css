@@ -1,0 +1,104 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* The cursor sits below the top layer, so open dialogs keep the system cursor. */
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
+}
+.cursor[data-visible="true"] {
+  opacity: 1;
+}
+.cursor[data-state="text"] {
+  opacity: 0;
+}
+.ring,
+.dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px color-mix(in oklab, var(--accent) 80%, transparent);
+  transition:
+    opacity 160ms var(--ease-out),
+    scale 220ms var(--ease-out),
+    background-color 200ms var(--ease-out);
+}
+.ring {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -1.125rem 0 0 -1.125rem;
+  border: 1px solid color-mix(in oklab, var(--foreground) 45%, transparent);
+  border-radius: 999px;
+  transition:
+    width 280ms var(--ease-out),
+    height 280ms var(--ease-out),
+    margin 280ms var(--ease-out),
+    border-radius 280ms var(--ease-out),
+    background-color 220ms var(--ease-out),
+    border-color 220ms var(--ease-out),
+    rotate 280ms var(--ease-out),
+    scale 220ms var(--ease-spring);
+}
+.label {
+  color: var(--accent-ink);
+  font: 600 0.75rem / 1 var(--font-text);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  opacity: 0;
+  scale: 0.6;
+  transition:
+    opacity 160ms var(--ease-out),
+    scale 240ms var(--ease-spring);
+}
+.cursor[data-state="link"] .ring {
+  width: 3.25rem;
+  height: 3.25rem;
+  margin: -1.625rem 0 0 -1.625rem;
+  border-color: color-mix(in oklab, var(--accent) 65%, transparent);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+}
+.cursor[data-state="link"] .dot {
+  scale: 0.6;
+}
+.cursor[data-state="label"] .ring {
+  width: 4.75rem;
+  height: 4.75rem;
+  margin: -2.375rem 0 0 -2.375rem;
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 10px 40px -12px color-mix(in oklab, var(--accent) 80%, transparent);
+}
+.cursor[data-state="label"] .label {
+  opacity: 1;
+  scale: 1;
+}
+.cursor[data-state="label"] .dot {
+  opacity: 0;
+}
+.cursor[data-state="crosshair"] .ring {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: -0.875rem 0 0 -0.875rem;
+  border-color: var(--accent-2);
+  border-radius: 0.35rem;
+  rotate: 45deg;
+}
+.cursor[data-state="crosshair"] .dot {
+  background: var(--accent-2);
+  box-shadow: 0 0 12px color-mix(in oklab, var(--accent-2) 80%, transparent);
+}
+.cursor[data-pressed="true"] .ring {
+  scale: 0.84;
+}

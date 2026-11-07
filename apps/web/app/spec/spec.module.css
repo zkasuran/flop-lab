@@ -40,6 +40,7 @@
   border-top: 3px solid var(--accent);
   background: var(--surface);
   padding: var(--space-8);
+  border-radius: var(--radius-md);
 }
 .verdictNumber {
   display: flex;
@@ -299,6 +300,7 @@
   grid-template-columns: 1fr 1fr;
   border: 1px solid var(--border);
   background: var(--surface);
+  border-radius: var(--radius-md);
 }
 .side {
   padding: var(--space-6);
@@ -347,6 +349,7 @@
   justify-content: space-between;
   gap: var(--space-4);
   text-align: left;
+  border-radius: var(--radius-md);
 }
 .more span {
   font-size: var(--text-sm);
@@ -374,6 +377,7 @@
   border: 1px solid var(--border);
   padding: var(--space-6);
   margin-block: var(--space-6);
+  border-radius: var(--radius-md);
 }
 .command code {
   flex: 1;

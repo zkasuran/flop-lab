@@ -85,6 +85,7 @@
   background: var(--surface);
   padding: var(--space-8);
   min-width: 0;
+  border-radius: var(--radius-md);
 }
 .cardTop {
   display: flex;
@@ -401,6 +402,7 @@
   border: 1px solid var(--border);
   background: var(--surface);
   margin-block: var(--space-3);
+  border-radius: var(--radius-md);
 }
 .command code {
   overflow-wrap: anywhere;
@@ -414,6 +416,7 @@
   padding: var(--space-8);
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: var(--radius-md);
 }
 .limits h2 {
   font-size: var(--text-lg);
@@ -507,6 +510,7 @@
   padding: var(--space-4);
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: var(--radius-md);
 }
 .detailSection {
   margin-top: var(--space-8);
