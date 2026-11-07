@@ -425,6 +425,8 @@ importers:
         specifier: workspace:*
         version: link:../mcp
 
+  packages/release: {}
+
   packages/scoreboard: {}
 
   packages/sdkconf:
