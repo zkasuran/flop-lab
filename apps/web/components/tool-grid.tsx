@@ -9,6 +9,9 @@ import { ArrowRight, ArrowUpRight } from "./icons";
 import { sectionHref } from "./suite/catalogue";
 import { ToolMark } from "./tool-header";
 import styles from "./home/home.module.css";
+import { sectionCopy } from "@/app/zh/translations/sections";
+import { common } from "@/app/zh/translations/common";
+import type { Locale } from "@/app/zh/translations/types";
 
 const STATUS: Record<Tool["status"], string> = { live: "Live", alpha: "Alpha", planned: "Planned" };
 
@@ -27,12 +30,13 @@ function tally(list: readonly Tool[]): string {
  * The highlight layout IDs are unique per section, so no nested LayoutGroup ID is needed. A nested ID would
  * namespace the ToolMark and break that travel.
  */
-export function ToolGrid() {
+export function ToolGrid({ locale = "en" }: { locale?: Locale }) {
   const reduced = useReducedMotion() !== false;
   const [hovered, setHovered] = useState<string | null>(null);
   return (
     <div className={styles.index}>
       {sections.map((section, sectionIndex) => {
+        const copy = sectionCopy[section.id]?.[locale];
         const list = toolsIn(section.id);
         if (!list.length) return null;
         return (
@@ -42,12 +46,14 @@ export function ToolGrid() {
                 {String(sectionIndex + 1).padStart(2, "0")}
               </span>
               <h3 id={`section-${section.id}`}>
-                <Link className={styles.indexTitle} href={sectionHref(section.id)}>
-                  {section.title}
+                <Link className={styles.indexTitle} href={`${locale === "zh" ? "/zh" : ""}${sectionHref(section.id)}`}>
+                  <span lang={copy ? undefined : "en"}>{copy?.title ?? section.title}</span>
                   <ArrowRight size={16} />
                 </Link>
               </h3>
-              <p className="muted">{section.question}</p>
+              <p className="muted" lang={copy ? undefined : "en"}>
+                {copy?.question ?? section.question}
+              </p>
               <p className={styles.indexCount}>{tally(list)}</p>
             </ReadingReveal>
             <ul className={styles.indexList} onPointerLeave={() => setHovered(null)}>
@@ -70,10 +76,14 @@ export function ToolGrid() {
                           transition={{ duration: reduced ? 0 : 0.22, ease: EASE_OUT }}
                         />
                       )}
-                      <span className={styles.toolName}>{tool.name}</span>
-                      <span className={styles.toolQuestion}>{tool.tagline}</span>
+                      <span className={styles.toolName} lang="en">
+                        {tool.name}
+                      </span>
+                      <span className={styles.toolQuestion} lang={copy?.[tool.slug] ? undefined : "en"}>
+                        {copy?.[tool.slug] ?? tool.tagline}
+                      </span>
                       <span className={styles.toolStatus} data-status={tool.status}>
-                        {STATUS[tool.status]}
+                        {locale === "zh" && tool.status === "planned" ? common.zh.planned : STATUS[tool.status]}
                       </span>
                       <span className={styles.toolGo}>
                         {planned ? <code title={tool.repoPath}>{tool.repoPath}</code> : <ToolMark slug={tool.slug} />}

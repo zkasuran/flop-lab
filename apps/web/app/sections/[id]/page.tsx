@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { sections, toolsIn } from "@/content/tools";
 import { SectionView } from "@/components/suite/section-view";
 import { sectionEvidence } from "@/components/suite/evidence";
+import { languageMetadata } from "@/app/zh/routes";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -12,7 +13,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const section = sections.find((entry) => entry.id === id);
-  return { title: section?.title, description: section?.question };
+  return { ...languageMetadata(`/sections/${id}`, "en"), title: section?.title, description: section?.question };
 }
 export default async function SectionPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
