@@ -435,7 +435,7 @@ function MinerEvidence({ report }: { report: Report }) {
           )}
         </div>
       </div>
-      <aside className={styles.notice}>
+      <div className={styles.notice} role="note">
         <h3>Network #76: {report.issue76.status}</h3>
         <p>{report.issue76.reason}</p>
         <p>
@@ -443,7 +443,7 @@ function MinerEvidence({ report }: { report: Report }) {
           block needed to check that claim.
         </p>
         <MotionLink href={report.issue76.source}>Read the existing report ↗</MotionLink>
-      </aside>
+      </div>
       <MotionLink href="/metering/recording" download="metering-recording.json" className="quiet-button">
         Download the raw recording
       </MotionLink>

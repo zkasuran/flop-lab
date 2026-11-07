@@ -447,7 +447,7 @@ export function SessionBoard({
             complete crawl above is a different population. No trend or state change is inferred between runs.
           </p>
         </ReadingReveal>
-        <div className={styles.tableWrap}>
+        <div className={styles.tableWrap} tabIndex={0} role="region" aria-label="Recorded settlement-sample history">
           <table>
             <caption>Distinct channels by state in each recorder settlement sample</caption>
             <thead>

@@ -45,7 +45,12 @@ function Values({ evidence }: { evidence: Evidence }) {
   if (evidence.state === "unavailable") return <p className={styles.warning}>{evidence.error}</p>;
   if (evidence.data === null) return <p className="muted">No indexed match in this response.</p>;
   const row = object(evidence.data);
-  if (!row) return <pre className={styles.code}>{display(evidence.data)}</pre>;
+  if (!row)
+    return (
+      <pre className={styles.code} tabIndex={0}>
+        {display(evidence.data)}
+      </pre>
+    );
   return (
     <dl className={styles.values}>
       {Object.entries(row).map(([key, value]) => (
@@ -54,7 +59,7 @@ function Values({ evidence }: { evidence: Evidence }) {
             {key}
             {rawAmounts.has(key) && <small>raw units</small>}
           </dt>
-          <dd>{display(value)}</dd>
+          <dd tabIndex={0}>{display(value)}</dd>
         </div>
       ))}
     </dl>
@@ -72,14 +77,16 @@ function EvidencePanel({ evidence, primary = false }: { evidence: Evidence; prim
         <p className="muted">
           Source: <code>{evidence.source}</code>. Received {evidence.measuredAt}.
         </p>
-        <pre className={styles.code}>
+        <pre className={styles.code} tabIndex={0}>
           {evidence.query ?? evidence.tool}
           {"\n"}
           {JSON.stringify(evidence.variables, null, 2)}
         </pre>
         <CopyButton text={evidence.query ?? evidence.tool} label="Copy query" />
         <Disclosure title={`Raw response: ${evidence.label}`}>
-          <pre className={styles.code}>{evidence.raw ?? "No response captured"}</pre>
+          <pre className={styles.code} tabIndex={0}>
+            {evidence.raw ?? "No response captured"}
+          </pre>
         </Disclosure>
       </Disclosure>
     </>
@@ -386,7 +393,9 @@ export function Workbench({
           </div>
           <Disclosure title="Empty proof query">
             <p>{emptyProofs.source}</p>
-            <pre className={styles.code}>{emptyProofs.query}</pre>
+            <pre className={styles.code} tabIndex={0}>
+              {emptyProofs.query}
+            </pre>
           </Disclosure>
         </ReadingReveal>
         <ReadingReveal order={2}>
