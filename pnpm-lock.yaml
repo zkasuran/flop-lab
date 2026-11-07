@@ -79,10 +79,28 @@ importers:
         specifier: 13.6.0
         version: 13.6.0(ajv@8.20.0)(rollup@4.67.4)(supports-color@8.1.1)
 
+  packages/action:
+    dependencies:
+      '@flop-lab/mcp':
+        specifier: workspace:*
+        version: link:../mcp
+      '@flop-lab/mcpaudit':
+        specifier: workspace:*
+        version: link:../mcpaudit
+      '@flop-lab/spec':
+        specifier: workspace:*
+        version: link:../spec
+      '@flop-lab/verifier':
+        specifier: workspace:*
+        version: link:../verifier
+
   packages/challenger: {}
 
   packages/cli:
     dependencies:
+      '@flop-lab/action':
+        specifier: workspace:*
+        version: link:../action
       '@flop-lab/challenger':
         specifier: workspace:*
         version: link:../challenger

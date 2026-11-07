@@ -14,6 +14,7 @@ const en = {
   export: "How do I get devnet data into a spreadsheet or notebook?",
   python: "How do I use flop-lab from Python?",
   openapi: "How do I read the suite's results as an API?",
+  action: "Can I bound FLOP evidence checks in CI?",
 };
 const zh = {
   title: "构建",
@@ -29,6 +30,7 @@ const zh = {
   export: "如何将开发网数据导入电子表格或笔记本？",
   python: "如何通过 Python 使用 flop-lab？",
   openapi: "如何通过 API 读取工具集的结果？",
+  action: "我能否在 CI 中限定 FLOP 证据检查的范围？",
 } satisfies Chinese<typeof en>;
 const metrics = {
   export: { label: "导出记录中的区块行数", note: "有界记录。导出完成不能证明已覆盖整条链。" },
@@ -40,5 +42,6 @@ const metrics = {
   yellowpaper: { label: "固定版本黄皮书中的参数数", note: "固定版本规范条目。目录一致性不验证已部署的运行时存储。" },
   knowledge: { label: "知识清单记录中的概念数", note: "目录中的声明。未验证来源溯源或运行时行为。" },
   openapi: { label: "API 磁带样本中的结算行数", note: "随包提供的算术摘要。未验证推理结果或当前网络健康状况。" },
+  action: { label: "已记录磁带中通过的算术检查数", note: "抽样的托管资金与显示比例算术。未验证推理或当前状态。" },
 };
 export const build = { en, zh, metrics };

@@ -46,6 +46,7 @@ import { recordedSnapshot as communitySnapshot } from "../../../../packages/comm
 import watch from "../../../../packages/watch/test/fixtures/2026-11-06T04-49-00.280Z.json";
 import suiteMcp from "../../app/mcp/tool-list.json";
 import { readResult as apiResult } from "../../../../packages/openapi/src/recorded";
+import { recordedCheck as actionCheck } from "../../../../packages/action/src/recorded";
 
 const mcp = "https://mcp.flop.network/mcp";
 const saved = (path: string) => `${repository}/blob/main/${path}`;
@@ -68,6 +69,17 @@ const metric = (
 ) => parseMetric({ value, label, measuredAt, source, recording: saved(path), sourceLabel, note });
 
 const readers: Record<string, () => SuiteMetric | null> = {
+  action: () => {
+    const check = actionCheck("tape");
+    return metric(
+      check.pass,
+      "arithmetic checks passing in the recorded tape",
+      check.sources[0]?.measuredAt,
+      check.sources[0]?.url,
+      "packages/verifier/fixtures/v2-channel.json",
+      "Sampled escrow and display-ratio arithmetic. No inference or current state is verified.",
+    );
+  },
   mcp: () =>
     metric(
       suiteMcp.tools.length,

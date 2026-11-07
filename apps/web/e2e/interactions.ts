@@ -4,6 +4,7 @@ import { expect, type Page } from "@playwright/test";
 type Interaction = { button?: RegExp; role?: "tab"; input?: string; select?: [string, string]; checkbox?: RegExp };
 // Each route has a deliberate primary action. A new route without one fails the inventory check.
 export const interactions: Record<string, Interaction> = {
+  "/action": { button: /^Include spec$/ },
   "/": { button: /^Claim 2 of/ },
   "/about": { button: /Flip a signed byte/ },
   "/provenance": { checkbox: /Tamper: flip/ },
