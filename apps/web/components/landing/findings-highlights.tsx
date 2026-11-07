@@ -40,9 +40,14 @@ export function FindingsHighlights({
         }
         lede="Dated observations from a disposable devnet. Each number links to the recording it came from."
         action={
-          <MotionLink className="text-link" href="/findings">
-            All findings and their evidence <ArrowRight />
-          </MotionLink>
+          <>
+            <MotionLink className="text-link" href="/findings">
+              All findings and their evidence <ArrowRight />
+            </MotionLink>
+            <MotionLink className="text-link" href="/docs/findings">
+              Dated upstream reports <ArrowRight />
+            </MotionLink>
+          </>
         }
       />
       <div className={styles.findings}>

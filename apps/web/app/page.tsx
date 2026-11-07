@@ -10,7 +10,9 @@ import { ToolUniverse } from "@/components/landing/tool-universe";
 import { getCachedSnapshot } from "@/lib/devnet-server";
 import { readClaimRun, readSettlementTape } from "@/lib/evidence";
 import { readStory } from "./about/recording";
+import { languageMetadata } from "./zh/routes";
 
+export const metadata = languageMetadata("/", "en");
 export const revalidate = 30;
 export default async function Home() {
   const snapshot = await getCachedSnapshot();

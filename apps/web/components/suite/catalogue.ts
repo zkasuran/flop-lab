@@ -42,6 +42,13 @@ export const sitePages: readonly SearchEntry[] = [
     kind: "Page",
   },
   {
+    id: "page:docs",
+    title: "Suite documentation",
+    detail: "Package guides, commands and limits for every tool, searchable in one place",
+    href: "/docs",
+    kind: "Page",
+  },
+  {
     id: "page:about",
     title: "How flop-lab was made",
     detail: "Agents write the code, a gate checks it and a person merges",

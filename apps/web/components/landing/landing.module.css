@@ -150,8 +150,9 @@
   .badge {
     animation: fade-up 0.7s var(--ease-out) 0.05s backwards;
   }
+  /* The lede is the largest text on first paint. It rises by transform only, so it is never hidden while it moves. */
   .heroLede {
-    animation: fade-up 0.8s var(--ease-out) 0.32s backwards;
+    animation: lede-rise 0.8s var(--ease-out) backwards;
   }
   .heroActions {
     animation: fade-up 0.8s var(--ease-out) 0.42s backwards;
@@ -197,6 +198,11 @@
 @keyframes fade-up {
   from {
     opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@keyframes lede-rise {
+  from {
     transform: translateY(16px);
   }
 }

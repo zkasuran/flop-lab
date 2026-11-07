@@ -41,7 +41,7 @@ export function Footer() {
         </section>
         <div className={styles.grid}>
           <div className={styles.brandCol}>
-            <Link className={styles.brand} href="/" aria-label="flop-lab home">
+            <Link className={styles.brand} href="/" prefetch={false} aria-label="flop-lab home">
               <Mark size={26} />
               <span aria-hidden="true">
                 flop<span className={styles.brandSuffix}>-lab</span>
@@ -95,6 +95,9 @@ export function Footer() {
                 </li>
                 <li>
                   <MotionLink href="/network">Network readings</MotionLink>
+                </li>
+                <li>
+                  <MotionLink href="/docs">Suite documentation</MotionLink>
                 </li>
                 <li>
                   <MotionLink href="/findings">Findings</MotionLink>

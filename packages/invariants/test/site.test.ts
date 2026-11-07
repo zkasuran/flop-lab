@@ -28,7 +28,7 @@ it("filters quoted source rows without changing evidence outcomes", async () => 
 it("streams each actual library completion and downloads replayable native input", async () => {
   const fetch = vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("No external requests"));
   try {
-    const response = POST();
+    const response = await POST(new Request("https://example.test/invariants/replay", { method: "POST" }));
     expect(response.headers.get("content-type")).toBe("application/x-ndjson");
     const events = (await response.text())
       .trim()

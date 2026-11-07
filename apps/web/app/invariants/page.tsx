@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   title: "Security invariants",
   description: "Read quoted security rules beside scoped suite checks and the evidence that public APIs do not expose.",
 };
-export const dynamic = "force-static";
 
 export default async function InvariantsPage() {
   return <Matrix initial={await runChecks()} />;

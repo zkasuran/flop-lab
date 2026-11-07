@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 import { setTimeout as delay } from "node:timers/promises";
 import { McpClient } from "../../../../packages/mcp/src/index";
+import { publicFetch } from "../../lib/security/transport";
 
 /** Cancel the whole operation, including body reads and backoff. Example: await withClient(client => collectTape(client)). */
 export async function withClient<T>(
   run: (client: McpClient) => Promise<T>,
-  fetcher: typeof fetch = fetch,
+  fetcher: typeof fetch = publicFetch,
   timeoutMs = 8_000,
 ): Promise<T> {
   const controller = new AbortController();

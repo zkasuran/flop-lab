@@ -5,7 +5,11 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { CONTRIBUTOR_DID } from "@/lib/constants";
-import { repository, sections, toolHref, toolsIn, type Section } from "@/content/tools";
+import { repository, sections, toolHref, toolsIn, type Section, type Tool } from "@/content/tools";
+import { common } from "@/app/zh/translations/common";
+import { sectionCopy } from "@/app/zh/translations/sections";
+import { fill, shell } from "@/app/zh/translations/shell";
+import type { Locale } from "@/app/zh/translations/types";
 import { CopyButton } from "../controls";
 import { ArrowRight, ArrowUpRight, SectionIcon } from "../icons";
 import { EASE_OUT } from "../motion";
@@ -16,6 +20,23 @@ import styles from "./header.module.css";
 export function availability(section: Section) {
   const list = toolsIn(section);
   return { total: list.length, available: list.filter((tool) => tool.status !== "planned").length };
+}
+
+/** Section copy in one language. Sections without a translation keep their English text. Example: sectionText("verify", "zh"). */
+export function sectionText(id: Section, locale: Locale) {
+  const section = sections.find((entry) => entry.id === id)!;
+  const copy = sectionCopy[id]?.[locale];
+  return {
+    title: copy?.title ?? section.title,
+    question: copy?.question ?? section.question,
+    translated: locale === "en" || copy !== undefined,
+    tagline: (tool: Tool) => sectionCopy[id]?.[locale]?.[tool.slug] ?? tool.tagline,
+  };
+}
+
+/** A section route in the reader's language. Example: sectionLink("verify", "zh") is "/zh/sections/verify". */
+export function sectionLink(id: Section, locale: Locale): string {
+  return `${locale === "zh" ? "/zh" : ""}${sectionHref(id)}`;
 }
 
 function usePanelMotion() {
@@ -30,28 +51,32 @@ function usePanelMotion() {
 
 /**
  * The Tools mega menu. A rail lists the six sections. Hovering or focusing one shows its tools beside it.
- * Planned tools link to their source. Example: <ToolsMenu id="menu-tools" current="verify" onNavigate={close} />.
+ * Planned tools link to their source. Example: <ToolsMenu id="menu-tools" current="verify" locale="en" onNavigate={close} />.
  */
 export function ToolsMenu({
   id,
   current,
+  locale,
   onNavigate,
 }: {
   id: string;
   current: Section | null;
+  locale: Locale;
   onNavigate: () => void;
 }) {
   const reduced = useReducedMotion() !== false;
   const panel = usePanelMotion();
+  const t = shell[locale];
   const [active, setActive] = useState<Section>(current ?? "observe");
-  const section = sections.find((entry) => entry.id === active) ?? sections[0]!;
-  const list = toolsIn(section.id);
+  const text = sectionText(active, locale);
+  const list = toolsIn(active);
   const paneId = `${id}-pane`;
   return (
     <motion.div id={id} className={styles.mega} data-lenis-prevent {...panel}>
-      <div className={styles.rail} aria-label="Sections">
+      <div className={styles.rail} role="group" aria-label={t.sectionsLabel}>
         {sections.map((entry, index) => {
           const counts = availability(entry.id);
+          const copy = sectionText(entry.id, locale);
           return (
             <button
               key={entry.id}
@@ -74,9 +99,11 @@ export function ToolsMenu({
                 <SectionIcon section={entry.id} size={16} />
               </span>
               <span className={styles.railText}>
-                <span className={styles.railTitle}>{entry.title}</span>
+                <span className={styles.railTitle} lang={copy.translated ? undefined : "en"}>
+                  {copy.title}
+                </span>
                 <span className={styles.railMeta}>
-                  {String(index + 1).padStart(2, "0")} / {counts.available} of {counts.total} available
+                  {String(index + 1).padStart(2, "0")} / {fill(t.counts, { a: counts.available, b: counts.total })}
                 </span>
               </span>
             </button>
@@ -86,7 +113,7 @@ export function ToolsMenu({
       <div className={styles.pane} id={paneId}>
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
-            key={section.id}
+            key={active}
             className={styles.paneInner}
             initial={{ opacity: 0, x: reduced ? 0 : 14 }}
             animate={{ opacity: 1, x: 0 }}
@@ -94,9 +121,11 @@ export function ToolsMenu({
             transition={{ duration: reduced ? 0 : 0.22, ease: EASE_OUT }}
           >
             <div className={styles.paneHead}>
-              <p className={styles.paneQuestion}>{section.question}</p>
-              <Link className="text-link" href={sectionHref(section.id)} onClick={onNavigate}>
-                {section.title} overview <ArrowRight size={14} />
+              <p className={styles.paneQuestion} lang={text.translated ? undefined : "en"}>
+                {text.question}
+              </p>
+              <Link className="text-link" href={sectionLink(active, locale)} prefetch={false} onClick={onNavigate}>
+                {fill(t.overview, { section: text.title })} <ArrowRight size={14} />
               </Link>
             </div>
             <ul className={styles.paneList}>
@@ -107,15 +136,20 @@ export function ToolsMenu({
                     <Link
                       className={styles.paneLink}
                       href={toolHref(tool)}
+                      prefetch={false}
                       data-status={tool.status}
                       onClick={onNavigate}
                     >
-                      <span className={styles.paneName}>
+                      <span className={styles.paneName} lang="en">
                         {tool.name}
                         {planned ? <ArrowUpRight size={12} /> : null}
                       </span>
-                      <span className={styles.paneTag}>{tool.tagline}</span>
-                      <span className={`badge ${tool.status}`}>{tool.status}</span>
+                      <span className={styles.paneTag} lang={text.translated ? undefined : "en"}>
+                        {text.tagline(tool)}
+                      </span>
+                      <span className={`badge ${tool.status}`}>
+                        {locale === "zh" && planned ? common.zh.planned : tool.status}
+                      </span>
                     </Link>
                   </li>
                 );
@@ -124,34 +158,31 @@ export function ToolsMenu({
           </motion.div>
         </AnimatePresence>
       </div>
-      <aside className={styles.feature} aria-label="Start here">
-        <p className="eyebrow">Start here</p>
-        <p className={styles.featureTitle}>Does this settlement add up?</p>
-        <p className={styles.featureText}>
-          The settlement verifier replays public evidence with exact integer arithmetic. Each check reads PASS, FAIL or
-          UNVERIFIABLE.
-        </p>
-        <Link className="button" href="/verify" onClick={onNavigate}>
-          Check a settlement <ArrowRight />
+      <aside className={styles.feature} aria-label={t.startHere}>
+        <p className="eyebrow">{t.startHere}</p>
+        <p className={styles.featureTitle}>{t.startTitle}</p>
+        <p className={styles.featureText}>{t.startText}</p>
+        <Link className="button" href="/verify" prefetch={false} onClick={onNavigate}>
+          {t.startAction} <ArrowRight />
         </Link>
         <p className={styles.featureHint}>
-          Press <span className="kbd">/</span> to search every tool and README heading.
+          {t.hintBefore} <span className="kbd">/</span> {t.hintAfter}
         </p>
       </aside>
     </motion.div>
   );
 }
 
-const trust = [
-  { href: "/about", title: "How it was made", text: "Agents write the code. A gate checks it. A person merges." },
-  { href: "/provenance", title: "Provenance", text: "Verify pull request and build signatures in your browser." },
-  { href: "/did", title: "DID trail", text: "What this did:key has signed and whether it verifies." },
-  { href: `${repository}/blob/main/LICENSE`, title: "Licence", text: "Apache-2.0. Read it, fork it and run it." },
-];
-
-/** The Trust dropdown: how the project is built and how to check its signatures. Example: <TrustMenu id="menu-trust" onNavigate={close} />. */
-export function TrustMenu({ id, onNavigate }: { id: string; onNavigate: () => void }) {
+/** The Trust dropdown: how the project is built and how to check its signatures. Example: <TrustMenu id="menu-trust" locale="en" onNavigate={close} />. */
+export function TrustMenu({ id, locale, onNavigate }: { id: string; locale: Locale; onNavigate: () => void }) {
   const panel = usePanelMotion();
+  const t = shell[locale];
+  const trust = [
+    { href: "/about", title: t.howMade, text: t.howMadeText },
+    { href: "/provenance", title: t.provenance, text: t.provenanceText },
+    { href: "/did", title: t.didTrail, text: t.didTrailText },
+    { href: `${repository}/blob/main/LICENSE`, title: t.licence, text: t.licenceText },
+  ];
   return (
     <motion.div id={id} className={styles.dropdown} data-lenis-prevent {...panel}>
       <ul className={styles.dropList}>
@@ -159,7 +190,7 @@ export function TrustMenu({ id, onNavigate }: { id: string; onNavigate: () => vo
           const external = item.href.startsWith("http");
           return (
             <li key={item.href}>
-              <Link className={styles.dropLink} href={item.href} onClick={onNavigate}>
+              <Link className={styles.dropLink} href={item.href} prefetch={false} onClick={onNavigate}>
                 <span className={styles.dropTitle}>
                   {item.title}
                   {external ? <ArrowUpRight size={12} /> : null}
@@ -171,9 +202,9 @@ export function TrustMenu({ id, onNavigate }: { id: string; onNavigate: () => vo
         })}
       </ul>
       <div className={styles.dropKey}>
-        <p className="eyebrow">Signing key</p>
+        <p className="eyebrow">{t.signingKey}</p>
         <code title={CONTRIBUTOR_DID}>{`${CONTRIBUTOR_DID.slice(0, 18)}...${CONTRIBUTOR_DID.slice(-6)}`}</code>
-        <CopyButton text={CONTRIBUTOR_DID} label="Copy DID" />
+        <CopyButton text={CONTRIBUTOR_DID} label={t.copyDid} />
       </div>
     </motion.div>
   );

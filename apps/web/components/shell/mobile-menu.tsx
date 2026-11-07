@@ -5,38 +5,44 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { repository, sections, toolHref, toolsIn, type Section } from "@/content/tools";
+import { common } from "@/app/zh/translations/common";
+import { fill, shell } from "@/app/zh/translations/shell";
+import type { Locale } from "@/app/zh/translations/types";
 import { ArrowRight, ArrowUpRight, ChevronDown, GitHubIcon, SectionIcon } from "../icons";
 import { EASE_OUT } from "../motion";
-import { sectionHref } from "../suite/catalogue";
 import { LiveBlock } from "./live-block";
-import { availability } from "./mega-menu";
+import { availability, sectionLink, sectionText } from "./mega-menu";
 import styles from "./header.module.css";
-
-const links = [
-  { href: "/network", label: "Network" },
-  { href: "/findings", label: "Findings" },
-  { href: "/about", label: "How it was made" },
-  { href: "/provenance", label: "Provenance" },
-];
 
 /**
  * Full-screen navigation for small screens. Sections expand in place to list their tools. Page scroll is locked
- * while it is open. Example: <MobileMenu open={open} onClose={close} current="verify" path="/verify" />.
+ * while it is open, and the page behind it leaves the tab order. Example: <MobileMenu open onClose={close} current="verify" path="/verify" locale="en" />.
  */
 export function MobileMenu({
   open,
   onClose,
   current,
   path,
+  locale,
 }: {
   open: boolean;
   onClose: () => void;
   current: Section | null;
   path: string;
+  locale: Locale;
 }) {
   const reduced = useReducedMotion() !== false;
+  const c = common[locale];
+  const t = shell[locale];
   const [expanded, setExpanded] = useState<Section | null>(current);
   const panel = useRef<HTMLDivElement>(null);
+  const links = [
+    { href: "/network", label: t.network },
+    { href: "/findings", label: c.findings },
+    { href: locale === "zh" ? "/zh/docs" : "/docs", label: c.docs },
+    { href: "/about", label: t.howMade },
+    { href: "/provenance", label: t.provenance },
+  ];
   useEffect(() => {
     if (!open) return;
     const root = document.documentElement;
@@ -66,8 +72,9 @@ export function MobileMenu({
           ref={panel}
           className={styles.mobile}
           tabIndex={-1}
-          aria-label="Site menu"
+          aria-label={t.menuLabel}
           role="region"
+          lang={locale === "zh" ? "zh-Hans" : "en"}
           data-lenis-prevent
           initial={{ opacity: 0, clipPath: reduced ? "inset(0 0 0 0)" : "inset(0 0 100% 0)" }}
           animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
@@ -79,12 +86,13 @@ export function MobileMenu({
               <LiveBlock />
             </motion.div>
             <motion.p className={`eyebrow ${styles.mobileLabel}`} {...item(1)}>
-              Tools by section
+              {t.toolsBySection}
             </motion.p>
             <ul className={styles.mobileSections}>
               {sections.map((section, index) => {
                 const isOpen = expanded === section.id;
                 const counts = availability(section.id);
+                const text = sectionText(section.id, locale);
                 const listId = `mobile-section-${section.id}`;
                 return (
                   <motion.li key={section.id} {...item(index + 2)}>
@@ -98,7 +106,9 @@ export function MobileMenu({
                       <span className={styles.railIcon} aria-hidden="true">
                         <SectionIcon section={section.id} size={16} />
                       </span>
-                      <span className={styles.mobileSectionTitle}>{section.title}</span>
+                      <span className={styles.mobileSectionTitle} lang={text.translated ? undefined : "en"}>
+                        {text.title}
+                      </span>
                       <span className={styles.mobileCount}>
                         {counts.available}/{counts.total}
                       </span>
@@ -122,8 +132,13 @@ export function MobileMenu({
                           transition={{ duration: reduced ? 0 : 0.28, ease: EASE_OUT }}
                         >
                           <li>
-                            <Link className={styles.mobileTool} href={sectionHref(section.id)} onClick={onClose}>
-                              <span>{section.title} overview</span>
+                            <Link
+                              className={styles.mobileTool}
+                              href={sectionLink(section.id, locale)}
+                              prefetch={false}
+                              onClick={onClose}
+                            >
+                              <span>{fill(t.overview, { section: text.title })}</span>
                               <ArrowRight size={14} />
                             </Link>
                           </li>
@@ -132,13 +147,14 @@ export function MobileMenu({
                               <Link
                                 className={styles.mobileTool}
                                 href={toolHref(tool)}
+                                prefetch={false}
                                 data-status={tool.status}
                                 aria-current={tool.href === path ? "page" : undefined}
                                 onClick={onClose}
                               >
-                                <span>{tool.name}</span>
+                                <span lang="en">{tool.name}</span>
                                 {tool.status === "planned" ? (
-                                  <span className="badge planned">planned</span>
+                                  <span className="badge planned">{locale === "zh" ? c.planned : "planned"}</span>
                                 ) : (
                                   <ArrowRight size={14} />
                                 )}
@@ -157,6 +173,7 @@ export function MobileMenu({
                 <motion.li key={link.href} {...item(index + 9)}>
                   <Link
                     href={link.href}
+                    prefetch={false}
                     aria-current={path === link.href ? "page" : undefined}
                     className={styles.mobileLink}
                     onClick={onClose}
@@ -167,12 +184,12 @@ export function MobileMenu({
                 </motion.li>
               ))}
             </ul>
-            <motion.div className={styles.mobileFoot} {...item(14)}>
-              <Link className="button" href="/verify" onClick={onClose}>
-                Run a check <ArrowRight />
+            <motion.div className={styles.mobileFoot} {...item(15)}>
+              <Link className="button" href="/verify" prefetch={false} onClick={onClose}>
+                {t.runCheck} <ArrowRight />
               </Link>
               <a className="quiet-button" href={repository}>
-                <GitHubIcon /> Source <ArrowUpRight size={13} />
+                <GitHubIcon /> {t.source} <ArrowUpRight size={13} />
               </a>
             </motion.div>
           </div>

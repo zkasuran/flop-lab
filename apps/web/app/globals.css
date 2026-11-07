@@ -298,12 +298,12 @@ code,
 }
 @media (prefers-reduced-motion: no-preference) {
   .page-hero > .eyebrow,
-  .page-hero > .intro,
   .page-hero > .page-hero-actions {
     animation: page-rise 0.8s var(--ease-out) backwards;
   }
+  /* The intro is often the largest text on first paint. It moves by transform only, so it is never hidden. */
   .page-hero > .intro {
-    animation-delay: 0.25s;
+    animation: page-lift 0.8s var(--ease-out) backwards;
   }
   .page-hero > .page-hero-actions {
     animation-delay: 0.35s;
@@ -312,6 +312,11 @@ code,
 @keyframes page-rise {
   from {
     opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes page-lift {
+  from {
     transform: translateY(14px);
   }
 }

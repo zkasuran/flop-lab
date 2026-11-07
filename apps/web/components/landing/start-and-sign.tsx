@@ -25,7 +25,13 @@ export function Quickstart() {
             id="start-title"
             eyebrow="Start with a read"
             title="Start with the public model list."
-            lede="Paste a command to read the gateway, or run a tool from a checkout. Then open the tool to check what the records support."
+            lede={
+              <>
+                Paste a command to read the gateway, or{" "}
+                <MotionLink href="/docs/cli">run flop from a checkout</MotionLink> to find a suite tool. Each package
+                guide keeps its quick start beside its limits.
+              </>
+            }
           />
           <ul className={styles.promises}>
             {promises.map((item) => (

@@ -6,9 +6,12 @@ import { usePathname } from "next/navigation";
 import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { sections, tools, toolsIn, type Tool } from "@/content/tools";
+import { common } from "@/app/zh/translations/common";
 import { ArrowLeft, ArrowRight, SectionIcon } from "../icons";
 import { EASE_OUT } from "../motion";
 import { sectionHref } from "../suite/catalogue";
+import { pathLocale } from "./locale";
+import { sectionLink, sectionText } from "./mega-menu";
 import { ToolMark } from "../tool-header";
 import styles from "./tool-context.module.css";
 
@@ -52,7 +55,8 @@ function useCenteredList(path: string) {
  * Example: <ToolContext />.
  */
 export function ToolContext() {
-  const path = usePathname();
+  const { locale, base } = pathLocale(usePathname());
+  const path = base;
   const reduced = useReducedMotion() !== false;
   const { ref, overflow } = useCenteredList(path);
   const tool = currentTool(path);
@@ -66,7 +70,7 @@ export function ToolContext() {
   );
   if (sectionPage) {
     return (
-      <nav className={styles.context} aria-label="Suite sections">
+      <nav className={styles.context} aria-label={common[locale].sections} lang={locale === "zh" ? "zh-Hans" : "en"}>
         <LayoutGroup id="context">
           <ul ref={ref} className={styles.list} data-overflow={overflow}>
             {sections.map((section, index) => {
@@ -75,7 +79,8 @@ export function ToolContext() {
                 <li key={section.id}>
                   <Link
                     className={styles.item}
-                    href={sectionHref(section.id)}
+                    href={sectionLink(section.id, locale)}
+                    prefetch={false}
                     aria-current={active ? "page" : undefined}
                   >
                     {active && pill}
@@ -83,7 +88,9 @@ export function ToolContext() {
                       <span className={styles.index} aria-hidden="true">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      {section.title}
+                      <span lang={sectionText(section.id, locale).translated ? undefined : "en"}>
+                        {sectionText(section.id, locale).title}
+                      </span>
                     </span>
                   </Link>
                 </li>
@@ -102,7 +109,7 @@ export function ToolContext() {
   const next = list[(at + 1) % list.length];
   return (
     <nav className={styles.context} aria-label={`${section.title} tools`}>
-      <Link className={styles.section} href={sectionHref(section.id)}>
+      <Link prefetch={false} className={styles.section} href={sectionHref(section.id)}>
         <SectionIcon section={section.id} size={15} />
         {section.title}
       </Link>
@@ -113,7 +120,12 @@ export function ToolContext() {
             const active = entry.slug === tool.slug;
             return (
               <li key={entry.slug}>
-                <Link className={styles.item} href={entry.href} aria-current={active ? "page" : undefined}>
+                <Link
+                  prefetch={false}
+                  className={styles.item}
+                  href={entry.href}
+                  aria-current={active ? "page" : undefined}
+                >
                   {active && pill}
                   <span className={styles.itemText}>{entry.name}</span>
                 </Link>
@@ -124,10 +136,15 @@ export function ToolContext() {
       </LayoutGroup>
       {list.length > 1 && previous && next && (
         <div className={styles.step}>
-          <Link className="icon-button" href={previous.href} aria-label={`Previous tool: ${previous.name}`}>
+          <Link
+            prefetch={false}
+            className="icon-button"
+            href={previous.href}
+            aria-label={`Previous tool: ${previous.name}`}
+          >
             <ArrowLeft size={14} />
           </Link>
-          <Link className="icon-button" href={next.href} aria-label={`Next tool: ${next.name}`}>
+          <Link prefetch={false} className="icon-button" href={next.href} aria-label={`Next tool: ${next.name}`}>
             <ArrowRight size={14} />
           </Link>
         </div>
@@ -144,6 +161,7 @@ export function ToolCard({ tool, hint }: { tool: Tool; hint: string }) {
   const [active, setActive] = useState(false);
   return (
     <Link
+      prefetch={false}
       className={styles.card}
       href={tool.href}
       data-spotlight
@@ -197,7 +215,7 @@ export function ToolRelated() {
         {!related.length &&
           others.map((entry) => (
             <li key={entry.id}>
-              <Link className={styles.card} href={sectionHref(entry.id)} data-spotlight>
+              <Link prefetch={false} className={styles.card} href={sectionHref(entry.id)} data-spotlight>
                 <span className={styles.cardTop}>
                   <SectionIcon section={entry.id} size={16} />
                 </span>

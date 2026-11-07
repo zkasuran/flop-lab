@@ -6,17 +6,21 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, LayoutGroup, motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from "react";
 import { repository, sections, tools, type Section } from "@/content/tools";
+import { LanguageSwitch } from "@/app/zh/language-switch";
+import { common } from "@/app/zh/translations/common";
+import { shell } from "@/app/zh/translations/shell";
 import { CommandPalette, ThemeToggle } from "./controls";
 import type { SearchEntry } from "./suite/catalogue";
 import { ArrowRight, ChevronDown, CloseIcon, GitHubIcon, Mark, MenuIcon } from "./icons";
 import { EASE_OUT, Magnetic, MotionButton } from "./motion";
+import { pathLocale } from "./shell/locale";
 import { LiveBlock } from "./shell/live-block";
 import { ToolsMenu, TrustMenu } from "./shell/mega-menu";
 import { MobileMenu } from "./shell/mobile-menu";
 import styles from "./shell/header.module.css";
 
 type MenuId = "tools" | "trust";
-type NavId = MenuId | "network" | "findings";
+type NavId = MenuId | "network" | "findings" | "docs";
 
 const trustPaths = ["/about", "/provenance", "/did"];
 
@@ -27,22 +31,27 @@ function sectionOf(path: string): Section | null {
   return sections.find((entry) => path === `/sections/${entry.id}`)?.id ?? null;
 }
 
-function activeNav(path: string): NavId | null {
-  if (path === "/network") return "network";
-  if (path === "/findings") return "findings";
-  if (trustPaths.some((entry) => path === entry || path.startsWith(`${entry}/`))) return "trust";
-  if (sectionOf(path)) return "tools";
+function activeNav(base: string): NavId | null {
+  if (base === "/network") return "network";
+  if (base === "/findings") return "findings";
+  if (base === "/docs" || base.startsWith("/docs/")) return "docs";
+  if (trustPaths.some((entry) => base === entry || base.startsWith(`${entry}/`))) return "trust";
+  if (sectionOf(base)) return "tools";
   return null;
 }
 
 /**
- * The site header: a Tools mega menu, the Network and Findings pages, a Trust dropdown, the latest block reading,
- * search, source, theme and the main action. Menus open on hover with a short intent delay, on click and from
- * the keyboard. Escape closes and returns focus. Small screens get a full-screen menu.
+ * The site header: a Tools mega menu, the Network, Findings and Docs pages, a Trust dropdown, the latest block
+ * reading, the language switch, search, source, theme and the main action. Menus open on hover with a short
+ * intent delay, on click and from the keyboard. Escape closes and returns focus. Small screens get a
+ * full-screen menu. Chinese pages translate the labels and keep tool names in English.
  * Example: <SiteHeader entries={entries} />.
  */
 export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
   const path = usePathname();
+  const { locale, base } = pathLocale(path);
+  const t = shell[locale];
+  const c = common[locale];
   const reduced = useReducedMotion() !== false;
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
@@ -54,8 +63,8 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
   const header = useRef<HTMLElement>(null);
   const triggers = useRef<Partial<Record<MenuId, HTMLButtonElement | null>>>({});
   const menuButton = useRef<HTMLButtonElement>(null);
-  const current = sectionOf(path);
-  const active = activeNav(path);
+  const current = sectionOf(base);
+  const active = activeNav(base);
 
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 8));
   useEffect(() => {
@@ -135,6 +144,21 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
       )}
     </>
   );
+  const page = (id: NavId, href: string, label: string) => (
+    <li>
+      <Link
+        className={styles.link}
+        href={href}
+        prefetch={false}
+        data-active={active === id}
+        aria-current={active === id ? "page" : undefined}
+        onPointerEnter={() => setHovered(id)}
+      >
+        {indicator(id)}
+        <span className={styles.label}>{label}</span>
+      </Link>
+    </li>
+  );
 
   return (
     <header
@@ -143,15 +167,21 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
       data-scrolled={scrolled}
       data-open={open !== null || mobile}
       data-print-hide
+      lang={locale === "zh" ? "zh-Hans" : "en"}
     >
       <div className={`container ${styles.inner}`}>
-        <Link className={styles.brand} href="/" aria-label="flop-lab home">
+        <Link
+          className={styles.brand}
+          href={locale === "zh" ? "/zh" : "/"}
+          prefetch={false}
+          aria-label={`flop-lab ${c.home}`}
+        >
           <Mark size={24} />
           <span aria-hidden="true">
             flop<span className={styles.brandSuffix}>-lab</span>
           </span>
         </Link>
-        <nav className={styles.nav} aria-label="Main navigation">
+        <nav className={styles.nav} aria-label={c.mainNavigation}>
           <LayoutGroup id="site-nav">
             <ul className={styles.links} onPointerLeave={() => setHovered(null)}>
               <li className={styles.megaItem} {...hover("tools")}>
@@ -169,38 +199,19 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
                 >
                   {indicator("tools")}
                   <span className={styles.label}>
-                    Tools
+                    {t.tools}
                     <ChevronDown size={13} className={styles.chevron} data-open={open === "tools"} />
                   </span>
                 </button>
                 <AnimatePresence>
-                  {open === "tools" && <ToolsMenu id="menu-tools" current={current} onNavigate={close} />}
+                  {open === "tools" && (
+                    <ToolsMenu id="menu-tools" current={current} locale={locale} onNavigate={close} />
+                  )}
                 </AnimatePresence>
               </li>
-              <li>
-                <Link
-                  className={styles.link}
-                  href="/network"
-                  data-active={active === "network"}
-                  aria-current={active === "network" ? "page" : undefined}
-                  onPointerEnter={() => setHovered("network")}
-                >
-                  {indicator("network")}
-                  <span className={styles.label}>Network</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={styles.link}
-                  href="/findings"
-                  data-active={active === "findings"}
-                  aria-current={active === "findings" ? "page" : undefined}
-                  onPointerEnter={() => setHovered("findings")}
-                >
-                  {indicator("findings")}
-                  <span className={styles.label}>Findings</span>
-                </Link>
-              </li>
+              {page("network", "/network", t.network)}
+              {page("findings", "/findings", c.findings)}
+              {page("docs", locale === "zh" ? "/zh/docs" : "/docs", c.docs)}
               <li className={styles.dropItem} {...hover("trust")}>
                 <button
                   ref={(node) => {
@@ -216,12 +227,12 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
                 >
                   {indicator("trust")}
                   <span className={styles.label}>
-                    Trust
+                    {t.trust}
                     <ChevronDown size={13} className={styles.chevron} data-open={open === "trust"} />
                   </span>
                 </button>
                 <AnimatePresence>
-                  {open === "trust" && <TrustMenu id="menu-trust" onNavigate={close} />}
+                  {open === "trust" && <TrustMenu id="menu-trust" locale={locale} onNavigate={close} />}
                 </AnimatePresence>
               </li>
             </ul>
@@ -229,19 +240,15 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
         </nav>
         <div className={styles.actions}>
           <LiveBlock className={styles.liveDesktop} />
+          <LanguageSwitch />
           <CommandPalette entries={entries} />
-          <a
-            className={`icon-button ${styles.repo}`}
-            href={repository}
-            aria-label="Source on GitHub"
-            title="Source on GitHub"
-          >
+          <a className={`icon-button ${styles.repo}`} href={repository} aria-label={c.repository} title={c.repository}>
             <GitHubIcon />
           </a>
           <ThemeToggle />
           <Magnetic className={styles.ctaWrap}>
-            <Link className={`button ${styles.cta}`} href="/verify">
-              Run a check <ArrowRight size={14} />
+            <Link className={`button ${styles.cta}`} href="/verify" prefetch={false}>
+              {t.runCheck} <ArrowRight size={14} />
             </Link>
           </Magnetic>
           <MotionButton
@@ -249,14 +256,14 @@ export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
             className={`icon-button ${styles.menuButton}`}
             aria-expanded={mobile}
             aria-controls="mobile-menu"
-            aria-label={mobile ? "Close menu" : "Open menu"}
+            aria-label={mobile ? c.closeMenu : c.openMenu}
             onClick={() => setMobile(!mobile)}
           >
             {mobile ? <CloseIcon /> : <MenuIcon />}
           </MotionButton>
         </div>
       </div>
-      <MobileMenu open={mobile} onClose={() => setMobile(false)} current={current} path={path} />
+      <MobileMenu open={mobile} onClose={() => setMobile(false)} current={current} path={base} locale={locale} />
     </header>
   );
 }

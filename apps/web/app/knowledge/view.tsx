@@ -562,7 +562,9 @@ export function KnowledgeView({
                   </div>
                 </dl>
                 <time className={styles.time}>{requirement.measuredAt}</time>
-                <pre className={styles.quote}>{display(req.text)}</pre>
+                <pre className={styles.quote} tabIndex={0}>
+                  {display(req.text)}
+                </pre>
                 <h3>Cited source paths</h3>
                 <ul>
                   {req.citations.map((c) => (

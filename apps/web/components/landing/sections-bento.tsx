@@ -26,6 +26,7 @@ export function SectionsBento() {
           return (
             <li key={section.id} className={styles.bentoCell} data-cell={index}>
               <Link
+                prefetch={false}
                 href={sectionHref(section.id)}
                 className={`${styles.bentoCard} reveal`}
                 data-spotlight

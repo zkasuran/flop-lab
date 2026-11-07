@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 import { Footer } from "@/components/footer";
 import { RouteSurface } from "@/components/motion";
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: "#060807" };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   const entries = await paletteEntries();
   return (
     <html
@@ -38,6 +40,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     >
       <head>
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html:
               "try{document.documentElement.dataset.theme=localStorage.getItem('flop-theme')==='light'?'light':'dark'}catch{}",

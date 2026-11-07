@@ -11,8 +11,8 @@ export default function NotFound() {
       accent={1}
       lede={
         <>
-          Planned tools link to their source until they ship. Press <span className="kbd">/</span> to find one, or
-          return to the workbench to see the current tool status.
+          Planned tools link to their source until they ship. Press <span className="kbd">/</span> to find one or return
+          to the workbench to see the current tool status.
         </>
       }
     >

@@ -1,0 +1,73 @@
+// SPDX-License-Identifier: Apache-2.0
+import type { Chinese } from "./types";
+const en = {
+  tools: "Tools",
+  network: "Network",
+  trust: "Trust",
+  runCheck: "Run a check",
+  toolsBySection: "Tools by section",
+  sectionsLabel: "Sections",
+  counts: "{a} of {b} available",
+  overview: "{section} overview",
+  startHere: "Start here",
+  startTitle: "Does this settlement add up?",
+  startText:
+    "The settlement verifier replays public evidence with exact integer arithmetic. Each check reads PASS, FAIL or UNVERIFIABLE.",
+  startAction: "Check a settlement",
+  hintBefore: "Press",
+  hintAfter: "to search every tool and README heading.",
+  howMade: "How it was made",
+  howMadeText: "Agents write the code. A gate checks it. A person merges.",
+  provenance: "Provenance",
+  provenanceText: "Verify pull request and build signatures in your browser.",
+  didTrail: "DID trail",
+  didTrailText: "What this did:key has signed and whether it verifies.",
+  licence: "Licence",
+  licenceText: "Apache-2.0. Read it, fork it and run it.",
+  signingKey: "Signing key",
+  copyDid: "Copy DID",
+  block: "Block",
+  lastKnown: "Last known",
+  blockUnavailable: "Block unavailable",
+  menuLabel: "Site menu",
+  source: "Source",
+  siblings: "tools",
+} as const;
+const zh = {
+  tools: "工具",
+  network: "网络",
+  trust: "可信",
+  runCheck: "运行检查",
+  toolsBySection: "按分区浏览工具",
+  sectionsLabel: "分区",
+  counts: "{a}/{b} 可用",
+  overview: "{section}概览",
+  startHere: "从这里开始",
+  startTitle: "这笔结算的账目对得上吗？",
+  startText: "结算验证器用精确的整数运算重放公开证据。每项检查的结果为 PASS、FAIL 或 UNVERIFIABLE。",
+  startAction: "检查一笔结算",
+  hintBefore: "按",
+  hintAfter: "搜索所有工具和 README 标题。",
+  howMade: "构建过程",
+  howMadeText: "智能体编写代码，关卡检查，由人合并。",
+  provenance: "来源证明",
+  provenanceText: "在浏览器中验证拉取请求和构建签名。",
+  didTrail: "DID 轨迹",
+  didTrailText: "这个 did:key 签署过什么，以及签名是否通过验证。",
+  licence: "许可证",
+  licenceText: "Apache-2.0。可阅读、复刻和运行。",
+  signingKey: "签名密钥",
+  copyDid: "复制 DID",
+  block: "区块",
+  lastKnown: "最近已知",
+  blockUnavailable: "区块暂无数据",
+  menuLabel: "站点菜单",
+  source: "源码",
+  siblings: "工具",
+} satisfies Chinese<typeof en>;
+export const shell = { en, zh };
+
+/** Fill {name} tokens in a translated string. @example fill("{a} of {b}", { a: 2, b: 5 }) */
+export function fill(template: string, values: Record<string, string | number>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) => (key in values ? String(values[key]) : match));
+}

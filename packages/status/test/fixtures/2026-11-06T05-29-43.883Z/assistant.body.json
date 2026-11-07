@@ -1,1 +1,1 @@
-"{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"protocolVersion\":\"2025-06-18\",\"capabilities\":{\"tools\":{\"listChanged\":false}},\"serverInfo\":{\"name\":\"flop-docs\",\"version\":\"0.1.0\"}}}"
+{ "fixtureId": "status-2026-11-06T05-29-43.883Z-assistant" }

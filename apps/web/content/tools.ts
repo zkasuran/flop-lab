@@ -24,6 +24,15 @@ export type Tool = {
 export const repository = "https://github.com/zkasuran/flop-lab";
 export const tools: readonly Tool[] = [
   {
+    slug: "action",
+    section: "build",
+    name: "CI checks",
+    tagline: "Can I bound FLOP evidence checks in CI?",
+    status: "alpha",
+    href: "/action",
+    repoPath: "packages/action",
+  },
+  {
     slug: "scoreboard",
     section: "agents",
     name: "Miner scoreboard",

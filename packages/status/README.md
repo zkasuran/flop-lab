@@ -70,7 +70,9 @@ console.log(report[0]?.availability);
 
 ## Evidence and checks
 
-`test/fixtures` holds raw response bodies encoded as JSON strings, source metadata and capture records. Decode a body with `JSON.parse` to recover its text. Unicode escapes preserve source typography without changing the decoded response. The bundled captures were taken close together and do not establish a daily trend.
+`test/fixtures` holds capture records. `@flop-lab/fixtures` holds the original response text and source metadata in a shared content-addressed store. `readFixture` verifies the hash and decoded byte count. The bundled captures were taken close together and do not establish a daily trend.
+
+Legacy `.body.json` paths that remain contain a `fixtureId` pointer. Pass it to `readFixture` to recover the response. They no longer contain response text.
 
 ```sh
 pnpm --filter @flop-lab/status check

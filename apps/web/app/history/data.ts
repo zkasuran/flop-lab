@@ -6,10 +6,11 @@ import { modelMiners } from "../../../../packages/recorder/src/analysis";
 import { fetchHistory, REVALIDATE_SECONDS } from "../../../../packages/recorder/src/feed";
 import { object, parseIndex, parseSnapshot } from "../../../../packages/recorder/src/schema";
 import type { ModelFallback } from "./fallback";
+import { publicFetch } from "../../lib/security/transport";
 
 /** Public history is cached for five minutes. Absence remains explicit. Example: await publicHistory(). */
 export const publicHistory = cache(() =>
-  fetchHistory((url, init) => fetch(url, { ...init, next: { revalidate: REVALIDATE_SECONDS } })),
+  fetchHistory((url, init) => publicFetch(url, { ...init, next: { revalidate: REVALIDATE_SECONDS } } as RequestInit)),
 );
 
 /** Project a checked snapshot into the home fallback. Example: await modelFallback(history). */

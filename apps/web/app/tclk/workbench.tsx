@@ -226,7 +226,7 @@ export function Workbench({ initial, chain }: { initial: Inspection; chain: Chai
               )}
             </div>
           </div>
-          <aside className={styles.machine} aria-label="State machine and selected record">
+          <section className={styles.machine} aria-label="State machine and selected record">
             <p className="eyebrow">Transcript state machine</p>
             <div className={styles.states}>
               {statuses.map((state) => (
@@ -271,7 +271,7 @@ export function Workbench({ initial, chain }: { initial: Inspection; chain: Chai
                 </motion.div>
               )}
             </AnimatePresence>
-          </aside>
+          </section>
         </div>
         <div className={`${styles.finding} ${report.firstViolation ? styles.findingBad : ""}`} role="status">
           <strong>

@@ -112,7 +112,7 @@ export function Challenger({
           </ReadingReveal>
         </div>
         <ReadingReveal order={3}>
-          <aside className={styles.clock} aria-label="Observed challenge lanes">
+          <section className={styles.clock} aria-label="Observed challenge lanes">
             <div className={styles.clockTop}>
               <span className="eyebrow">Window watch</span>
               <span className={styles.dotLabel}>
@@ -151,7 +151,7 @@ export function Challenger({
             <p className={styles.small}>
               Counts use separately dated captures. Runtime eligibility and finality are not verified.
             </p>
-          </aside>
+          </section>
         </ReadingReveal>
       </section>
 

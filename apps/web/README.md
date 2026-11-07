@@ -13,12 +13,12 @@ What can I check about FLOP from outside? This site brings the independent devne
 
 ## Quick start
 
-From the repository root with Node 22 and pnpm. Open http://localhost:3380 after the server starts:
+From the repository root with Node 22 and pnpm. Open http://localhost:3800 after the server starts:
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter web build
-pnpm --filter web exec next start --port 3380
+pnpm --filter web exec next start --port 3800
 ```
 
 Stop this server before using the development commands below.
@@ -69,7 +69,7 @@ Use `motion/react` for animation and `useReducedMotion` for a static alternative
 
 The header holds the Tools mega menu, the Network and Findings pages, the Trust menu, the latest block reading, search, source, theme and the main action. The mega menu lists the six sections in a rail. Hovering or focusing a section shows its tools with their question and status. Planned tools link to their source. Menus open on hover after a short intent delay, on click and from the keyboard. Escape closes a menu and returns focus to its trigger. Below 960 px the header collapses into a full-screen menu. It locks page scroll and takes the page behind it out of the tab order until it closes.
 
-The block reading polls `/api/pulse` every 30 seconds while the tab is visible. That route returns the stats observation from the same cached snapshot as the home page, so it adds no public requests beyond that cache. It reads Last known when the source failed or the value is older than a minute.
+The block reading asks `/api/pulse` at most once every 30 seconds per tab, and only while the reading is visible. Page loads inside that window reuse the last reading from session storage, so moving between pages does not spend the visitor's data-route budget. A 429 waits for `Retry-After`. That route returns the stats observation from the same cached snapshot as the home page, so it adds no public requests beyond that cache. It reads Last known when the source failed or the value is older than a minute.
 
 On a tool page, the context bar lists the other available tools in its section with previous and next. On a section page it switches between the six sections. The palette groups results into sections, pages, tools and docs. Groups follow the rank of their best match, so the highlighted first row is the result Enter opens from the input. Arrows move focus, Home returns to the input and Escape restores focus to the control that opened it. The theme control uses a 520 ms view transition from the pointer where the browser supports it and switches at once otherwise.
 
@@ -77,7 +77,7 @@ On a tool page, the context bar lists the other available tools in its section w
 
 The home page, `/network`, `/findings` and `/api/pulse` share one snapshot. It uses `@flop-lab/mcp` for `flop_get_stats` and `flop_list_settlements` with a page limit of five. The keyless gateway model list supplies distinct miner addresses from `x-flop.price_sources`. The displayed settlement is the greatest timestamp in that returned page. No full-history claim is made.
 
-The server caches each source for 30 seconds and coalesces concurrent reads. Next.js revalidates these pages and the pulse route every 30 seconds. Visible browser tabs on `/` and `/network` request a refreshed page on the same interval. A healthy uncached read makes three public requests. MCP calls are spaced by the shared client. Each source gets one attempt per refresh, with an eight-second response deadline and a 200 KB response limit. Failures back off from 30 seconds to five minutes. `Retry-After` can extend that wait.
+The server caches each source for 30 seconds and coalesces concurrent reads. HTML renders per request so each response can carry a fresh script nonce. Visible browser tabs on `/` and `/network` request a refreshed page on the same interval. A healthy uncached read makes three public requests. MCP calls are spaced by the shared client. Each source gets one attempt per refresh, with an eight-second response deadline and a 200 KB response limit. Source caches back off after failures. The shared transport also enforces at least one minute of origin backoff. `Retry-After` can extend that wait.
 
 Last-good values are retained per server process. A cold process falls back to the committed real recordings in `tests/fixtures/`, with their original measurement times. This fallback is explicitly labelled last known. An empty successful response replaces the previous list. Empty lists and missing fields never become invented counts. Instances do not share their in-memory caches.
 
@@ -94,7 +94,7 @@ Every figure on the home page, `/findings` and `/network` is computed from a com
 - The hero constellation draws one node per price-source address in the snapshot, placed on an orbit by address hash. Filled nodes appear in the sampled settlement page. Pulses replay that page from the core to each miner and are labelled as replays, not live traffic. A ripple marks a new block reading. Hover a node to read its address and whether it is in the sample. The loop pauses off-screen and in hidden tabs. Reduced motion draws one still frame.
 - The hero readings show the latest `flop_get_stats` block with its age from the browser clock, the price-source count with its sample match and two recorded figures with their capture dates. A reading is last known when the source failed or the value is older than a minute.
 - The ticker lists the first 20 rows of `packages/verifier/fixtures/settlements-0.json` with the verifier's two arithmetic results. The walk through a check shows the first of those rows: its source, its escrow equation as raw integer strings and its results.
-- On `/findings`, the matrix draws one cell per claim in `packages/harness/last-run.json`, in catalogue order. Sorting by outcome moves cells and never changes a result. Hover or focus a cell to read its recorded reason. Arrow keys move by visual rows. The legend highlights one outcome.
+- On `/findings`, the matrix draws one cell per claim in the split recording at `packages/harness/fixtures/coverage/`, in catalogue order. It shows at most 64 cells per page with the visible range and full recorded count. Previous and next controls expose every claim. Its raw-recording link opens that archive, including `report.json` and the result parts named by the manifest. Sorting by outcome starts at the first page and never changes a result. Hover or focus a cell to read its recorded reason. Arrow keys move by visual rows within the page. The legend highlights one outcome.
 - On `/findings`, the settlement specimen runs the verifier's `checkArithmetic` over the same 20 rows. Choosing a tick swaps the raw integer strings as whole values. They are grouped for reading and never pass through floating point.
 - On `/findings`, the promise ledger places four documented promises next to recorded harness claims and verifier checks from `packages/verifier/fixtures/channel-1.json`. A missing result shows as not recorded.
 - The signature card verifies the recorded pull request proof in the browser with the same `verifyContribution` call as `/about`. Its flip control changes the first signed byte and checks again.
@@ -118,16 +118,30 @@ node scripts/verify-signature.mjs ./SIGNATURE.json .
 
 This checks the pinned signer, commit, exact tracked file set and SHA-256 of checkout file bytes. It handles tracked symlink bytes without following their target. It rejects symlink parents. It needs no network or private key. Run it from a checkout of the signed commit. Exit code zero means all checks passed. The importable `verifyCheckout` function accepts an explicit expected DID for throwaway-key tests; the CLI always pins the contributor DID.
 
+## Mobile performance budget
+
+After `pnpm --filter web build`, run `pnpm --filter web perf`. It starts a local production server and measures every sitemap route with three cold-cache mobile Lighthouse runs. Independent medians must meet performance 90 and CLS 0.05. Missing measurements fail. The report includes per-route initial JavaScript file bytes from the Next build output, browser request counts and dates.
+
+Chrome must be installed. On a shared build host, use `slot browser 1 -- pnpm --filter web perf`. Ports default to 3810 and 3811. Full settings, output format and coverage limits are in [the performance guide](../../scripts/perf/README.md).
+
+Shared links fetch their destinations on navigation rather than prefetching every visible tool or section. The search palette mounts its ranked results when opened. Reading reveals keep initially visible server content still and animate off-screen sections when they enter view.
+
 ## Vercel
 
 - Framework preset: Next.js.
 - Root directory: `apps/web`. Enable files outside the root directory for the workspace.
-- Install command: `pnpm install` from the workspace root.
+- Install command: `pnpm install --frozen-lockfile` from the workspace root.
 - Build command: `pnpm --filter web build` from the workspace root or `pnpm build` from `apps/web`.
 - Output directory: Next.js default.
-- Set `SITE_URL` to the canonical deployment origin for metadata and sitemap URLs. The local fallback is `https://flop-lab.vercel.app` and is not a deployment claim.
+- Set `SITE_URL` to the canonical HTTPS deployment origin for metadata, sitemap URLs and API origin checks. Without it, API checks use the request URL origin. The metadata fallback is `https://flop-lab.vercel.app` and is not a deployment claim.
 - `VERCEL_GIT_COMMIT_SHA` is supplied by Vercel. Locally the build reads `git rev-parse HEAD`. Missing commit metadata displays `unknown`.
 - No API keys or wallet environment variables are used.
+
+## Public deployment security
+
+The shared proxy adds nonce-based CSP and request admission. HTML must remain dynamic and uncacheable. Motion uses the documented inline-style exception; inline scripts require the nonce. API errors are no-store and live reads have streamed byte caps, cancellation and fixed-host allowlists.
+
+Vercel client IPs use only its platform-owned forwarded header. Other hosts share one conservative budget and need an edge limiter. Process-local limits do not coordinate across regions. Read the [route threat model and dependency findings](../../docs/SECURITY.md) and [reporting policy](../../SECURITY.md) before deployment. Run `pnpm exec tsx apps/web/scripts/security-inventory.ts` from the repository root to inspect installed lifecycle scripts.
 
 ## What this does not verify
 
