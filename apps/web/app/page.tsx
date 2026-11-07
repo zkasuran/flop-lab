@@ -14,23 +14,28 @@ import { getCachedSnapshot } from "@/lib/devnet-server";
 import { readClaimRun, readPromiseLedger, readSettlementTape } from "@/lib/evidence";
 import { readStory } from "./about/recording";
 import styles from "@/components/home/home.module.css";
+import { languageMetadata } from "./zh/routes";
+import { home } from "./zh/translations/home";
+
+export const metadata = languageMetadata("/", "en");
+const c = home.en;
 
 const process = [
   {
-    title: "An agent works from a brief",
-    text: "Each tool was built by a separate AI agent from a written brief, in its own git worktree, with checkpoints on disk.",
+    title: c.step1,
+    text: c.step1Text,
   },
   {
-    title: "A gate refuses weak changes",
-    text: "An agent cannot push, open a pull request or touch a key. The gate refuses a change without a green build, tests, honest wording and a README that says what is not verified.",
+    title: c.step2,
+    text: c.step2Text,
   },
   {
-    title: "The publisher signs the file hashes",
-    text: "Every pull request is signed with one Ed25519 key. The signature covers the hash of every changed file.",
+    title: c.step3,
+    text: c.step3Text,
   },
   {
-    title: "A person merges",
-    text: "A signature proves who published the bytes. It does not prove the code is right. Tests, mutation checks and your own run are for that.",
+    title: c.step4,
+    text: c.step4Text,
   },
 ];
 
@@ -49,11 +54,11 @@ export default async function Home() {
           <div>
             <p className={`eyebrow ${styles.heroEyebrow}`}>
               <span className={styles.heroMark} aria-hidden="true" />
-              Independent tools / FLOP devnet
+              {c.eyebrow}
             </p>
             <h1 id="pitch" className={styles.heroTitle}>
               <span className={styles.line}>
-                <span>Observe first.</span>
+                <span>{c.title}</span>
               </span>
               <span className={styles.line}>
                 <span>
@@ -63,16 +68,13 @@ export default async function Home() {
             </h1>
           </div>
           <div className={styles.heroAside}>
-            <p className={styles.heroIntro}>
-              Open tools for a network where agents pay miners for AI inference. Inspect what happened. See what is
-              still unverified.
-            </p>
+            <p className={styles.heroIntro}>{c.intro}</p>
             <div className={styles.heroActions}>
               <MotionLink className="button" href="#tools">
-                Explore the tools <ArrowDown />
+                {c.explore} <ArrowDown />
               </MotionLink>
-              <MotionLink className="text-link" href="https://docs.flop.network">
-                Read the protocol <ArrowUpRight />
+              <MotionLink className="text-link" href="/docs">
+                Find a command <ArrowUpRight />
               </MotionLink>
             </div>
             <LiveStatus stats={snapshot.stats} renderedAt={snapshot.renderedAt} />
@@ -83,45 +85,42 @@ export default async function Home() {
             <ClaimMatrix run={run} />
           ) : (
             <div className="panel">
-              <p className="muted">Recorded harness results are unavailable. Open the harness for its evidence.</p>
+              <p className="muted">{c.missingRun}</p>
             </div>
           )}
         </div>
       </section>
 
       <Findings snapshot={snapshot} run={run} tape={tape} />
+      <MotionLink className="text-link" href="/docs/findings">
+        Read the dated upstream reports <ArrowRight />
+      </MotionLink>
 
       <PromiseLedger ledger={ledger} />
 
       <section className="section" id="observe" aria-labelledby="observe-heading">
-        <SectionHeading
-          index="03"
-          eyebrow="Devnet observations"
-          id="observe-heading"
-          title="Read what the network publishes."
-        >
-          The gateway and the indexer answer in public. Each value keeps its source and time. Values can have different
-          measurement times. They are not an atomic network snapshot.
+        <SectionHeading index="03" eyebrow={c.observations} id="observe-heading" title={c.observeTitle}>
+          {c.observeText}
         </SectionHeading>
         <ReadingReveal>
           <DevnetPanel snapshot={snapshot} />
         </ReadingReveal>
         <div className={styles.observeGrid}>
           <div className={styles.observeNotes}>
-            <p className="eyebrow">How to read the map</p>
+            <p className="eyebrow">{c.map}</p>
             <ReadingSteps
               steps={[
                 {
-                  title: "Read a public source",
-                  text: "The gateway lists price-source addresses. The indexer reports blocks, accounts and a page of settlements. Each observation keeps its source and time.",
+                  title: c.read,
+                  text: c.readText,
                 },
                 {
-                  title: "Keep the sample in view",
+                  title: c.sample,
                   text: "The map highlights addresses found in both responses. A missing match only means an address was absent from this settlement page.",
                 },
                 {
-                  title: "Inspect before you rely",
-                  text: "Open a tool for its checks and limits. Contribution signatures verify published bytes. They do not prove an inference result or network finality.",
+                  title: c.inspect,
+                  text: c.inspectText,
                 },
               ]}
             />
@@ -134,8 +133,9 @@ export default async function Home() {
 
       <section className="section" id="tools" aria-labelledby="tools-heading">
         <SectionHeading index="04" eyebrow="The workbench" id="tools-heading" title="One suite. One question per tool.">
-          The suite has six sections, from watching the network to checking who signed a change. Start with a settlement
-          in the verifier. Alpha pages run today on real data. Planned pages link to their source.
+          Observe, verify, build, operate, agents and identity. Each section starts with a question. Alpha pages use
+          live or recorded real data with source times. Planned entries link to the repository. Search the{" "}
+          <MotionLink href="/docs">package guides</MotionLink> for a command and its limits.
         </SectionHeading>
         <ToolGrid />
       </section>
@@ -147,8 +147,9 @@ export default async function Home() {
           id="start-heading"
           title="Start with the public model list."
         >
-          No wallet, key or account. Paste a command in a terminal to read the gateway or run a tool from a checkout.
-          Then open a tool to check what the records support.
+          No wallet, key or account for this read. Paste the gateway command or use{" "}
+          <MotionLink href="/docs/cli">flop from a checkout</MotionLink> to find a suite tool. Each package guide keeps
+          its quick start beside its evidence limits.
         </SectionHeading>
         <ReadingReveal>
           <Terminal />
@@ -156,13 +157,8 @@ export default async function Home() {
       </section>
 
       <section className="section" id="process" aria-labelledby="process-heading">
-        <SectionHeading
-          index="06"
-          eyebrow="How it is built"
-          id="process-heading"
-          title="Agents wrote it. You can check it."
-        >
-          FLOP asks users to trust proofs of inference. The same question applies to this site: what can a reader check?
+        <SectionHeading index="06" eyebrow={c.process} id="process-heading" title={c.processTitle}>
+          {c.processText}
         </SectionHeading>
         <div className={styles.processGrid}>
           <div>
@@ -181,10 +177,10 @@ export default async function Home() {
             </ol>
             <div className={styles.processLinks}>
               <MotionLink className="text-link" href="/about">
-                How this was made <ArrowRight />
+                {c.about} <ArrowRight />
               </MotionLink>
               <MotionLink className="text-link" href="/provenance">
-                Verify contribution proofs <ArrowRight />
+                {c.provenance} <ArrowRight />
               </MotionLink>
             </div>
           </div>

@@ -8,7 +8,7 @@ export default function NotFound() {
       <p className="eyebrow">Page not found</p>
       <h1>No tool here yet.</h1>
       <p className="muted">
-        Planned tools link to their source until they ship. Press <span className="kbd">/</span> to find one, or return
+        Planned tools link to their source until they ship. Press <span className="kbd">/</span> to find one or return
         to the workbench to see the current tool status.
       </p>
       <p className="not-found-actions">

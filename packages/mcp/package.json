@@ -9,6 +9,9 @@
     ".": "./src/index.ts",
     "./fixtures": "./src/fixtures.ts"
   },
+  "devDependencies": {
+    "@flop-lab/fixtures": "workspace:*"
+  },
   "scripts": {
     "check": "tsc --noEmit && eslint . && prettier --check src test && vitest run"
   }

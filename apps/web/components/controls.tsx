@@ -129,6 +129,7 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
   const input = useRef<HTMLInputElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState<string | null>(null);
   const [modifier, setModifier] = useState("Ctrl");
@@ -136,6 +137,7 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
     opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setQuery("");
     setFocused(null);
+    setIsOpen(true);
     dialog.current?.showModal();
     input.current?.focus();
   };
@@ -153,7 +155,8 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-  const matches = searchEntries(entries, query);
+  // A closed dialog needs no ranked links, layout measurements or route prefetches.
+  const matches = isOpen ? searchEntries(entries, query) : [];
   // Groups follow the rank of their best match, so the first row shown is always the first result.
   const groups: { kind: SearchEntry["kind"]; list: SearchEntry[] }[] = [];
   for (const entry of matches.slice(0, RESULT_LIMIT)) {
@@ -170,7 +173,14 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
     );
   return (
     <>
-      <MotionButton ref={trigger} className="find-button" onClick={open} aria-haspopup="dialog">
+      <MotionButton
+        ref={trigger}
+        className="find-button"
+        onClick={open}
+        aria-label="Search"
+        aria-haspopup="dialog"
+        lang="en"
+      >
         <SearchIcon />
         <span className="find-label">Search</span>
         <span className="kbd" aria-hidden="true">
@@ -181,7 +191,10 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
         ref={dialog}
         className="palette"
         aria-labelledby="palette-title"
-        onClose={() => (opener.current?.isConnected ? opener.current : trigger.current)?.focus()}
+        onClose={() => {
+          setIsOpen(false);
+          (opener.current?.isConnected ? opener.current : trigger.current)?.focus();
+        }}
         onClick={(event) => {
           if (event.target === dialog.current) dialog.current.close();
         }}

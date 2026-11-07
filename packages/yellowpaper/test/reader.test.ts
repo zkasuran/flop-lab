@@ -42,6 +42,18 @@ describe("pinned reader", () => {
     expect(custom.html).toContain("## Fake");
   });
 
+  it("gives every scrollable table a distinct name tied to its section", () => {
+    const labels = [...reader.html.matchAll(/class="paper-table"[^>]*aria-label="([^"]+)"/g)].map((match) => match[1]);
+    expect(labels.length).toBeGreaterThan(1);
+    expect(new Set(labels).size).toBe(labels.length);
+    const custom = buildReader({
+      ...paper,
+      raw: "## 1. Units\n\n| Unit | Value |\n| --- | --- |\n| FLOP | 1 |\n\n## 2. Bounds\n\n| Name | Limit |\n| --- | --- |\n| Rows | 2 |\n",
+    });
+    expect(custom.html).toContain('aria-label="1. Units table 1"');
+    expect(custom.html).toContain('aria-label="2. Bounds table 2"');
+  });
+
   it("uses the existing exact comparison and retains missing evidence", () => {
     const row = reader.parameters.find((p) => p.name === "channel_dispute_window_blocks")!;
     expect(row.result).toBe("MATCH");

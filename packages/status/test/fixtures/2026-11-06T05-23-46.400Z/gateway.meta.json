@@ -1,7 +1,0 @@
-{
-  "service": "gateway",
-  "source": "https://api.flop.network/v1/models",
-  "measuredAt": "2026-11-06T05:23:46.897Z",
-  "httpStatus": 200,
-  "contentType": "application/json; charset=utf-8"
-}

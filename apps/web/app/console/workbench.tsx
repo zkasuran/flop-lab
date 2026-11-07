@@ -90,7 +90,7 @@ function Evidence({ observation, mode }: { observation: Observation; mode: strin
           Schema {observation.check.status}
         </span>
       </div>
-      <h3>{observation.tool}</h3>
+      <h2>{observation.tool}</h2>
       <p className={styles.date}>
         <time dateTime={observation.measuredAt}>{utc(observation.measuredAt)}</time> ·{" "}
         <MotionLink href={observation.source}>Hosted MCP ↗</MotionLink>
@@ -110,7 +110,9 @@ function Evidence({ observation, mode }: { observation: Observation; mode: strin
         <h3>Reproduce this call</h3>
         <CopyButton text={observation.curl} label="Copy curl" />
       </div>
-      <pre className={styles.code}>{observation.curl}</pre>
+      <pre className={styles.code} tabIndex={0}>
+        {observation.curl}
+      </pre>
     </div>
   );
 }
@@ -758,7 +760,9 @@ export function ConsoleWorkbench({ initial }: { initial: Initial }) {
           costs. Nominal devnet prices are not market quotes. The request budget and cache are local to each server
           process. Shared hosting addresses share a budget.
         </p>
-        <pre className={styles.code}>{curlCommand("flop_get_stats", {})}</pre>
+        <pre className={styles.code} tabIndex={0}>
+          {curlCommand("flop_get_stats", {})}
+        </pre>
       </section>
     </div>
   );
