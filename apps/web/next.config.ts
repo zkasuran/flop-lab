@@ -12,10 +12,24 @@ const commit =
     }
   })();
 
+const docsFiles = ["../../packages/*/package.json", "../../packages/*/README.md", "../../apps/web/README.md"];
+const buildTime = new Date().toISOString();
+
 const config: NextConfig = {
   poweredByHeader: false,
-  outputFileTracingIncludes: { "/SIGNATURE.json": ["../../SIGNATURE.json"] },
-  env: { NEXT_PUBLIC_BUILD_COMMIT: /^[a-f0-9]{40}$/.test(commit) ? commit : "unknown" },
+  // Pages that read package files at request time need those files in the deployed function.
+  // The docs pages render per request so each response can carry its own CSP nonce.
+  outputFileTracingIncludes: {
+    "/SIGNATURE.json": ["../../SIGNATURE.json"],
+    "/docs": docsFiles,
+    "/docs/[package]": docsFiles,
+    "/zh/docs": docsFiles,
+    "/": docsFiles,
+  },
+  env: {
+    NEXT_PUBLIC_BUILD_COMMIT: /^[a-f0-9]{40}$/.test(commit) ? commit : "unknown",
+    NEXT_PUBLIC_BUILD_TIME: buildTime,
+  },
   experimental: { cpus: 2 },
   async headers() {
     return [
