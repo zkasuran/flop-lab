@@ -259,7 +259,7 @@ export function SourceCoverage({
         </motion.button>
       )}
       {!filtered.length && <p>No source pages match. Clear the search to see the inventory.</p>}
-      <aside className={styles.history} aria-label="Recorder history availability">
+      <section className={styles.history} aria-label="Recorder history availability">
         <h3>Claim history</h3>
         <p>
           {history.state === "recorded"
@@ -272,7 +272,7 @@ export function SourceCoverage({
           Checked <time dateTime={history.checkedAt}>{utc(history.checkedAt)}</time>.{" "}
           <a href={history.source}>Recorder index ↗</a>. Cached for five minutes. Missing claims remain gaps.
         </p>
-      </aside>
+      </section>
     </section>
   );
 }

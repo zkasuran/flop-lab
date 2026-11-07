@@ -136,6 +136,8 @@ export function buildReader(paper: { raw: string; sha: string; measuredAt: strin
     return url.href.startsWith(base) ? url.href : null;
   }
   let inLabel = false;
+  let tableNumber = 0;
+  let tableSection = "Specification";
   function linkRefs(value: string): string {
     const pattern = /§\s*(\d+(?:\.\d+)*[a-z]?)|\bAppendix ([A-Z](?:\.\d+)?)\b|\b(E\.\d+)\b|\byellowpaper#(\d+)\b/g;
     let output = "";
@@ -160,6 +162,7 @@ export function buildReader(paper: { raw: string; sha: string; measuredAt: strin
       heading(token) {
         const heading = headingTokens.get(token);
         if (!heading) return `<p>${escape(plain(token.text))}</p>`;
+        tableSection = heading.title;
         inLabel = true;
         const label = this.parser.parseInline(token.tokens);
         inLabel = false;
@@ -207,7 +210,8 @@ export function buildReader(paper: { raw: string; sha: string; measuredAt: strin
       table(token) {
         const head = token.header.map((cell) => this.tablecell(cell)).join("");
         const rows = token.rows.map((row) => `<tr>${row.map((cell) => this.tablecell(cell)).join("")}</tr>`).join("");
-        return `<div class="paper-table" tabindex="0" role="region" aria-label="Specification table"><table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
+        const label = escape(`${tableSection} table ${++tableNumber}`);
+        return `<div class="paper-table" tabindex="0" role="region" aria-label="${label}"><table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
       },
     },
   });
