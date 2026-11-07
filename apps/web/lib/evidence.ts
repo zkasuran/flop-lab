@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 // Shape committed recordings for the home page. Every value here is read from a recording, never typed in.
-import { readRecording } from "@/app/harness/data";
-import { counts } from "@/app/harness/model";
+import { readRecording } from "../app/harness/data";
+import { counts } from "../app/harness/model";
 import tape from "../../../packages/verifier/fixtures/settlements-0.json";
 import channel from "../../../packages/verifier/fixtures/channel-1.json";
 import { checkArithmetic, verifyEvidence } from "../../../packages/verifier/src/checks/index";
 import { parseEvidence } from "../../../packages/verifier/src/bundle";
 import { array, object } from "../../../packages/verifier/src/schema";
 import type { Status as VerifierStatus } from "../../../packages/verifier/src/types";
-import { repository } from "@/content/tools";
+import { repository } from "../content/tools";
 import type { ClaimStatus } from "./status";
 
 export type { ClaimStatus };
@@ -39,7 +39,7 @@ export function readClaimRun(): ClaimRun | null {
     measuredAt: report.measuredAt,
     requests: report.budget.requests,
     spentFlop: report.budget.spentFlop,
-    recording: `${repository}/blob/main/packages/harness/last-run.json`,
+    recording: `${repository}/tree/main/packages/harness/fixtures/coverage`,
   };
 }
 
