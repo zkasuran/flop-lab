@@ -1,0 +1,98 @@
+{
+  "source": "http://127.0.0.1:3810",
+  "commit": "1a4abde9d43fae5aff0c59b8ca46f27bcca17fe6",
+  "startedAt": "2026-11-06T16:29:23.737Z",
+  "finishedAt": "2026-11-06T16:30:07.442Z",
+  "build": {
+    "id": "g1BElPaq7lHP4HasfaoLy",
+    "builtAt": "2026-11-06T16:29:07.134Z"
+  },
+  "sitemapRoutes": [
+    "/",
+    "/about",
+    "/provenance",
+    "/scoreboard",
+    "/harness",
+    "/verify",
+    "/spendguard",
+    "/x402",
+    "/kestra",
+    "/challenger",
+    "/history",
+    "/explorer",
+    "/spec",
+    "/contracts",
+    "/indexer",
+    "/sdk",
+    "/console",
+    "/start",
+    "/doctor",
+    "/tclk",
+    "/mcp",
+    "/did",
+    "/models",
+    "/sessions",
+    "/finality",
+    "/upgrades",
+    "/status",
+    "/community",
+    "/economics",
+    "/metering",
+    "/proofs",
+    "/invariants",
+    "/yellowpaper",
+    "/knowledge",
+    "/export",
+    "/openapi",
+    "/staking",
+    "/watch",
+    "/swaps"
+  ],
+  "rawReportSha256": "ebbae30936b493853fe40bbddd3f300810ec0f55b7b387965dff4aeace9a9cac",
+  "routes": [
+    {
+      "route": "/mcp",
+      "buildJsBytes": 833655,
+      "median": {
+        "performance": 96,
+        "cls": 0,
+        "lcpMs": 1058.1839,
+        "tbtMs": 212.5,
+        "requests": 18,
+        "jsTransferBytes": 217596,
+        "pass": true
+      },
+      "samples": {
+        "measuredAt": ["2026-11-06T16:29:27.555Z", "2026-11-06T16:29:40.768Z", "2026-11-06T16:29:54.494Z"],
+        "performance": [96, 99, 83],
+        "cls": [0, 0, 0],
+        "lcpMs": [1076.1812, 1058.1839, 1057.8535],
+        "tbtMs": [212.5, 97, 697.5],
+        "requests": [18, 18, 18],
+        "jsTransferBytes": [217596, 217596, 217596]
+      }
+    },
+    {
+      "route": "/openapi",
+      "buildJsBytes": 778705,
+      "median": {
+        "performance": 97,
+        "cls": 0,
+        "lcpMs": 1057.9943,
+        "tbtMs": 188,
+        "requests": 17,
+        "jsTransferBytes": 211085,
+        "pass": true
+      },
+      "samples": {
+        "measuredAt": ["2026-11-06T16:29:34.512Z", "2026-11-06T16:29:47.428Z", "2026-11-06T16:30:01.857Z"],
+        "performance": [99, 97, 92],
+        "cls": [0, 0, 0],
+        "lcpMs": [1057.9943, 1056.779, 1059.1919],
+        "tbtMs": [131.5, 188, 344],
+        "requests": [17, 17, 17],
+        "jsTransferBytes": [211085, 211085, 211085]
+      }
+    }
+  ]
+}

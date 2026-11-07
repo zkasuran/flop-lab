@@ -58,7 +58,7 @@ Refresh the raw recordings with `pnpm --filter web exec tsx scripts/record-devne
 
 Every figure on the home page is computed from a committed recording or a live read when the page renders. `lib/evidence.ts` shapes the recordings. Nothing in it is a typed-in count.
 
-- The hero matrix draws one cell per claim in `packages/harness/last-run.json`, in catalogue order. Sorting by outcome moves cells and never changes a result. Hover or focus a cell to read its recorded reason. Arrow keys move by visual rows. The legend highlights one outcome.
+- The hero matrix draws one cell per claim in the split recording at `packages/harness/fixtures/coverage/`, in catalogue order. It shows at most 64 cells per page with the visible range and full recorded count. Previous and next controls expose every claim. Its raw-recording link opens that archive, including `report.json` and the result parts named by the manifest. Sorting by outcome starts at the first page and never changes a result. Hover or focus a cell to read its recorded reason. Arrow keys move by visual rows within the page. The legend highlights one outcome.
 - The live status line shows the latest `flop_get_stats` block with its age from the browser clock. It reads last known when the source failed or the value is older than a minute.
 - The settlement specimen runs the verifier's `checkArithmetic` over the first 20 rows of `packages/verifier/fixtures/settlements-0.json`. Choosing a tick swaps the raw integer strings as whole values. They are grouped for reading and never pass through floating point.
 - The promise ledger places four documented promises next to recorded harness claims and verifier checks from `packages/verifier/fixtures/channel-1.json`. A missing result shows as not recorded.
@@ -82,6 +82,14 @@ node scripts/verify-signature.mjs ./SIGNATURE.json .
 ```
 
 This checks the pinned signer, commit, exact tracked file set and SHA-256 of checkout file bytes. It handles tracked symlink bytes without following their target. It rejects symlink parents. It needs no network or private key. Run it from a checkout of the signed commit. Exit code zero means all checks passed. The importable `verifyCheckout` function accepts an explicit expected DID for throwaway-key tests; the CLI always pins the contributor DID.
+
+## Mobile performance budget
+
+After `pnpm --filter web build`, run `pnpm --filter web perf`. It starts a local production server and measures every sitemap route with three cold-cache mobile Lighthouse runs. Independent medians must meet performance 90 and CLS 0.05. Missing measurements fail. The report includes per-route initial JavaScript file bytes from the Next build output, browser request counts and dates.
+
+Chrome must be installed. On a shared build host, use `slot browser 1 -- pnpm --filter web perf`. Ports default to 3810 and 3811. Full settings, output format and coverage limits are in [the performance guide](../../scripts/perf/README.md).
+
+Shared links fetch their destinations on navigation rather than prefetching every visible tool or section. The search palette mounts its ranked results when opened. Reading reveals keep initially visible server content still and animate off-screen sections when they enter view.
 
 ## Vercel
 

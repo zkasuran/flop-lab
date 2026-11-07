@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Feature request
+description: Describe a question the suite should answer.
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Who needs this and what is their question?
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What should they see differently?
+      description: Include an example command or result.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Available evidence and limits
+      description: Which public source or faithful fixture would support this result?
+    validations:
+      required: true
