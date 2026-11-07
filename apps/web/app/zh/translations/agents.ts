@@ -8,7 +8,7 @@ const en = {
   spendguard: "Will my policy hold when agents share one budget?",
   challenger: "Which challenge windows close next and what evidence is missing?",
   tclk: "Did this agent-to-agent deal follow the protocol?",
-  mcp: "How does my agent call every flop-lab tool?",
+  mcp: "How does my agent call the read-only suite?",
   swaps: "Is this atomic swap safe to start?",
 };
 const zh = {
@@ -19,7 +19,7 @@ const zh = {
   spendguard: "多个智能体共享预算时，我的策略是否仍然有效？",
   challenger: "哪些挑战窗口即将关闭？还缺少哪些证据？",
   tclk: "这笔智能体之间的交易是否遵循协议？",
-  mcp: "我的智能体如何调用 flop-lab 的各项工具？",
+  mcp: "我的智能体如何调用只读的工具集？",
   swaps: "这笔原子交换是否可以安全启动？",
 } satisfies Chinese<typeof en>;
 const metrics = {
@@ -31,5 +31,6 @@ const metrics = {
     label: "记录响应中未结的 FLOP_BTC 订单数",
     note: "订单与索引中的 HTLC 是不同对象。未验证跨链双方均已完成。",
   },
+  mcp: { label: "本地 MCP 服务器列出的操作数", note: "由已构建服务器的 tools/list 生成。不代表托管服务的可用性。" },
 };
 export const agents = { en, zh, metrics };

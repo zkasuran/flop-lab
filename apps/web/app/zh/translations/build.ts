@@ -39,5 +39,6 @@ const metrics = {
   start: { label: "入门示例重放中的已登记模型数", note: "已记录的发现结果，不是当前报价或支出估算。" },
   yellowpaper: { label: "固定版本黄皮书中的参数数", note: "固定版本规范条目。目录一致性不验证已部署的运行时存储。" },
   knowledge: { label: "知识清单记录中的概念数", note: "目录中的声明。未验证来源溯源或运行时行为。" },
+  openapi: { label: "API 磁带样本中的结算行数", note: "随包提供的算术摘要。未验证推理结果或当前网络健康状况。" },
 };
 export const build = { en, zh, metrics };
