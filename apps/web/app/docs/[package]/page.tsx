@@ -7,7 +7,7 @@ import { Readme } from "../markdown";
 import { ReadingRail } from "../view";
 import styles from "../docs.module.css";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return readCatalog().docs.map((doc) => ({ package: doc.slug }));

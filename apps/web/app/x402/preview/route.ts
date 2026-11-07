@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import { McpClient, listSettlements, escrowConserved } from "@flop-lab/mcp";
 import { parsePreview } from "../data";
+import { publicFetch } from "../../../lib/security/transport";
 
-const client = new McpClient({ timeoutMs: 4000, retries: 1, minIntervalMs: 500 });
+const client = new McpClient({ fetch: publicFetch, timeoutMs: 4000, retries: 0, minIntervalMs: 500 });
 let cached: { expires: number; body: unknown; status: number } | undefined;
 let pending: Promise<Response> | undefined;
 

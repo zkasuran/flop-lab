@@ -2,11 +2,18 @@
 import { classify, Explorer, SearchBudget } from "../../../../packages/explorer/src/index";
 import { recordedExploration } from "../../../../packages/explorer/src/recorded";
 import type { Kind } from "../../../../packages/explorer/src/types";
+import { McpClient } from "@flop-lab/mcp";
+import { visitorKey } from "../../lib/security/admission";
+import { failure } from "../../lib/security/policy";
+import { publicFetch, safeJson, withPublicOperation } from "../../lib/security/transport";
 
 /** Shared service lifetime bounds the cache, queue and visitor budget to one server instance.
  * @example const handle = createSearchService(); await handle(new Request(url))
  */
-export function createSearchService(explorer: Pick<Explorer, "search"> = new Explorer(), budget = new SearchBudget()) {
+export function createSearchService(
+  explorer: Pick<Explorer, "search"> = new Explorer(new McpClient({ fetch: publicFetch, retries: 0, timeoutMs: 8000 })),
+  budget = new SearchBudget(),
+) {
   return async (request: Request): Promise<Response> => {
     const url = new URL(request.url);
     const headers = new Headers({ "Cache-Control": "private, no-store" });
@@ -19,13 +26,7 @@ export function createSearchService(explorer: Pick<Explorer, "search"> = new Exp
       }
       const input = url.searchParams.get("q") ?? "";
       classify(input);
-      const cookie = /(?:^|;\s*)flop_explorer=([0-9a-f-]{36})(?:;|$)/.exec(request.headers.get("cookie") ?? "")?.[1];
-      const visitor = cookie ?? crypto.randomUUID();
-      if (!cookie)
-        headers.set(
-          "Set-Cookie",
-          `flop_explorer=${visitor}; HttpOnly; SameSite=Lax; Path=/explorer; Max-Age=3600${url.protocol === "https:" ? "; Secure" : ""}`,
-        );
+      const visitor = visitorKey(request);
       const admission = budget.take(visitor);
       if (!admission.allowed) {
         headers.set("Retry-After", String(admission.retryAfter));
@@ -34,12 +35,23 @@ export function createSearchService(explorer: Pick<Explorer, "search"> = new Exp
           { status: 429, headers },
         );
       }
-      return Response.json(await explorer.search(input), { headers });
-    } catch (error) {
-      return Response.json(
-        { error: error instanceof Error ? error.message : "Search unavailable" },
-        { status: 400, headers },
-      );
+      return withPublicOperation(async () => {
+        const result = await explorer.search(input);
+        const clean = <T extends { error: string | null }>(entry: T): T => ({
+          ...entry,
+          error: entry.error ? "Public observation unavailable" : null,
+        });
+        return safeJson(
+          {
+            ...result,
+            lookups: result.lookups.map(clean),
+            entities: result.entities.map((entity) => ({ ...entity, evidence: entity.evidence.map(clean) })),
+          },
+          { headers },
+        );
+      });
+    } catch {
+      return failure(400);
     }
   };
 }

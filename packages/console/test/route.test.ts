@@ -16,7 +16,7 @@ describe("same-origin route boundary", () => {
     expect((await POST(request("{}", { "Content-Type": "text/plain" }))).status).toBe(415);
     expect((await POST(request("x".repeat(32769)))).status).toBe(413);
     expect((await POST(request("["))).status).toBe(400);
-    expect((await POST(request("[", { origin: "http://127.0.0.1:3500", host: "127.0.0.1:3500" }))).status).toBe(400);
+    expect((await POST(request("[", { origin: "http://127.0.0.1:3500", host: "127.0.0.1:3500" }))).status).toBe(403);
     expect((await POST(request("{}", { origin: "null" }))).status).toBe(403);
     expect((await POST(request('{"action":"write"}'))).status).toBe(400);
   });

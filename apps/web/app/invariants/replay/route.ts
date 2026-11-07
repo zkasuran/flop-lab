@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import { recordedInputs, runChecks } from "../../../../../packages/invariants/src/index";
+import { failure, sameOrigin } from "../../../lib/security/policy";
+import { readBytes } from "../../../lib/security/transport";
 export const runtime = "nodejs";
+let busy = false;
 
 /** Download native raw inputs for local CLI replay. @example GET /invariants/replay */
 export function GET() {
@@ -15,7 +18,15 @@ export function GET() {
 /** Re-evaluate the immutable recordings and stream actual library completions.
  * @example fetch('/invariants/replay', { method: 'POST' })
  */
-export function POST() {
+export async function POST(request: Request) {
+  if (!sameOrigin(request)) return failure(403);
+  try {
+    await readBytes(request.body, 0, AbortSignal.timeout(5000));
+  } catch {
+    return failure(413);
+  }
+  if (busy) return failure(429);
+  busy = true;
   const encoder = new TextEncoder();
   let cancelled = false;
   const stream = new ReadableStream<Uint8Array>({
@@ -29,6 +40,7 @@ export function POST() {
       } catch {
         send({ error: "Recorded replay could not complete. The displayed recording is retained." });
       } finally {
+        busy = false;
         if (!cancelled) controller.close();
       }
     },

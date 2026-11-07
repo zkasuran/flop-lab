@@ -23,16 +23,14 @@ describe("public explorer admission", () => {
     expect(take).not.toHaveBeenCalled();
     expect(search).not.toHaveBeenCalled();
   });
-  it("sets a private cookie and refuses the fourth visitor search before IO", async () => {
+  it("refuses the fourth visitor search even when the browser rotates its cookie", async () => {
     const search = vi.fn(async () => ({ ...recordedExploration("block"), mode: "live" as const }));
     const handle = createSearchService({ search });
     const url = "https://example.test/explorer/query?q=2990806";
     const response = await handle(new Request(url));
-    const cookie = response.headers.get("set-cookie")!;
-    expect(cookie).toContain("HttpOnly");
-    expect(cookie).toContain("Secure");
+    expect(response.headers.has("set-cookie")).toBe(false);
     expect(response.headers.get("cache-control")).toBe("private, no-store");
-    const request = () => new Request(url, { headers: { cookie: cookie.split(";")[0]! } });
+    const request = () => new Request(url, { headers: { cookie: `flop_explorer=${crypto.randomUUID()}` } });
     expect((await handle(request())).status).toBe(200);
     expect((await handle(request())).status).toBe(200);
     const denied = await handle(request());
