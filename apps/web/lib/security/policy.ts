@@ -37,11 +37,14 @@ export function routePolicy(path: string): { methods: string[]; query: string[] 
       "/community/report.json",
       "/upgrades/report.json",
       "/kestra/evidence",
+      "/mcp/tool-list",
       ...["indexer", "proofs", "metering", "economics", "models", "sessions", "x402"].map(
         (slug) => `/${slug}/recording`,
       ),
     ].includes(path) ||
-    /^\/(?:sessions\/channel|harness\/sources)\/[^/]+$/.test(path)
+    /^\/(?:sessions\/channel|harness\/sources)\/[^/]+$/.test(path) ||
+    /^\/docs\/[^/]+\/readme$/.test(path) ||
+    /^\/api\/v1\/[^/]+$/.test(path)
   )
     return { methods: ["GET", "HEAD"], query: [] };
   return undefined;

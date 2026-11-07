@@ -32,6 +32,18 @@ const json = (body: string, headers: HeadersInit = {}) =>
   });
 
 describe("route entry and cache boundaries", () => {
+  it("admits only exact read paths for the documentation, API and MCP list routes", () => {
+    for (const path of ["/docs/verifier/readme", "/api/v1/status", "/api/v1/openapi.json", "/mcp/tool-list"])
+      expect(routePolicy(path), path).toEqual({ methods: ["GET", "HEAD"], query: [] });
+    for (const path of [
+      "/docs/verifier/readme/extra",
+      "/docs/readme",
+      "/api/v1",
+      "/api/v1/status/extra",
+      "/api/v2/status",
+    ])
+      expect(routePolicy(path), path).toBeUndefined();
+  });
   it("requires a policy for every application data route", async () => {
     const entries = await readdir(new URL("../app/", import.meta.url), { recursive: true });
     const routes = entries.filter((entry) => entry.endsWith("/route.ts"));
