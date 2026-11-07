@@ -254,6 +254,8 @@ importers:
         specifier: workspace:*
         version: link:../mcp
 
+  packages/fixtures: {}
+
   packages/harness:
     dependencies:
       '@flop-lab/mcp':
@@ -296,7 +298,11 @@ importers:
         specifier: workspace:*
         version: link:../mcp
 
-  packages/mcp: {}
+  packages/mcp:
+    devDependencies:
+      '@flop-lab/fixtures':
+        specifier: workspace:*
+        version: link:../fixtures
 
   packages/mcp-server:
     dependencies:
@@ -458,6 +464,10 @@ importers:
       '@flop-lab/mcp':
         specifier: workspace:*
         version: link:../mcp
+    devDependencies:
+      '@flop-lab/fixtures':
+        specifier: workspace:*
+        version: link:../fixtures
 
   packages/swaps:
     dependencies:

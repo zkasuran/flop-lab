@@ -1,5 +1,6 @@
 {
-  "service": "mcp",
+  "sha256": "cdee7e354540405e4ae492503e5769466d5bfcf55136269ff3af6c977e02a285",
+  "bytes": 240,
   "source": "https://mcp.flop.network/mcp",
   "measuredAt": "2026-11-06T05:23:46.892Z",
   "httpStatus": 200,
