@@ -53,5 +53,6 @@ export const readCatalog = cache(() => {
       };
       return doc;
     });
-  return { docs, generatedAt: new Date().toISOString(), revision };
+  // The build time, not the request time: these pages render per request but the catalog is a build-time snapshot.
+  return { docs, generatedAt: process.env.NEXT_PUBLIC_BUILD_TIME ?? new Date().toISOString(), revision };
 });
