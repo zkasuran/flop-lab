@@ -136,7 +136,7 @@ export function ProofBoard({
                     <Citation evidence={type.evidence} />
                   </Disclosure>
                 </div>
-                <aside className={styles.layerObserved}>
+                <div className={styles.layerObserved} role="note">
                   <p className="eyebrow">This recording</p>
                   {type.id === "aggregation" ? (
                     <>
@@ -159,7 +159,7 @@ export function ProofBoard({
                       </p>
                     </>
                   )}
-                </aside>
+                </div>
               </motion.article>
             </ReadingReveal>
           ))}

@@ -173,7 +173,14 @@ export function CommandPalette({ entries }: { entries: readonly SearchEntry[] })
     );
   return (
     <>
-      <MotionButton ref={trigger} className="find-button" onClick={open} aria-label="Search" aria-haspopup="dialog">
+      <MotionButton
+        ref={trigger}
+        className="find-button"
+        onClick={open}
+        aria-label="Search"
+        aria-haspopup="dialog"
+        lang="en"
+      >
         <SearchIcon />
         <span className="find-label">Search</span>
         <span className="kbd" aria-hidden="true">
