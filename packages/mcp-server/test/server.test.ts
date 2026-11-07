@@ -114,4 +114,15 @@ describe("admission and result validation", () => {
       "outside",
     );
   });
+  it("reports no status samples without inventing an availability percentage", async () => {
+    const result = await createSuite({ recorded: true }).call("lab_status_history", {
+      from: "2000-01-01T00:00:00.000Z",
+      to: "2000-01-02T00:00:00.000Z",
+    });
+    const parsed = z
+      .object({ services: z.array(z.object({ samples: z.number(), availability: z.number().nullable() })) })
+      .parse(result.data);
+    expect(parsed.services.length).toBeGreaterThan(0);
+    expect(parsed.services.every((service) => service.samples === 0 && service.availability === null)).toBe(true);
+  });
 });

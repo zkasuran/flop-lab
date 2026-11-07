@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 /** Copyable recorded calls. Monetary inputs are local examples, not observed prices. @example examples.lab_verify_tape */
 export const examples: Record<string, Record<string, unknown>> = {
+  lab_status_history: {},
+  lab_export_preview: { dataset: "settlements", format: "ndjson", limit: 3 },
+  lab_community_requests: { repo: "network", limit: 3 },
   lab_verify_channel: {
     mode: "recorded",
     channelId: "0xeda44d4053757bf88f7147f16daf2576d4c6550e560dd10a9a524a3bd664ec8e",
