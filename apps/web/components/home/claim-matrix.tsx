@@ -6,9 +6,11 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type Keyboard
 import type { ClaimRun, ClaimStatus } from "@/lib/evidence";
 import { STATUS_ORDER, statusLabel } from "@/lib/status";
 import { utc } from "@/app/harness/model";
-import { EASE_OUT, MotionLink } from "../motion";
+import { EASE_OUT, MotionButton, MotionLink } from "../motion";
 import { ArrowRight, ArrowUpRight } from "../icons";
 import styles from "./home.module.css";
+
+const PAGE_SIZE = 64;
 
 /** Columns follow the CSS breakpoint so arrow keys move by visual rows. */
 function useColumns() {
@@ -31,6 +33,7 @@ export function ClaimMatrix({ run }: { run: ClaimRun }) {
   const reduced = useReducedMotion() !== false;
   const columns = useColumns();
   const [sorted, setSorted] = useState(false);
+  const [page, setPage] = useState(0);
   const [focus, setFocus] = useState<ClaimStatus | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -45,13 +48,23 @@ export function ClaimMatrix({ run }: { run: ClaimRun }) {
   const activeId = hovered ?? selected;
   const active = run.claims.find((claim) => claim.id === activeId) ?? null;
   const total = run.claims.length;
+  const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const currentPage = Math.min(page, pages - 1);
+  const start = currentPage * PAGE_SIZE;
+  const visible = ordered.slice(start, start + PAGE_SIZE);
+  const changePage = (next: number) => {
+    setPage(next);
+    setCursor(0);
+    setSelected(null);
+    setHovered(null);
+  };
 
   const move = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (event.key === "Escape") {
       setSelected(null);
       return;
     }
-    const last = ordered.length - 1;
+    const last = visible.length - 1;
     const steps: Record<string, number> = {
       ArrowRight: index + 1,
       ArrowLeft: index - 1,
@@ -100,11 +113,11 @@ export function ClaimMatrix({ run }: { run: ClaimRun }) {
           <div
             className={styles.matrix}
             role="group"
-            aria-label={`${total} claims from the recorded run`}
+            aria-label={`Claims ${total ? start + 1 : 0} to ${start + visible.length} of ${total} from the recorded run`}
             aria-describedby="matrix-hint"
             onPointerLeave={() => setHovered(null)}
           >
-            {ordered.map((claim, index) => (
+            {visible.map((claim, index) => (
               <motion.button
                 key={claim.id}
                 ref={(node) => {
@@ -112,6 +125,7 @@ export function ClaimMatrix({ run }: { run: ClaimRun }) {
                 }}
                 type="button"
                 layout={!reduced}
+                layoutDependency={`${sorted}:${currentPage}`}
                 transition={{
                   layout: {
                     duration: reduced ? 0 : 0.48,
@@ -123,7 +137,7 @@ export function ClaimMatrix({ run }: { run: ClaimRun }) {
                 data-status={claim.status}
                 data-dim={focus !== null && focus !== claim.status}
                 data-active={activeId === claim.id}
-                tabIndex={index === cursor ? 0 : -1}
+                tabIndex={index === Math.min(cursor, visible.length - 1) ? 0 : -1}
                 aria-label={`Claim ${position.get(claim.id)} of ${total}. ${claim.title}. ${claim.kind}. ${statusLabel(claim.status)}.`}
                 onPointerEnter={() => setHovered(claim.id)}
                 onFocus={() => {
@@ -148,7 +162,10 @@ export function ClaimMatrix({ run }: { run: ClaimRun }) {
                     key={option.label}
                     type="button"
                     aria-pressed={sorted === option.value}
-                    onClick={() => setSorted(option.value)}
+                    onClick={() => {
+                      setSorted(option.value);
+                      changePage(0);
+                    }}
                   >
                     {sorted === option.value && (
                       <motion.span
@@ -164,6 +181,17 @@ export function ClaimMatrix({ run }: { run: ClaimRun }) {
             </div>
             <p className={styles.matrixHint} id="matrix-hint">
               One cell per claim. Arrow keys move between claims.
+            </p>
+            <div className={styles.segmented} role="group" aria-label="Claim pages">
+              <MotionButton disabled={currentPage === 0} onClick={() => changePage(currentPage - 1)}>
+                Previous claims
+              </MotionButton>
+              <MotionButton disabled={currentPage === pages - 1} onClick={() => changePage(currentPage + 1)}>
+                Next claims
+              </MotionButton>
+            </div>
+            <p className={styles.matrixHint} role="status">
+              Showing {total ? start + 1 : 0} to {start + visible.length} of {total}. Page {currentPage + 1} of {pages}.
             </p>
           </div>
         </div>

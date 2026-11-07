@@ -1,0 +1,21 @@
+{
+  "name": "@flop-lab/fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Content-addressed recorded responses with original observation provenance",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "records",
+    "bodies",
+    "README.md"
+  ],
+  "scripts": {
+    "check": "tsc --noEmit && eslint . && prettier --ignore-path .prettierignore --check src test && vitest run",
+    "refresh": "pnpm --filter @flop-lab/status exec tsx scripts/capture.ts"
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "service": "faucet",
-  "source": "https://faucet.flop.network/",
-  "measuredAt": "2026-11-06T05:23:47.537Z",
-  "httpStatus": 200,
-  "contentType": "text/html; charset=utf-8"
-}
