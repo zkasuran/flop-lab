@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { readdir } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { McpClient, getStats } from "@flop-lab/mcp";
@@ -32,6 +32,15 @@ const json = (body: string, headers: HeadersInit = {}) =>
   });
 
 describe("route entry and cache boundaries", () => {
+  it("never pre-renders an HTML page, because each response needs its own CSP nonce", async () => {
+    const entries = await readdir(new URL("../app/", import.meta.url), { recursive: true });
+    const pages = entries.filter((entry) => /(^|\/)(page|layout)\.tsx$/.test(entry));
+    expect(pages.length).toBeGreaterThan(0);
+    for (const page of pages) {
+      const source = await readFile(new URL(`../app/${page}`, import.meta.url), "utf8");
+      expect(source, page).not.toMatch(/export const dynamic\s*=\s*["']force-static["']/);
+    }
+  });
   it("admits only exact read paths for the documentation, API and MCP list routes", () => {
     for (const path of ["/docs/verifier/readme", "/api/v1/status", "/api/v1/openapi.json", "/mcp/tool-list"])
       expect(routePolicy(path), path).toEqual({ methods: ["GET", "HEAD"], query: [] });

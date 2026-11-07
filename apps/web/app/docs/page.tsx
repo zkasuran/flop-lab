@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Find the FLOP devnet tool for your question. Package READMEs, commands and limits in one searchable place.",
 };
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export default function DocsPage() {
   const { docs, generatedAt } = readCatalog();
