@@ -4,12 +4,12 @@ What can I check about FLOP from outside? This site brings the independent devne
 
 ## Quick start
 
-From the repository root with Node 22 and pnpm. Open http://localhost:3380 after the server starts:
+From the repository root with Node 22 and pnpm. Open http://localhost:3800 after the server starts:
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter web build
-pnpm --filter web exec next start --port 3380
+pnpm --filter web exec next start --port 3800
 ```
 
 Stop this server before using the development commands below.
@@ -44,7 +44,7 @@ The header gains a frosted background after the first scroll and marks the home 
 
 The home page uses `@flop-lab/mcp` for `flop_get_stats` and `flop_list_settlements` with a page limit of five. The keyless gateway model list supplies distinct miner addresses from `x-flop.price_sources`. The displayed settlement is the greatest timestamp in that returned page. No full-history claim is made.
 
-The server caches each source for 30 seconds and coalesces concurrent reads. Next.js revalidates the page every 30 seconds. Visible browser tabs request a refreshed page on the same interval. A healthy uncached read makes three public requests. MCP calls are spaced by the shared client. Each source gets one attempt per refresh, with an eight-second response deadline and a 200 KB response limit. Failures back off from 30 seconds to five minutes. `Retry-After` can extend that wait.
+The server caches each source for 30 seconds and coalesces concurrent reads. HTML renders per request so each response can carry a fresh script nonce. Visible browser tabs request a refreshed page on the same interval. A healthy uncached read makes three public requests. MCP calls are spaced by the shared client. Each source gets one attempt per refresh, with an eight-second response deadline and a 200 KB response limit. Source caches back off after failures. The shared transport also enforces at least one minute of origin backoff. `Retry-After` can extend that wait.
 
 Last-good values are retained per server process. A cold process falls back to the committed real recordings in `tests/fixtures/`, with their original measurement times. This fallback is explicitly labelled last known. An empty successful response replaces the previous list. Empty lists and missing fields never become invented counts. Instances do not share their in-memory caches.
 
@@ -95,12 +95,18 @@ Shared links fetch their destinations on navigation rather than prefetching ever
 
 - Framework preset: Next.js.
 - Root directory: `apps/web`. Enable files outside the root directory for the workspace.
-- Install command: `pnpm install` from the workspace root.
+- Install command: `pnpm install --frozen-lockfile` from the workspace root.
 - Build command: `pnpm --filter web build` from the workspace root or `pnpm build` from `apps/web`.
 - Output directory: Next.js default.
-- Set `SITE_URL` to the canonical deployment origin for metadata and sitemap URLs. The local fallback is `https://flop-lab.vercel.app` and is not a deployment claim.
+- Set `SITE_URL` to the canonical HTTPS deployment origin for metadata, sitemap URLs and API origin checks. Without it, API checks use the request URL origin. The metadata fallback is `https://flop-lab.vercel.app` and is not a deployment claim.
 - `VERCEL_GIT_COMMIT_SHA` is supplied by Vercel. Locally the build reads `git rev-parse HEAD`. Missing commit metadata displays `unknown`.
 - No API keys or wallet environment variables are used.
+
+## Public deployment security
+
+The shared proxy adds nonce-based CSP and request admission. HTML must remain dynamic and uncacheable. Motion uses the documented inline-style exception; inline scripts require the nonce. API errors are no-store and live reads have streamed byte caps, cancellation and fixed-host allowlists.
+
+Vercel client IPs use only its platform-owned forwarded header. Other hosts share one conservative budget and need an edge limiter. Process-local limits do not coordinate across regions. Read the [route threat model and dependency findings](../../docs/SECURITY.md) and [reporting policy](../../SECURITY.md) before deployment. Run `pnpm exec tsx apps/web/scripts/security-inventory.ts` from the repository root to inspect installed lifecycle scripts.
 
 ## What this does not verify
 

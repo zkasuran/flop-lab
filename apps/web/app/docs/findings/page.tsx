@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Dated upstream findings",
   description: "Public FLOP issue reports by zkasuran with recorded GitHub states, dates and source links.",
 };
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export default function FindingsPage() {
   return (

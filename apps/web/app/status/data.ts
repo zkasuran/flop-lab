@@ -2,6 +2,7 @@
 import { unstable_cache } from "next/cache";
 import { recordings } from "../../../../packages/status/src/recorded";
 import { readHistory } from "../../../../packages/status/src/remote";
-export const pageHistory = unstable_cache(() => readHistory(recordings), ["service-status-history-v1"], {
+import { publicFetch } from "../../lib/security/transport";
+export const pageHistory = unstable_cache(() => readHistory(recordings, publicFetch), ["service-status-history-v1"], {
   revalidate: 300,
 });

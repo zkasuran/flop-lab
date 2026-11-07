@@ -1,73 +1,47 @@
 // SPDX-License-Identifier: Apache-2.0
-import { createHash } from "node:crypto";
 import { ConsoleError, ConsoleService } from "../../../../../packages/console/src/service";
+import { visitorKey } from "../../../lib/security/admission";
+import { failure, sameOrigin } from "../../../lib/security/policy";
+import { publicFetch, readRequestJson, safeJson, withPublicOperation } from "../../../lib/security/transport";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-const service = new ConsoleService();
+const service = new ConsoleService(publicFetch);
 
-/** Same-origin read-only proxy. @example POST /console/api {"action":"tools"} */
+/** Same-origin read-only proxy with bounded input. @example POST /console/api {"action":"tools"} */
 export async function POST(request: Request): Promise<Response> {
-  const headers = { "Cache-Control": "no-store", "Content-Type": "application/json" };
-  const origin = request.headers.get("origin");
-  if (origin) {
-    // Next can rewrite request.url to an internal hostname. Host retains the browser-facing authority.
-    let sameOrigin = false;
-    try {
-      const parsed = new URL(origin);
-      sameOrigin =
-        ["http:", "https:"].includes(parsed.protocol) &&
-        parsed.host === (request.headers.get("host") ?? new URL(request.url).host);
-    } catch {
-      /* Opaque and malformed origins are denied. */
-    }
-    if (!sameOrigin) return Response.json({ error: "Cross-origin request denied" }, { status: 403, headers });
-  }
-  if (!request.headers.get("content-type")?.startsWith("application/json"))
-    return Response.json({ error: "Use application/json" }, { status: 415, headers });
-  const reader = request.body?.getReader();
-  if (!reader) return Response.json({ error: "Request body required" }, { status: 400, headers });
-  let expired = false;
-  const timer = setTimeout(() => {
-    expired = true;
-    void reader.cancel().catch(() => undefined);
-  }, 5000);
+  if (!sameOrigin(request)) return failure(403);
+  if (request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase() !== "application/json")
+    return failure(415);
+  let body: unknown;
   try {
-    const chunks: Uint8Array[] = [];
-    let size = 0;
-    while (true) {
-      const chunk = await reader.read();
-      if (expired) throw new ConsoleError("Request body timed out", 408);
-      if (chunk.done) break;
-      size += chunk.value.length;
-      if (size > 32_768) {
-        await reader.cancel();
-        throw new ConsoleError("Request exceeds 32768 bytes", 413);
-      }
-      chunks.push(chunk.value);
-    }
-    const bytes = new Uint8Array(size);
-    let offset = 0;
-    for (const chunk of chunks) {
-      bytes.set(chunk, offset);
-      offset += chunk.length;
-    }
-    const body: unknown = JSON.parse(new TextDecoder().decode(bytes));
-    // Only trust the platform-owned header on Vercel. Other hosts share one conservative bucket.
-    const address =
-      process.env.VERCEL === "1" ? request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() : undefined;
-    const visitor = createHash("sha256")
-      .update(address || "shared-local")
-      .digest("hex");
-    return Response.json(await service.handle(body, visitor), { headers });
+    body = await readRequestJson(request);
   } catch (error) {
-    const status = error instanceof ConsoleError ? error.status : 400;
-    return Response.json(
-      { error: error instanceof Error ? error.message : String(error) },
-      { status, headers: { ...headers, ...(status === 429 ? { "Retry-After": "60" } : {}) } },
+    return failure(
+      error instanceof RangeError ? 413 : error instanceof DOMException && error.name === "TimeoutError" ? 408 : 400,
     );
-  } finally {
-    clearTimeout(timer);
-    reader.releaseLock();
   }
+  return withPublicOperation(async () => {
+    try {
+      const result = await service.handle(body, visitorKey(request));
+      if (result.payload.kind === "estimate") {
+        // Copy the cached payload. Never overwrite cached observations or raw evidence.
+        const estimate = result.payload.estimate;
+        return safeJson({
+          ...result,
+          payload: {
+            ...result.payload,
+            estimate: {
+              ...estimate,
+              errors: estimate.errors.map(({ tool }) => ({ tool, message: "Public observation unavailable" })),
+              gatewayError: estimate.gatewayError ? "Public model list unavailable" : null,
+            },
+          },
+        });
+      }
+      return safeJson(result);
+    } catch (error) {
+      return failure(error instanceof ConsoleError ? error.status : 400);
+    }
+  }, 25_000);
 }
