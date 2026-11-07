@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { describe, expect, it } from "vitest";
+import { readFixture } from "@flop-lab/fixtures";
 import { McpClient, McpError } from "../src/client";
 import { fixtureSse, replayFetch } from "../src/fixtures";
 
@@ -28,10 +29,18 @@ const fast = { sleep: async () => {}, minIntervalMs: 0, baseDelayMs: 1 };
 describe("McpClient", () => {
   it("initializes through the same transport without extra tool calls", async () => {
     const requests: unknown[] = [];
-    const result = { protocolVersion: "2024-11-05", serverInfo: { name: "test", version: "1" }, capabilities: {} };
+    const recording = readFixture("status-2026-11-06T05-23-46.400Z-mcp");
+    const result = {
+      protocolVersion: "2024-11-05",
+      serverInfo: { name: "flop-network", version: "0.2.0" },
+      capabilities: { tools: { listChanged: true }, resources: { listChanged: true }, completions: {} },
+    };
     const fetchFn: typeof fetch = async (_url, init) => {
       requests.push(JSON.parse(String(init?.body)));
-      return new Response(`data: ${JSON.stringify({ jsonrpc: "2.0", id: 1, result })}\n\n`);
+      return new Response(recording.body, {
+        status: recording.httpStatus,
+        headers: { "Content-Type": recording.contentType },
+      });
     };
     const client = new McpClient({ fetch: fetchFn, retries: 0, ...fast });
     const answer = await client.initialize();

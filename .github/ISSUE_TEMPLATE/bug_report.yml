@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Bug report
+description: Report a reproducible problem in a flop-lab tool.
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Package and version or commit
+      placeholder: "@flop-lab/mcp at a full commit SHA"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the command, input and Node and pnpm versions. Search existing issues first.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+      description: Include output and source URL and capture time for external observations.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Link to the documented behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: unknown
+    attributes:
+      label: What remains unknown
+      description: List what the reproduction does not establish.
