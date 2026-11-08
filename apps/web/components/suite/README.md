@@ -26,7 +26,7 @@ The component reads the name, section, status, question and source path from the
 
 `ToolMark` is a named React view transition between a card and its header. The header marker always travels. Pass `travel` to a card marker only while that card is hovered or focused, so the followed card morphs into the header and no other card moves. The small slug marker has the same type size in both places, so wrapped titles stay readable during travel. Reduced motion sets view transitions to zero duration. The original tool workbench remains responsible for its own input and result motion.
 
-The layout adds a context bar above every tool page and section page, and a related tools strip below every tool page. On a tool page the bar lists the other available tools in the section with previous and next. On a section page it switches sections. Both read the registry, so a tool appears in them once its entry is available. They are in `components/shell/tool-context.tsx`.
+The layout adds a context bar above every tool page and section page. It also adds a related tools strip below every tool page. On a tool page the bar lists the other available tools in the section with previous and next. On a section page it switches sections. Both read the registry, so a tool appears in them once its entry is available. They are in `components/shell/tool-context.tsx`.
 
 ## Section evidence
 
