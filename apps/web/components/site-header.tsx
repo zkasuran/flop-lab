@@ -4,193 +4,266 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, LayoutGroup, motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
-import { useEffect, useState } from "react";
-import { repository, tools } from "@/content/tools";
-import { CommandPalette, ThemeToggle } from "./controls";
-import type { SearchEntry } from "./suite/catalogue";
-import { ArrowUpRight, CloseIcon, GitHubIcon, Mark, MenuIcon } from "./icons";
-import { EASE_OUT, MotionButton } from "./motion";
+import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from "react";
+import { repository, sections, tools, type Section } from "@/content/tools";
 import { LanguageSwitch } from "@/app/zh/language-switch";
 import { common } from "@/app/zh/translations/common";
+import { shell } from "@/app/zh/translations/shell";
+import { CommandPalette, ThemeToggle } from "./controls";
+import type { SearchEntry } from "./suite/catalogue";
+import { ArrowRight, ChevronDown, CloseIcon, GitHubIcon, Mark, MenuIcon } from "./icons";
+import { EASE_OUT, Magnetic, MotionButton } from "./motion";
+import { pathLocale } from "./shell/locale";
+import { LiveBlock } from "./shell/live-block";
+import { ToolsMenu, TrustMenu } from "./shell/mega-menu";
+import { MobileMenu } from "./shell/mobile-menu";
+import styles from "./shell/header.module.css";
 
-type NavItem = { id: string; label: string; href: string };
-const items: NavItem[] = [
-  { id: "findings", label: "Findings", href: "/#findings" },
-  { id: "tools", label: "Tools", href: "/#tools" },
-  { id: "about", label: "About", href: "/about" },
-  { id: "provenance", label: "Provenance", href: "/provenance" },
-];
-const toolPaths = new Set(tools.filter((tool) => tool.status !== "planned").map((tool) => tool.href));
+type MenuId = "tools" | "trust";
+type NavId = MenuId | "network" | "findings" | "docs";
 
-/** Follow the home page section under the reading line so the nav can mark it. */
-function useHomeSection(enabled: boolean) {
-  const [section, setSection] = useState<string | null>(null);
-  useEffect(() => {
-    if (!enabled) return;
-    const targets = ["findings", "tools"]
-      .map((id) => document.getElementById(id))
-      .filter((node): node is HTMLElement => node !== null);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setSection(entry.target.id);
-          else setSection((current) => (current === entry.target.id ? null : current));
-        }
-      },
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    for (const target of targets) observer.observe(target);
-    return () => observer.disconnect();
-  }, [enabled]);
-  return enabled ? section : null;
+const trustPaths = ["/about", "/provenance", "/did"];
+
+/** Which registry section the current route belongs to, if any. Example: sectionOf("/verify") is "verify". */
+function sectionOf(path: string): Section | null {
+  const tool = tools.find((entry) => entry.status !== "planned" && entry.href === path);
+  if (tool) return tool.section;
+  return sections.find((entry) => path === `/sections/${entry.id}`)?.id ?? null;
 }
 
-/** Sticky site header with scroll-aware chrome, section-aware navigation and a compact mobile menu. */
+function activeNav(base: string): NavId | null {
+  if (base === "/network") return "network";
+  if (base === "/findings") return "findings";
+  if (base === "/docs" || base.startsWith("/docs/")) return "docs";
+  if (trustPaths.some((entry) => base === entry || base.startsWith(`${entry}/`))) return "trust";
+  if (sectionOf(base)) return "tools";
+  return null;
+}
+
+/**
+ * The site header: a Tools mega menu, the Network, Findings and Docs pages, a Trust dropdown, the latest block
+ * reading, the language switch, search, source, theme and the main action. Menus open on hover with a short
+ * intent delay, on click and from the keyboard. Escape closes and returns focus. Small screens get a
+ * full-screen menu. Chinese pages translate the labels and keep tool names in English.
+ * Example: <SiteHeader entries={entries} />.
+ */
 export function SiteHeader({ entries }: { entries: readonly SearchEntry[] }) {
   const path = usePathname();
-  const chinese = path === "/zh" || path.startsWith("/zh/");
-  const copy = common[chinese ? "zh" : "en"];
-  const navigation = items.map((item) => ({
-    ...item,
-    label:
-      (
-        {
-          findings: copy.findings,
-          tools: chinese ? "工具" : "Tools",
-          about: copy.about,
-          provenance: copy.provenance,
-        } as Record<string, string>
-      )[item.id] ?? item.label,
-    href: chinese && item.href.startsWith("/#") ? `/zh${item.href.slice(1)}` : item.href,
-  }));
-  navigation.push({ id: "docs", label: copy.docs, href: chinese ? "/zh/docs" : "/docs" });
+  const { locale, base } = pathLocale(path);
+  const t = shell[locale];
+  const c = common[locale];
   const reduced = useReducedMotion() !== false;
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
-  const [menu, setMenu] = useState(false);
-  const homeSection = useHomeSection(path === "/" || path === "/zh");
+  const [open, setOpen] = useState<MenuId | null>(null);
+  const [mobile, setMobile] = useState(false);
+  const [hovered, setHovered] = useState<NavId | null>(null);
+  const closeTimer = useRef<number | undefined>(undefined);
+  const openedAt = useRef(0);
+  const header = useRef<HTMLElement>(null);
+  const triggers = useRef<Partial<Record<MenuId, HTMLButtonElement | null>>>({});
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const current = sectionOf(base);
+  const active = activeNav(base);
+
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 8));
   useEffect(() => {
     setScrolled(window.scrollY > 8);
   }, []);
   useEffect(() => {
-    setMenu(false);
+    setOpen(null);
+    setMobile(false);
   }, [path]);
   useEffect(() => {
-    if (!menu) return;
+    if (!open && !mobile) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenu(false);
+      if (event.key !== "Escape") return;
+      if (open) {
+        triggers.current[open]?.focus();
+        setOpen(null);
+      } else {
+        setMobile(false);
+        menuButton.current?.focus();
+      }
+    };
+    const onPointer = (event: globalThis.PointerEvent) => {
+      if (open && !header.current?.contains(event.target as Node)) setOpen(null);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [menu]);
-  const activeId =
-    path === "/" || path === "/zh"
-      ? homeSection
-      : path.startsWith("/about")
-        ? "about"
-        : path === "/docs" || path === "/zh/docs"
-          ? "docs"
-          : path.startsWith("/provenance")
-            ? "provenance"
-            : toolPaths.has(path)
-              ? "tools"
-              : null;
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, [open, mobile]);
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
+
+  const show = (id: MenuId) => {
+    window.clearTimeout(closeTimer.current);
+    if (open !== id) openedAt.current = Date.now();
+    setOpen(id);
+  };
+  const hide = () => {
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setOpen(null), 180);
+  };
+  const hover = (id: MenuId) => ({
+    onPointerEnter: (event: PointerEvent) => {
+      if (event.pointerType === "mouse") show(id);
+    },
+    onPointerLeave: (event: PointerEvent) => {
+      if (event.pointerType === "mouse") hide();
+    },
+    onBlur: (event: FocusEvent<HTMLLIElement>) => {
+      if (!event.currentTarget.contains(event.relatedTarget as Node | null))
+        setOpen((value) => (value === id ? null : value));
+    },
+  });
+  const toggle = (id: MenuId) => {
+    // A click that lands right after a hover opened the menu should not close it again.
+    if (open === id && Date.now() - openedAt.current < 400) return;
+    if (open === id) setOpen(null);
+    else show(id);
+  };
+  const close = () => setOpen(null);
+  const indicator = (id: NavId) => (
+    <>
+      {active === id && (
+        <motion.span
+          layoutId="nav-indicator"
+          className={styles.indicator}
+          transition={{ duration: reduced ? 0 : 0.3, ease: EASE_OUT }}
+        />
+      )}
+      {hovered === id && active !== id && (
+        <motion.span
+          layoutId="nav-hover"
+          className={styles.hover}
+          transition={{ duration: reduced ? 0 : 0.22, ease: EASE_OUT }}
+        />
+      )}
+    </>
+  );
+  const page = (id: NavId, href: string, label: string) => (
+    <li>
+      <Link
+        className={styles.link}
+        href={href}
+        prefetch={false}
+        data-active={active === id}
+        aria-current={active === id ? "page" : undefined}
+        onPointerEnter={() => setHovered(id)}
+      >
+        {indicator(id)}
+        <span className={styles.label}>{label}</span>
+      </Link>
+    </li>
+  );
+
   return (
     <header
-      className="site-header"
+      ref={header}
+      className={`site-header ${styles.header}`}
       data-scrolled={scrolled}
-      data-menu={menu ? "open" : "closed"}
-      lang={chinese ? "zh-Hans" : "en"}
+      data-open={open !== null || mobile}
+      data-print-hide
+      lang={locale === "zh" ? "zh-Hans" : "en"}
     >
-      <div className="container header-inner">
-        <Link className="wordmark" href={chinese ? "/zh" : "/"} prefetch={false} aria-label={`flop-lab ${copy.home}`}>
-          <Mark />
+      <div className={`container ${styles.inner}`}>
+        <Link
+          className={styles.brand}
+          href={locale === "zh" ? "/zh" : "/"}
+          prefetch={false}
+          aria-label={`flop-lab ${c.home}`}
+        >
+          <Mark size={24} />
           <span aria-hidden="true">
-            flop<span className="wordmark-suffix">-lab</span>
+            flop<span className={styles.brandSuffix}>-lab</span>
           </span>
         </Link>
-        <nav className="site-nav" aria-label={copy.mainNavigation} lang={chinese ? "zh-Hans" : "en"}>
-          <LayoutGroup id="nav">
-            <ul className="nav-links">
-              {navigation.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    prefetch={false}
-                    className="nav-link"
-                    href={item.href}
-                    data-active={activeId === item.id}
-                    aria-current={activeId === item.id && item.href.startsWith("/#") === false ? "page" : undefined}
-                  >
-                    {activeId === item.id && (
-                      <motion.span
-                        layoutId="nav-indicator"
-                        className="nav-indicator"
-                        transition={{ duration: reduced ? 0 : 0.3, ease: EASE_OUT }}
-                      />
-                    )}
-                    <span className="nav-label">{item.label}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </LayoutGroup>
-          <div className="nav-actions">
-            <LanguageSwitch />
-            <CommandPalette entries={entries} />
-            <a
-              className="icon-button nav-repo"
-              href={repository}
-              aria-label="Source on GitHub"
-              title="Source on GitHub"
-            >
-              <GitHubIcon />
-            </a>
-            <ThemeToggle />
-            <MotionButton
-              className="icon-button menu-button"
-              aria-expanded={menu}
-              aria-controls="mobile-menu"
-              aria-label={menu ? copy.closeMenu : copy.openMenu}
-              onClick={() => setMenu(!menu)}
-            >
-              {menu ? <CloseIcon /> : <MenuIcon />}
-            </MotionButton>
-          </div>
-        </nav>
-      </div>
-      <AnimatePresence initial={false}>
-        {menu && (
-          <motion.div
-            id="mobile-menu"
-            className="mobile-menu"
-            initial={{ height: reduced ? "auto" : 0, opacity: reduced ? 1 : 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: reduced ? "auto" : 0, opacity: 0 }}
-            transition={{ duration: reduced ? 0 : 0.28, ease: EASE_OUT }}
-          >
-            <ul>
-              {navigation.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={item.href}
-                    prefetch={false}
-                    data-active={activeId === item.id}
-                    onClick={() => setMenu(false)}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <a href={repository}>
-                  Source on GitHub <ArrowUpRight />
-                </a>
+        <nav className={styles.nav} aria-label={c.mainNavigation}>
+          <LayoutGroup id="site-nav">
+            <ul className={styles.links} onPointerLeave={() => setHovered(null)}>
+              <li className={styles.megaItem} {...hover("tools")}>
+                <button
+                  ref={(node) => {
+                    triggers.current.tools = node;
+                  }}
+                  type="button"
+                  className={styles.link}
+                  data-active={active === "tools"}
+                  aria-expanded={open === "tools"}
+                  aria-controls="menu-tools"
+                  onClick={() => toggle("tools")}
+                  onPointerEnter={() => setHovered("tools")}
+                >
+                  {indicator("tools")}
+                  <span className={styles.label}>
+                    {t.tools}
+                    <ChevronDown size={13} className={styles.chevron} data-open={open === "tools"} />
+                  </span>
+                </button>
+                <AnimatePresence>
+                  {open === "tools" && (
+                    <ToolsMenu id="menu-tools" current={current} locale={locale} onNavigate={close} />
+                  )}
+                </AnimatePresence>
+              </li>
+              {page("network", "/network", t.network)}
+              {page("findings", "/findings", c.findings)}
+              {page("docs", locale === "zh" ? "/zh/docs" : "/docs", c.docs)}
+              <li className={styles.dropItem} {...hover("trust")}>
+                <button
+                  ref={(node) => {
+                    triggers.current.trust = node;
+                  }}
+                  type="button"
+                  className={styles.link}
+                  data-active={active === "trust"}
+                  aria-expanded={open === "trust"}
+                  aria-controls="menu-trust"
+                  onClick={() => toggle("trust")}
+                  onPointerEnter={() => setHovered("trust")}
+                >
+                  {indicator("trust")}
+                  <span className={styles.label}>
+                    {t.trust}
+                    <ChevronDown size={13} className={styles.chevron} data-open={open === "trust"} />
+                  </span>
+                </button>
+                <AnimatePresence>
+                  {open === "trust" && <TrustMenu id="menu-trust" locale={locale} onNavigate={close} />}
+                </AnimatePresence>
               </li>
             </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </LayoutGroup>
+        </nav>
+        <div className={styles.actions}>
+          <LiveBlock className={styles.liveDesktop} />
+          <LanguageSwitch />
+          <CommandPalette entries={entries} />
+          <a className={`icon-button ${styles.repo}`} href={repository} aria-label={c.repository} title={c.repository}>
+            <GitHubIcon />
+          </a>
+          <ThemeToggle />
+          <Magnetic className={styles.ctaWrap}>
+            <Link className={`button ${styles.cta}`} href="/verify" prefetch={false}>
+              {t.runCheck} <ArrowRight size={14} />
+            </Link>
+          </Magnetic>
+          <MotionButton
+            ref={menuButton}
+            className={`icon-button ${styles.menuButton}`}
+            aria-expanded={mobile}
+            aria-controls="mobile-menu"
+            aria-label={mobile ? c.closeMenu : c.openMenu}
+            onClick={() => setMobile(!mobile)}
+          >
+            {mobile ? <CloseIcon /> : <MenuIcon />}
+          </MotionButton>
+        </div>
+      </div>
+      <MobileMenu open={mobile} onClose={() => setMobile(false)} current={current} path={base} locale={locale} />
     </header>
   );
 }

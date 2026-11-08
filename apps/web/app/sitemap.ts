@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import type { MetadataRoute } from "next";
 import { tools } from "@/content/tools";
+import { sitePages } from "@/components/suite/catalogue";
 import { languagePair, translatedPaths } from "./zh/routes";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.SITE_URL ?? "https://flop-lab.vercel.app";
@@ -8,8 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...new Set([
       ...translatedPaths,
       ...translatedPaths.map((path) => languagePair(path)!.zh),
-      "/about",
-      "/provenance",
+      ...sitePages.map((page) => page.href),
       ...tools.filter((tool) => tool.status !== "planned").map((tool) => tool.href),
     ]),
   ].map((path) => {

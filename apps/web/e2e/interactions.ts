@@ -5,7 +5,18 @@ type Interaction = { button?: RegExp; role?: "tab"; input?: string; select?: [st
 // Each route has a deliberate primary action. A new route without one fails the inventory check.
 export const interactions: Record<string, Interaction> = {
   "/action": { button: /^Include spec$/ },
-  "/": { button: /^Claim 2 of/ },
+  "/": { button: /^Verify\s*\d+$/ },
+  "/findings": { button: /^Claim 2 of/ },
+  "/network": { button: /^In sample$/ },
+  "/docs": { input: "#docs-search" },
+  "/zh": { button: /^验证\s*\d+$/ },
+  "/zh/docs": { input: 'input[type="search"]' },
+  ...Object.fromEntries(
+    ["observe", "verify", "build", "operate", "agents", "identity"].flatMap((id) => [
+      [`/sections/${id}`, { button: /^Planned$/ }],
+      [`/zh/sections/${id}`, { button: /^计划中$/ }],
+    ]),
+  ),
   "/about": { button: /Flip a signed byte/ },
   "/provenance": { checkbox: /Tamper: flip/ },
   "/scoreboard": { input: 'input[placeholder="Filter miners"]' },

@@ -4,11 +4,12 @@ import type { ReactNode } from "react";
 import type { ClaimStatus } from "./status";
 
 export const OG_SIZE = { width: 1200, height: 630 };
+// Literal copies of the dark tokens in app/tokens.css. Satori cannot read CSS custom properties.
 const ink = {
-  background: "#0a0d0b",
-  surface: "#101512",
-  border: "#263029",
-  strong: "#435047",
+  background: "#060807",
+  surface: "#0c100e",
+  border: "#1e2722",
+  strong: "#3a463e",
   foreground: "#eef3ea",
   muted: "#a3afa6",
   accent: "#c2f07f",

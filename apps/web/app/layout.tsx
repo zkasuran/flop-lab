@@ -5,8 +5,9 @@ import localFont from "next/font/local";
 import { Footer } from "@/components/footer";
 import { RouteSurface } from "@/components/motion";
 import { SiteHeader } from "@/components/site-header";
+import { MagicCursor, PointerSpotlight, SmoothScroll } from "@/components/shell/effects";
+import { ToolContext, ToolRelated } from "@/components/shell/tool-context";
 import { paletteEntries } from "@/components/suite/docs";
-import { SectionNavigation } from "@/components/suite/navigation";
 import "./globals.css";
 
 const text = localFont({
@@ -21,11 +22,11 @@ const mono = localFont({
 });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL ?? "https://flop-lab.vercel.app"),
-  title: { default: "flop-lab | Check FLOP's promises from outside", template: "%s | flop-lab" },
+  title: { default: "flop-lab | The independent observatory for the FLOP devnet", template: "%s | flop-lab" },
   description:
-    "Does a settlement add up? Does the network match its docs? Independent FLOP devnet tools with dated findings you can inspect and rerun.",
+    "Built on FLOP. Independent tools that read the FLOP devnet in public, check settlements and documented claims, and show what is still unproven.",
 };
-export const viewport: Viewport = { themeColor: "#0a0d0b" };
+export const viewport: Viewport = { themeColor: "#060807" };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const nonce = (await headers()).get("x-nonce") ?? undefined;
@@ -50,12 +51,17 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <a className="skip" href="#main">
           Skip to content
         </a>
+        <div className="scroll-progress" aria-hidden="true" />
         <SiteHeader entries={entries} />
-        <SectionNavigation />
         <main id="main" className="container">
+          <ToolContext />
           <RouteSurface>{children}</RouteSurface>
+          <ToolRelated />
         </main>
         <Footer />
+        <MagicCursor />
+        <PointerSpotlight />
+        <SmoothScroll />
       </body>
     </html>
   );

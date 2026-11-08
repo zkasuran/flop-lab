@@ -26,6 +26,7 @@ export function routePolicy(path: string): { methods: string[]; query: string[] 
   if (
     [
       "/api/history.json",
+      "/api/pulse",
       "/SIGNATURE.json",
       "/history/models.json",
       "/history/feed.xml",

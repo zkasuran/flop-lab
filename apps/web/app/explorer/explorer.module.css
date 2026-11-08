@@ -282,6 +282,7 @@
   background: var(--background);
   padding: 1rem;
   border: 1px solid var(--border);
+  border-radius: var(--radius-md);
 }
 .command {
   display: flex;
@@ -292,6 +293,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   padding: 1rem;
+  border-radius: var(--radius-md);
 }
 .command code {
   overflow-wrap: anywhere;

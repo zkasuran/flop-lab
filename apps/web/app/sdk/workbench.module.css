@@ -37,6 +37,7 @@
   padding: var(--space-3);
   margin-block: var(--space-6) var(--space-2);
   min-width: 0;
+  border-radius: var(--radius-md);
 }
 .command code {
   font-size: var(--text-xs);
@@ -66,6 +67,7 @@
   border: 1px solid var(--border);
   background: var(--surface);
   padding: var(--space-8);
+  border-radius: var(--radius-md);
 }
 .summary p {
   color: var(--muted);
@@ -154,6 +156,7 @@
   padding: var(--space-4);
   border: 1px solid var(--border);
   background: var(--surface);
+  border-radius: var(--radius-md);
 }
 .trace p {
   margin: var(--space-1) 0;
@@ -272,6 +275,7 @@
   border: 1px solid var(--border);
   border-left: 3px solid var(--status-color);
   background: var(--surface);
+  border-radius: var(--radius-md);
 }
 .findingToggle {
   display: grid;

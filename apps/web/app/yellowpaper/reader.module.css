@@ -22,6 +22,7 @@
   background: var(--surface);
   padding: var(--space-6);
   overflow-wrap: anywhere;
+  border-radius: var(--radius-md);
 }
 .pin > p {
   margin-block: var(--space-4);
@@ -104,6 +105,7 @@
   background: var(--surface);
   font-size: var(--text-sm);
   overflow-wrap: anywhere;
+  border-radius: var(--radius-md);
 }
 .issueGrid p {
   margin-top: var(--space-3);
@@ -312,6 +314,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   font: var(--text-xs)/1.65 var(--font-data);
+  border-radius: var(--radius-md);
 }
 .paper code {
   font-family: var(--font-data);
@@ -409,6 +412,7 @@
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--foreground);
+  border-radius: var(--radius-md);
 }
 .drawer h2 {
   font: 1.4rem/1.4 var(--font-data);

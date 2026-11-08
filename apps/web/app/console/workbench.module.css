@@ -24,6 +24,7 @@
   padding: var(--space-6);
   margin-bottom: var(--space-8);
   background: var(--surface);
+  border-radius: var(--radius-md);
 }
 .discovery p {
   margin-top: 0.5rem;
@@ -235,6 +236,7 @@
   font: var(--text-xs)/1.8 var(--font-data);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+  border-radius: var(--radius-md);
 }
 .completion {
   padding: var(--space-6);
@@ -255,6 +257,7 @@
   display: grid;
   gap: var(--space-1);
   overflow-wrap: anywhere;
+  border-radius: var(--radius-md);
 }
 .completionButton small {
   color: var(--muted);
